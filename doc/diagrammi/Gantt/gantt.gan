@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Untitled Gantt Project" company="" webLink="http://" view-date="2008-01-07" view-index="0" gantt-divider-location="7" resource-divider-location="301" version="2.0">
+<project name="Untitled Gantt Project" company="" webLink="http://" view-date="2008-01-13" view-index="0" gantt-divider-location="123" resource-divider-location="301" version="2.0">
     <description/>
-    <view zooming-state="default:3" id="gantt-chart"/>
+    <view zooming-state="default:2" id="gantt-chart"/>
     <view id="resource-table">
         <field id="0" name="Nome" width="55"/>
         <field id="1" name="Ruolo predefinito" width="44"/>
@@ -47,17 +47,17 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="Revisione Requisiti" color="#ffff66" meeting="false" start="2008-01-14" duration="23" complete="0" priority="1" expand="true">
+        <task id="0" name="Revisione Requisiti" color="#ffff66" meeting="false" start="2008-01-14" duration="17" complete="0" priority="1" expand="true">
             <notes><![CDATA[wetwe]]></notes>
             <depend id="1" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="1" name="Revisione di progetto preliminare (RPP)" color="#ff9933" meeting="false" start="2008-02-06" duration="21" complete="0" priority="1" expand="true">
+        <task id="1" name="Revisione di progetto preliminare (RPP)" color="#ff9933" meeting="false" start="2008-01-31" duration="21" complete="0" priority="1" expand="true">
             <depend id="2" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="2" name="Revisione di progetto definitivo (RPD)" color="#cc6600" meeting="false" start="2008-02-27" duration="17" complete="0" priority="1" expand="true">
+        <task id="2" name="Revisione di progetto definitivo (RPD)" color="#cc6600" meeting="false" start="2008-02-21" duration="22" complete="0" priority="1" expand="true">
             <depend id="3" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="3" name="Revisione di qualifica (RQ)" color="#00ff33" shape="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" meeting="true" start="2008-03-15" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="3" name="Revisione di qualifica (RQ)" color="#00ff33" shape="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" meeting="true" start="2008-03-14" duration="1" complete="0" priority="1" expand="true"/>
         <task id="4" name="Analisi" color="#4bac76" meeting="false" start="2008-01-14" duration="11" complete="0" priority="1" expand="true">
             <depend id="5" type="2" difference="0" hardness="Strong"/>
         </task>
@@ -67,8 +67,8 @@
         <task id="6" name="Sviluppo" color="#58ff00" meeting="false" start="2008-02-13" duration="14" complete="0" priority="1" expand="true">
             <depend id="7" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="7" name="Validazione" color="#adff00" meeting="false" start="2008-02-27" duration="17" complete="0" priority="1" expand="true"/>
-        <task id="8" name="Verifica" color="#ff0000" meeting="false" start="2008-01-14" duration="61" complete="0" priority="1" expand="true"/>
+        <task id="7" name="Validazione" color="#adff00" meeting="false" start="2008-02-27" duration="16" complete="0" priority="1" expand="true"/>
+        <task id="8" name="Verifica" color="#ff0000" meeting="false" start="2008-01-14" duration="60" complete="0" priority="1" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="Benin Diego" function="Default:1" contacts="" phone=""/>
