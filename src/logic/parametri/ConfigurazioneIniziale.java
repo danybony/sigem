@@ -1,6 +1,7 @@
 package logic.parametri;
 
 import java.util.ArrayList; 
+import logic.gestioneMemoria.FrameMemoria; 
 import logic.Processore; 
 import logic.caricamento.GestioneFile; 
 import logic.gestioneMemoria.String; 
@@ -11,72 +12,62 @@ import logic.gestioneMemoria.String;
 public class ConfigurazioneIniziale {
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.88072D81-A085-E120-F299-CF8CC1BA7C98]
+    // #[regen=yes,id=DCE.AC04C1B3-ECD6-A2BF-277F-D63BE2116B0D]
     // </editor-fold> 
-    private String tecnicaGestioneMemoria;
+    private int bandaBusDati;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.D51D8817-60AB-6B72-2F02-87ACC6E090A6]
+    // #[regen=yes,id=DCE.8EE863D2-3A69-6602-C638-52247114A1F0]
     // </editor-fold> 
-    private String politicaSchedulazioneProcessi;
+    private int politicaGestioneMemoria;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.7D023090-7205-0619-F9ED-3385CD17ADE5]
+    // #[regen=yes,id=DCE.F09EB2A3-C2F5-8595-9DAB-1DE4C26E9785]
     // </editor-fold> 
-    private int clockRefTime = -1;
+    private int modalitaGestioneMemoria;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.6A4ABB5A-FB2A-D37C-3705-173A37712992]
+    // #[regen=yes,id=DCE.E3FD9551-578C-4718-E8D6-F8F0FCA55338]
     // </editor-fold> 
-    private int politicaRimpiazzo;
+    private int politicaSchedulazioneProcessi;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.8D510645-356A-D725-C809-DBA832414025]
-    // </editor-fold> 
-    private int timeSlice = -1;
-
-    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.6E6982C1-3770-AF93-381F-A13F7C586250]
-    // </editor-fold> 
-    private Vector processi;
-
-    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.84739EAB-4CD2-A3D2-38BF-C9A9F67C5489]
+    // #[regen=yes,id=DCE.CDE58946-8113-0677-F615-BC8D48A29F69]
     // </editor-fold> 
     private int dimensioneRAM;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.41B60E6B-75B9-A123-D99B-DB33D2A4374C]
+    // #[regen=yes,id=DCE.FD69B72C-282A-3CD4-7EB8-9A426F1B4E50]
     // </editor-fold> 
     private int dimensioneSwap;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.3D7A7C7E-F2F4-EC66-ACD9-47727010C71C]
+    // #[regen=yes,id=DCE.09666231-C86E-532B-2B25-7EF838B58234]
     // </editor-fold> 
     private boolean copyOnWrite;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.907A95D5-F57E-73A8-F1E7-984B21584BF9]
+    // #[regen=yes,id=DCE.E2404C73-8462-56B1-48CA-CD825115F784]
     // </editor-fold> 
     private int tempoContextSwitch;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.5593DE67-84F8-7F0B-567F-30928D999E3A]
+    // #[regen=yes,id=DCE.81B91E82-D51D-6CBE-FEA1-50F917CE337B]
     // </editor-fold> 
     private int tempoAccessoDisco;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.175A4007-D0FD-1C72-8F6B-FCDF6A6496D4]
+    // #[regen=yes,id=DCE.54ED59A9-8808-D2FD-0107-7635F22F9154]
     // </editor-fold> 
-    private ArrayList<Integer> configurazioneRAM;
+    private ArrayList<FrameMemoria> configurazioneRAM;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.637295E7-D6CA-2DE7-E551-1D4B68E00844]
+    // #[regen=yes,id=DCE.F76853B9-28B4-950A-BBEC-1431DDDD1F6B]
     // </editor-fold> 
-    private ArrayList<Integer> configurazioneSwap;
+    private ArrayList<FrameMemoria> configurazioneSwap;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.D5744188-90A4-602C-9A5F-8E6A67C5AA74]
+    // #[regen=yes,id=DCE.527AE685-BDCF-3D21-C7D5-C85D50837466]
     // </editor-fold> 
     private int dimensionePagina;
 
@@ -84,11 +75,6 @@ public class ConfigurazioneIniziale {
     // #[regen=yes,id=DCE.19997A32-4BFB-5D18-7320-A3ABCCD43971]
     // </editor-fold> 
     private Processo mProcesso;
-
-    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.F084EF1B-D8D1-9F7E-1609-8C20EDB23021]
-    // </editor-fold> 
-    private Gui mGui;
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
     // #[regen=yes,id=DCE.5ED7068F-6671-7DAA-BDC0-556245E715BE]
@@ -99,6 +85,174 @@ public class ConfigurazioneIniziale {
     // #[regen=yes,id=DCE.55CBF63B-1634-9B79-403D-B106C4C3EB5B]
     // </editor-fold> 
     private Processore mProcessore;
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.A262BEB5-78AF-31A6-4DC0-17859E1A3D76]
+    // </editor-fold> 
+    public int getBandaBusDati () {
+        return bandaBusDati;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.A1D7566F-E91C-B614-F651-501A53F05A67]
+    // </editor-fold> 
+    public void setBandaBusDati (int val) {
+        this.bandaBusDati = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.4DDF5BC3-663B-F698-F532-F47B7C2C1B79]
+    // </editor-fold> 
+    public ArrayList<FrameMemoria> getConfigurazioneRAM () {
+        return configurazioneRAM;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.D1805890-18D5-A09F-F6B2-9C7BDECE2ADB]
+    // </editor-fold> 
+    public void setConfigurazioneRAM (ArrayList<FrameMemoria> val) {
+        this.configurazioneRAM = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.46561FD6-EB73-ECCC-31C3-788FD2C53EC6]
+    // </editor-fold> 
+    public ArrayList<FrameMemoria> getConfigurazioneSwap () {
+        return configurazioneSwap;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.AFCA8F12-386A-1921-C7C0-5A7BBBA598A2]
+    // </editor-fold> 
+    public void setConfigurazioneSwap (ArrayList<FrameMemoria> val) {
+        this.configurazioneSwap = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.832310FB-912B-844B-AD70-730886BB66D2]
+    // </editor-fold> 
+    public boolean getCopyOnWrite () {
+        return copyOnWrite;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.B26BF6BF-DFCA-2729-D1A6-A12B08AB62A1]
+    // </editor-fold> 
+    public void setCopyOnWrite (boolean val) {
+        this.copyOnWrite = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.5E1C5D1C-4A7F-23A1-E180-DF083F75D920]
+    // </editor-fold> 
+    public int getDimensionePagina () {
+        return dimensionePagina;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.72E5F4BA-E7D9-B4A9-DE61-A88ACAFFAA2A]
+    // </editor-fold> 
+    public void setDimensionePagina (int val) {
+        this.dimensionePagina = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.949A75FE-27B7-3A8E-93EA-3FDBBC65EDB2]
+    // </editor-fold> 
+    public int getDimensioneRAM () {
+        return dimensioneRAM;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.DFF27563-405F-C5D1-648E-1A6B064C5805]
+    // </editor-fold> 
+    public void setDimensioneRAM (int val) {
+        this.dimensioneRAM = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.1EF11CAE-8590-EFEF-AED8-240E03351AA1]
+    // </editor-fold> 
+    public int getDimensioneSwap () {
+        return dimensioneSwap;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.C4EAC9DD-3F80-5095-F7C9-12B71E1F2D34]
+    // </editor-fold> 
+    public void setDimensioneSwap (int val) {
+        this.dimensioneSwap = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.48797995-B518-3D1A-6E4B-DF8DEBD9657B]
+    // </editor-fold> 
+    public int getModalitaGestioneMemoria () {
+        return modalitaGestioneMemoria;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.BB74A9D4-C387-08DE-03EA-92587A6A65D5]
+    // </editor-fold> 
+    public void setModalitaGestioneMemoria (int val) {
+        this.modalitaGestioneMemoria = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.1F9D4FF9-BDC6-1099-5561-28C9A8BB7D87]
+    // </editor-fold> 
+    public int getPoliticaGestioneMemoria () {
+        return politicaGestioneMemoria;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.DDE1DED5-3DD8-B814-E33D-BF31C1327BAC]
+    // </editor-fold> 
+    public void setPoliticaGestioneMemoria (int val) {
+        this.politicaGestioneMemoria = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.5606006E-4CDA-68D3-EC16-36738AB56B07]
+    // </editor-fold> 
+    public int getPoliticaSchedulazioneProcessi () {
+        return politicaSchedulazioneProcessi;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.5437EE66-9BEA-7091-0ECC-8C8E0E58A4BF]
+    // </editor-fold> 
+    public void setPoliticaSchedulazioneProcessi (int val) {
+        this.politicaSchedulazioneProcessi = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.30EC0F11-11F3-4675-689E-67800F95974F]
+    // </editor-fold> 
+    public int getTempoAccessoDisco () {
+        return tempoAccessoDisco;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.8377AE34-DB42-E416-2D76-389490EE37D3]
+    // </editor-fold> 
+    public void setTempoAccessoDisco (int val) {
+        this.tempoAccessoDisco = val;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.BD8ABDB1-0975-A447-BA22-BD6BBE897223]
+    // </editor-fold> 
+    public int getTempoContextSwitch () {
+        return tempoContextSwitch;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
+    // #[regen=yes,regenBody=yes,id=DCE.31E16B3C-610E-C5F8-CABD-E36B94653705]
+    // </editor-fold> 
+    public void setTempoContextSwitch (int val) {
+        this.tempoContextSwitch = val;
+    }
 
 }
 
