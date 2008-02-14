@@ -5,13 +5,8 @@
 
 package logic.gestioneMemoria;
 
-import java.util.Vector;
+abstract class MemoriaPaginata extends Memoria{
 
-abstract class MemoriaPaginata{
-    
-    /**Struttura dati Vector che conterrà le pagine residenti in memoria.
-     */
-    protected final Vector<Pagina> memoria=new Vector<Pagina>();
     
     /**Campo dati che indica il numero di pagine che la memoria può ancora
      * contenere.

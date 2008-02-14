@@ -5,27 +5,26 @@
 
 package logic.gestioneMemoria;
 
-/**
- *
- * @author PC
- */
-class SwapSegmentata extends MemoriaSegmentata implements Memoria{
+import logic.parametri.ConfigurazioneIniziale;
+
+
+class SwapSegmentata extends MemoriaSegmentata{
 
     public SwapSegmentata(ConfigurazioneIniziale conf){
-        super(conf.getDimensioneSwap);
+        super(conf.getDimensioneSwap());
     }
     
     @Override
     /**Metodo che aggiunge un segmento nello Swap.
      */
-    public void aggiungi(Segmento seg){
+    public void aggiungi(FrameMemoria seg){
         
     }
     
     @Override
     /**Metodo che toglie un segmento dallo Swap.
      */
-    public Segmento rimuovi(String idSeg){
+    public FrameMemoria rimuovi(FrameMemoria seg){
         
     }
     

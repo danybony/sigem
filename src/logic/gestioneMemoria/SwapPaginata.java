@@ -5,27 +5,29 @@
 
 package logic.gestioneMemoria;
 
+import logic.parametri.ConfigurazioneIniziale;
+
 /**
  *
  * @author PC
  */
-class SwapPaginata extends MemoriaPaginata implements Memoria{
+class SwapPaginata extends MemoriaPaginata{
     
 public SwapPaginata(ConfigurazioneIniziale conf){
-        super(conf.getDimensioneSwap/conf.getDimensionePagina);
+        super(conf.getDimensioneSwap()/conf.getDimensionePagina());
     }
     
     @Override
     /**Metodo che aggiunge una pagina nello Swap.
      */
-    public void aggiungi(Pagina pag){
+    public void aggiungi(FrameMemoria pag){
         
     }
     
     @Override
     /**Metodo che toglie una pagina dallo Swap.
      */
-    public Pagina rimuovi(String idPagina){
+    public FrameMemoria rimuovi(FrameMemoria pag){
         
     }
     

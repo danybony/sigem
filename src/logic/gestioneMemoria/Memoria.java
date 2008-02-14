@@ -5,15 +5,16 @@
 
 package logic.gestioneMemoria;
 
-/**
- *
- * @author PC
- */
-interface Memoria{
+import java.util.Vector;
+
+
+abstract class Memoria{
         
-    public void aggiungi(FrameMemoria frame);
-    public FrameMemoria rimuovi(String idframe);
-    public void liberaMemoria(String idProcesso);
+    protected Vector<FrameMemoria> memoria=new Vector<FrameMemoria>();
+    
+    public abstract void aggiungi(FrameMemoria frame);
+    public abstract FrameMemoria rimuovi(FrameMemoria frame);
+    public abstract void liberaMemoria(String idProcesso);
 
 
 }

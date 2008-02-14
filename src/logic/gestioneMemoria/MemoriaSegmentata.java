@@ -1,18 +1,14 @@
-/*
+/**
  * Classe astratta che rappresenta le memorie che utilizzano segmentazione. Verrà
  * concretizzata poi dalle classi RAMSegmentata, SwapSegmentata e HDSegmentata.
  */
 
 package logic.gestioneMemoria;
 
-import java.util.Vector;
 
-abstract class MemoriaSegmentata{
+abstract class MemoriaSegmentata extends Memoria{
     
-    /**Struttura dati Vector che conterrà i segmenti residenti in memoria.
-     */
-    protected final Vector<Segmento> memoria=new Vector<Segmento>();
-    
+
     /**Campo dati di tipo int che indica lo spazio residuo della RAM espresso 
      * in byte.
      */

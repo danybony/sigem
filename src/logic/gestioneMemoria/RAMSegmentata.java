@@ -5,27 +5,27 @@
 
 package logic.gestioneMemoria;
 
-/**
- *
- * @author PC
- */
-class RAMSegmentata extends MemoriaSegmentata implements Memoria{
+
+import java.util.Vector;
+import logic.parametri.ConfigurazioneIniziale;
+
+class RAMSegmentata extends MemoriaSegmentata{
 
     public RAMSegmentata(ConfigurazioneIniziale conf){
-        super(conf.getDimensioneRAM);
+        super(conf.getDimensioneRAM());
     }
     
     @Override
     /**Metodo che aggiunge un segmento nella RAM.
      */
-    public void aggiungi(Segmento seg){
+    public void aggiungi(FrameMemoria seg){
         
     }
     
     @Override
     /**Metodo che toglie un segmento dalla RAM.
      */
-    public Segmento rimuovi(String idSeg){
+    public FrameMemoria rimuovi(FrameMemoria seg){
         
     }
     
@@ -43,7 +43,24 @@ class RAMSegmentata extends MemoriaSegmentata implements Memoria{
      * 
      * @return
      */
-    public Vector<FrameMemoria> getSituazione(){
+    public Vector<FrameMemoria> getFrameLiberi(){
+        
+    }
+    
+    /**Metodo che costruisce un Vector composto dagli spazi occupati disponibili in
+     * RAM. Utile per gli algoritmi di rimpiazzo dei segmenti.
+     * 
+     * @return
+     */
+    public Vector<FrameMemoria> getFrameOccupati(){
+        
+    }
+    /**Metodo che restituisce il segmento con lo spazio libero più grande.
+     * Utile per gli algoritmi di rimpiazzo dei segmenti.
+     * 
+     * @return
+     */
+    public FrameMemoria getSpazioMaggiore(){
         
     }
 }

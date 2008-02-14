@@ -5,27 +5,29 @@
 
 package logic.gestioneMemoria;
 
+import logic.parametri.ConfigurazioneIniziale;
+
 /**
  *
  * @author PC
  */
-class RAMPaginata extends MemoriaPaginata implements Memoria{
+class RAMPaginata extends MemoriaPaginata{
 
     public RAMPaginata(ConfigurazioneIniziale conf){
-        super(conf.getDimensioneRAM/conf.getDimensionePagina);
+        super(conf.getDimensioneRAM()/conf.getDimensionePagina());
     }
     
     @Override
     /**Metodo che aggiunge una pagina nella RAM.
      */
-    public void aggiungi(Pagina pag){
+    public void aggiungi(FrameMemoria pag){
         
     }
     
     @Override
     /**Metodo che toglie una pagina dalla RAM.
      */
-    public Pagina rimuovi(String idPagina){
+    public FrameMemoria rimuovi(FrameMemoria pag){
         
     }
     
