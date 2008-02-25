@@ -2,7 +2,7 @@ package logic.schedulazione;
 
 /* Azienda: Stylosoft
  * Nome file: Priorita.java
- * Package: scheduler
+ * Package: logic.scheduler
  * Autore: Daniele Bonaldo
  * Data: 22/02/2008
  * Versione: 1.0

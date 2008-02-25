@@ -3,7 +3,7 @@ package logic.schedulazione;
 /*
  * Azienda: BlueThoth
  * Nome file: Scheduler.java
- * Package: scheduler
+ * Package: logic.scheduler
  * Autore: Piero Dalle Pezze
  * Data: 29/01/2006
  * Versione: 1.10

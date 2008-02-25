@@ -3,7 +3,7 @@ package logic.schedulazione;
 /*
  * Azienda: Stylosoft
  * Nome file: RRConPriorita.java
- * Package: scheduler
+ * Package: logic.scheduler
  * Autore: Daniele Bonaldo
  * Data: 22/02/2008
  * Versione: 1.00
@@ -170,30 +170,30 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 		// Ottengo il PCB in esecuzione
 		PCB inEsecuzione = scheduler.getPCBCorrente();
 
-		// Se l'ultimo PCB eseguito, � diverso da quello in esecuzione il
+		// Se l'ultimo PCB eseguito, è diverso da quello in esecuzione il
 		// contatore deve essere resettato.
 		// altrimenti avrei una inconsistenza.
 		if (!(inEsecuzione.equals(ultimoEseguito))) {
 			this.reset();
 		}
 
-		// Trovo il minore tra istantiSicuri e le unit� di tempo ancora
+		// Trovo il minore tra istantiSicuri e le unità di tempo ancora
 		// disponibili al PCB
 		int rimanenzaQuanto = getTimeSlice() - getContatore();
 		int limite;
-		if (rimanenzaQuanto <= istantiSicuri) {
+		if (rimanenzaQuanto <= 1) {
 			limite = rimanenzaQuanto;
 		} else {
-			limite = istantiSicuri;
+			limite = 1;
 		}
 
-		// incremento il contatore delle unit� di tempo individuate
+		// incremento il contatore delle unità di tempo individuate
 		// precedentemente
 		setContatore(getContatore() + limite);
 
 		// istante riferito al tempo in cui il processo ha eseguito,
 		// calcolato dallo scheduler.
-		istante = scheduler.incrementaTempoScheduler(limite);
+		scheduler.incrementaTempoScheduler();
 
 		// Se il PCB ha terminato il quanto a sua disposizione, viene tolto,
 		// rimesso nella codaPronti e resettato il contatore.
@@ -206,13 +206,12 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 			ultimoEseguito = inEsecuzione;
 		}
 
-		return istante;
 	}
 
 	/**
 	 * Imposta il campo dato privato di tipo scheduler.
 	 * 
-	 * @param Scheduler
+	 * @param scheduler
 	 *            scheduler riferimento per impostare il campo dati privato
 	 *            della classe.
 	 */

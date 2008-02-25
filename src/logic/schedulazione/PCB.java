@@ -1,7 +1,7 @@
 /*
  * Azienda: Stylosoft
  * Nome file: PCB.java
- * Package: parametri
+ * Package: logic.scheduler
  * Autore: Daniele Bonaldo
  * Data: 21/02/2008
  * Versione: 1.01

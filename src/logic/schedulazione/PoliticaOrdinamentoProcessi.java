@@ -3,7 +3,7 @@ package logic.schedulazione;
 /*
  * Azienda: Stylosoft
  * Nome file: PoliticaOrdinamentoProcessi.java
- * Package: scheduler
+ * Package: logic.scheduler
  * Autore: Daniele Bonaldo
  * Data: 06/02/2008
  * Versione: 1.0
