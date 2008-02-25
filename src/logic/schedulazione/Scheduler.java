@@ -42,7 +42,7 @@ package logic.schedulazione;
  */
 
 import java.util.*;
-
+import logic.parametri.Processo;
 /**
  * Questa classe implementa i meccanismi necessari per realizzare una
  * simulazione discreta di processi in un elaboratore multi-programmato. Uno

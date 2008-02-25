@@ -17,7 +17,6 @@ package logic.schedulazione;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-
 /**
  * Classe concreta che implementa l'interfaccia Batch. La classe FCFS
  * rappresenta il funzionamento della politica di ordinamento First Come First
@@ -136,5 +135,5 @@ public class FCFS implements PoliticaOrdinamentoProcessi {
 		}
 		return stati;
 	}
-
+ 
 }
