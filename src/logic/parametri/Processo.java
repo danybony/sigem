@@ -1,15 +1,12 @@
 /*
- * Azienda: BlueThoth
+ * Azienda: Stylosoft
  * Nome file: Processo.java
- * Package: parametri
- * Autore: Michele Perin
- * Data: 16/02/2006
- * Versione: 1.04
+ * Package: logic.parametri
+ * Autore: Daniele Bonaldo
+ * Data: 18/02/2008
+ * Versione: 1.01
  * Licenza: open-source
  * Registro delle modifiche:
- * v.1.04 (16/02/2006): Adeguamento del codice allo standard aziendale.
- * v.1.03 (10/02/2006): Modifica metodo richiestaAccesso() e relativa documentazione.
- * v.1.02 (09/02/2006): Aggiornato metodo richiestaAccesso() e relativa documentazione.
  * v.1.01 (06/02/2006): Correzzione del metodo equals
  * v.1.00 (03/02/2006): Scrittura della documentazione e implementazione dei metodi.
  */
@@ -17,13 +14,13 @@
 package logic.parametri;
 
 import java.util.ArrayList;
-
+import logic.gestioneMemoria.FrameMemoria;
 /**
  * La classe Processo rappresenta la classe base per tutti i processi, almeno
  * per quelli che sono dati in dotazione alla consegna del prodotto. Essa
  * contiene in sè tutti i campi dati e metodi comuni ad ogni tipo di processo. 
  * 
- * @author Michele Perin
+ * @author Daniele Bonaldo
  * @version 1.04
  */
 public class Processo {
@@ -44,7 +41,7 @@ public class Processo {
 	}
 
 	/**
-	 * Campo dati che contiene la lista degli accessi a risorse che un processo
+	 * Campo dati che contiene la lista degli accessi a FrameMemoria che un processo
 	 * andrà a richiedere durante il suo ciclo di vita. Tale lista di accessi è
 	 * ordinata per istante di esecuzione crescente e alla creazione viene posta
 	 * inizialmete uguale a una lista vuota.
@@ -55,7 +52,7 @@ public class Processo {
 	 * Metodo che ritorna la lista degli accessi ordinata per istante di
 	 * esecuzione crescente.
 	 * 
-	 * @return La lista di richieste d'accesso a risorse che saranno fatte da un
+	 * @return La lista di richieste d'accesso a FrameMemoria che saranno fatte da un
 	 *         particolare processo.
 	 */
 	public ArrayList getAccessi() {
@@ -63,24 +60,24 @@ public class Processo {
 	}
 
 	/**
-	 * Metodo che si occupa di aggiungere una richiesta d'accesso ad una risorsa
+	 * Metodo che si occupa di aggiungere una richiesta d'accesso ad un FrameMemoria
 	 * nel campo dati accessi. Il metodo garantisce che l'inserimento mantenga
 	 * ordinata per istante di richiesta crescenta la lista degli accessi.
 	 * Ritorna true se l'inserimento ha successo, false altrimenti.
 	 * 
-	 * @param risorsa
-	 *            risorsa a cui il processo vuole accedere
+	 * @param frame
+	 *            FrameMemoria a cui il processo vuole accedere
 	 * @param richiesta
 	 *            istante di esecuzione in cui avviene al richiesta di accesso
-	 *            alla risorsa
+	 *            al FrameMemoria
 	 * @param durata
 	 *            numero di istanti di esecuzione per cui il processo deve poter
-	 *            accedere alla risorsa
+	 *            accedere al FrameMemoria
 	 * @return true se l'inserimento ha successo, false altrimenti.
 	 */
         
-	public boolean richiestaAccesso(Risorsa risorsa, int richiesta, int durata) {
-		Accesso accesso = new Accesso(risorsa, richiesta, durata);
+	public boolean richiestaFrameMemoria(FrameMemoria frame, int richiesta, int durata) {
+		Accesso accesso = new Accesso(frame, richiesta, durata);
 		for (int i = 0; i < accessi.size(); i++) {
 			/*
 			 * Controllo di mantenere l'ArrayList ordianto per istante di
@@ -91,7 +88,7 @@ public class Processo {
 				accessi.add(i, accesso);
 				return true;
 			}
-		}// esco dal for perch� l'oggetto va inserito in fondo all'ArrayList
+		}// esco dal for perchè l'oggetto va inserito in fondo all'ArrayList
 		return accessi.add(accesso);
 	}
         
