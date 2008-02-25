@@ -4,16 +4,16 @@ package logic.schedulazione;
  * Nome file: Priorita.java
  * Package: scheduler
  * Autore: Daniele Bonaldo
- * Data: 06/02/2008
+ * Data: 22/02/2008
  * Versione: 1.0
  * Licenza: open-source
  * Registro delle modifiche: *  
- *  - v.1.0 (06/02/2008): Creazione e scrittura documentazione.
+ *  - v.1.0 (22/02/2008): Creazione e scrittura documentazione.
  */
 
 
 import java.util.*;
-
+import logic.parametri.*;
 
 /**
  * Questa classe implementa la politica di ordinamento con priorita', politica che richiede 
@@ -94,13 +94,13 @@ public class Priorita implements PoliticaOrdinamentoProcessi {
 
 		boolean inserito = false;
 
-		IProcessoConPriorita proc = (IProcessoConPriorita) pronto.getIProcesso(), tmp = null;
+		ProcessoConPriorita proc = (ProcessoConPriorita) pronto.getRifProcesso(), tmp = null;
 
 		/* Inserimento mantenendo l'ordine di priorita' decrescente */
 		for (int i = 0; i < codaPronti.size() && !inserito; i++) {
 
-			tmp = (IProcessoConPriorita) ((PCB) codaPronti.get(i))
-					.getIProcesso();
+			tmp = (ProcessoConPriorita) ((PCB) codaPronti.get(i))
+					.getRifProcesso();
 
 			if (proc.getPriorita() > tmp.getPriorita()) {
 
@@ -161,8 +161,7 @@ public class Priorita implements PoliticaOrdinamentoProcessi {
 	 * Inserisce in un ArrayList, gli IProcesso dei PCB nella
 	 * codaPronti, mantenendo l'ordine con cui dovrebbero eseguire.
 	 * 
-	 * @return Ritorna un ArrayList di Processi.
-	 * @see <a href="../parametri/IProcesso.html">IProcesso</a>
+	 * @return Ritorna un ArrayList di Processi.	 
 	 */
 	public ArrayList getCodaPronti() {
 
@@ -178,4 +177,4 @@ public class Priorita implements PoliticaOrdinamentoProcessi {
 
 	}
 
-}  //fine class Priorita
+} 

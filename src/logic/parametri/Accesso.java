@@ -1,7 +1,7 @@
 /*
  * Azienda: Stylosoft
  * Nome file: Accesso.java
- * Package: parametri
+ * Package: logic.parametri
  * Autore: Daniele Bonaldo
  * Data: 20/02/2008
  * Versione: 1.06

@@ -5,18 +5,17 @@ package logic.schedulazione;
  * Nome file: RRConPriorita.java
  * Package: scheduler
  * Autore: Daniele Bonaldo
- * Data: 06/02/2008
- * Versione: 1.0
+ * Data: 22/02/2008
+ * Versione: 1.00
  * Licenza: open-source
  * Registro delle modifiche: *  
- *  - v.1.0 (06/02/2008): Creazione e scrittura documentazione.
+ *  - v.1.00 (22/02/2008): Creazione e scrittura documentazione.
  */
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import parametri.IProcessoConPriorita;
-import parametri.PCB;
+import logic.parametri.ProcessoConPriorita;
 
 /**
  * Classe concreta, estende la classe astratta ConQuanti, e implementa
@@ -39,8 +38,8 @@ import parametri.PCB;
  * di un PCB con priorità alta, già presente nella coda dei pronti.
  * 
  * 
- * @author Marin Pier Giorgio
- * @version 1.1 09/02/2006
+ * @author Daniele Bonaldo
+ * @version 1.00 22/02/2008
  */
 
 public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProcessi {
@@ -51,7 +50,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 	protected ArrayList codaPronti;
 
 	/**
-	 * Riferimento dell'ultimo PCB mandato in esecuzione. Servir� nel metodo
+	 * Riferimento dell'ultimo PCB mandato in esecuzione. Servirà nel metodo
 	 * esegui e nel caso ultimoEseguito e il PCB in esecuzione fossero
 	 * differenti, caso in cui deve anche essere resettato il contatore.
 	 */
@@ -64,7 +63,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 
 	/**
 	 * Costruttore di default. Richiama il costruttore ad un parametro, con
-	 * valore 3, assegnando di defualt un timeslice di 3 unit� di tempo.
+	 * valore 3, assegnando di defualt un timeslice di 3 unità di tempo.
 	 * 
 	 */
 	public RRConPriorita() {
@@ -81,8 +80,8 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 	public RRConPriorita(int timeSlice) {
 
 		super(timeSlice);
-		// creo 5 code delle priorit�, una per ogni possibile livello di
-		// priorit�
+		// creo 5 code delle priorità, una per ogni possibile livello di
+		// priorità
 		codaPronti = new ArrayList(5);
 		for (int i = 0; i < 5; i++) {
 			codaPronti.add(i, new LinkedList());
@@ -91,7 +90,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 
 	/**
 	 * Inserisce un nuovo PCB nella coda dei pronti. L'inserimento viene
-	 * effettuato tenendo conto della priorit� di ogni PCB.
+	 * effettuato tenendo conto della priorità di ogni PCB.
 	 * 
 	 * @param pronto
 	 *            E' il PCB che rappresenta il processo appena arrivato nella
@@ -99,7 +98,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 	 */
 	public void inserisci(PCB pronto) {
 
-		IProcessoConPriorita tmp = (IProcessoConPriorita) pronto.getIProcesso();
+		ProcessoConPriorita tmp = (ProcessoConPriorita) pronto.getRifProcesso();
 		int priorita = tmp.getPriorita();
 		((LinkedList) codaPronti.get(priorita - 1)).add(pronto);
 
@@ -107,7 +106,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 
 	/**
 	 * Estrae e ritorna il PCB del processo che deve andare in esecuzione.
-	 * L'estrazione viene fatta cercando il PCB con priorit� maggiore
+	 * L'estrazione viene fatta cercando il PCB con priorità maggiore
 	 * all'interno della codaPronti.
 	 * 
 	 * @return Ritorna il PCB che deve eseguire.
@@ -115,7 +114,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 	public PCB estrai() {
 		PCB corrente = null;
 		// La ricerca parte dall'ultimo elemento della coda, quello in cui i PCB
-		// hanno priorit� maggiore.
+		// hanno priorità maggiore.
 		for (int i = codaPronti.size() - 1; i >= 0; i--) {
 			if (!((LinkedList) codaPronti.get(i)).isEmpty()) {
 				corrente = (PCB) ((LinkedList) codaPronti.get(i)).removeFirst();
@@ -142,7 +141,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 	}
 
 	/**
-	 * Ritorna un ArrayList contenente IProcesso estratti dalla coda dei pronti.
+	 * Ritorna un ArrayList contenente Processo estratti dalla coda dei pronti.
 	 * 
 	 * @return ArrayList di IProcesso dei PCB nella codaPronti.
 	 */
@@ -150,12 +149,12 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 		ArrayList stati = new ArrayList();
 		// Si scorre la codaPronti dalla fine, in tale posizione si trovano
 		// infatti
-		// i PCB con priorit� pi� alta.
+		// i PCB con priorità più alta.
 		for (int i = codaPronti.size() - 1; i >= 0; i--) {
 			LinkedList tmp = (LinkedList) codaPronti.get(i);
 			for (int j = 0; j < tmp.size(); j++) {
 				// Inserimento dei PCB nell'ArrayList da ritornare.
-				stati.add(((PCB) tmp.get(j)).getIProcesso());
+				stati.add(((PCB) tmp.get(j)).getRifProcesso());
 			}
 		}
 		return stati;
@@ -163,20 +162,10 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 
 	/**
 	 * Simula l'esecuzione del processo che "possiede" la CPU per un numero
-	 * definito di unit� di tempo. Metodo invocato dallo Scheduler, che calcola
-	 * il parametro istantiSicuri. Questo metodo deve per� dare la priorit� alla
-	 * scadenza del quanto di tempo, nel caso istantiSicuri sia maggiore del
-	 * tempo ancora disponibile al processo in esecuzione.
+	 * definito di unità di tempo. Metodo invocato dallo Scheduler.
 	 * 
-	 * @param istantiSicuri
-	 *            � il numero di unit� di tempo in cui sicuramente non avverr�
-	 *            un evento dello scheduler
-	 * 
-	 * @return Ritorna un oggetto di tipo Istante, che rappresenta l'istante
-	 *         realtivo all'esecuzione del processo che detiene la CPU.
 	 */
-	public Istante esegui(int istantiSicuri) {
-		Istante istante;
+	public void esegui() {
 
 		// Ottengo il PCB in esecuzione
 		PCB inEsecuzione = scheduler.getPCBCorrente();
