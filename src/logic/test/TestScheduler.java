@@ -1,6 +1,16 @@
-
-
 package logic.test;
+
+/*
+ * Azienda: Stylosoft
+ * Nome file: TestScheduler.java
+ * Package: logic.test
+ * Autore: Daniele Bonaldo
+ * Data: 26/02/2008
+ * Versione: 1.00
+ * Licenza: open-source
+ * Registro delle modifiche:
+ * v.1.00 (03/02/2006): Creazione della classe.
+ */
 
 import java.util.LinkedList;
 import logic.parametri.Processo;
@@ -9,8 +19,11 @@ import logic.schedulazione.*;
 /**
  * Classe che implementa dei test sullo scheduler utilizzando una versione incompleta
  * del processore come Stub.
+ * I risultati della schedulazione potranno venire poi confrontati con quelli 
+ * di un sistema SGPEMv2 per appurarne la correttezza.
  * 
  * @author Daniele Bonaldo
+ * @version 1.00
  */
 public class TestScheduler {
     
