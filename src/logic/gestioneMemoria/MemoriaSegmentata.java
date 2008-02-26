@@ -1,6 +1,6 @@
 /**
  * Classe astratta che rappresenta le memorie che utilizzano segmentazione. Verrà
- * concretizzata poi dalle classi RAMSegmentata, SwapSegmentata e HDSegmentata.
+ * concretizzata poi dalle classi RAMSegmentata, SwapSegmentata.
  */
 
 package logic.gestioneMemoria;

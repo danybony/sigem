@@ -7,12 +7,10 @@ package logic.gestioneMemoria;
 
 import logic.parametri.ConfigurazioneIniziale;
 
-/**
- *
- * @author PC
- */
+
 class SwapPaginata extends MemoriaPaginata{
     
+
 public SwapPaginata(ConfigurazioneIniziale conf){
         super(conf.getDimensioneSwap()/conf.getDimensionePagina());
     }
@@ -20,15 +18,23 @@ public SwapPaginata(ConfigurazioneIniziale conf){
     @Override
     /**Metodo che aggiunge una pagina nello Swap.
      */
-    public void aggiungi(FrameMemoria pag){
-        
+    public int aggiungi(FrameMemoria pag) throws MemoriaEsaurita{
+        if(pagineResidue>0){
+            memoria.add(pag);
+            pagineResidue--;
+        }
+        else{
+            throw new MemoriaEsaurita(0);
+        }
     }
     
     @Override
     /**Metodo che toglie una pagina dallo Swap.
      */
     public FrameMemoria rimuovi(FrameMemoria pag){
-        
+        memoria.remove(pag);
+        pagineResidue++;
+        return pag;
     }
     
     @Override
@@ -36,6 +42,19 @@ public SwapPaginata(ConfigurazioneIniziale conf){
      * finito la sua esecuzione.
      */
     public void liberaMemoria(String idProcesso){
-        
+        FrameMemoria paginaAux;
+        for(int i=0; i<memoria.size(); i++){
+            if(memoria.get(i).getIdProcesso().equals(idProcesso)){
+                memoria.remove(i);
+                pagineResidue++;
+            }
+        }
+    }
+    
+    @Override
+    /**Metodo lasciato vuoto in quanto mai usato in Swap
+     */
+    public boolean cerca(FrameMemoria pag){
+        return true;
     }
 }

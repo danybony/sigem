@@ -1,6 +1,6 @@
 /*
  * Classe astratta che rappresenta le memorie che utilizzano paginazione. Verrà
- * concretizzata poi dalle classi RAMPaginata, SwapPaginata e HDPaginata.
+ * concretizzata poi dalle classi RAMPaginata, SwapPaginata.
  */
 
 package logic.gestioneMemoria;
