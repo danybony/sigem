@@ -492,7 +492,7 @@ public class Scheduler {
 	 * Ritorna il PCB attualmente nello stato di esecuzione. Questo metodo
 	 * condivide la memoria.
 	 * 
-	 * @return Ritorna il PCB in esecuzione. Se nessun PCB � in esecuzione,
+	 * @return Ritorna il PCB in esecuzione. Se nessun PCB è in esecuzione,
 	 *         ritorna null.
 	 * @see <a href="../parametri/PCB.html">PCB</a>
 	 */
