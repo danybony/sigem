@@ -1,4 +1,5 @@
-package src.logic.gestioneMemoria;
+
+package logic.gestioneMemoria;
 
 
 public interface FrameMemoria {

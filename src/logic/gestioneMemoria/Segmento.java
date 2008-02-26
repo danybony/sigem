@@ -1,6 +1,6 @@
-package src.logic.gestioneMemoria;
 
-import src.logic.gestioneMemoria.FrameMemoria;
+package logic.gestioneMemoria;
+
 
 public class Segmento implements FrameMemoria{
     

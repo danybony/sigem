@@ -1,7 +1,6 @@
 
-package src.logic.gestioneMemoria;
+package logic.gestioneMemoria;
 
-import src.logic.gestioneMemoria.FrameMemoria;
 
 public class Pagina implements FrameMemoria{
     
