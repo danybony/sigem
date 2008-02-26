@@ -3,10 +3,11 @@
  * Nome file: Accesso.java
  * Package: logic.parametri
  * Autore: Daniele Bonaldo
- * Data: 20/02/2008
- * Versione: 1.06
+ * Data: 26/02/2008
+ * Versione: 1.02
  * Licenza: open-source
  * Registro delle modifiche:
+ * v.1.02 (01/02/2006): Codifica di metodi e costruttori. 
  * v.1.01 (01/02/2006): Codifica di metodi e costruttori.
  * v.1.00 (31/01/2006): Scrittura documentazione.
  */
@@ -23,7 +24,7 @@ import logic.gestioneMemoria.FrameMemoria;
  * dalla durata per cui il processo deve poter accedere al FrameMemoria richiesto.
  * 
  * @author Daniele Bonaldo
- * @version 1.01
+ * @version 1.02
  */
 public class Accesso implements Serializable {	
 
@@ -44,23 +45,7 @@ public class Accesso implements Serializable {
 		return istanteRichiesta;
 	}
 
-	/**
-	 * Campo dati contenente il tempo totale per cui un processo richiede di
-	 * poter accedere ad un particolare FrameMemoria.
-	 */
-	private int durata;
-
-	/**
-	 * Metodo che ritorna il tempo totale per cui un processo richiede l'accesso
-	 * ad un particolare FrameMemoria.
-	 * 
-	 * @return Il numero di istanti d'esecuzione per cui il processo ha bisogno
-	 *         d'accedere ad un FrameMemoria.
-	 */
-	public int getDurata() {
-		return durata;
-	}
-
+	
 	/**
 	 * Campo dati contenente il FrameMemoria a cui la richiesta d'accesso si
 	 * riferisce.
@@ -85,31 +70,12 @@ public class Accesso implements Serializable {
 	 *            Il FrameMemoria a cui il processo richiede di poter accedere
 	 * @param istanteRichiesta
 	 *            L'istante di tempo in cui la richiesta d'accesso deve essere
-	 *            effettuata.
-	 * @param durata
-	 *            Il numero di istanti di tempo per cui il processo richiede di
-	 *            dover accedere al FrameMemoria
-	 */
-	public Accesso(FrameMemoria frame, int istanteRichiesta, int durata) {
-		this.frame = frame;
-		this.istanteRichiesta = istanteRichiesta;
-		this.durata = durata;
-	}
-        
-        /**
-	 * Costruttore che si occupa di creare un oggetto rappresentante tutte le
-	 * informazioni che riguardano una richiesta d'accesso ad un FrameMemoria
-         * da parte di un processo che andrà a contenerlo.
-         * Non necessita di specificare la durata della richiesta intendendola 
-         * uguale a 1.
-	 * 
-	 * @param frame
-	 *            Il FrameMemoria a cui il processo richiede di poter accedere
-	 * @param istanteRichiesta
-	 *            L'istante di tempo in cui la richiesta d'accesso deve essere
-	 *            effettuata.
+	 *            effettuata.	 
 	 */
 	public Accesso(FrameMemoria frame, int istanteRichiesta) {
-		this(frame, istanteRichiesta, 1);
+		this.frame = frame;
+		this.istanteRichiesta = istanteRichiesta;
 	}
+        
+        
 }

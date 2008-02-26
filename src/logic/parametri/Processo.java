@@ -69,15 +69,12 @@ public class Processo {
 	 *            FrameMemoria a cui il processo vuole accedere
 	 * @param richiesta
 	 *            istante di esecuzione in cui avviene al richiesta di accesso
-	 *            al FrameMemoria
-	 * @param durata
-	 *            numero di istanti di esecuzione per cui il processo deve poter
-	 *            accedere al FrameMemoria
+	 *            al FrameMemoria	 
 	 * @return true se l'inserimento ha successo, false altrimenti.
 	 */
         
-	public boolean richiestaFrameMemoria(FrameMemoria frame, int richiesta, int durata) {
-		Accesso accesso = new Accesso(frame, richiesta, durata);
+	public boolean richiestaFrameMemoria(FrameMemoria frame, int richiesta) {
+		Accesso accesso = new Accesso(frame, richiesta);
 		for (int i = 0; i < accessi.size(); i++) {
 			/*
 			 * Controllo di mantenere l'ArrayList ordianto per istante di
