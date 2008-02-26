@@ -1,15 +1,20 @@
 
 package logic.gestioneMemoria;
 
+import logic.parametri.ConfigurazioneIniziale;
 
 public class Pagina implements FrameMemoria{
     
     private boolean solaLettura = false;
     private boolean bloccata = false;
     private final String INDIRIZZO;
-    private final static int DIMENSIONE;
+    private static int DIMENSIONE;
     private boolean inRAM = false;
     private int idProcesso;
+    
+    {
+        DIMENSIONE = ConfigurazioneIniziale.getDimensionePagina();
+    }
     
     public Pagina(String indirizzoPagina){
         INDIRIZZO=indirizzoPagina;
