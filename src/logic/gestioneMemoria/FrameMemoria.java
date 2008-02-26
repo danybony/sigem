@@ -15,6 +15,10 @@ public interface FrameMemoria {
     public boolean getSolaLettura ();
 
     public boolean setSolaLettura (boolean nuovoStato);
+    
+    public int getIdProcesso();
+    
+    public boolean setIdProcesso(int idProcessoPassato);
 
 }
 
