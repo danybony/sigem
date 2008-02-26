@@ -3,7 +3,6 @@
 package logic.test;
 
 import java.util.LinkedList;
-import logic.Processore;
 import logic.parametri.Processo;
 import logic.schedulazione.*;
 
@@ -23,8 +22,15 @@ public class TestScheduler {
        processi.add(P1);
        processi.add(P2);
        Scheduler scheduler = new Scheduler(politica, processi);
-       Processore processore = new Processore(scheduler);
-       processore.creaSimulazione();
+       
+       //quello che segue simula la creaSimulazione() del processore
+       scheduler.esegui();
+        while(!scheduler.fineSimulazione()){
+            PCB tmp = scheduler.getPCBCorrente();
+            System.out.print(tmp.getRifProcesso().getNome() + " - ");
+            scheduler.esegui();
+        }
+       
     }
    
 }
