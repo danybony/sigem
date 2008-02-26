@@ -146,6 +146,15 @@ public class Scheduler {
          */
         boolean fineSimulazione = false;
 
+        /**
+         * Questo metodo ritorna lo stato della simulazione.
+         * 
+         * @return Ritorna true se la simulazione è terminata, false altrimenti.
+         */
+        public boolean fineSimulazione(){
+            return fineSimulazione;
+        }
+        
 	/**
 	 * Questa struttura serve per memorizzare i tempi dei quattro eventi che
 	 * possono ricorrere in questa simulazione di schedulazione. Tali eventi
