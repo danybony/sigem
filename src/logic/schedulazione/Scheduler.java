@@ -125,7 +125,7 @@ public class Scheduler {
 	 * terminazione.
 	 * 
 	 */
-	ArrayList processiTerminati;
+	ArrayList processiTerminati = new ArrayList();
 
 	/**
 	 * Questo campo dati rappresenta la tabella di tutti i PCB (processi attivi)
