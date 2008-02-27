@@ -2,9 +2,14 @@
 package logic.simulazione;
 
 import java.util.LinkedList;
+import logic.schedulazione.PCB;
 
 
-class Istante {
+/**
+ * 
+ * @author 
+ */
+public class Istante {
     
     private PCB processoInEsecuzione;
     private PCB processoPrecedenteTerminato;
