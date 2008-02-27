@@ -22,6 +22,7 @@ public SwapPaginata(ConfigurazioneIniziale conf){
         if(pagineResidue>0){
             memoria.add(pag);
             pagineResidue--;
+            return memoria.size();
         }
         else{
             throw new MemoriaEsaurita(0);
@@ -41,10 +42,9 @@ public SwapPaginata(ConfigurazioneIniziale conf){
     /**Metodo che elimina dallo Swap le pagine riferite ad un processo che ha
      * finito la sua esecuzione.
      */
-    public void liberaMemoria(String idProcesso){
-        FrameMemoria paginaAux;
+    public void liberaMemoria(int idProcesso){
         for(int i=0; i<memoria.size(); i++){
-            if(memoria.get(i).getIdProcesso().equals(idProcesso)){
+            if(memoria.get(i).getIdProcesso()==idProcesso){
                 memoria.remove(i);
                 pagineResidue++;
             }

@@ -20,6 +20,6 @@ abstract class MemoriaPaginata extends Memoria{
         pagineResidue=numeroPagine;
     }
 
-    
+    public abstract int aggiungi(FrameMemoria frame) throws MemoriaEsaurita;
 
 }

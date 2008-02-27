@@ -21,6 +21,6 @@ abstract class MemoriaSegmentata extends Memoria{
         spazioResiduo=spazio;
     }
 
-    
+    public abstract void aggiungi(FrameMemoria frame, FrameMemoria spazio);
 
 }

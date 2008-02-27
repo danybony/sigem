@@ -80,11 +80,11 @@ class RAMPaginata extends MemoriaPaginata{
      * pagine saranno considerate memoria libera, quindi si potranno inserire
      * nuove pagine senza interrogare la politica di rimpiazzo.
      */
-    public void liberaMemoria(String idProcesso){
+    public void liberaMemoria(int idProcesso){
         FrameMemoria paginaAux;
         for(int i=0; i<memoria.size(); i++){
             paginaAux=memoria.get(i);
-            if(paginaAux.getIdProcesso().equals(idProcesso)){
+            if(paginaAux.getIdProcesso()==idProcesso){
                 paginaAux.setInRAM(false);
                 pagineResidue++;
             }
