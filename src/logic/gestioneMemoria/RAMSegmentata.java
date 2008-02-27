@@ -45,7 +45,25 @@ class RAMSegmentata extends MemoriaSegmentata{
     /**Metodo che toglie un segmento dalla RAM.
      */
     public FrameMemoria rimuovi(FrameMemoria seg){
+        /**Salvo la posizione del segmento in memoria. Servirà in seguito*/
+        int pos=memoria.indexOf(seg);
         
+        /**Tolgo il segmento dalla memoria*/
+        memoria.remove(seg);
+        spazioResiduo+=seg.getDimensione();
+        
+        /**Sfruttando la posizione del segmento appena tolto, compatto eventuali
+         * spazi liberi adiacenti*/
+        if(pos!=0){
+            FrameMemoria frameAux1=memoria.get(pos);
+            FrameMemoria frameAux2=memoria.get(pos-1);
+            if(frameAux1.getIdProcesso()==-1 && frameAux2.getIdProcesso()==-1) {
+                memoria.add(new Segmento("spazio",frameAux1.getDimensione()+frameAux2.getDimensione()));
+                memoria.remove(pos+1);
+                memoria.remove(pos+1);
+            }
+        }
+        return seg;
     }
     
     @Override
@@ -71,8 +89,10 @@ class RAMSegmentata extends MemoriaSegmentata{
                     /**Unisco i due segmenti*/
                     memoria.add(i,new Segmento("spazio", segAux1.getDimensione()+segAux2.getDimensione()));
                     memoria.remove(i+1);
-                    memoria.remove(i+2);
+                    memoria.remove(i+1);
                     
+                    /**L'iterazione deve continuare da questo nuovo segmento*/
+                    i=i-1;
                 }
                 else{
                     /**Il segmento successivo è ancora referenziato da qualche
@@ -109,6 +129,22 @@ class RAMSegmentata extends MemoriaSegmentata{
      * @return
      */
     public FrameMemoria getSpazioMaggiore(){
+        FrameMemoria frameMax=new Segmento("spazio",0);
+        FrameMemoria frameAux;
+        for(int i=0; i<memoria.size();i++){
+            frameAux=memoria.get(i);
+            if(frameAux.getIdProcesso()==-1 && frameAux.getDimensione()>frameMax.getDimensione()) {
+                frameMax=frameAux;
+            }
+        }
+        return frameMax;
         
+    }
+    
+    
+    @Override
+    /**Metodo che cerca se il segmento richiesto è già presente in RAM*/
+    public boolean cerca(FrameMemoria seg){
+        return memoria.contains(seg);
     }
 }
