@@ -18,7 +18,14 @@ public class Istante {
     private LinkedList<OperazioneInMemoria> cambiamentiInMemoria;
     
     
-    Istante(PCB inEsecuzione, PCB terminato, int fault, LinkedList<OperazioneInMemoria> memoria){
+    /**
+     * 
+     * @param inEsecuzione
+     * @param terminato
+     * @param fault
+     * @param memoria
+     */
+    public Istante(PCB inEsecuzione, PCB terminato, int fault, LinkedList<OperazioneInMemoria> memoria){
         this.processoInEsecuzione = inEsecuzione;
         this.processoPrecedenteTerminato = terminato;
         this.numeroFault = fault;
