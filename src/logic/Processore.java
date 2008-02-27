@@ -2,28 +2,34 @@ package logic;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import logic.gestioneMemoria.FrameMemoria;
+import logic.gestioneMemoria.OperazioneInMemoria;
 import logic.parametri.Accesso;
+import logic.parametri.ConfigurazioneIniziale;
 import logic.schedulazione.PCB;
 import logic.schedulazione.Scheduler;
+
 
 /*
  * Azienda: Stylosoft
  * Nome file: Processore.java
  * Package: logic
  * Autore: Daniele Bonaldo
- * Data: 26/02/2008
- * Versione: 1.1
+ * Data: 27/02/2008
+ * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche: *  
+ *  - v.1.2 (27/02/2008): Modifica del metodo calcolaFault.
  *  - v.1.1 (26/02/2008): Aggiunta la descrizione dei parametri nella javadoc.
  *  - v.1.0 (26/02/2008): Creazione e scrittura documentazione.
  */
+import logic.simulazione.Istante;
 
 /**
  * 
  * 
  * @author Daniele Bonaldo
- * @version 1.1 26/02/2008
+ * @version 1.2 27/02/2008
  */
 
 public class Processore {
@@ -37,11 +43,11 @@ public class Processore {
     /**
      * Costruttore della classe Processore
      * 
-     * @param scheduler 
-     *      Indica lo scheduler da utilizzare nella simulazione
+     * @param conf 
+     *      Indica la configurazione iniziale da cui inizializzare lo Scheduler
      */
-    public Processore(Scheduler scheduler){
-        this.scheduler = scheduler;    
+    public Processore(ConfigurazioneIniziale conf){
+        this.scheduler = new Scheduler(conf.getPoliticaSchedulazioneProcessi(), conf.getProcessiInArrivo());    
     }
     
     /**
@@ -65,13 +71,13 @@ public class Processore {
                 
                 /* Estrae i FrameMemoria necessari al processo in esecuzione
                  nell'istante della sua esecuzione corrente */
-                LinkedList frameNecessari = estraiFrame(corrente);
+                LinkedList<FrameMemoria> frameNecessari = estraiFrame(corrente);
                 
                 /* Interroga il gestore della memoria sulla disponibilità dei 
                  FrameMemoria necessari al processo in esecuzione e riceve la 
                  lista delle istruzioni effettuate dal gestore della memoria per
                  portare in RAM quei FrameMemoria */
-                LinkedList istruzioni;// = gestoreMemoria.esegui(frameNecessari);
+                LinkedList<OperazioneInMemoria> istruzioni;// = gestoreMemoria.esegui(frameNecessari);
                 
                 simulazione.add(creaIstante(corrente,istruzioni));
                 //da aggiungere il PCB dell'ultimo terminato
@@ -91,6 +97,10 @@ public class Processore {
     }
 
     /**
+     * Metodo che si occupa di estrarre il numero fdi fault di pagina da una lista
+     * di istruzioni sulla memoria.
+     * Il numero di fault è costituito dalla somma delle operazioni corrispondenti 
+     * ad una scrittura di una pagina su RAM.
      * 
      * @param istruzioni 
      *      La lista di istruzioni effettuate dal gestore della memoria in questo
@@ -99,14 +109,15 @@ public class Processore {
      * 
      * @return Il numero di fault di pagina avvenuti in questo istante.
      */
-    private int calcolaFault(LinkedList istruzioni) {
+    private int calcolaFault(LinkedList<OperazioneInMemoria> istruzioni) {
        
         if(istruzioni == null){
             
             return 0;
             
         }
-           
+        
+        //necessito di tutti i campi di OperazioneInMemoria
         return 42;
     }
     
@@ -119,14 +130,24 @@ public class Processore {
      * 
      * @return Ritorna l'istante corrente.
      */
-    private Istante creaIstante(PCB corrente, LinkedList istruzioni){
+    da pensare come fare a passare il PCB terminato
+    private Istante creaIstante(PCB corrente, LinkedList<OperazioneInMemoria> istruzioni){
+        
         int fault = calcolaFault(istruzioni);
-        Istante istante = new Istante();
+        
+        Istante istante = new Istante(corrente, corrente, fault, istruzioni);
         
         return istante;
     }
     
     /**
+     * Metodo che ha il compito di estrarre i FrameMemoria necessari al processo 
+     * correntemente in esecuzione nell'istante corrente della simulazione.
+     * Questa azione viene resa semplice dall'avere inserito le richieste di 
+     * accesso ad un FrameMemoria da parte di un processo in ordine di istante 
+     * della richiesta stessa.
+     * Viene ritornata una LinkedList contenente i FrameMemoria.
+     * 
      * 
      * @param corrente
      *      Il PCB relativo al processo attualmente in esecuzione
@@ -134,7 +155,7 @@ public class Processore {
      * @return Ritorna la LinkedList dei FrameMemoria necessari al PCB corrente
      * nell'istante attuale.
      */
-    private LinkedList estraiFrame(PCB corrente){
+    private LinkedList<FrameMemoria> estraiFrame(PCB corrente){
         
         /* Ottiene l'identificativo dell'istante di esecuzione corrente */
         int istanteCorrente = corrente.getIstantiEseguiti();
