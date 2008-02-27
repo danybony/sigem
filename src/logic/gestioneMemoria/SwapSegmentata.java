@@ -17,22 +17,36 @@ class SwapSegmentata extends MemoriaSegmentata{
     @Override
     /**Metodo che aggiunge un segmento nello Swap.
      */
-    public void aggiungi(FrameMemoria seg){
-        
+    public void aggiungi(FrameMemoria seg, FrameMemoria spazio){
+        memoria.add(seg);
+        spazioResiduo-=seg.getDimensione();
     }
     
     @Override
     /**Metodo che toglie un segmento dallo Swap.
      */
     public FrameMemoria rimuovi(FrameMemoria seg){
-        
+        memoria.remove(seg);
+        spazioResiduo-=seg.getDimensione();
+        return seg;
     }
     
     @Override
     /**Metodo che elimina dallo Swap i segmenti relativi ad un processo che ha
      * finito la sua esecuzione.
      */
-    public void liberaMemoria(String idProcesso){
-        
+    public void liberaMemoria(int idProcesso){
+        for(int i=0;i<memoria.size();i++){
+            if (memoria.get(i).getIdProcesso()==idProcesso){
+                rimuovi(memoria.get(i));
+                i-=1;
+            }
+        }
+    }
+    
+    @Override
+    /**Metodo cerca non usato in SwapSegmentata*/
+    public boolean cerca(FrameMemoria seg){
+        return true;
     }
 }
