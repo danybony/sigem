@@ -2,6 +2,7 @@
 package logic.simulazione;
 
 import java.util.LinkedList;
+import logic.Processore;
 import logic.parametri.ConfigurazioneIniziale;
 
 public class Simulazione{
@@ -11,7 +12,7 @@ public class Simulazione{
     private ConfigurazioneIniziale conf;
     
     public Simulazione(ConfigurazioneIniziale conf){
-        proc = Processore(conf);
+        proc = new Processore(conf);
         this.conf=conf;
     }
     
