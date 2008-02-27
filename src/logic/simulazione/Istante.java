@@ -2,6 +2,7 @@
 package logic.simulazione;
 
 import java.util.LinkedList;
+import logic.gestioneMemoria.OperazioneInMemoria;
 import logic.schedulazione.PCB;
 
 
