@@ -13,7 +13,7 @@ public class Player{
     private ListIterator<Istante> istanteCorrente;
     
     public Player(ConfigurazioneIniziale conf){
-        simulazioneEseguita = Simulazione(conf);
+        simulazioneEseguita = new Simulazione(conf);
         listaIstanti = null;
         this.conf = conf;
     }
@@ -39,16 +39,49 @@ public class Player{
     }
     
     public LinkedList<Istante> precedenteIstanteSignificativo(int tipoEventoSignificativo){
-        LinkedList<Istante> listaIstantiDaRitornare = LinkedList();
+        LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
+        Istante nuovoIstante = null;
         boolean trovato = false;
         while(istanteCorrente.hasPrevious() && !trovato){
-            
+            nuovoIstante = istanteCorrente.previous();
+            listaIstantiDaRitornare.add(nuovoIstante);
+            if(nuovoIstante==evento) trovato=true;
         }
+        if(trovato)
+            return listaIstantiDaRitornare;
+        else
+            return null;
     }
     
     public LinkedList<Istante> prossimoIstanteSignificativo(int tipoEventoSignificativo){
-    
+        LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
+        Istante nuovoIstante = null;
+        boolean trovato = false;
+        while(istanteCorrente.hasNext() && !trovato){
+            nuovoIstante = istanteCorrente.next();
+            listaIstantiDaRitornare.add(nuovoIstante);
+            if(nuovoIstante==evento) trovato=true;
+        }
+        if(trovato)
+            return listaIstantiDaRitornare;
+        else
+            return null;
     }
     
+    public Istante primoIstante(){
+        while(istanteCorrente.hasPrevious()){
+            istanteCorrente.previous();
+        }
+        return istanteCorrente.next();
+        
+    }
+    
+    public LinkedList<Istante> ultimoIstante(){
+        LinkedList<Istante> listaAllaFine = new LinkedList<Istante>();
+        while(istanteCorrente.hasNext()){
+            listaAllaFine.add(istanteCorrente.next());
+        }
+        return listaAllaFine;
+    }
 
 }
