@@ -1,7 +1,7 @@
 package logic.parametri;
 
-import java.util.ArrayList; 
-import logic.gestioneMemoria.FrameMemoria; 
+class EccezioneConfigurazioneNonValida extends Exception{}
+
 
 /**
  * Classe per la memorizzazione dei dati si configurazione del sistema.
@@ -16,9 +16,9 @@ public class ConfigurazioneIniziale {
     /**
      * Capacità del bus dati utilizzato per la comunicazione
      * tra hard-disk e RAM.Esso influenza i tempi per il caricamento/salvataggio
-     * di pagine/segmenti.
+     * di pagine/segmenti. Espressa in KB/sec.
      */
-    private static int bandaBusDati = 0;
+    private int bandaBusDati = 0;
     
     /**
      * Specifica la politica di gestione della memoria centrale.
@@ -38,7 +38,7 @@ public class ConfigurazioneIniziale {
      * Valori non previsti causeranno il sollevamento di un eccezione
      * 
      */
-    private static int politicaGestioneMemoria = 0;
+    private int politicaGestioneMemoria = 0;
     
     /**
      * Specifica la modalità di gestione della memoria.
@@ -52,7 +52,7 @@ public class ConfigurazioneIniziale {
      * Valori non previsti causeranno il sollevamento di un eccezione
      * 
      */
-    private static int modalitaGestioneMemoria;
+    private int modalitaGestioneMemoria = 0;
     
     /**
      * Specifica la politica si schedulazione che lo scheduler dovrà usare
@@ -67,135 +67,120 @@ public class ConfigurazioneIniziale {
      *  4   RR
      *  5   RRP
      *  6   P
-     *  7   L
      * 
      * Valori non previsti causeranno il sollevamento di un eccezione
      * 
      */
-    private static int politicaSchedulazioneProcessi;
+    private int politicaSchedulazioneProcessi = 0;
     
     /**
      * Specifica la dimensione della RAM espressa in KB.
      */
-    private static int dimensioneRAM;
+    private int dimensioneRAM = 0;
     
     /**
      * Specifica la dimensione dell'area di Swap espressa in KB.
      */
-    private static int dimensioneSwap;
+    private int dimensioneSwap = 0;
     
     /**
      * Specifica il tempo necessario  al processore per togliere un processo
      * in esecuzione e rimpiazzarlo con un altro.
      * Viene espresso in millisecondi.
      */
-    private static int tempoContextSwitch;
+    private int tempoContextSwitch = 0;
     
     /**
      * Tempo impiegato dal disco per adempiere ad una richiesta di scrittura o
      * lettura. Viene espressa in millesecondi.
      */
-    private static int tempoAccessoDisco;
-    
-    /**
-     * A cosa servono?
-     */
-    private static ArrayList<FrameMemoria> configurazioneRAM;
-    private static ArrayList<FrameMemoria> configurazioneSwap;
+    private int tempoAccessoDisco = 0;
     
     /**
      * Specifica la dimensione di una pagina espressa in KB.
      */
-    private static int dimensionePagina;
+    private int dimensionePagina = 0;
+    
+    /**
+     *
+     */
+    private Processo[] listaProcessi = null;
+    
+    /**
+     * Costruttore della classe.
+     */
+    public ConfigurazioneIniziale(int bandaBusDati, 
+                                  int politicaGestioneMemoria,
+                                  int modalitaGestioneMemoria,
+                                  int politicaSchedulazione,
+                                  int dimRAM,
+                                  int dimSwap,
+                                  int tempoContextSwitch,
+                                  int tempoAccessoDisco,
+                                  int dimPagina,
+                                  Processo[] listaProcessi) throws EccezioneConfigurazioneNonValida{
+        
+        if(bandaBusDati<=0){throw new EccezioneConfigurazioneNonValida();}
+        switch (modalitaGestioneMemoria){
+            case 1: // Paginazione
+                if(politicaGestioneMemoria<1 || politicaGestioneMemoria>7)
+                    throw new EccezioneConfigurazioneNonValida();
+                break;
+            case 2: // Segmentazione
+                if(politicaGestioneMemoria<1 || politicaGestioneMemoria>5)
+                    throw new EccezioneConfigurazioneNonValida();
+                break;
+            default: // Modalita gestione memoria errata
+                throw new EccezioneConfigurazioneNonValida();
+        }
+        if(politicaSchedulazione<1 || politicaSchedulazione>6)
+            throw new EccezioneConfigurazioneNonValida();
+        if(dimRAM<=0)throw new EccezioneConfigurazioneNonValida();
+        if(dimSwap<=0)throw new EccezioneConfigurazioneNonValida();
+        if(tempoContextSwitch<=0)throw new EccezioneConfigurazioneNonValida();
+        if(tempoAccessoDisco<=0)throw new EccezioneConfigurazioneNonValida();
+        if(dimPagina<=0)throw new EccezioneConfigurazioneNonValida();
+        if(listaProcessi==null)throw new EccezioneConfigurazioneNonValida();
+        
+        this.bandaBusDati=bandaBusDati;
+        this.politicaGestioneMemoria=politicaGestioneMemoria;
+        this.modalitaGestioneMemoria=modalitaGestioneMemoria;
+        this.politicaSchedulazioneProcessi=politicaSchedulazione;
+        this.dimensioneRAM=dimRAM;
+        this.dimensioneSwap=dimSwap;
+        this.tempoContextSwitch=tempoContextSwitch;
+        this.tempoAccessoDisco=tempoAccessoDisco;
+        this.dimensionePagina=dimPagina;
+        this.listaProcessi=listaProcessi;
+    }
 
     /**
      * Ritorna un intero che esprime la banda del bus-dati impostata.
      */
-    public static int getBandaBusDati () {
+    public int getBandaBusDati () {
         return bandaBusDati;
     }
     
     /**
-     * Cambia il valore della banda del bus-dati.
-     * 
-     * @param nuovaBanda = parametro intero che specifica il nuovo valore per 
-     * la banda del bus-dati.
-     */
-    public void setBandaBusDati (int nuovaBanda) {
-        this.bandaBusDati = nuovaBanda;
-    }
-    
-    /**
-     * 
-     *
-    public static ArrayList<FrameMemoria> getConfigurazioneRAM () {
-        return configurazioneRAM;
-    }
-
-    public void setConfigurazioneRAM (ArrayList<FrameMemoria> val) {
-        this.configurazioneRAM = val;
-    }
-
-    public static ArrayList<FrameMemoria> getConfigurazioneSwap () {
-        return configurazioneSwap;
-    }
-
-    public void setConfigurazioneSwap (ArrayList<FrameMemoria> val) {
-        this.configurazioneSwap = val;
-    }
-
-    /**
      * Ritorna la rimensione di una pagina espressa in KB.
      */
-    public static int getDimensionePagina () {
+    public int getDimensionePagina () {
         return dimensionePagina;
     }
-
-    /**
-     * Imposta la dimensione di una pagina espressa in KB.
-     * 
-     * @param nuovaDimensionePagina = nuova dimensione per una pagina
-     *
-    public void setDimensionePagina (int val) {
-        this.dimensionePagina = val;
-    }
-     * 
-     * metodo eliminato perchè non è possibile la modifica delle dimensioni di
-     * una pagina
-    */
     
     /**
      * Ritorna la dimensione della memoria centrale RAM espressa in KB.
      */
-    public static int getDimensioneRAM () {
+    public int getDimensioneRAM () {
         return dimensioneRAM;
     }
 
     /**
-     * Metodo da togliere perchè non è possibile la modifica della dimensione 
-     * della RAM
-     *
-    public void setDimensioneRAM (int val) {
-        this.dimensioneRAM = val;
-    }
-     * 
-     * 
-     */
-
-    /**
      * Ritorna la dimensione dell'area di Swap espressa in KB.
      */
-    public static int getDimensioneSwap () {
+    public int getDimensioneSwap () {
         return dimensioneSwap;
     }
-
-    /**
-     * da togliere
-    public void setDimensioneSwap (int val) {
-        this.dimensioneSwap = val;
-    }
-     * 
-     */
 
     /**
      * Restituisce la modalità di gestione di memoria.
@@ -205,15 +190,10 @@ public class ConfigurazioneIniziale {
      *  2   Segmentazione
      * 
      */
-    public static int getModalitaGestioneMemoria () {
+    public int getModalitaGestioneMemoria () {
         return modalitaGestioneMemoria;
     }
 
-    /* eliminare
-    public void setModalitaGestioneMemoria (int val) {
-        this.modalitaGestioneMemoria = val;
-    }
-*/
     /**
      * Ritorna un intero che specifica la politica di gestione della memoria
      * scelta.
@@ -230,17 +210,9 @@ public class ConfigurazioneIniziale {
      *  7  A        -
      * 
      */
-    public static int getPoliticaGestioneMemoria () {
+    public int getPoliticaGestioneMemoria () {
         return politicaGestioneMemoria;
     }
-
-    /**
-     * elimina
-     *
-    public void setPoliticaGestioneMemoria (int val) {
-        this.politicaGestioneMemoria = val;
-    }
-*/
     
     /**
      * Ritorna un intero che esprime la politica di schedulazione dei processi.
@@ -253,43 +225,33 @@ public class ConfigurazioneIniziale {
      *  4   RR
      *  5   RRP
      *  6   P
-     *  7   L
      * 
      */
-    public static int getPoliticaSchedulazioneProcessi () {
+    public int getPoliticaSchedulazioneProcessi () {
         return politicaSchedulazioneProcessi;
     }
 
     /**
-     * elimina
-     *
-    public void setPoliticaSchedulazioneProcessi (int val) {
-        this.politicaSchedulazioneProcessi = val;
-    }
-*/
-    /**
      * Ritorna un valore intero che esprime il tempo di acesso del disco, 
      * espresso in millisecondi.
      */
-    public static int getTempoAccessoDisco () {
+    public int getTempoAccessoDisco () {
         return tempoAccessoDisco;
     }
-/*elimina
-    public void setTempoAccessoDisco (int val) {
-        this.tempoAccessoDisco = val;
-    }
-*/
+    
     /**
      * Ritorna un intero che esprime il tempo di context-swich espresso in 
      * millisecondi.
      */
-    public static int getTempoContextSwitch () {
+    public int getTempoContextSwitch () {
         return tempoContextSwitch;
     }
-/*elimina
-    public void setTempoContextSwitch (int val) {
-        this.tempoContextSwitch = val;
+    
+    /**
+     *
+     */
+    public Processo[] getListaProcessi(){
+        return listaProcessi;
     }
-*/
 }
 
