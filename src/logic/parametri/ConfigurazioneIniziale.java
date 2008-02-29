@@ -1,6 +1,6 @@
 package logic.parametri;
 
-class EccezioneConfigurazioneNonValida extends Exception{}
+import java.util.LinkedList;
 
 
 /**
@@ -18,7 +18,7 @@ public class ConfigurazioneIniziale {
      * tra hard-disk e RAM.<br>Esso influenza i tempi per il caricamento/salvataggio
      * di pagine/segmenti.<br>Espressa in KB/sec.
      */
-    private final int bandaBusDati;
+    private final int BANDA_BUS_DATI;
     
     /**
      * Specifica la politica di gestione della memoria centrale. <br>
@@ -39,7 +39,7 @@ public class ConfigurazioneIniziale {
      * Valori non previsti causeranno il sollevamento di un eccezione
      * 
      */
-    private final int politicaGestioneMemoria;
+    private final int POLITICA_GESTIONE_MEMORIA;
     
     /**
      * Specifica la modalità di gestione della memoria.<br>
@@ -56,7 +56,7 @@ public class ConfigurazioneIniziale {
      * Valori non previsti causeranno il sollevamento di un eccezione
      * 
      */
-    private final int modalitaGestioneMemoria;
+    private final int MODALITA_GESTIONE_MEMORIA;
     
     /**
      * Specifica la politica si schedulazione che lo scheduler dovra usare
@@ -80,40 +80,40 @@ public class ConfigurazioneIniziale {
      * Valori non previsti causeranno il sollevamento di un eccezione
      * 
      */
-    private final int politicaSchedulazioneProcessi;
+    private final int POLITICA_SCHEDULAZIONE_PROCESSI;
     
     /**
      * Specifica la dimensione della RAM espressa in KB.
      */
-    private final int dimensioneRAM;
+    private final int DIMENSIONE_RAM;
     
     /**
      * Specifica la dimensione dell'area di Swap espressa in KB.
      */
-    private final int dimensioneSwap;
+    private final int DIMENSIONE_SWAP;
     
     /**
      * Specifica il tempo necessario  al processore per togliere un processo
      * in esecuzione e rimpiazzarlo con un altro.<br>
      * Viene espresso in millisecondi.
      */
-    private final int tempoContextSwitch;
+    private final int TEMPO_CONTEXT_SWITCH;
     
     /**
      * Tempo impiegato dal disco per adempiere ad una richiesta di scrittura o
      * lettura. Viene espressa in millesecondi.
      */
-    private final int tempoAccessoDisco;
+    private final int TEMPO_ACCESSO_DISCO;
     
     /**
      * Specifica la dimensione di una pagina espressa in KB.
      */
-    private final int dimensionePagina;
+    private final int DIMENSIONE_PAGINA;
     
     /**
      * Lista di processi da utilizzare nella simulazione.
      */
-    private final Processo[] listaProcessi;
+    private final LinkedList<Processo> LISTA_PROCESSI;
     
     /**
      * Costruttore della classe.<br>
@@ -164,7 +164,7 @@ public class ConfigurazioneIniziale {
                                   int tempoContextSwitch,
                                   int tempoAccessoDisco,
                                   int dimPagina,
-                                  Processo[] listaProcessi
+                                  LinkedList<Processo> listaProcessi
                                   ) 
                                   throws EccezioneConfigurazioneNonValida{
         
@@ -200,44 +200,44 @@ public class ConfigurazioneIniziale {
         
         // tutti i parametri sono conformi; posso procedere con la creazione
         // dell'oggetto
-        this.bandaBusDati=bandaBusDati;
-        this.politicaGestioneMemoria=politicaGestioneMemoria;
-        this.modalitaGestioneMemoria=modalitaGestioneMemoria;
-        this.politicaSchedulazioneProcessi=politicaSchedulazione;
-        this.dimensioneRAM=dimRAM;
-        this.dimensioneSwap=dimSwap;
-        this.tempoContextSwitch=tempoContextSwitch;
-        this.tempoAccessoDisco=tempoAccessoDisco;
-        this.dimensionePagina=dimPagina;
-        this.listaProcessi=listaProcessi;
+        this.BANDA_BUS_DATI=bandaBusDati;
+        this.POLITICA_GESTIONE_MEMORIA=politicaGestioneMemoria;
+        this.MODALITA_GESTIONE_MEMORIA=modalitaGestioneMemoria;
+        this.POLITICA_SCHEDULAZIONE_PROCESSI=politicaSchedulazione;
+        this.DIMENSIONE_RAM=dimRAM;
+        this.DIMENSIONE_SWAP=dimSwap;
+        this.TEMPO_CONTEXT_SWITCH=tempoContextSwitch;
+        this.TEMPO_ACCESSO_DISCO=tempoAccessoDisco;
+        this.DIMENSIONE_PAGINA=dimPagina;
+        this.LISTA_PROCESSI=listaProcessi;
     }
 
     /**
      * Ritorna un intero che esprime la banda del bus-dati impostata.
      */
     public int getBandaBusDati () {
-        return bandaBusDati;
+        return BANDA_BUS_DATI;
     }
     
     /**
      * Ritorna la rimensione di una pagina espressa in KB.
      */
     public int getDimensionePagina () {
-        return dimensionePagina;
+        return DIMENSIONE_PAGINA;
     }
     
     /**
      * Ritorna la dimensione della memoria centrale RAM espressa in KB.
      */
     public int getDimensioneRAM () {
-        return dimensioneRAM;
+        return DIMENSIONE_RAM;
     }
 
     /**
      * Ritorna la dimensione dell'area di Swap espressa in KB.
      */
     public int getDimensioneSwap () {
-        return dimensioneSwap;
+        return DIMENSIONE_SWAP;
     }
 
     /**
@@ -254,7 +254,7 @@ public class ConfigurazioneIniziale {
      * 
      */
     public int getModalitaGestioneMemoria () {
-        return modalitaGestioneMemoria;
+        return MODALITA_GESTIONE_MEMORIA;
     }
 
     /**
@@ -277,7 +277,7 @@ public class ConfigurazioneIniziale {
      * 
      */
     public int getPoliticaGestioneMemoria () {
-        return politicaGestioneMemoria;
+        return POLITICA_GESTIONE_MEMORIA;
     }
     
     /**
@@ -299,7 +299,7 @@ public class ConfigurazioneIniziale {
      * 
      */
     public int getPoliticaSchedulazioneProcessi () {
-        return politicaSchedulazioneProcessi;
+        return POLITICA_SCHEDULAZIONE_PROCESSI;
     }
 
     /**
@@ -307,7 +307,7 @@ public class ConfigurazioneIniziale {
      * espresso in millisecondi.
      */
     public int getTempoAccessoDisco () {
-        return tempoAccessoDisco;
+        return TEMPO_ACCESSO_DISCO;
     }
     
     /**
@@ -315,14 +315,14 @@ public class ConfigurazioneIniziale {
      * millisecondi.
      */
     public int getTempoContextSwitch () {
-        return tempoContextSwitch;
+        return TEMPO_CONTEXT_SWITCH;
     }
     
     /**
      * Ritorna la lista di processi
      */
-    public Processo[] getListaProcessi(){
-        return listaProcessi;
+    public LinkedList<Processo> getListaProcessi(){
+        return LISTA_PROCESSI;
     }
 }
 
