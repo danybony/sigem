@@ -68,13 +68,14 @@ public class Processore {
         
         PoliticaOrdinamentoProcessi politica = null;
         
-        switch (conf.getPoliticaSchedulazioneProcessi()){
+        switch (conf.getPoliticaSchedulazioneProcessi()){            
             case 1:politica = new FCFS();
             case 2:politica = new SJF();
             case 3:politica = new SRTN();
             case 4:politica = new RR();
             case 5:politica = new RRConPriorita();
-            case 6:politica = new Priorita();
+            case 6:politica = new RRConPrioritaConPrerilascio();
+            case 7:politica = new Priorita();
         }
         
         this.scheduler = new Scheduler(politica, conf.getListaProcessi()); 
