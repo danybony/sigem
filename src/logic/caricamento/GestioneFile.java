@@ -1,6 +1,5 @@
 package logic.caricamento;
-
-import logic.gestioneMemoria.String; 
+ 
 import logic.parametri.ConfigurazioneIniziale; 
 
 // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
@@ -33,8 +32,8 @@ public class GestioneFile {
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
     // #[regen=yes,id=DCE.6A23AAE2-0A68-D883-0011-712301DAB665]
     // </editor-fold> 
-    public voidint setPercorsoFileConfigurazione (String val) {
-        return null;
+    public void setPercorsoFileConfigurazione (String val) {
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
