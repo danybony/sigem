@@ -12,5 +12,5 @@ import logic.gestioneMemoria.FrameMemoria;
  * @author Davide
  */
 public abstract class GestoreMemoria {
-    public abstract void Esegui( LinkedList<FrameMemoria> ListaPagine, int UT );
+    public abstract LinkedList<Azione> Esegui( LinkedList<FrameMemoria> ListaPagine, int UT );
 }
