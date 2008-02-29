@@ -154,7 +154,8 @@ public class ConfigurazioneIniziale {
      *            la lista dei processi che saranno trattati nella simulazione.
      * 
      */
-    public ConfigurazioneIniziale(int bandaBusDati, 
+    public ConfigurazioneIniziale(
+                                  int bandaBusDati, 
                                   int politicaGestioneMemoria,
                                   int modalitaGestioneMemoria,
                                   int politicaSchedulazione,
@@ -163,7 +164,9 @@ public class ConfigurazioneIniziale {
                                   int tempoContextSwitch,
                                   int tempoAccessoDisco,
                                   int dimPagina,
-                                  Processo[] listaProcessi) throws EccezioneConfigurazioneNonValida{
+                                  Processo[] listaProcessi
+                                  ) 
+                                  throws EccezioneConfigurazioneNonValida{
         
         // il bus-dati deve essere > 0
         if(bandaBusDati<=0){throw new EccezioneConfigurazioneNonValida();}
