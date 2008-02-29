@@ -4,110 +4,155 @@ class EccezioneConfigurazioneNonValida extends Exception{}
 
 
 /**
- * Classe per la memorizzazione dei dati si configurazione del sistema.
+ * Classe per la memorizzazione dei dati si configurazione del sistema.<br>
  * Le classi di SiGeM dovranno raccogliere da tale classe i parametri 
- * di configurazione.
+ * di configurazione.<br>
  * Sono predisposti medodi per la modifica e l'interrogazione dei suoi campi
- * dati.
+ * dati.<br>
  */
 
 public class ConfigurazioneIniziale {
 
     /**
      * Capacità del bus dati utilizzato per la comunicazione
-     * tra hard-disk e RAM.Esso influenza i tempi per il caricamento/salvataggio
-     * di pagine/segmenti. Espressa in KB/sec.
+     * tra hard-disk e RAM.<br>Esso influenza i tempi per il caricamento/salvataggio
+     * di pagine/segmenti.<br>Espressa in KB/sec.
      */
-    private int bandaBusDati = 0;
+    private final int bandaBusDati;
     
     /**
-     * Specifica la politica di gestione della memoria centrale.
+     * Specifica la politica di gestione della memoria centrale. <br>
      * La politica scelta viene specificata da un intero secondo quanto segue:
-     * 
-     *    Pagine    Segmenti
-     * 
-     *  0                           nessuna polititica specificata
-     *  1  NRU      First-Fit
-     *  2  FIFO     Next-Fit
-     *  3  FC       Best-Fit
-     *  4  C        Worst-Fit
-     *  5  LRU      Quick-Fit
-     *  6  NFU      -
-     *  7  A        -
-     * 
+     * <br><br>
+     * <table border="1">
+     *  <tr align="center"><td><b>Parametro</b></td><td><b>Pagine</b></td><td><b>Segmenti</b></td></tr>
+     *  <tr align="center"><td>0</td><td colspan="2">nessuna polititica specificata</td></tr>
+     *  <tr align="center"><td>1</td><td>  NRU  </td><td>    First-Fit   </td></tr>
+     *  <tr align="center"><td>2</td><td>  FIFO </td><td>    Next-Fit    </td></tr>
+     *  <tr align="center"><td>3</td><td>  FC   </td><td>    Best-Fit    </td></tr>
+     *  <tr align="center"><td>4</td><td>  C    </td><td>    Worst-Fit   </td></tr>
+     *  <tr align="center"><td>5</td><td>  LRU  </td><td>    Quick-Fit   </td></tr>
+     *  <tr align="center"><td>6</td><td>  NFU  </td><td>    -           </td></tr>
+     *  <tr align="center"><td>7</td><td>  A    </td><td>    -           </td></tr>
+     * </table>
+     * <br>
      * Valori non previsti causeranno il sollevamento di un eccezione
      * 
      */
-    private int politicaGestioneMemoria = 0;
+    private final int politicaGestioneMemoria;
     
     /**
-     * Specifica la modalità di gestione della memoria.
+     * Specifica la modalità di gestione della memoria.<br>
      * Tale modalità viene specificata con un valore intero
-     * secondo questo schema:
+     * secondo questo schema:<br><br>
      * 
-     *  0                   modalità non specificata
-     *  1   Paginazione
-     *  2   Segmentazione
-     * 
+     * <table border="1">
+     *  <tr align="center"><td><b>Parametro</b></td><td><b>Modalita'</b></td></tr>
+     *  <tr align="center"><td>0</td><td>modalità non specificata</td></tr>
+     *  <tr align="center"><td>1</td><td>  Paginazione  </td></tr>
+     *  <tr align="center"><td>2</td><td>  Segmentazione </td></tr>
+     * </table>
+     * <br>
      * Valori non previsti causeranno il sollevamento di un eccezione
      * 
      */
-    private int modalitaGestioneMemoria = 0;
+    private final int modalitaGestioneMemoria;
     
     /**
-     * Specifica la politica si schedulazione che lo scheduler dovrà usare
-     * per scegliere il prossimo processo da mandare in esecuzione.
-     * Il parametro intero che specifica la politica avrà il seguente 
+     * Specifica la politica si schedulazione che lo scheduler dovra usare
+     * per scegliere il prossimo processo da mandare in esecuzione.<br>
+     * Il parametro intero che specifica la politica avra il seguente 
      * significato: 
-     * 
-     *  0               politica non specificata
-     *  1   FCFS
-     *  2   SJF
-     *  3   SRTN
-     *  4   RR
-     *  5   RRP
-     *  6   P
+     * <br><br>
+     * <table border="1">
+     *  <tr align="center"><td><b>Parametro</b></td><td><b>Politica di schedulazione</b></td></tr>
+     *  <tr align="center"><td>0</td><td colspan="2">nessuna polititica specificata</td></tr>
+     *  <tr align="center"><td>1</td><td> FCFS </td></tr>
+     *  <tr align="center"><td>2</td><td> SJF  </td></tr>
+     *  <tr align="center"><td>3</td><td> SRTN </td></tr>
+     *  <tr align="center"><td>4</td><td> RR   </td></tr>
+     *  <tr align="center"><td>5</td><td> RRP  </td></tr>
+     *  <tr align="center"><td>6</td><td> RRPP </td></tr>
+     *  <tr align="center"><td>7</td><td> P    </td></tr>
+     * </table>
+     * <br>
      * 
      * Valori non previsti causeranno il sollevamento di un eccezione
      * 
      */
-    private int politicaSchedulazioneProcessi = 0;
+    private final int politicaSchedulazioneProcessi;
     
     /**
      * Specifica la dimensione della RAM espressa in KB.
      */
-    private int dimensioneRAM = 0;
+    private final int dimensioneRAM;
     
     /**
      * Specifica la dimensione dell'area di Swap espressa in KB.
      */
-    private int dimensioneSwap = 0;
+    private final int dimensioneSwap;
     
     /**
      * Specifica il tempo necessario  al processore per togliere un processo
-     * in esecuzione e rimpiazzarlo con un altro.
+     * in esecuzione e rimpiazzarlo con un altro.<br>
      * Viene espresso in millisecondi.
      */
-    private int tempoContextSwitch = 0;
+    private final int tempoContextSwitch;
     
     /**
      * Tempo impiegato dal disco per adempiere ad una richiesta di scrittura o
      * lettura. Viene espressa in millesecondi.
      */
-    private int tempoAccessoDisco = 0;
+    private final int tempoAccessoDisco;
     
     /**
      * Specifica la dimensione di una pagina espressa in KB.
      */
-    private int dimensionePagina = 0;
+    private final int dimensionePagina;
     
     /**
-     *
+     * Lista di processi da utilizzare nella simulazione.
      */
-    private Processo[] listaProcessi = null;
+    private final Processo[] listaProcessi;
     
     /**
-     * Costruttore della classe.
+     * Costruttore della classe.<br>
+     * Oltre a costruire un oggetto della classe ConfigurazioneIniziale,
+     * controlla che tutti i campi dati della classe assumano valori adeguati
+     * e corretti. Il controllo viene essettuato sui sul valore dei parametri
+     * passati. <br>
+     * Nel caso anche solo uno dei parametri contenga un valore errato, verra'
+     * sollevata un eccezione EccezioneConfigurazioneNonValida. <br>
+     * Attenzione: una volta creato un oggetto di questa classe, i suoi campi
+     * dati non saranno piu' modificabili. <br>Nel caso la configurazioneIniziale
+     * creata non fosse quella desiderata, si dovra' quindi procedere con la
+     * creazione di una nuova istanza.
+     * 
+     * @param bandaBusDati
+     *            la banda del bus-dati espressa in KB
+     * @param politicaGestioneMemoria
+     *            la politica di gestione della memoria sottoforma di un intero
+     *            secondo la tabella del metodo getPoliticaGestioneMemoria().
+     * @param modalitaGestioneMemori
+     *            la modalita' di gestione della memoria sottoforma di un intero
+     *            secondo la tabella del metodo getModalitaGestioneMemoria().
+     * @param politicaSchedulazione
+     *            la politica di schedulazione dei processi sottoforma di un intero
+     *            secondo la tabella del metodo getPoliticaSchedulazioneProcessi().
+     * @param dimRAM
+     *            la dimensione della memoria centrale RAM, espressa in KB.
+     * @param dimSwap
+     *            la dimensione dell'area di Swap, espressa in KB.
+     * @param tempoContextSwitch
+     *            il tempo di context switch espresso in millisecondi
+     * @param tempoAccessoDisco
+     *            il tempo di accesso al disco espresso in millisecondi
+     * @param dimPagina
+     *            dimensione delle pagine in KB. Se si utilizza la segmentazione
+     *            questo parametro puo' essere posto a zero.
+     * @param listaProcessi
+     *            la lista dei processi che saranno trattati nella simulazione.
+     * 
      */
     public ConfigurazioneIniziale(int bandaBusDati, 
                                   int politicaGestioneMemoria,
@@ -120,28 +165,38 @@ public class ConfigurazioneIniziale {
                                   int dimPagina,
                                   Processo[] listaProcessi) throws EccezioneConfigurazioneNonValida{
         
+        // il bus-dati deve essere > 0
         if(bandaBusDati<=0){throw new EccezioneConfigurazioneNonValida();}
+        
+        // modalità di gestione della memoria
         switch (modalitaGestioneMemoria){
             case 1: // Paginazione
+                // controllo il valore della politica di rimpiazzo delle pagine
                 if(politicaGestioneMemoria<1 || politicaGestioneMemoria>7)
                     throw new EccezioneConfigurazioneNonValida();
+                // la dimensione di una pagina deve essere >0
+                if(dimPagina<=0)throw new EccezioneConfigurazioneNonValida();
                 break;
             case 2: // Segmentazione
+                // controllo il valore della politica di rimpiazzo dei segmenti
                 if(politicaGestioneMemoria<1 || politicaGestioneMemoria>5)
                     throw new EccezioneConfigurazioneNonValida();
                 break;
-            default: // Modalita gestione memoria errata
+            default: // Modalita' gestione memoria errata
                 throw new EccezioneConfigurazioneNonValida();
         }
-        if(politicaSchedulazione<1 || politicaSchedulazione>6)
+        // controllo il valore della politica di scheduling dei processi
+        if(politicaSchedulazione<1 || politicaSchedulazione>7)
             throw new EccezioneConfigurazioneNonValida();
+        
         if(dimRAM<=0)throw new EccezioneConfigurazioneNonValida();
         if(dimSwap<=0)throw new EccezioneConfigurazioneNonValida();
         if(tempoContextSwitch<=0)throw new EccezioneConfigurazioneNonValida();
         if(tempoAccessoDisco<=0)throw new EccezioneConfigurazioneNonValida();
-        if(dimPagina<=0)throw new EccezioneConfigurazioneNonValida();
         if(listaProcessi==null)throw new EccezioneConfigurazioneNonValida();
         
+        // tutti i parametri sono conformi; posso procedere con la creazione
+        // dell'oggetto
         this.bandaBusDati=bandaBusDati;
         this.politicaGestioneMemoria=politicaGestioneMemoria;
         this.modalitaGestioneMemoria=modalitaGestioneMemoria;
@@ -183,11 +238,16 @@ public class ConfigurazioneIniziale {
     }
 
     /**
-     * Restituisce la modalità di gestione di memoria.
+     * Restituisce la modalita' di gestione di memoria.<br>
      * Il tipo di ritorno è un intero con il seguente significato:
-     *  
-     *  1   Paginazione
-     *  2   Segmentazione
+     * <br><br>
+     * <table border="1">
+     *  <tr align="center"><td><b>Parametro</b></td><td><b>Modalita'</b></td></tr>
+     *  <tr align="center"><td>0</td><td>modalità non specificata</td></tr>
+     *  <tr align="center"><td>1</td><td>  Paginazione  </td></tr>
+     *  <tr align="center"><td>2</td><td>  Segmentazione </td></tr>
+     * </table>
+     * <br>
      * 
      */
     public int getModalitaGestioneMemoria () {
@@ -196,18 +256,21 @@ public class ConfigurazioneIniziale {
 
     /**
      * Ritorna un intero che specifica la politica di gestione della memoria
-     * scelta.
-     * L'intero ritornato avrà il seguente significato:
-     * 
-     *    Pagine    Segmenti
-     * 
-     *  1  NRU      First-Fit
-     *  2  FIFO     Next-Fit
-     *  3  FC       Best-Fit
-     *  4  C        Worst-Fit
-     *  5  LRU      Quick-Fit
-     *  6  NFU      -
-     *  7  A        -
+     * scelta.<br>
+     * L'intero ritornato avra' il seguente significato:
+     * <br><br>
+     * <table border="1">
+     *  <tr align="center"><td><b>Parametro</b></td><td><b>Pagine</b></td><td><b>Segmenti</b></td></tr>
+     *  <tr align="center"><td>0</td><td colspan="2">nessuna polititica specificata</td></tr>
+     *  <tr align="center"><td>1</td><td>  NRU  </td><td>    First-Fit   </td></tr>
+     *  <tr align="center"><td>2</td><td>  FIFO </td><td>    Next-Fit    </td></tr>
+     *  <tr align="center"><td>3</td><td>  FC   </td><td>    Best-Fit    </td></tr>
+     *  <tr align="center"><td>4</td><td>  C    </td><td>    Worst-Fit   </td></tr>
+     *  <tr align="center"><td>5</td><td>  LRU  </td><td>    Quick-Fit   </td></tr>
+     *  <tr align="center"><td>6</td><td>  NFU  </td><td>    -           </td></tr>
+     *  <tr align="center"><td>7</td><td>  A    </td><td>    -           </td></tr>
+     * </table>
+     * <br>
      * 
      */
     public int getPoliticaGestioneMemoria () {
@@ -215,16 +278,21 @@ public class ConfigurazioneIniziale {
     }
     
     /**
-     * Ritorna un intero che esprime la politica di schedulazione dei processi.
-     * Il significato del valore di ritorno è il seguente:
-     * 
-     *  0               politica non specificata
-     *  1   FCFS
-     *  2   SJF
-     *  3   SRTN
-     *  4   RR
-     *  5   RRP
-     *  6   P
+     * Ritorna un intero che esprime la politica di schedulazione dei processi.<br>
+     * Il significato del valore di ritorno e' il seguente:
+     * <br><br>
+     * <table border="1">
+     *  <tr align="center"><td><b>Parametro</b></td><td><b>Politica di schedulazione</b></td></tr>
+     *  <tr align="center"><td>0</td><td colspan="2">nessuna polititica specificata</td></tr>
+     *  <tr align="center"><td>1</td><td> FCFS </td></tr>
+     *  <tr align="center"><td>2</td><td> SJF  </td></tr>
+     *  <tr align="center"><td>3</td><td> SRTN </td></tr>
+     *  <tr align="center"><td>4</td><td> RR   </td></tr>
+     *  <tr align="center"><td>5</td><td> RRP  </td></tr>
+     *  <tr align="center"><td>6</td><td> RRPP </td></tr>
+     *  <tr align="center"><td>7</td><td> P    </td></tr>
+     * </table>
+     * <br>
      * 
      */
     public int getPoliticaSchedulazioneProcessi () {
@@ -248,7 +316,7 @@ public class ConfigurazioneIniziale {
     }
     
     /**
-     *
+     * Ritorna la lista di processi
      */
     public Processo[] getListaProcessi(){
         return listaProcessi;
