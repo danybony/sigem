@@ -31,6 +31,8 @@ public class Player{
      */
     private LinkedList<Istante> listaIstanti;
     
+    private int indiceElementoCorrente = 0;
+    
     /**
      * Iteratore che punta all'elemento ultimo corrente restituito dal player.
      */
@@ -63,7 +65,9 @@ public class Player{
      */
     public boolean caricaSimulazione(){
         listaIstanti = simulazioneEseguita.crea();
-        istanteCorrente=listaIstanti..listIterator();
+        //Metto l'iteratore prima del primo elemento
+        istanteCorrente=listaIstanti.listIterator();
+        indiceElementoCorrente = 0;
         return true;
     }
     
@@ -74,8 +78,15 @@ public class Player{
      * o siamo all'inizio della simulazione stessa (siamo cioe' all'istante zero).
      */
     public Istante istantePrecedente(){
-        if(istanteCorrente.hasPrevious())
+        if(istanteCorrente.hasPrevious()){
+            if(istanteCorrente.previousIndex()==indiceElementoCorrente){
+                istanteCorrente.previous();
+            }
+        }
+        if(istanteCorrente.hasPrevious()){
+            indiceElementoCorrente--;
             return istanteCorrente.previous();
+        }
         else
             return null;
     }
@@ -87,8 +98,15 @@ public class Player{
      * o siamo alla fine della simulazione stessa.
      */
     public Istante istanteSuccessivo(){
-        if(istanteCorrente.hasNext())
+        if(istanteCorrente.hasNext()){
+            if(istanteCorrente.nextIndex()==indiceElementoCorrente){
+                istanteCorrente.next();
+            }
+        }
+        if(istanteCorrente.hasNext()){
+            indiceElementoCorrente++;
             return istanteCorrente.next();
+        }
         else
             return null;
     }
