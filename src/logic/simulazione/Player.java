@@ -1,6 +1,7 @@
 
 package logic.simulazione;
 
+
 import java.util.LinkedList;
 import java.util.ListIterator;
 import logic.parametri.ConfigurazioneIniziale;
@@ -15,7 +16,7 @@ import logic.parametri.ConfigurazioneIniziale;
  * Sara' possibile avanzare o retrocedere rapidamente ad istanti della simulazione
  * in cui si sono verificati fault in memoria, context-switch, riempimenti della
  * memoria centrale RAM, riempimenti dell'area di swap, terminazione  di processi
- * e arrivo di processi.
+ * e arrivo di nuovi processi.
  */
 public class Player{
     
@@ -31,10 +32,13 @@ public class Player{
      */
     private LinkedList<Istante> listaIstanti;
     
+    /**
+     * Utilizzato per ottimizzare lo scorrimento della lista degli istanti.
+     */
     private int indiceElementoCorrente = 0;
     
     /**
-     * Iteratore che punta all'elemento ultimo corrente restituito dal player.
+     * Iteratore che punta all'elemento corrente restituito dal player.
      */
     private ListIterator<Istante> istanteCorrente;
     
@@ -78,6 +82,12 @@ public class Player{
      * o siamo all'inizio della simulazione stessa (siamo cioe' all'istante zero).
      */
     public Istante istantePrecedente(){
+        /*
+         * Dato che l'iteratore punta in mezzo agli elementi della lista,
+         * puo' capitare, in certi casi, che la funzione ritorni l'elemento
+         * attuale, al posto del precedente. Per questo motivo sono stati
+         * aggiunti dei controlli.
+         */
         if(istanteCorrente.hasPrevious()){
             if(istanteCorrente.previousIndex()==indiceElementoCorrente){
                 istanteCorrente.previous();
@@ -98,6 +108,12 @@ public class Player{
      * o siamo alla fine della simulazione stessa.
      */
     public Istante istanteSuccessivo(){
+        /*
+         * Dato che l'iteratore punta in mezzo agli elementi della lista,
+         * puo' capitare, in certi casi, che la funzione ritorni l'elemento
+         * attuale, al posto del successivo. Per questo motivo sono stati
+         * aggiunti dei controlli.
+         */
         if(istanteCorrente.hasNext()){
             if(istanteCorrente.nextIndex()==indiceElementoCorrente){
                 istanteCorrente.next();
@@ -114,8 +130,21 @@ public class Player{
     /**
      * Ritorna il primo istante significativo che precede quello attuale.<br>
      * Il tipo dell'evento significativo da ricercare viene espresso dal
-     * parametro.
-     * Dato che un evento significativo, puo' distare piu' passi dallo stato
+     * parametro secondo la seguente tabella:
+     * 
+     * <br><br>
+     * <table border="1">
+     *  <tr align="center"><td><b>Parametro</b></td><td><b>Descrizione</b></td></tr>
+     *  <tr align="center"><td>FAULT</td><td colspan="2">Fault in RAM</td></tr>
+     *  <tr align="center"><td>SWITCH</td><td>Context-switch</td></tr>
+     *  <tr align="center"><td>FULL_RAM</td><td>Memoria centrale esaurita</td></tr>
+     *  <tr align="center"><td>FULL_SWAP</td><td>Area di swap piena</td></tr>
+     *  <tr align="center"><td>END_PROC</td><td>Processo terminato</td></tr>
+     *  <tr align="center"><td>NEW_PROC</td><td>Arrivo di uno o più processi nuovi</td></tr>
+     * </table>
+     * <br>
+     * 
+     * Dato che un evento significativo, puo' essere lontano piu' passi dallo stato
      * attuale, il tipo di ritorno e' una lista di Istante ordinati in modo che 
      * il primo istante della lista e' il piu' vicino allo stato attuale, e 
      * l'ultimo elemento e' l'istante significativo trovato.<br>
@@ -127,37 +156,42 @@ public class Player{
      * 
      * @return  lista di istanti che portano all'evento significativo
      */
-    public LinkedList<Istante> precedenteIstanteSignificativo(Evento e, int arg0){
+    public LinkedList<Istante> precedenteIstanteSignificativo
+            (Evento e) throws EccezioneEventoNonDefinito
+    {
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
-        Istante nuovoIstante = null;
+        Istante nuovo = istantePrecedente();
         boolean trovato = false;
-        while(istanteCorrente.hasPrevious() && !trovato){
-            nuovoIstante = istanteCorrente.previous();
-            listaIstantiDaRitornare.add(nuovoIstante);
+        while(nuovo!=null && !trovato){
+            listaIstantiDaRitornare.add(nuovo);
             switch(e){
                 case FAULT:
-                    if(nuovoIstante.getFault()!=0)
+                    if(nuovo.getFault()!=0)
                         trovato=true;
                     break;
                 case SWITCH:
                     
                     break;
                 case FULL_RAM:
-                    
+                    if(nuovo.getFull_RAM())
+                        trovato=true;
                     break;
                 case FULL_SWAP:
-                    
+                    if(nuovo.getFull_Swap())
+                        trovato=true;
                     break;
                 case END_PROC:
-                    
+                    if(nuovo.getProcessoPrecedenteTerminato()!=null)
+                        trovato=true;
                     break;
-                /*case NEW_PROC:
-                    
-                    break;*/
+                case NEW_PROC:
+                    if(nuovo.getNuovoProcesso())
+                        trovato=true;
+                    break;
                 default:
-                
-                    break;
+                    throw new EccezioneEventoNonDefinito();
             }
+            nuovo = istantePrecedente();
                     
         }
         if(trovato)
@@ -169,7 +203,21 @@ public class Player{
     /**
      * Ritorna il primo istante significativo che segue quello attuale.<br>
      * Il tipo dell'evento significativo da ricercare viene espresso dal
-     * parametro.
+     * parametro secondo la seguente tabella:
+     * 
+     * 
+     * <br><br>
+     * <table border="1">
+     *  <tr align="center"><td><b>Parametro</b></td><td><b>Descrizione</b></td></tr>
+     *  <tr align="center"><td>FAULT</td><td colspan="2">Fault in RAM</td></tr>
+     *  <tr align="center"><td>SWITCH</td><td>Context-switch</td></tr>
+     *  <tr align="center"><td>FULL_RAM</td><td>Memoria centrale esaurita</td></tr>
+     *  <tr align="center"><td>FULL_SWAP</td><td>Area di swap piena</td></tr>
+     *  <tr align="center"><td>END_PROC</td><td>Processo terminato</td></tr>
+     *  <tr align="center"><td>NEW_PROC</td><td>Arrivo di uno o più processi nuovi</td></tr>
+     * </table>
+     * <br>
+     * 
      * Dato che un evento significativo, puo' distare piu' passi dallo stato
      * attuale, il tipo di ritorno e' una lista di Istante ordinati in modo che 
      * il primo istante della lista e' il piu' vicino allo stato attuale, e 
@@ -182,14 +230,43 @@ public class Player{
      * 
      * @return  lista di istanti che portano all'evento significativo
      */
-    public LinkedList<Istante> prossimoIstanteSignificativo(int tipoEventoSignificativo){
+    public LinkedList<Istante> prossimoIstanteSignificativo
+            (Evento e) throws EccezioneEventoNonDefinito
+    {
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
-        Istante nuovoIstante = null;
+        Istante nuovo = istanteSuccessivo();
         boolean trovato = false;
-        while(istanteCorrente.hasNext() && !trovato){
-            nuovoIstante = istanteCorrente.next();
-            listaIstantiDaRitornare.add(nuovoIstante);
-            if(nuovoIstante==evento) trovato=true;
+        while(nuovo!=null && !trovato){
+            listaIstantiDaRitornare.add(nuovo);
+            switch(e){
+                case FAULT:
+                    if(nuovo.getFault()!=0)
+                        trovato=true;
+                    break;
+                case SWITCH:
+                    
+                    break;
+                case FULL_RAM:
+                    if(nuovo.getFull_RAM())
+                        trovato=true;
+                    break;
+                case FULL_SWAP:
+                    if(nuovo.getFull_Swap())
+                        trovato=true;
+                    break;
+                case END_PROC:
+                    if(nuovo.getProcessoPrecedenteTerminato()!=null)
+                        trovato=true;
+                    break;
+                case NEW_PROC:
+                    if(nuovo.getNuovoProcesso())
+                        trovato=true;
+                    break;
+                default:
+                    throw new EccezioneEventoNonDefinito();
+            }
+            nuovo = istanteSuccessivo();
+                    
         }
         if(trovato)
             return listaIstantiDaRitornare;
@@ -219,8 +296,10 @@ public class Player{
      */
     public LinkedList<Istante> ultimoIstante(){
         LinkedList<Istante> listaAllaFine = new LinkedList<Istante>();
-        while(istanteCorrente.hasNext()){
-            listaAllaFine.add(istanteCorrente.next());
+        Istante nuovo = istanteSuccessivo(); 
+        while(nuovo!=null){
+            listaAllaFine.add(nuovo);
+            nuovo = istanteSuccessivo(); 
         }
         return listaAllaFine;
     }
