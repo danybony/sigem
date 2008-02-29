@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import logic.gestioneMemoria.FrameMemoria;
 import logic.gestioneMemoria.OperazioneInMemoria;
-import logic.parametri.Accesso;
 import logic.parametri.ConfigurazioneIniziale;
-import logic.schedulazione.PCB;
-import logic.schedulazione.Scheduler;
+import logic.parametri.Processo.Accesso;
+import logic.schedulazione.*;
 
 
 /*
@@ -15,10 +14,11 @@ import logic.schedulazione.Scheduler;
  * Nome file: Processore.java
  * Package: logic
  * Autore: Daniele Bonaldo
- * Data: 27/02/2008
- * Versione: 1.2
+ * Data: 29/02/2008
+ * Versione: 1.3
  * Licenza: open-source
- * Registro delle modifiche: *  
+ * Registro delle modifiche: * 
+ *  - v.1.3 (29/02/2008): Aggiornamento del costruttore per la nuova ConfigurazioneIniziale. 
  *  - v.1.2 (27/02/2008): Modifica del metodo calcolaFault.
  *  - v.1.1 (26/02/2008): Aggiunta la descrizione dei parametri nella javadoc.
  *  - v.1.0 (26/02/2008): Creazione e scrittura documentazione.
@@ -29,7 +29,7 @@ import logic.simulazione.Istante;
  * 
  * 
  * @author Daniele Bonaldo
- * @version 1.2 27/02/2008
+ * @version 1.3 29/02/2008
  */
 
 public class Processore {
@@ -37,30 +37,87 @@ public class Processore {
     /**
      * Questo campo dati specifica lo scheduler da utilizzare per l'ordinamento 
      * dei processi.
+     * 
      */
     private Scheduler scheduler = null;    
+    
+    /**
+     * Questo campo dati specifica il gestore della memoria incaricato di verificare
+     * la presenza in RAM delle pagine o dei processi necessari al processo in 
+     * esecuzione e di operare sulla memoria.
+     * 
+     */
+    private GestoreMemoria gestoreMemoria = null;
             
     /**
-     * Costruttore della classe Processore
+     * Riferimento dell'ultimo PCB mandato in esecuzione. Servirà nel metodo
+     * creaIstante e, nel caso corrisponda con il primo elemento della lista dei
+     * processi terminato, deve essere essere inserito nell'istante corrente come 
+     * processo appena terminato.
+     */
+    private PCB ultimoEseguito = null;
+    
+    /**
+     * Unico costruttore della classe Processore.
+     * Imposta lo scheduler e il gestore della memoria necesasri per la simulazione.
      * 
      * @param conf 
      *      Indica la configurazione iniziale da cui inizializzare lo Scheduler
      */
     public Processore(ConfigurazioneIniziale conf){
-        this.scheduler = new Scheduler(conf.getPoliticaSchedulazioneProcessi(), conf.getProcessiInArrivo());    
+        
+        PoliticaOrdinamentoProcessi politica = null;
+        
+        switch (conf.getPoliticaSchedulazioneProcessi()){
+            case 1:politica = new FCFS();
+            case 2:politica = new SJF();
+            case 3:politica = new SRTN();
+            case 4:politica = new RR();
+            case 5:politica = new RRConPriorita();
+            case 6:politica = new Priorita();
+        }
+        
+        this.scheduler = new Scheduler(politica, conf.getListaProcessi()); 
+        
+        if(conf.getModalitaGestioneMemoria() == 1){
+            
+            this.gestoreMemoria = new GestioneMemoriaPaginata();
+            
+        }
+        else {
+            
+            this.gestoreMemoria = new GestioneMemoriaSegmentata();
+            
+        }      
     }
     
     /**
+     * Metodo principale della classe Processore, incaricato di creare tutta la 
+     * simulazione, rappresentata da una collezione di istanti.
+     * La terminazione della simulazione è segnalata dallo scheduler, che è a 
+     * conoscenza dello stato dei processi in attesa o in arrivo, oltre che di
+     * quello in esecuzione.<BR>
+     * Dopo aver attivato il processo in esecuzione nell'istante di tempo corrente,
+     * viene chiesto allo scheduler un riferimento al suo PCB, in modo da poter
+     * estrarre una lista di FrameMemoria necessari al processo in esecuzione.
+     * Questa lista viene passata al gestore della memoria che ha il compito di 
+     * caricare i frame in RAM, ritornando la lista di operazioni eseguite.<BR>
+     * Da questa lista di operazioni verrà poi ricavato il numero di fault di 
+     * pagina e verrà quindi creata l'istanza di classe Istante corrispondente
+     * al momento attuale della simulazione.
+     * 
      * 
      * @return Ritorna la simulazione sotto forma di LinkedList di Istante
      */
     public LinkedList<Istante> creaSimulazione(){
         
-        LinkedList<Istante> simulazione = new LinkedList<Istante>();
-        
-        scheduler.esegui();
+        LinkedList<Istante> simulazione = new LinkedList<Istante>();        
         
         while(!scheduler.fineSimulazione()){
+            
+            boolean stop = false;
+            
+            stop = scheduler.eseguiAttivazione();
             
             /* Ottiene dallo scheduler il PCB del processo correntemente in 
              esecuzione */
@@ -77,7 +134,7 @@ public class Processore {
                  FrameMemoria necessari al processo in esecuzione e riceve la 
                  lista delle istruzioni effettuate dal gestore della memoria per
                  portare in RAM quei FrameMemoria */
-                LinkedList<OperazioneInMemoria> istruzioni;// = gestoreMemoria.esegui(frameNecessari);
+                LinkedList<OperazioneInMemoria> istruzioni = gestoreMemoria.esegui(frameNecessari);
                 
                 simulazione.add(creaIstante(corrente,istruzioni));
                 //da aggiungere il PCB dell'ultimo terminato
@@ -87,9 +144,16 @@ public class Processore {
                 simulazione.add(creaIstante(corrente,null));
             }
             
-            /* Esegue nuovamente il metodo principale dello scheduler 
-             incrementandone il contatore interno */
-            scheduler.esegui();
+            /* Se c'è un processo in esecuzione esegue nuovamente il metodo 
+             principale dello scheduler incrementandone il contatore interno */
+            if (!stop){
+                
+                scheduler.eseguiIncremento();
+                
+            }
+            
+            ultimoEseguito = corrente;
+            
         }
         
         /* La simulazione è terminata */
@@ -122,6 +186,11 @@ public class Processore {
     }
     
     /**
+     * Metodo con il compito di creare una istanza della classe Istante riguardante
+     * l'istante corrente della simulazione.
+     * Controlla se l'ultimo PCB eseguito è lo stesso in testa alla testa dei terminati.
+     * In caso affermativo, ultimoEseguito è appena terminato, e quindi verrà salvato 
+     * nell'istante corrente.
      * 
      * @param istruzioni
      *      La lista di istruzioni effettuate dal gestore della memoria in questo
@@ -129,23 +198,34 @@ public class Processore {
      *      istruzioni.
      * 
      * @return Ritorna l'istante corrente.
-     */
-    da pensare come fare a passare il PCB terminato
+     */   
     private Istante creaIstante(PCB corrente, LinkedList<OperazioneInMemoria> istruzioni){
         
         int fault = calcolaFault(istruzioni);
         
-        Istante istante = new Istante(corrente, corrente, fault, istruzioni);
+        Istante istante = null;
+        
+        if(scheduler.getProcessiTerminati().size() > 0 && 
+                (PCB)scheduler.getProcessiTerminati().get(0) == ultimoEseguito){
+            
+            istante = new Istante(corrente, ultimoEseguito, fault, istruzioni);
+            
+        }
+        else{
+            
+            istante = new Istante(corrente, null, fault, istruzioni);
+            
+        }
         
         return istante;
     }
     
     /**
      * Metodo che ha il compito di estrarre i FrameMemoria necessari al processo 
-     * correntemente in esecuzione nell'istante corrente della simulazione.
+     * correntemente in esecuzione nell'istante corrente della simulazione.<BR>
      * Questa azione viene resa semplice dall'avere inserito le richieste di 
      * accesso ad un FrameMemoria da parte di un processo in ordine di istante 
-     * della richiesta stessa.
+     * della richiesta stessa.<BR>
      * Viene ritornata una LinkedList contenente i FrameMemoria.
      * 
      * 
@@ -165,16 +245,16 @@ public class Processore {
         
         /* Ottiene la lista totale delle richieste di accesso a memoria del
          processo a cui appartiene il PCB corrente */
-        ArrayList frameTotali = corrente.getRifProcesso().getAccessi();
+        ArrayList<Accesso> frameTotali = corrente.getRifProcesso().getAccessi();
         
         /* Scorre le richieste finchè non passa ad un istante successivo a quello 
          corrente o raggiunge la fine della lista.
          Da notare che la lista è ordinata in ordine crescente di richiesta */
         for(int i=0; i <= istanteCorrente && i < frameTotali.size(); i++)
             
-            if(((Accesso) frameTotali.get(i)).getIstanteRichiesta() == istanteCorrente)
+            if((frameTotali.get(i)).getIstanteRichiesta() == istanteCorrente)
                 
-                frameNecessari.add(((Accesso) frameTotali.get(i)).getRisorsa());
+                frameNecessari.add((frameTotali.get(i)).getRisorsa());
         
         return frameNecessari;
     }
