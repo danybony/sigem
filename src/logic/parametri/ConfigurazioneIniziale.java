@@ -1,5 +1,19 @@
 package logic.parametri;
 
+/*
+ * Azienda: Stylosoft
+ * Nome file: ConfigurazioneIniziale.java
+ * @version $Revision: 1.4 $
+ * Package: logic.parametri
+ * Autore: Luca Rubin
+ * Data: 29/02/2008
+ * Versione: 1.
+ * Licenza: open-source
+ * Registro delle modifiche:
+ *  - v.1.1 (26/02/2008): Aggiunta la documentazione JavaDoc.
+ *  - v.1.0 (26/02/2008): Impostazione base della classe
+ */
+
 import java.util.LinkedList;
 
 
