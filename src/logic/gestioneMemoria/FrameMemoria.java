@@ -62,6 +62,17 @@ public interface FrameMemoria {
      * Imposta il processo che detiene l'elemento che modella la memoria.
      */
     public boolean setIdProcesso(PCB idProcessoPassato);
+    
+    /**
+     * Ritorna un booleano che esprime se l'elemento che modella la memoria e'
+     * stato modificato.
+     */
+    public boolean getModifica();
+    
+    /**
+     * Imposta lo stato di modificato o meno su un elemento che modella la memoria.
+     */
+    public boolean setModifica(boolean nuovoStato);
 
 }
 

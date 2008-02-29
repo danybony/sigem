@@ -29,9 +29,14 @@ public class Pagina implements FrameMemoria{
     private boolean solaLettura = false;
     
     /**
-     * Indica se la pagina e' bloccata: non puo' essere tolta dalla RAM
+     * Indica se la pagina e' bloccata: non puo' essere tolta dalla RAM.
      */
     private boolean bloccata = false;
+    
+    /**
+     * Indica se una pagina e' stata modificata.
+     */
+    private boolean modificata = false;
     
     /**
      * Indirizzo della pagina
@@ -150,6 +155,24 @@ public class Pagina implements FrameMemoria{
      */
     public boolean setIdProcesso(PCB idProcessoPassato){
         idProcesso=idProcessoPassato;
+        return true;
+    }
+    
+    /**
+     * Ritorna un booleano che indica se una pagina e' stata modificata o no.
+     */
+    public boolean getModifica(){
+        return this.modificata;
+    }
+    
+    /**
+     * Imposta lo stato di modificato o meno su una pagina.
+     * 
+     * @param nuovoStato
+     *      true se una pagina e' stata modificata; false altrimenti.
+     */
+    public boolean setModifica(boolean nuovoStato){
+        this.modificata=nuovoStato;
         return true;
     }
 }

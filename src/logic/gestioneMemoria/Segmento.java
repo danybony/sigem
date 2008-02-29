@@ -30,6 +30,11 @@ public class Segmento implements FrameMemoria{
     private boolean solaLettura = false;
     
     /**
+     * Specifica se un segmento e' stato modificato o meno.
+     */
+    private boolean modificato = false;
+    
+    /**
      * Specifica la dimensione del segmento(e' variabile durante l'esecuzione).
      * <br> Viene espressa in KB.
      */
@@ -127,6 +132,24 @@ public class Segmento implements FrameMemoria{
      */
     public boolean setIdProcesso(PCB idProcessoPassato){
         idProcesso=idProcessoPassato;
+        return true;
+    }
+    
+    /**
+     * Ritorna un booleano che indica se un segmento e' stato modificato o no.
+     */
+    public boolean getModifica(){
+        return this.modificato;
+    }
+    
+    /**
+     * Imposta lo stato di modificato o meno su un segmento.
+     * 
+     * @param nuovoStato
+     *      true se un segmento e' stato modificato; false altrimenti.
+     */
+    public boolean setModifica(boolean nuovoStato){
+        this.modificato=nuovoStato;
         return true;
     }
 }
