@@ -7,7 +7,7 @@
  * Versione: 1.00
  * Licenza: open-source
  * Registro delle modifiche:
- * v.1.00 (03/02/2006): Scrittura della documentazione e implementazione dei metodi.
+ * v.1.00 (22/02/2008): Scrittura della documentazione e implementazione dei metodi.
  */
 
 package logic.parametri;
@@ -18,8 +18,8 @@ package logic.parametri;
  * caratterizzati dall'avere una certa priorità, la quale non si esclude possa
  * anche cambiare nel corso dell'evoluzione della simulazione.
  * 
- * @author 22/02/2008
- * @version 1.00
+ * @author Daniele Bonaldo
+ * @version 1.00 22/02/2008
  */
 public class ProcessoConPriorita extends Processo {
 	/** Necessario per il Serializable.*/

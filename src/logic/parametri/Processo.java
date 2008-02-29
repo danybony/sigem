@@ -4,15 +4,17 @@
  * Package: logic.parametri
  * Autore: Daniele Bonaldo
  * Data: 18/02/2008
- * Versione: 1.01
+ * Versione: 1.02
  * Licenza: open-source
  * Registro delle modifiche:
- * v.1.01 (06/02/2006): Correzzione del metodo equals
- * v.1.00 (03/02/2006): Scrittura della documentazione e implementazione dei metodi.
+ * v.1.02 (29/02/2008): Innestamento della classe Accesso, prima esterna.
+ * v.1.01 (21/02/2008): Correzzione del metodo equals
+ * v.1.00 (20/02/2008): Scrittura della documentazione e implementazione dei metodi.
  */
 
 package logic.parametri;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import logic.gestioneMemoria.FrameMemoria;
 /**
@@ -21,11 +23,73 @@ import logic.gestioneMemoria.FrameMemoria;
  * contiene in sè tutti i campi dati e metodi comuni ad ogni tipo di processo. 
  * 
  * @author Daniele Bonaldo
- * @version 1.04
+ * @version 1.03
  */
-public class Processo {
+public class Processo implements Serializable {
 	
+        /**
+         * Classe i cui oggetti rappresentano una richiesta d'accesso ad un FrameMemoria da
+         * parte di un processo. Essi sono costituiti dal FrameMemoria a cui il processo
+         * vuole accedere, dall'istante in cui la richiesta deve essere effettuata e
+         * dalla durata per cui il processo deve poter accedere al FrameMemoria richiesto.
+         * 
+         * @author Daniele Bonaldo
+         * @version 1.02
+         */
+        public class Accesso implements Serializable {	
 
+                /**
+                 * Campo dati che contiene l'istante d'esecuzione in cui un processo deve
+                 * effettuare la richiesta d'accesso ad un FrameMemoria.
+                 */
+                private int istanteRichiesta;
+
+                /**
+                 * Metodo che ritorna l'istante d'esecuzione del processo in cui avviene la
+                 * richiesta di accesso ad un FrameMemoria.
+                 * 
+                 * @return L'istante d'esecuzione in cui si verifica una richiesta d'accesso
+                 *         ad un FrameMemoria da parte di un processo.
+                 */
+                public int getIstanteRichiesta() {
+                        return istanteRichiesta;
+                }
+
+
+                /**
+                 * Campo dati contenente il FrameMemoria a cui la richiesta d'accesso si
+                 * riferisce.
+                 */
+                private FrameMemoria frame;
+
+                /**
+                 * Metodo che ritorna il FrameMemoria a cui la richiesta d'accesso di riferisce.
+                 * 
+                 * @return Ll FrameMemoria a cui il processo vuole accedere.
+                 */
+                public FrameMemoria getRisorsa() {
+                        return frame;
+                }
+
+                /**
+                 * Costruttore che si occupa di creare un oggetto rappresentante tutte le
+                 * informazioni che riguardano una richiesta d'accesso ad un FrameMemoria 
+                 * da parte di un processo che andrà a contenerlo.
+                 * 
+                 * @param frame
+                 *            Il FrameMemoria a cui il processo richiede di poter accedere
+                 * @param istanteRichiesta
+                 *            L'istante di tempo in cui la richiesta d'accesso deve essere
+                 *            effettuata.	 
+                 */
+                public Accesso(FrameMemoria frame, int istanteRichiesta) {
+                        this.frame = frame;
+                        this.istanteRichiesta = istanteRichiesta;
+                }
+
+
+        } /* fine classe interna Accesso */
+        
 	/** Campo dati che identifica univocamente ogni istanza della classe 
 	 * Da inizializzare con un'apposita chiamata ad un metodo della classe Id.*/
 	private int id;
@@ -46,7 +110,7 @@ public class Processo {
 	 * ordinata per istante di esecuzione crescente e alla creazione viene posta
 	 * inizialmete uguale a una lista vuota.
 	 */
-	private ArrayList accessi = new ArrayList();
+	private ArrayList<Accesso> accessi = new ArrayList();
 
 	/**
 	 * Metodo che ritorna la lista degli accessi ordinata per istante di
@@ -80,7 +144,7 @@ public class Processo {
 			 * Controllo di mantenere l'ArrayList ordianto per istante di
 			 * richiesta crescente
 			 */
-			if (((Accesso) accessi.get(i)).getIstanteRichiesta() > accesso
+			if ((accessi.get(i)).getIstanteRichiesta() > accesso
 					.getIstanteRichiesta()) {
 				accessi.add(i, accesso);
 				return true;
