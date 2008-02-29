@@ -2,7 +2,7 @@ package logic.schedulazione;
 
 /*
  * Azienda: Stylosoft
- * Nome file: SRTF.java
+ * Nome file: SRTN.java
  * Package: logic.scheduler
  * Autore: Daniele Bonaldo
  * Data: 20/02/2008
@@ -10,14 +10,14 @@ package logic.schedulazione;
  * Licenza: open-source
  * Registro delle modifiche:
  *  - v.1.1 (20/02/2008):correzione nel metodo inserisci(PCB ).
- * 	- v.1.0 (18/02/2008): creazione e scrittura documentazione.
+ *  - v.1.0 (18/02/2008): creazione e scrittura documentazione.
  * */
 
 
 /**
  * Classe concreta che estende la classe SJF. 
- * La classe SRTF implementa la politica di ordinamento
- * Shortest Remaining Time First, ovvero una politica con prerilascio per
+ * La classe SRTN implementa la politica di ordinamento
+ * Shortest Remaining Time Next, ovvero una politica con prerilascio per
  * sistemi Batch. Eredita i metodi esegui(), estrai(), size() e getCodaPronti()
  * dalla classe superiore, mentre implementa il metodo minore(PCB a, PCB b)
  * Questa politica di ordnamento ha un comportamento simile alla politica SJF,
@@ -31,14 +31,14 @@ package logic.schedulazione;
  * @version 1.1 20/02/2008
  */
 
-public class SRTF extends SJF {
+public class SRTN extends SJF {
 
 	/**
 	 * Costruttore, richiama i costruttori della classe superiore (SJF), e crea
-	 * la struttura dati per implementare la politica di ordinamento SRTF. La
+	 * la struttura dati per implementare la politica di ordinamento SRTN. La
 	 * struttura sarà inizialmente vuota.
 	 */
-	public SRTF() {
+	public SRTN() {
 		super();
 	}
 

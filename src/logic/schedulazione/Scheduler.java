@@ -1,44 +1,18 @@
 package logic.schedulazione;
 
 /*
- * Azienda: BlueThoth
+ * Azienda: Stylosoft
  * Nome file: Scheduler.java
  * Package: logic.scheduler
- * Autore: Piero Dalle Pezze
- * Data: 29/01/2006
- * Versione: 1.10
+ * Autore: Daniele Bonaldo
+ * Data: 29/02/2008
+ * Versione: 1.3
  * Licenza: open-source
- * 
  * Registro delle modifiche:
- * v1.10 (22/02/2006): Aggiunta documentazione. Piero Dalle Pezze.
- * v1.9 (19/02/2006): Apportato standard di documentazione di BlueThoth. Piero Dalle Pezze.
- * v1.8 (11/02/2006):  Effettuata ottimizzazione nel caso in cui non ci sono processi da eseguire
- * 		       finche' un nuovo processo non arriva. In questo modo si avanza direttamente
- * 		       fino al prossimo arrivo di processo. Piero Dalle Pezze.
- * v1.7 (10/02/2006):  Effettuata ottimizzazione sull'incremento del tempo dello scheduler
- * 		       mediante il passaggio di un parametro. Piero Dalle Pezze.
- * v1.6 (09/02/2006):  Revisione del codice e della documentazione. Modifica di rendere il
- * 		       metodo esegui() automatico, in modo da creare tutta la simulazione al
- * 		       principio con una sola chiamata. Reso parametrico il metodo 
- * 		       incrementaTempoScheduler. Piero Dalle Pezze.
- * v1.5 (06/02/2006):  Studio sugli specificatori d'accesso. Revisione della documentazione
- * 		       con le modifiche apportate in data 3,4,5 febbraio 2006. Piero Dalle Pezze.
- * v1.4 (05/02/2006):  Aggiunti i metodi terminaPCBCorrente, incrementaTempoScheduler e aggiunta
- * 		       struttura per i processi terminati. Modificato il rilascio delle risorse.
- * 		       Adottata tecnica lazy. Piero Dalle Pezze.
- * v1.3 (04/02/2006):  Realizzazione simulazione discreta. Aggiunt� struttura tempoEvento e 
- * 		       tipi di eventi, metodo tempoProssimoEvento(). Adeguato il metodo esegui()
- * 		       facendo riferimento ai tipi di eventi e il metodo attivaProcesso. 
- * 		       Piero Dalle Pezze.
- * v1.2 (03/02/2006):  Analisi e progettazione della simulazione discreta anziche' continua. 
- * 		       Stabiliti gli eventi per i quali lo stato interno cambia. Definizione 
- * 		       delle funzionalita' necessarie che devono essere disponibili in PCB 
- * 		       (metodi per calcolare gli eventi). Valutazione delle attivit� svolte dal 
- * 		       metodo specializzato esegui() nelle politiche di ordinamento, in quanto 
- * 		       invocato dal metodo esegui() di Scheduler.
- * v1.1 (30/01/2006):  Codifica di tutti i metodi e costruttori dichiarati nella specifica tecnica. 
- * 		       Piero Dalle Pezze
- * v1.0 (29/01/2006):  Scrittura documentazione. Piero Dalle Pezze
+ * v1.3 (29/01/2008):  Divisione del metodo esegui() in seguito a TestScheduler.
+ * v1.2 (29/01/2008):  Aggiunto metodo fineSimulazione();
+ * v1.1 (29/01/2008):  Corretta inizializzazione di processiInArrivo
+ * v1.0 (29/02/2008):  Creazione e scrittura documentazione.
  */
 
 import java.util.*;
@@ -47,51 +21,20 @@ import logic.parametri.Processo;
  * Questa classe implementa i meccanismi necessari per realizzare una
  * simulazione discreta di processi in un elaboratore multi-programmato. Uno
  * scheduler di questo tipo deve ordinare e gestire gli eventi che possono
- * sorgere durante la schedulazione e calcolare tutti gli istanti continui nei
- * quali lo stato interno dello scheduler stesso rimane inalterato. Lo spazio
- * degli eventi gestiti dallo scheduler sono: </br>
+ * sorgere durante la schedulazione. 
+ * Lo spazio degli eventi gestiti dallo scheduler sono: </br>
  * <ol>
- * <li>Arrivo di un nuovo processo.</li>
- * <li>Richiesta di una nuova risorsa.</li>
- * <li>Rilascio di una risorsa.</li>
+ * <li>Arrivo di un nuovo processo.</li> 
  * <li>Terminazione di un PCB.</li>
  * </ol>
- * Lo scheduler deve prevenire, rispetto al tempo attuale della schedulazione,
- * quale sar� il prossimo evento. Una volta stabilito l'istante futuro nel quale
- * avverr� tale evento, lo scheduler � in grado di avanzare l'esecuzione del PCB
- * attualmente in esecuzione con la certezza che lo stato interno non pu�
- * mutare. </br> La politica di ordinamento scelta per un'istanza di questa
- * classe, pu� essere caratterizzata da ulteriori propri eventi, i quali possono
- * anticipare l'evento scelto dallo scheduler. Per esempio, la politica di
- * ordinamento Round Robin, � caratterizzata dall'evento di fine del quanto di
- * tempo, che pu� spostare il PCB in esecuzione nella coda dei PCB pronti. </br>
- * Per quanto riguarda la gestione dei processi, tale classe simula il
- * comportamento dello scheduler interno ad un sistema operativo. Quindi si
- * occupa dell'attivazione di un nuovo processo, che si simula arrivato nel
- * tempo attuale interno dello scheduler e della sua evoluzione all'interno di
- * un contesto multiprogrammato. La struttura della coda di ordinamento e di
- * assegnazione delle risorse e' interna alle classi che implementano le
- * interfacce PoliticaOrdinamento e PoliticaAssegnazione. Ci� consente allo
- * scheduler di operare il pi� possibile in autonomia dalla scelta della
- * politica e dal modo in cui questa politica considera il PCB in stato di
- * esecuzione. Nel momento dell'estrazione di un PCB dalla coda dei processi
- * pronti, lo scheduler stabilisce se tale PCB estratto pu� andare in esecuzione
- * oppure deve attendere il rilascio di una risorsa attualmente non disponibile.
- * In caso affermativo, lo scheduler manda in esecuzione il PCB con il criterio
- * stabilito dalla classe PoliticaOrdinamento, altrimenti lo inserisce in una
- * specifica struttura dati chiamata PoliticaAssegnazione che, analogamente alla
- * PoliticaOrdinamento, definisce una modalit� di accodamento per i processi
- * bloccati.
+ * Lo Scheduler viene interrogato per ogni istante dal Processore, a cui ritorna 
+ * un riferimento al PCB correntemente in esecuzione, che potrà essere un riferimento
+ * nullo nel caso in cui nessun processo abbia il controllo della CPU.
+ * L'esecuzione dei vari processi avverrà in maniera specializzata a seconda della 
+ * politica di ordinamento scelta.
  * 
- * @author Piero Dalle Pezze
- * @version 1.10 22/02/2006
- * @see <a href="../parametri/IProcesso.html">IProcesso</a>
- * @see <a href="../simulazione/Istante.html">Istante</a>
- * @see <a href="../parametri/PCB.html">PCB</a>
- * @see <a href="PoliticaOrdinamento.html">PoliticaOrdinamento</a>
- * @see <a
- *      href="politicheAssegnazione/PoliticaAssegnazione.html">PoliticaAssegnazione</a>
- * @see <a href="../parametri/Risorsa.html">Risorsa</a>
+ * @author Daniele Bonaldo
+ * @version 1.3 29/02/2008
  */
 
 public class Scheduler {
@@ -100,7 +43,7 @@ public class Scheduler {
 
 	/**
 	 * Il PCBCorrente rappresenta il PCB che, all'istante definito nella
-	 * variabile tempoCorrente, � nello stato di esecuzione. Il caso in cui tale
+	 * variabile tempoCorrente, è nello stato di esecuzione. Il caso in cui tale
 	 * campo dati fosse null, rappresenta la situazione nella quale la CPU non
 	 * sta eseguendo nessun processo.
 	 */
@@ -108,7 +51,7 @@ public class Scheduler {
 
 	/**
 	 * Questo campo dati specifica la politica di schedulazione che si intende
-	 * utilizzare per questo scheduler. All'interno di questa � definita la coda
+	 * utilizzare per questo scheduler. All'interno di questa è definita la coda
 	 * dei PCB nello stato di pronto.
 	 */
 	PoliticaOrdinamentoProcessi politicaOrdinamento = null;
@@ -143,8 +86,10 @@ public class Scheduler {
         
         /**
          * Questa variabile indica se la simulazione è giunta al termine o meno.
+         * 
          */
         boolean fineSimulazione = false;
+   
 
         /**
          * Questo metodo ritorna lo stato della simulazione.
@@ -182,19 +127,15 @@ public class Scheduler {
 	 * Il solo costruttore della classe. Un'istanza della classe Scheduler
 	 * richiede al momento della sua inizializzazione, i parametri
 	 * PoliticaOrdinamento che specifica la particolare politica di scheduling
-	 * dei processi pronti che si intende utilizzare, PoliticaAssegnazione, che
-	 * definisce la politica di assegnazione delle risorse per quali i processi
-	 * rimangono in attesa, una lista dei processi che dovranno essere attivati
-	 * dallo scheduler ordinati per tempo di arrivo ed un vettore di risorse,
-	 * che rappresenta tutte le risorse disponibili che si intendono utilizzare.
+	 * dei processi pronti che si intende utilizzaree una lista dei processi 
+         * che dovranno essere attivati dallo scheduler ordinati per tempo di 
+         * arrivo ed un vettore di risorse.
 	 * 
 	 * @param politicaOrdinamento
 	 *            La politica di ordinamento per i processi pronti.
 	 * @param processiInArrivo
 	 *            La lista dei processi che si dovranno attivare e schedulare
 	 *            ordinati per tempo di arrivo.
-	 * @see <a href="../parametri/IProcesso.html">IProcesso</a>
-	 * @see <a href="../parametri/Risorsa.html">Risorsa</a>
 	 */
 	public Scheduler(PoliticaOrdinamentoProcessi politicaOrdinamento,
 			LinkedList processiInArrivo) {
@@ -282,15 +223,12 @@ public class Scheduler {
 
 	/**
 	 * Questo metodo si occupa di attivare un nuovo processo arrivato. Per fare
-	 * ci�, lo Scheduler deve istanziare il PCB (Process Control Block) relativo
+	 * ciò, lo Scheduler deve istanziare il PCB (Process Control Block) relativo
 	 * al processo che si intende attivare. Nel caso la politica di
 	 * schedulazione adottata dallo scheduler fosse con prerilascio,
 	 * l'attivamento di un nuovo processo potrebbe interrompere il PCB nello
 	 * stato di esecuzione, se questo e' presente.
 	 * 
-	 * @see <a href="../parametri/IProcesso.html">IProcesso</a>
-	 * @see <a href="../parametri/PCB.html">PCB</a>
-	 * @see <a href="PoliticaOrdinamento.html">PoliticaOrdinamento</a>
 	 */
 	void attivaProcesso() {
 		/*
@@ -335,51 +273,23 @@ public class Scheduler {
 
 	}
 
-	
-
-	/**
-	 * Questo metodo si occupa di eseguire tutta la simulazione della gestione
-	 * dei processi. L'esecuzione termina nel momento in cui non ci sono piu'
-	 * processi in arrivo e tutti i processi sono terminati e/o bloccati.
-	 * Un'iterazione provvede ad estrarre un processo pronto e a farlo eseguire
-	 * finch� lo stato interno dello scheduler rimane invariato. Prima di
-	 * mandare in esecuzione il PCB estratto secondo la politica di ordinamento,
-	 * questo metodo stabilisce se tale PCB accede ad una nuova risorsa e
-	 * provvede ad attribuirgli le risorse prerilasciabili richieste.
-	 * L'esecuzione del PCB estratto � limitata superiormente dal tempo
-	 * rimanente del prossimo evento che accadr� nello scheduler. Cio' permette
-	 * di effettuare una simulazione discreta dei processi, copiando lo stato
-	 * interno dello scheduler soltanto nel momento in cui accade un evento che
-	 * modifica lo stato attuale. </br> Tale stato interno costante e' descritto
-	 * mediante il ritorno di un oggetto di tipo Istante il quale conterra' le
-	 * strutture interne utilizzate dallo scheduler, contenenti i dati statici
-	 * nel tempo. Questi dati sono di tipo IProcesso e Risorsa e sono condivisi
-	 * dallo scheduler. </br> Il metodo in questione e' in grado di rilevare una
-	 * situazione di stallo (deadlock) totale, ossia nel caso in cui tutti i PCB
-	 * attivi sono in attesa di una risorsa non prerilasciabile attualmente non
-	 * disponibile perche' attribuita ad un altro PCB. In questo caso, invocando
-	 * il metodo <a
-	 * href="../simulazione/Istante.html#getDeadlock()">getDeadlock()</a>
-	 * sull'oggetto istante ritornato, si otterra' true. Tuttavia occorre
-	 * precisare che questo non e' un algoritmo di rilevazione di deadlock, dal
-	 * momento che, se un nuovo processo arriva e non necessita di risorse non
-	 * disponibili, il metodo sopra menzionato ritorna false. </br> Quando la
-	 * simulazione e' terminata, viene ritornato un Istante in cui tutte le code
-	 * saranno prive di processi e il metodo <a
-	 * href="../simulazione/Istante.html#getProcInArrivo()">getProcInArrivo()</a>
-	 * della classe Istante ritorna false.
-	 * 
-	 * @see <a href="../simulazione/Istante.html">Istante</a>
-	 * @see <a href="../parametri/PCB.html">PCB</a>
-	 * @see <a href="PoliticaOrdinamento.html">PoliticaOrdinamento</a>
-	 * @see <a
-	 *      href="politicheAssegnazione/PoliticaAssegnazione.html">PoliticaAssegnazione</a>
-	 * @see <a href="../parametri/Risorsa.html">Risorsa</a>
+        /**
+	 * Questo metodo si occupa di preparare il prossimo PCB in esecuzione.
+         * Per fare ciò controlla se è il momento corrispondente all'arrivo di 
+         * un nuovo processo e in caso affermativo lo attiva.
+         * Se non c'è nessun PCB in esecuzione, allora estrae il primo PCB dalla
+         * coda dei pronti, organizzata secondo la politica di ordinamento corrente.
+         * Se non c'è nessun PCB è in esecuzione e la coda dei pronti è vuota, 
+         * viene controllata la lista dei processi in arrivo ancora da attivare:
+         * se è vuota significa che la simulazione è terminata.
+         * 
+	 * @return Ritorna un valore booleano che indica la necessità di eseguire
+         * anche l'avanzamento tramite la politica di ordinamento dei processi.
 	 */
-	public void esegui() {		
-
-		boolean stop= false;			
-
+	public boolean eseguiAttivazione() {
+            
+                boolean stop= false;
+     
                 if (tempoEvento[NUOVO_PROCESSO] == 0) {
 
                         attivaProcesso();
@@ -403,7 +313,10 @@ public class Scheduler {
                                         fineSimulazione = true;
 
                                 } 
-
+                                
+                                /* Incrementa il contatore interno dello scheduler,
+                                 visto che ritornando true non verrà
+                                 invocato incrementaTempoScheduler() */
                                 incrementaTempo();
                                 
                                 stop = true;
@@ -411,58 +324,57 @@ public class Scheduler {
                         } 
 
                 } 
+     
+                return stop;
+         }
 
-                if (!stop) {
-                        /* RUNNING */
+	/**
+	 * Questo metodo viene invocato solo nel caso ci sia un PCB che può 
+         * eseguire. Esegue il PCBCorrente in modo specializzato secondo la
+         * politica di ordinamento,che invoca il metodo incrementaTempoScheduler().
+         * Inoltre se il PCBcorrente terminerà la sua esecuzione, verrà invocato il
+         * metodo terminaPCBCorrente().
+	 * 
+	 */
+	public void eseguiIncremento() {
+            
+                /* RUNNING */
 
-                        /* Il PCBCorrente esiste e puo' eseguire */
+                /* Il PCBCorrente esiste e puo' eseguire */
+                
+                tempoProssimoEvento = tempoProssimoEvento();
 
-                        /*
-                         * Esegue il PCBCorrente in modo specializzato secondo la
-                         * politica di ordinamento, per un tempo stabilito dal valore
-                         * ritornato dal metodo statoInternoCostante(). Il metodo
-                         * incrementaTempoScheduler() e' invocato dalla politica di
-                         * ordinamento un numero di volte stabilito dal metodo
-                         * tempoProssimoEvento().
-                         * 
-                         */
-                        tempoProssimoEvento = tempoProssimoEvento();
+                politicaOrdinamento.esegui();
 
-                        politicaOrdinamento.esegui();
+                /*
+                 * Notare che questo test risultera' sempre falso nel caso in
+                 * cui la politica di ordinamento terminasse prima del valore
+                 * calcolato con il metodo tempoProssimoEvento(). Cio' e'
+                 * possibile solo se la politica e' caratterizzata da altri
+                 * eventi (almeno 1) ed uno di questi scade prima degli eventi
+                 * dello Scheduler. Per esempio, una politica Round Robin tiene
+                 * in considerazione la misurazione del quanto eseguito. Per
+                 * cui, se il tempo da eseguire prima di alterare lo stato del
+                 * PCBCorrente, e' minore del tempo del prossimo evento
+                 * calcolato dallo scheduler (che e' il minore tra tutti gli
+                 * eventi), nessun tempoEvento[i], per ogni i, potra' essere
+                 * decrementato fino a 0. Se invece l'evento scelto dallo
+                 * scheduler scade nello stesso tempo dell'evento
+                 * caratterizzante la politica di ordinamento, allora e' compito
+                 * della politica verificare se il PCB che esegue ha terminato
+                 * la sua esecuzione.
+                 */
 
-                        /*
-                         * Notare che questo test risultera' sempre falso nel caso in
-                         * cui la politica di ordinamento terminasse prima del valore
-                         * calcolato con il metodo tempoProssimoEvento(). Cio' e'
-                         * possibile solo se la politica e' caratterizzata da altri
-                         * eventi (almeno 1) ed uno di questi scade prima degli eventi
-                         * dello Scheduler. Per esempio, una politica Round Robin tiene
-                         * in considerazione la misurazione del quanto eseguito. Per
-                         * cui, se il tempo da eseguire prima di alterare lo stato del
-                         * PCBCorrente, e' minore del tempo del prossimo evento
-                         * calcolato dallo scheduler (che e' il minore tra tutti gli
-                         * eventi), nessun tempoEvento[i], per ogni i, potra' essere
-                         * decrementato fino a 0. Se invece l'evento scelto dallo
-                         * scheduler scade nello stesso tempo dell'evento
-                         * caratterizzante la politica di ordinamento, allora e' compito
-                         * della politica verificare se il PCB che esegue ha terminato
-                         * la sua esecuzione.
-                         */
+                if (tempoEvento[PCB_TERMINATO] == 0) {
+                        /* Il PCBCorrente ha terminato di eseguire */
 
-                        if (tempoEvento[PCB_TERMINATO] == 0) {
-                                /* Il PCBCorrente ha terminato di eseguire */
-
-                                terminaPCBCorrente();
-
-                        }
+                        terminaPCBCorrente();
 
                 }
-		
-
 
 	}
 
-
+ 
 
 	/**
 	 * Ritorna la lista dei processi che devono ancora essere attivati, ordinata
@@ -678,4 +590,4 @@ public class Scheduler {
 
 	}
 
-} // fine classe Scheduler
+} 
