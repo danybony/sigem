@@ -21,9 +21,9 @@
                   <Component id="jToolBarSimulazione" min="-2" pref="114" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jToolBarHelp" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace pref="451" max="32767" attributes="0"/>
+                  <EmptySpace pref="784" max="32767" attributes="0"/>
               </Group>
-              <Component id="jDesktopMV" alignment="0" pref="769" max="32767" attributes="0"/>
+              <Component id="jDesktopMV" alignment="0" pref="1102" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -35,7 +35,7 @@
                       <Component id="jToolBarHelp" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jDesktopMV" pref="497" max="32767" attributes="0"/>
+                  <Component id="jDesktopMV" pref="490" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -94,6 +94,7 @@
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -216,91 +217,158 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JInternalFrame" name="jInternalFrameAvanzamentoProcessi">
+            <Container class="javax.swing.JPanel" name="jPanelProcessi">
               <Properties>
-                <Property name="iconifiable" type="boolean" value="true"/>
-                <Property name="maximizable" type="boolean" value="true"/>
-                <Property name="resizable" type="boolean" value="true"/>
-                <Property name="title" type="java.lang.String" resourceKey="jInternalFrameAvanzamentoProcessi.title"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="jInternalFrameAvanzamentoProcessi.toolTipText"/>
-                <Property name="doubleBuffered" type="boolean" value="true"/>
-                <Property name="name" type="java.lang.String" value="jInternalFrameAvanzamentoProcessi" noResource="true"/>
-                <Property name="visible" type="boolean" value="true"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+                    <BevelBorder bevelType="1">
+                      <Property name="highlightOuter" resourceKey="jPanelProcessi.border.highlightOuterColor"/>
+                      <Property name="highlightInner" resourceKey="jPanelProcessi.border.highlightInnerColor"/>
+                      <Property name="shadowOuter" resourceKey="jPanelProcessi.border.shadowOuterColor"/>
+                      <Property name="shadowInner" resourceKey="jPanelProcessi.border.shadowInnerColor"/>
+                    </BevelBorder>
+                  </Border>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jPanelProcessi" noResource="true"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-                  <JLayeredPaneConstraints x="0" y="0" width="360" height="210" layer="0" position="-1"/>
+                  <JLayeredPaneConstraints x="0" y="0" width="510" height="340" layer="0" position="-1"/>
                 </Constraint>
               </Constraints>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="350" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelStatoAvanzamentoProcessi" pref="484" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="175" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelStatoAvanzamentoProcessi" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="306" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabelStatoAvanzamentoProcessi">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabelStatoAvanzamentoProcessi.font"/>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabelStatoAvanzamentoProcessi.text"/>
+                    <Property name="name" type="java.lang.String" value="jLabelStatoAvanzamentoProcessi" noResource="true"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
             </Container>
-            <Container class="javax.swing.JInternalFrame" name="jInternalFrameMVC">
+            <Container class="javax.swing.JPanel" name="jPanelMemoria">
               <Properties>
-                <Property name="iconifiable" type="boolean" value="true"/>
-                <Property name="maximizable" type="boolean" value="true"/>
-                <Property name="resizable" type="boolean" value="true"/>
-                <Property name="title" type="java.lang.String" resourceKey="jInternalFrameMVC.title"/>
-                <Property name="name" type="java.lang.String" value="jInternalFrameMVC" noResource="true"/>
-                <Property name="visible" type="boolean" value="true"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+                    <BevelBorder>
+                      <Property name="highlightOuter" resourceKey="jPanelMemoria.border.highlightOuterColor"/>
+                      <Property name="highlightInner" resourceKey="jPanelMemoria.border.highlightInnerColor"/>
+                      <Property name="shadowOuter" resourceKey="jPanelMemoria.border.shadowOuterColor"/>
+                      <Property name="shadowInner" resourceKey="jPanelMemoria.border.shadowInnerColor"/>
+                    </BevelBorder>
+                  </Border>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jPanelMemoria" noResource="true"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-                  <JLayeredPaneConstraints x="360" y="0" width="410" height="210" layer="0" position="-1"/>
+                  <JLayeredPaneConstraints x="510" y="0" width="590" height="340" layer="0" position="-1"/>
                 </Constraint>
               </Constraints>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelFrameMemoria" pref="564" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="175" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelFrameMemoria" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="306" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabelFrameMemoria">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabelFrameMemoria.font"/>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabelFrameMemoria.text"/>
+                    <Property name="name" type="java.lang.String" value="jLabelFrameMemoria" noResource="true"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
             </Container>
-            <Container class="javax.swing.JInternalFrame" name="jInternalFrameStatistiche">
+            <Container class="javax.swing.JPanel" name="jPanelStatistiche">
               <Properties>
-                <Property name="iconifiable" type="boolean" value="true"/>
-                <Property name="maximizable" type="boolean" value="true"/>
-                <Property name="resizable" type="boolean" value="true"/>
-                <Property name="title" type="java.lang.String" resourceKey="jInternalFrameStatistiche.title"/>
-                <Property name="name" type="java.lang.String" value="jInternalFrameStatistiche" noResource="true"/>
-                <Property name="visible" type="boolean" value="true"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+                    <BevelBorder>
+                      <Property name="highlightOuter" resourceKey="jPanelStatistiche.border.highlightOuterColor"/>
+                      <Property name="highlightInner" resourceKey="jPanelStatistiche.border.highlightInnerColor"/>
+                      <Property name="shadowOuter" resourceKey="jPanelStatistiche.border.shadowOuterColor"/>
+                      <Property name="shadowInner" resourceKey="jPanelStatistiche.border.shadowInnerColor"/>
+                    </BevelBorder>
+                  </Border>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jPanelStatistiche" noResource="true"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-                  <JLayeredPaneConstraints x="0" y="210" width="770" height="160" layer="0" position="-1"/>
+                  <JLayeredPaneConstraints x="0" y="340" width="1100" height="150" layer="0" position="-1"/>
                 </Constraint>
               </Constraints>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="760" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelStatistiche" pref="1074" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="125" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelStatistiche" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="116" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabelStatistiche">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" resourceKey="jLabelStatistiche.font"/>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabelStatistiche.text"/>
+                    <Property name="name" type="java.lang.String" value="jLabelStatistiche" noResource="true"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
             </Container>
           </SubComponents>
         </Container>
@@ -317,15 +385,9 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenuFile">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.jdesktop.application.Application" id="quit" methodName="quit"/>
-            </Property>
             <Property name="text" type="java.lang.String" resourceKey="jMenuFile.text"/>
             <Property name="name" type="java.lang.String" value="jMenuFile" noResource="true"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuFileActionPerformed"/>
-          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
@@ -408,6 +470,7 @@
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jSimulazioneItemPlay.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jSimulazioneItemPlay.text"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="jSimulazioneItemPlay" noResource="true"/>
               </Properties>
             </MenuItem>
@@ -415,6 +478,7 @@
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jSimulazioneItemStop.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jSimulazioneItemStop.text"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="jSimulazioneItemStop" noResource="true"/>
               </Properties>
             </MenuItem>
@@ -427,14 +491,16 @@
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jSimulazioneItemInizio.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jSimulazioneItemInizio.text"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="jSimulazioneItemInizio" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jSimluazioneItemFine">
+            <MenuItem class="javax.swing.JMenuItem" name="jSimulazioneItemFine">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jSimluazioneItemFine.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jSimluazioneItemFine.text"/>
-                <Property name="name" type="java.lang.String" value="jSimluazioneItemFine" noResource="true"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jSimulazioneItemFine.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jSimulazioneItemFine.text"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="jSimulazioneItemFine" noResource="true"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -491,7 +557,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="800" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="1104" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -519,6 +585,6 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,39,0,0,3,3"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,32,0,0,4,80"/>
   </AuxValues>
 </Form>

@@ -34,15 +34,33 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jComboBoxRimpiazzoPagine" alignment="0" max="32767" attributes="1"/>
-                      <Component id="jLabelRimpiazzoPagine" alignment="0" min="-2" max="-2" attributes="1"/>
-                  </Group>
-                  <Component id="jLabelRimpiazzoSegmenti" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxRimpiazzoSegmenti" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="jLabelRimpiazzoPagine" min="-2" max="-2" attributes="1"/>
+              <EmptySpace pref="199" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabelRimpiazzoSegmenti" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="194" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabelSchedulazione" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="240" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jComboBoxSchedulazione" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="156" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jComboBoxRimpiazzoPagine" pref="197" max="32767" attributes="1"/>
+              <EmptySpace min="-2" pref="199" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jComboBoxRimpiazzoSegmenti" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="320" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -54,11 +72,15 @@
               <Component id="jLabelRimpiazzoPagine" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jComboBoxRimpiazzoPagine" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Component id="jLabelRimpiazzoSegmenti" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jComboBoxRimpiazzoSegmenti" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="110" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Component id="jLabelSchedulazione" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jComboBoxSchedulazione" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="69" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonIndietro" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonAvanti" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -157,6 +179,33 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAnnullaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelSchedulazione">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="jLabelSchedulazione.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="jLabelSchedulazione.text"/>
+        <Property name="name" type="java.lang.String" value="jLabelSchedulazione" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBoxSchedulazione">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="jComboBoxSchedulazione.font"/>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="7">
+            <StringItem index="0" value="First-Come-First-Served (FCFS)"/>
+            <StringItem index="1" value="Priorit&#xe0; (P)"/>
+            <StringItem index="2" value="Round Robin (RR)"/>
+            <StringItem index="3" value="Round Robin con priorit&#xe0; (RRP)"/>
+            <StringItem index="4" value="Round Robin con priorit&#xe0; e prerilascio (RRPP)"/>
+            <StringItem index="5" value="Shortest Job First (SJF)"/>
+            <StringItem index="6" value="Shortest Remaining Time Next (SRTN)"/>
+          </StringArray>
+        </Property>
+        <Property name="name" type="java.lang.String" value="jComboBoxSchedulazione" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxSchedulazioneActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

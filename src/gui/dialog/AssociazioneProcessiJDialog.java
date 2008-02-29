@@ -1,11 +1,19 @@
 /*
- * AssociazioneProcessiJDialog.java
- *
- * Created on 28 febbraio 2008, 19.43
+ * Azienda: Stylosoft
+ * Nome file: AssociazioneProcessiJDialog.java
+ * Package: gui.dialog
+ * Autore: Giordano Cariani
+ * Data: 28/02/2008
+ * Versione: 1.0
+ * Licenza: open-source
+ * Registro delle modifiche: *  
+ *  - v.1.0 (28/02/2008): Creazione JDialog e impostazione grafica
  */
 
 package gui.dialog;
 
+import gui.SiGeMv2View;
+import gui.SiGeMv2View;
 import javax.swing.JComboBox;
 import javax.swing.table.TableColumn;
 import javax.swing.DefaultCellEditor;
@@ -13,20 +21,23 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
- * @author  Jordy
+ * @author  Giordano Cariani
  */
 public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     
     private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
     private PoliticheJDialog politica;
     private ProcessiJDialog processi;
+    private Object[][] associazione;
+    private SiGeMv2View view;
     
     /** Creates new form AssociazioneProcessiJDialog */
-    public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, ProcessiJDialog proc) {
+    public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, ProcessiJDialog proc, SiGeMv2View view) {
         super(parent, modal);
         configurazioneAmbiente = configurazione;
         politica = pol;
         processi = proc;
+        this.view = view;
         initComponents();
         initJTable();
     }
@@ -173,9 +184,14 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
+        associazione = new Object [jTableAssociazioneProcessi.getRowCount()][jTableAssociazioneProcessi.getColumnCount()];
+        for (int row=0; row<jTableAssociazioneProcessi.getRowCount(); row++)
+            for (int col=0; col<jTableAssociazioneProcessi.getColumnCount(); col++)
+                associazione[row][col] = jTableAssociazioneProcessi.getValueAt(row, col);
+                
         this.setVisible(false);
+        view.abilitaTutto();
     }//GEN-LAST:event_jButtonOkActionPerformed
-    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;
@@ -196,4 +212,13 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         renderer.setToolTipText("Seleziona");
         associazioneColonna.setCellRenderer(renderer);
     }
+
+    public Object[][] getAssociazione() {
+        return associazione;
+    }
+
+    public void setAssociazione(Object[][] associazione) {
+        this.associazione = associazione;
+    }
+    
 }

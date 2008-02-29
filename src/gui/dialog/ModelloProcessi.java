@@ -1,18 +1,21 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Azienda: Stylosoft
+ * Nome file: ModelloProcessi.java
+ * Package: gui.dialog
+ * Autore: Giordano Cariani
+ * Data: 28/02/2008
+ * Versione: 1.0
+ * Licenza: open-source
+ * Registro delle modifiche: *  
+ *  - v.1.0 (24/02/2008): Creazione modello di tabella
  */
 
 package gui.dialog;
-import javax.swing.JComboBox;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.DefaultCellEditor;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.DefaultTableCellRenderer;
+
 /**
  *
- * @author Jordy
+ * @author Giordano Cariani
  */
 public class ModelloProcessi extends AbstractTableModel {
         private String[] nomiColonna=new String[0];
@@ -38,6 +41,7 @@ public class ModelloProcessi extends AbstractTableModel {
                 contenutiRighe[i][0]=new String((String) table[i][0]);
                 contenutiRighe[i][1]=new Integer((Integer) table[i][1]);
                 contenutiRighe[i][2]=new Integer((Integer) table[i][2]);
+                contenutiRighe[i][3]=new String("Pagina");
             }
             fireTableStructureChanged();
         }

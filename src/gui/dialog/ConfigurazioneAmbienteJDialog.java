@@ -1,17 +1,24 @@
 /*
- * ConfigurazioneAmbienteJDialog.java
- *
- * Created on 24 febbraio 2008, 14.59
+ * Azienda: Stylosoft
+ * Nome file: ConfigurazioneAmbienteJDialog
+ * Package: gui.dialog.java
+ * Autore: Giordano Cariani
+ * Data: 28/02/2008
+ * Versione: 1.0
+ * Licenza: open-source
+ * Registro delle modifiche: *  
+ *  - v.1.0 (24/02/2008): Creazione JDialog e impostazione grafica
  */
 
 package gui.dialog;
 
 import javax.swing.SpinnerListModel;
 import gui.SiGeMv2App;
+import gui.SiGeMv2View;
 
 /**
  *
- * @author  Jordy
+ * @author  Giordano Cariani
  */
 public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     private static final int DIMPROCESSI = 20;
@@ -26,11 +33,13 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     private int tempoContextSwitch;
     private int tempoAccessoDisco;
     private int bandaBusDati;
+    private SiGeMv2View view;
     
 
     /** Creates new form ConfigurazioneAmbienteJDialog */
-    public ConfigurazioneAmbienteJDialog(java.awt.Frame parent, boolean modal) {
+    public ConfigurazioneAmbienteJDialog(java.awt.Frame parent, boolean modal, SiGeMv2View view) {
         super(parent, modal);
+        this.view = view;
         initComponents();
         initJSpinnerProcessi();
         initSpinnerDimensioneRAM();
@@ -39,7 +48,8 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         initSpinnerTempi();
     }
     
-    public ConfigurazioneAmbienteJDialog(ConfigurazioneAmbienteJDialog conf) {
+    public ConfigurazioneAmbienteJDialog(ConfigurazioneAmbienteJDialog conf, SiGeMv2View view) {
+        this.view = view;
         setNumProcessi(conf.getNumProcessi());
     }
     /** This method is called from within the constructor to
@@ -238,7 +248,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
 
        this.setVisible(false);
        
-       PoliticheJDialog politicheJDialog = new PoliticheJDialog(SiGeMv2App.getApplication().getMainFrame(), true, this);
+       PoliticheJDialog politicheJDialog = new PoliticheJDialog(SiGeMv2App.getApplication().getMainFrame(), true, this, view);
        politicheJDialog.setVisible(true);
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 

@@ -7,8 +7,7 @@
 package gui.dialog;
 
 import gui.SiGeMv2App;
-import java.util.Vector;
-import javax.swing.JTable;
+import gui.SiGeMv2View;
 
 /**
  *
@@ -18,14 +17,16 @@ public class ProcessiJDialog extends javax.swing.JDialog {
     private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
     private PoliticheJDialog politiche;
     private AssociazioneProcessiJDialog associazioneProcessi;
+    private SiGeMv2View view;
     
     private Object[][] combinazioneProcessi;
    
     /** Creates new form ProcessiJDialog */
-    public ProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, PoliticheJDialog pol) {
+    public ProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, PoliticheJDialog pol, SiGeMv2View view) {
         super(parent, modal);
         configurazioneAmbiente = conf;
         politiche = pol;
+        this.view = view;
         initComponents();
         initTable(); 
     }
@@ -176,7 +177,7 @@ public class ProcessiJDialog extends javax.swing.JDialog {
                 combinazioneProcessi[row][col]= jTableProcessi.getValueAt(row, col);
                                     
         this.setVisible(false);
-        associazioneProcessi = new AssociazioneProcessiJDialog(SiGeMv2App.getApplication().getMainFrame(), true, configurazioneAmbiente, politiche, this);
+        associazioneProcessi = new AssociazioneProcessiJDialog(SiGeMv2App.getApplication().getMainFrame(), true, configurazioneAmbiente, politiche, this, view);
         associazioneProcessi.setVisible(true);
     }//GEN-LAST:event_jButtonAvantiActionPerformed
     

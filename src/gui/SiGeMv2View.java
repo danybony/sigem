@@ -1,7 +1,16 @@
 /*
- * SiGeMv2View.java
+ * Azienda: Stylosoft
+ * Nome file: Processore.java
+ * Package: gui
+ * Autore: Giordano Cariani
+ * Data: 29/02/2008
+ * Versione: 1.3
+ * Licenza: open-source
+ * Registro delle modifiche: *  
+ *  - v.1.2 (28/02/2008): Aggiunti pannelli dei processi, delle statistiche e dei frame memoria
+ *  - v.1.1 (13/02/2008): Completato il menu' e aggiunte icone
+ *  - v.1.0 (12/02/2008): Creazione e stesura pannello.
  */
-
 package gui;
 
 import org.jdesktop.application.Action;
@@ -20,6 +29,7 @@ import javax.swing.JProgressBar;
 
 import logic.caricamento.GestioneFile;
 import gui.dialog.*;
+import gui.view.ViewStatoAvanzamentoProcessi;
 
 /**
  * The application's main frame.
@@ -28,12 +38,14 @@ public class SiGeMv2View extends FrameView {
     
     private JProgressBar progressBar = new JProgressBar();
     private GestioneFile gestioneFile = new GestioneFile();
-    private ConfigurazioneAmbienteJDialog configurazioneAmbiente = new ConfigurazioneAmbienteJDialog(SiGeMv2App.getApplication().getMainFrame(), true);
+    private ConfigurazioneAmbienteJDialog  configurazioneAmbiente = new ConfigurazioneAmbienteJDialog(SiGeMv2App.getApplication().getMainFrame(), true, this);
+    private ViewStatoAvanzamentoProcessi jPanelStatoProcessi;
     
     public SiGeMv2View(SingleFrameApplication app) {
         super(app);
 
         initComponents();
+        //initViewProcessi();
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
@@ -119,9 +131,12 @@ public class SiGeMv2View extends FrameView {
         jToolBarHelp = new javax.swing.JToolBar();
         jButtonHelp = new javax.swing.JButton();
         jDesktopMV = new javax.swing.JDesktopPane();
-        jInternalFrameAvanzamentoProcessi = new javax.swing.JInternalFrame();
-        jInternalFrameMVC = new javax.swing.JInternalFrame();
-        jInternalFrameStatistiche = new javax.swing.JInternalFrame();
+        jPanelProcessi = new javax.swing.JPanel();
+        jLabelStatoAvanzamentoProcessi = new javax.swing.JLabel();
+        jPanelMemoria = new javax.swing.JPanel();
+        jLabelFrameMemoria = new javax.swing.JLabel();
+        jPanelStatistiche = new javax.swing.JPanel();
+        jLabelStatistiche = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu jMenuFile = new javax.swing.JMenu();
         jFileItemNuovaConfigurazione = new javax.swing.JMenuItem();
@@ -135,7 +150,7 @@ public class SiGeMv2View extends FrameView {
         jSimulazioneItemStop = new javax.swing.JMenuItem();
         jSimulazioneSeparator = new javax.swing.JSeparator();
         jSimulazioneItemInizio = new javax.swing.JMenuItem();
-        jSimluazioneItemFine = new javax.swing.JMenuItem();
+        jSimulazioneItemFine = new javax.swing.JMenuItem();
         jMenuFinestre = new javax.swing.JMenu();
         javax.swing.JMenu jMenuHelp = new javax.swing.JMenu();
         jHelpItemGuida = new javax.swing.JMenuItem();
@@ -182,6 +197,7 @@ public class SiGeMv2View extends FrameView {
         jButtonSalvaConfigurazione.setIcon(resourceMap.getIcon("jButtonSalvaConfigurazione.icon")); // NOI18N
         jButtonSalvaConfigurazione.setText(resourceMap.getString("jButtonSalvaConfigurazione.text")); // NOI18N
         jButtonSalvaConfigurazione.setBorder(null);
+        jButtonSalvaConfigurazione.setEnabled(false);
         jButtonSalvaConfigurazione.setFocusable(false);
         jButtonSalvaConfigurazione.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonSalvaConfigurazione.setMaximumSize(new java.awt.Dimension(25, 21));
@@ -251,70 +267,89 @@ public class SiGeMv2View extends FrameView {
 
         jDesktopMV.setName("jDesktopMV"); // NOI18N
 
-        jInternalFrameAvanzamentoProcessi.setIconifiable(true);
-        jInternalFrameAvanzamentoProcessi.setMaximizable(true);
-        jInternalFrameAvanzamentoProcessi.setResizable(true);
-        jInternalFrameAvanzamentoProcessi.setTitle(resourceMap.getString("jInternalFrameAvanzamentoProcessi.title")); // NOI18N
-        jInternalFrameAvanzamentoProcessi.setToolTipText(resourceMap.getString("jInternalFrameAvanzamentoProcessi.toolTipText")); // NOI18N
-        jInternalFrameAvanzamentoProcessi.setDoubleBuffered(true);
-        jInternalFrameAvanzamentoProcessi.setName("jInternalFrameAvanzamentoProcessi"); // NOI18N
-        jInternalFrameAvanzamentoProcessi.setVisible(true);
+        jPanelProcessi.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, resourceMap.getColor("jPanelProcessi.border.highlightOuterColor"), resourceMap.getColor("jPanelProcessi.border.highlightInnerColor"), resourceMap.getColor("jPanelProcessi.border.shadowOuterColor"), resourceMap.getColor("jPanelProcessi.border.shadowInnerColor"))); // NOI18N
+        jPanelProcessi.setName("jPanelProcessi"); // NOI18N
 
-        javax.swing.GroupLayout jInternalFrameAvanzamentoProcessiLayout = new javax.swing.GroupLayout(jInternalFrameAvanzamentoProcessi.getContentPane());
-        jInternalFrameAvanzamentoProcessi.getContentPane().setLayout(jInternalFrameAvanzamentoProcessiLayout);
-        jInternalFrameAvanzamentoProcessiLayout.setHorizontalGroup(
-            jInternalFrameAvanzamentoProcessiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 350, Short.MAX_VALUE)
+        jLabelStatoAvanzamentoProcessi.setFont(resourceMap.getFont("jLabelStatoAvanzamentoProcessi.font")); // NOI18N
+        jLabelStatoAvanzamentoProcessi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelStatoAvanzamentoProcessi.setText(resourceMap.getString("jLabelStatoAvanzamentoProcessi.text")); // NOI18N
+        jLabelStatoAvanzamentoProcessi.setName("jLabelStatoAvanzamentoProcessi"); // NOI18N
+
+        javax.swing.GroupLayout jPanelProcessiLayout = new javax.swing.GroupLayout(jPanelProcessi);
+        jPanelProcessi.setLayout(jPanelProcessiLayout);
+        jPanelProcessiLayout.setHorizontalGroup(
+            jPanelProcessiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelProcessiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelStatoAvanzamentoProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jInternalFrameAvanzamentoProcessiLayout.setVerticalGroup(
-            jInternalFrameAvanzamentoProcessiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 175, Short.MAX_VALUE)
-        );
-
-        jInternalFrameAvanzamentoProcessi.setBounds(0, 0, 360, 210);
-        jDesktopMV.add(jInternalFrameAvanzamentoProcessi, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        jInternalFrameMVC.setIconifiable(true);
-        jInternalFrameMVC.setMaximizable(true);
-        jInternalFrameMVC.setResizable(true);
-        jInternalFrameMVC.setTitle(resourceMap.getString("jInternalFrameMVC.title")); // NOI18N
-        jInternalFrameMVC.setName("jInternalFrameMVC"); // NOI18N
-        jInternalFrameMVC.setVisible(true);
-
-        javax.swing.GroupLayout jInternalFrameMVCLayout = new javax.swing.GroupLayout(jInternalFrameMVC.getContentPane());
-        jInternalFrameMVC.getContentPane().setLayout(jInternalFrameMVCLayout);
-        jInternalFrameMVCLayout.setHorizontalGroup(
-            jInternalFrameMVCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jInternalFrameMVCLayout.setVerticalGroup(
-            jInternalFrameMVCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 175, Short.MAX_VALUE)
+        jPanelProcessiLayout.setVerticalGroup(
+            jPanelProcessiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelProcessiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelStatoAvanzamentoProcessi)
+                .addContainerGap(306, Short.MAX_VALUE))
         );
 
-        jInternalFrameMVC.setBounds(360, 0, 410, 210);
-        jDesktopMV.add(jInternalFrameMVC, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jPanelProcessi.setBounds(0, 0, 510, 340);
+        jDesktopMV.add(jPanelProcessi, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jInternalFrameStatistiche.setIconifiable(true);
-        jInternalFrameStatistiche.setMaximizable(true);
-        jInternalFrameStatistiche.setResizable(true);
-        jInternalFrameStatistiche.setTitle(resourceMap.getString("jInternalFrameStatistiche.title")); // NOI18N
-        jInternalFrameStatistiche.setName("jInternalFrameStatistiche"); // NOI18N
-        jInternalFrameStatistiche.setVisible(true);
+        jPanelMemoria.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, resourceMap.getColor("jPanelMemoria.border.highlightOuterColor"), resourceMap.getColor("jPanelMemoria.border.highlightInnerColor"), resourceMap.getColor("jPanelMemoria.border.shadowOuterColor"), resourceMap.getColor("jPanelMemoria.border.shadowInnerColor"))); // NOI18N
+        jPanelMemoria.setName("jPanelMemoria"); // NOI18N
 
-        javax.swing.GroupLayout jInternalFrameStatisticheLayout = new javax.swing.GroupLayout(jInternalFrameStatistiche.getContentPane());
-        jInternalFrameStatistiche.getContentPane().setLayout(jInternalFrameStatisticheLayout);
-        jInternalFrameStatisticheLayout.setHorizontalGroup(
-            jInternalFrameStatisticheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
+        jLabelFrameMemoria.setFont(resourceMap.getFont("jLabelFrameMemoria.font")); // NOI18N
+        jLabelFrameMemoria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelFrameMemoria.setText(resourceMap.getString("jLabelFrameMemoria.text")); // NOI18N
+        jLabelFrameMemoria.setName("jLabelFrameMemoria"); // NOI18N
+
+        javax.swing.GroupLayout jPanelMemoriaLayout = new javax.swing.GroupLayout(jPanelMemoria);
+        jPanelMemoria.setLayout(jPanelMemoriaLayout);
+        jPanelMemoriaLayout.setHorizontalGroup(
+            jPanelMemoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMemoriaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelFrameMemoria, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jInternalFrameStatisticheLayout.setVerticalGroup(
-            jInternalFrameStatisticheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 125, Short.MAX_VALUE)
+        jPanelMemoriaLayout.setVerticalGroup(
+            jPanelMemoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMemoriaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelFrameMemoria)
+                .addContainerGap(306, Short.MAX_VALUE))
         );
 
-        jInternalFrameStatistiche.setBounds(0, 210, 770, 160);
-        jDesktopMV.add(jInternalFrameStatistiche, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jPanelMemoria.setBounds(510, 0, 590, 340);
+        jDesktopMV.add(jPanelMemoria, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jPanelStatistiche.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, resourceMap.getColor("jPanelStatistiche.border.highlightOuterColor"), resourceMap.getColor("jPanelStatistiche.border.highlightInnerColor"), resourceMap.getColor("jPanelStatistiche.border.shadowOuterColor"), resourceMap.getColor("jPanelStatistiche.border.shadowInnerColor"))); // NOI18N
+        jPanelStatistiche.setName("jPanelStatistiche"); // NOI18N
+
+        jLabelStatistiche.setFont(resourceMap.getFont("jLabelStatistiche.font")); // NOI18N
+        jLabelStatistiche.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelStatistiche.setText(resourceMap.getString("jLabelStatistiche.text")); // NOI18N
+        jLabelStatistiche.setName("jLabelStatistiche"); // NOI18N
+
+        javax.swing.GroupLayout jPanelStatisticheLayout = new javax.swing.GroupLayout(jPanelStatistiche);
+        jPanelStatistiche.setLayout(jPanelStatisticheLayout);
+        jPanelStatisticheLayout.setHorizontalGroup(
+            jPanelStatisticheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelStatisticheLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelStatistiche, javax.swing.GroupLayout.DEFAULT_SIZE, 1074, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelStatisticheLayout.setVerticalGroup(
+            jPanelStatisticheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelStatisticheLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelStatistiche)
+                .addContainerGap(116, Short.MAX_VALUE))
+        );
+
+        jPanelStatistiche.setBounds(0, 340, 1100, 150);
+        jDesktopMV.add(jPanelStatistiche, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -326,8 +361,8 @@ public class SiGeMv2View extends FrameView {
                 .addComponent(jToolBarSimulazione, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBarHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(451, Short.MAX_VALUE))
-            .addComponent(jDesktopMV, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
+                .addContainerGap(784, Short.MAX_VALUE))
+            .addComponent(jDesktopMV, javax.swing.GroupLayout.DEFAULT_SIZE, 1102, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,20 +372,13 @@ public class SiGeMv2View extends FrameView {
                     .addComponent(jToolBarSimulazione, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToolBarHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopMV, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE))
+                .addComponent(jDesktopMV, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
         );
 
         menuBar.setName("menuBar"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(gui.SiGeMv2App.class).getContext().getActionMap(SiGeMv2View.class, this);
-        jMenuFile.setAction(actionMap.get("quit")); // NOI18N
         jMenuFile.setText(resourceMap.getString("jMenuFile.text")); // NOI18N
         jMenuFile.setName("jMenuFile"); // NOI18N
-        jMenuFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuFileActionPerformed(evt);
-            }
-        });
 
         jFileItemNuovaConfigurazione.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         jFileItemNuovaConfigurazione.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/resources/new_file.png"))); // NOI18N
@@ -386,6 +414,7 @@ public class SiGeMv2View extends FrameView {
         jFileSeparatorEsci.setName("jFileSeparatorEsci"); // NOI18N
         jMenuFile.add(jFileSeparatorEsci);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(gui.SiGeMv2App.class).getContext().getActionMap(SiGeMv2View.class, this);
         jFileItemEsci.setAction(actionMap.get("quit")); // NOI18N
         jFileItemEsci.setIcon(resourceMap.getIcon("jFileItemEsci.icon")); // NOI18N
         jFileItemEsci.setName("jFileItemEsci"); // NOI18N
@@ -398,11 +427,13 @@ public class SiGeMv2View extends FrameView {
 
         jSimulazioneItemPlay.setIcon(resourceMap.getIcon("jSimulazioneItemPlay.icon")); // NOI18N
         jSimulazioneItemPlay.setText(resourceMap.getString("jSimulazioneItemPlay.text")); // NOI18N
+        jSimulazioneItemPlay.setEnabled(false);
         jSimulazioneItemPlay.setName("jSimulazioneItemPlay"); // NOI18N
         jMenuSimulazione.add(jSimulazioneItemPlay);
 
         jSimulazioneItemStop.setIcon(resourceMap.getIcon("jSimulazioneItemStop.icon")); // NOI18N
         jSimulazioneItemStop.setText(resourceMap.getString("jSimulazioneItemStop.text")); // NOI18N
+        jSimulazioneItemStop.setEnabled(false);
         jSimulazioneItemStop.setName("jSimulazioneItemStop"); // NOI18N
         jMenuSimulazione.add(jSimulazioneItemStop);
 
@@ -411,13 +442,15 @@ public class SiGeMv2View extends FrameView {
 
         jSimulazioneItemInizio.setIcon(resourceMap.getIcon("jSimulazioneItemInizio.icon")); // NOI18N
         jSimulazioneItemInizio.setText(resourceMap.getString("jSimulazioneItemInizio.text")); // NOI18N
+        jSimulazioneItemInizio.setEnabled(false);
         jSimulazioneItemInizio.setName("jSimulazioneItemInizio"); // NOI18N
         jMenuSimulazione.add(jSimulazioneItemInizio);
 
-        jSimluazioneItemFine.setIcon(resourceMap.getIcon("jSimluazioneItemFine.icon")); // NOI18N
-        jSimluazioneItemFine.setText(resourceMap.getString("jSimluazioneItemFine.text")); // NOI18N
-        jSimluazioneItemFine.setName("jSimluazioneItemFine"); // NOI18N
-        jMenuSimulazione.add(jSimluazioneItemFine);
+        jSimulazioneItemFine.setIcon(resourceMap.getIcon("jSimulazioneItemFine.icon")); // NOI18N
+        jSimulazioneItemFine.setText(resourceMap.getString("jSimulazioneItemFine.text")); // NOI18N
+        jSimulazioneItemFine.setEnabled(false);
+        jSimulazioneItemFine.setName("jSimulazioneItemFine"); // NOI18N
+        jMenuSimulazione.add(jSimulazioneItemFine);
 
         menuBar.add(jMenuSimulazione);
 
@@ -448,7 +481,7 @@ public class SiGeMv2View extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 1104, Short.MAX_VALUE)
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -459,6 +492,25 @@ public class SiGeMv2View extends FrameView {
         setMenuBar(menuBar);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initViewProcessi(){ 
+        
+	jPanelStatoProcessi = new ViewStatoAvanzamentoProcessi();
+
+        javax.swing.GroupLayout jPanelStatoProcessiLayout = new javax.swing.GroupLayout(jPanelStatoProcessi);
+        jPanelStatoProcessi.setLayout(jPanelStatoProcessiLayout);
+        jPanelStatoProcessiLayout.setHorizontalGroup(
+            jPanelStatoProcessiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 510, Short.MAX_VALUE)
+        );
+        jPanelStatoProcessiLayout.setVerticalGroup(
+            jPanelStatoProcessiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 340, Short.MAX_VALUE)
+        );
+
+        jPanelStatoProcessi.setBounds(0, 0, 510, 340);
+        jDesktopMV.add(jPanelStatoProcessi, javax.swing.JLayeredPane.DEFAULT_LAYER);
+    }
+    
     private void jFileItemApriConfigurazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileItemApriConfigurazioneActionPerformed
         //gestioneFile.openFile(SiGeMv2App.getApplication().getMainFrame());
     }//GEN-LAST:event_jFileItemApriConfigurazioneActionPerformed
@@ -471,14 +523,23 @@ public class SiGeMv2View extends FrameView {
        configurazioneAmbiente.setVisible(true);
     }//GEN-LAST:event_jButtonNuovaConfigurazioneActionPerformed
 
-    private void jMenuFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFileActionPerformed
-       
-    }//GEN-LAST:event_jMenuFileActionPerformed
-
     private void jFileItemNuovaConfigurazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileItemNuovaConfigurazioneActionPerformed
         configurazioneAmbiente.setVisible(true);
     }//GEN-LAST:event_jFileItemNuovaConfigurazioneActionPerformed
 
+    public void abilitaTutto() {
+        jSimulazioneItemPlay.setEnabled(true);
+        jSimulazioneItemFine.setEnabled(true);
+        jSimulazioneItemInizio.setEnabled(true);
+        jSimulazioneItemPlay.setEnabled(true);
+        jSimulazioneItemStop.setEnabled(true);
+        jButtonSalvaConfigurazione.setEnabled(true);
+        jButtonSimulazioneFine.setEnabled(true);
+        jButtonSimulazioneInizio.setEnabled(true);
+        jButtonSimulazionePlay.setEnabled(true);
+        jButtonSimulazioneStop.setEnabled(true);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonApriConfigurazione;
     private javax.swing.JButton jButtonHelp;
@@ -495,12 +556,15 @@ public class SiGeMv2View extends FrameView {
     private javax.swing.JSeparator jFileSeparatorEsci;
     private javax.swing.JSeparator jFileSeparatorSalvaConfigurazione;
     private javax.swing.JMenuItem jHelpItemGuida;
-    private javax.swing.JInternalFrame jInternalFrameAvanzamentoProcessi;
-    private javax.swing.JInternalFrame jInternalFrameMVC;
-    private javax.swing.JInternalFrame jInternalFrameStatistiche;
+    private javax.swing.JLabel jLabelFrameMemoria;
+    private javax.swing.JLabel jLabelStatistiche;
+    private javax.swing.JLabel jLabelStatoAvanzamentoProcessi;
     private javax.swing.JMenu jMenuFinestre;
     private javax.swing.JMenu jMenuSimulazione;
-    private javax.swing.JMenuItem jSimluazioneItemFine;
+    private javax.swing.JPanel jPanelMemoria;
+    private javax.swing.JPanel jPanelProcessi;
+    private javax.swing.JPanel jPanelStatistiche;
+    private javax.swing.JMenuItem jSimulazioneItemFine;
     private javax.swing.JMenuItem jSimulazioneItemInizio;
     private javax.swing.JMenuItem jSimulazioneItemPlay;
     private javax.swing.JMenuItem jSimulazioneItemStop;

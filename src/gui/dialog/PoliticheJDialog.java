@@ -1,12 +1,19 @@
 /*
- * PoliticheJDialog.java
- *
- * Created on 24 febbraio 2008, 16.24
+ * Azienda: Stylosoft
+ * Nome file: PoliticheJDialog.java
+ * Package: gui.dialog
+ * Autore: Giordano Cariani
+ * Data: 28/02/2008
+ * Versione: 1.0
+ * Licenza: open-source
+ * Registro delle modifiche: *  
+ *  - v.1.0 (24/02/2008): Creazione JDialog e impostazione grafica
  */
 
 package gui.dialog;
 
 import gui.SiGeMv2App;
+import gui.SiGeMv2View;
 
 /**
  *
@@ -16,14 +23,17 @@ public class PoliticheJDialog extends javax.swing.JDialog {
 
     private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
     private ProcessiJDialog processi;
+    private SiGeMv2View view;
     
     private String politicaPagina;
     private String politicaSegmenti;
+    private String politicaSchedulazione;
     
     /** Creates new form PoliticheJDialog */
-    public PoliticheJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf) {
+    public PoliticheJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, SiGeMv2View view) {
         super(parent, modal);
         configurazioneAmbiente = conf;
+        this.view = view;
         initComponents();
         setPoliticaPagina((String)jComboBoxRimpiazzoPagine.getItemAt(0));
         setPoliticaSegmenti((String)jComboBoxRimpiazzoSegmenti.getItemAt(0));
@@ -45,6 +55,8 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         jButtonIndietro = new javax.swing.JButton();
         jButtonAvanti = new javax.swing.JButton();
         jButtonAnnulla = new javax.swing.JButton();
+        jLabelSchedulazione = new javax.swing.JLabel();
+        jComboBoxSchedulazione = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -107,6 +119,19 @@ public class PoliticheJDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabelSchedulazione.setFont(resourceMap.getFont("jLabelSchedulazione.font")); // NOI18N
+        jLabelSchedulazione.setText(resourceMap.getString("jLabelSchedulazione.text")); // NOI18N
+        jLabelSchedulazione.setName("jLabelSchedulazione"); // NOI18N
+
+        jComboBoxSchedulazione.setFont(resourceMap.getFont("jComboBoxSchedulazione.font")); // NOI18N
+        jComboBoxSchedulazione.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "First-Come-First-Served (FCFS)", "Priorità (P)", "Round Robin (RR)", "Round Robin con priorità (RRP)", "Round Robin con priorità e prerilascio (RRPP)", "Shortest Job First (SJF)", "Shortest Remaining Time Next (SRTN)" }));
+        jComboBoxSchedulazione.setName("jComboBoxSchedulazione"); // NOI18N
+        jComboBoxSchedulazione.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxSchedulazioneActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,13 +147,28 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                 .addContainerGap(169, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jComboBoxRimpiazzoPagine, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelRimpiazzoPagine, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(jLabelRimpiazzoSegmenti)
-                    .addComponent(jComboBoxRimpiazzoSegmenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabelRimpiazzoPagine)
+                .addContainerGap(199, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelRimpiazzoSegmenti)
                 .addContainerGap(194, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelSchedulazione)
+                .addContainerGap(240, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(156, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jComboBoxRimpiazzoPagine, 0, 197, Short.MAX_VALUE)
+                .addGap(199, 199, 199))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jComboBoxRimpiazzoSegmenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(320, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,11 +178,15 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                 .addComponent(jLabelRimpiazzoPagine)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBoxRimpiazzoPagine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addComponent(jLabelRimpiazzoSegmenti)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBoxRimpiazzoSegmenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addComponent(jLabelSchedulazione)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonIndietro)
                     .addComponent(jButtonAvanti)
@@ -168,13 +212,17 @@ public class PoliticheJDialog extends javax.swing.JDialog {
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
         this.setVisible(false);
-        processi = new ProcessiJDialog(SiGeMv2App.getApplication().getMainFrame(), true, configurazioneAmbiente, this);
+        processi = new ProcessiJDialog(SiGeMv2App.getApplication().getMainFrame(), true, configurazioneAmbiente, this, view);
         processi.setVisible(true);
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
     private void jComboBoxRimpiazzoSegmentiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxRimpiazzoSegmentiActionPerformed
         setPoliticaSegmenti((String)jComboBoxRimpiazzoSegmenti.getItemAt(jComboBoxRimpiazzoSegmenti.getSelectedIndex()));
     }//GEN-LAST:event_jComboBoxRimpiazzoSegmentiActionPerformed
+
+    private void jComboBoxSchedulazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSchedulazioneActionPerformed
+        setPoliticaSchedulazione((String)jComboBoxSchedulazione.getItemAt(jComboBoxSchedulazione.getSelectedIndex()));
+    }//GEN-LAST:event_jComboBoxSchedulazioneActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;
@@ -182,8 +230,10 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButtonIndietro;
     private javax.swing.JComboBox jComboBoxRimpiazzoPagine;
     private javax.swing.JComboBox jComboBoxRimpiazzoSegmenti;
+    private javax.swing.JComboBox jComboBoxSchedulazione;
     private javax.swing.JLabel jLabelRimpiazzoPagine;
     private javax.swing.JLabel jLabelRimpiazzoSegmenti;
+    private javax.swing.JLabel jLabelSchedulazione;
     private javax.swing.JLabel jLabelTitoloPolitiche;
     // End of variables declaration//GEN-END:variables
 
@@ -205,5 +255,13 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         this.politicaSegmenti = politicaSegmenti;
     }
 
+    public String getPoliticaSchedulazione() {
+        return politicaSchedulazione;
+    }
 
+    public void setPoliticaSchedulazione(String politicaSchedulazione) {
+        int inizio = politicaSchedulazione.lastIndexOf("(");
+        int fine = politicaSchedulazione.lastIndexOf(")");
+        this.politicaSchedulazione = politicaSchedulazione.substring(inizio+1, fine);
+    }
 }
