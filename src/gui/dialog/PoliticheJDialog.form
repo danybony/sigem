@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="jLabelTitoloPolitiche" alignment="0" pref="406" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <Component id="jButtonIndietro" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonAvanti" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonAnnulla" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="169" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jComboBoxRimpiazzoPagine" alignment="0" max="32767" attributes="1"/>
+                      <Component id="jLabelRimpiazzoPagine" alignment="0" min="-2" max="-2" attributes="1"/>
+                  </Group>
+                  <Component id="jLabelRimpiazzoSegmenti" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBoxRimpiazzoSegmenti" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="194" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jLabelTitoloPolitiche" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jLabelRimpiazzoPagine" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jComboBoxRimpiazzoPagine" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+              <Component id="jLabelRimpiazzoSegmenti" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jComboBoxRimpiazzoSegmenti" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="110" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButtonIndietro" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonAvanti" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonAnnulla" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="jLabelTitoloPolitiche">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="jLabelTitoloPolitiche.font"/>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" resourceKey="jLabelTitoloPolitiche.text"/>
+        <Property name="name" type="java.lang.String" value="jLabelTitoloPolitiche" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelRimpiazzoPagine">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="jLabelRimpiazzoPagine.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="jLabelRimpiazzoPagine.text"/>
+        <Property name="name" type="java.lang.String" value="jLabelRimpiazzoPagine" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBoxRimpiazzoPagine">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="jComboBoxRimpiazzoPagine.font"/>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="7">
+            <StringItem index="0" value="Not Recently Used (NRU)"/>
+            <StringItem index="1" value="First In First Out (FIFO)"/>
+            <StringItem index="2" value="Second Chance (SC)"/>
+            <StringItem index="3" value="Clock (C)"/>
+            <StringItem index="4" value="Least Recently Used (LRU)"/>
+            <StringItem index="5" value="Not Frequently Used (NFU)"/>
+            <StringItem index="6" value="Aging (A)"/>
+          </StringArray>
+        </Property>
+        <Property name="autoscrolls" type="boolean" value="true"/>
+        <Property name="name" type="java.lang.String" value="jComboBoxRimpiazzoPagine" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxRimpiazzoPagineActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelRimpiazzoSegmenti">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="jLabelRimpiazzoSegmenti.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="jLabelRimpiazzoSegmenti.text"/>
+        <Property name="name" type="java.lang.String" value="jLabelRimpiazzoSegmenti" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBoxRimpiazzoSegmenti">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="jComboBoxRimpiazzoSegmenti.font"/>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="5">
+            <StringItem index="0" value="First-Fit"/>
+            <StringItem index="1" value="Next-Fit"/>
+            <StringItem index="2" value="Best-Fit"/>
+            <StringItem index="3" value="Worst-Fit"/>
+            <StringItem index="4" value="Quick-Fit"/>
+          </StringArray>
+        </Property>
+        <Property name="autoscrolls" type="boolean" value="true"/>
+        <Property name="name" type="java.lang.String" value="jComboBoxRimpiazzoSegmenti" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxRimpiazzoSegmentiActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonIndietro">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonIndietro.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonIndietro" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonIndietroActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonAvanti">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonAvanti.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonAvanti" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAvantiActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonAnnulla">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonAnnulla.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonAnnulla" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAnnullaActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>
