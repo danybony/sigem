@@ -1,6 +1,21 @@
 
 package logic.simulazione;
 
+/*
+ * Azienda: Stylosoft
+ * Nome file: Istante.java
+ * Package: logic.simulazione
+ * Autore: Luca Rubin
+ * Data: 29/02/2008
+ * Versione: 1.3
+ * Licenza: open-source
+ * Registro delle modifiche:
+ *  - v.1.3 (29/02/2008): Completamento documentazione
+ *  - v.1.2 (28/02/2008): Implementato il costruttore
+ *  - v.1.1 (26/02/2008): Aggiunta la documentazione JavaDoc.
+ *  - v.1.0 (26/02/2008): Impostazione base della classe
+ */
+
 import java.util.LinkedList;
 import logic.gestioneMemoria.OperazioneInMemoria;
 import logic.schedulazione.PCB;

@@ -1,6 +1,26 @@
 
 package logic.simulazione;
 
+/*
+ * Azienda: Stylosoft
+ * Nome file: Player.java
+ * Package: logic.simulazione
+ * Autore: Luca Rubin
+ * Data: 29/02/2008
+ * Versione: 1.5
+ * Licenza: open-source
+ * Registro delle modifiche:
+ *  - v.1.5 (29/02/2008): Completata la documentazione
+ *  - v.1.4 (29/02/2008): Implementata la modalita' di ricerca di istanti significativi;
+ *                        corretto il problema di scorrimento degli stati (in alcuni casi
+                          veniva ritornato lo stato corrente al posto di quello precedente
+                          o successivo)
+ *  - v.1.3 (28/02/2008): Modificata la modalita' di scorrimento degli istanti
+ *                        con l'utilizzo di un iteratore
+ *  - v.1.2 (27/02/2008): Aggiunti metodi di salto a eventi significativi
+ *  - v.1.1 (26/02/2008): Aggiunta la documentazione JavaDoc.
+ *  - v.1.0 (26/02/2008): Impostazione base della classe
+ */
 
 import java.util.LinkedList;
 import java.util.ListIterator;

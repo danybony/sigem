@@ -1,6 +1,21 @@
 
 package logic.gestioneMemoria;
 
+/*
+ * Azienda: Stylosoft
+ * Nome file: Segmento.java
+ * Package: logic.gestioneMemoria
+ * Autore: Luca Rubin
+ * Data: 29/02/2008
+ * Versione: 1.2
+ * Licenza: open-source
+ * Registro delle modifiche:
+ *  - v.1.2 (29/02/2008): Modificato costruttore aggiungendo parametro idProcesso;
+ *                        completata documentazione JavaDoc
+ *  - v.1.1 (26/02/2008): Aggiunta la documentazione JavaDoc.
+ *  - v.1.0 (26/02/2008): Impostazione base della classe
+ */
+
 import logic.schedulazione.PCB;
 
 /**

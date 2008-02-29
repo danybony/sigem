@@ -3,13 +3,15 @@ package logic.parametri;
 /*
  * Azienda: Stylosoft
  * Nome file: ConfigurazioneIniziale.java
- * @version $Revision: 1.4 $
  * Package: logic.parametri
  * Autore: Luca Rubin
  * Data: 29/02/2008
- * Versione: 1.
+ * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.2 (28/02/2008): Migliorata la documentazione JavaDoc con la formattazione
+ *                        HTML; ottimizzati i controlli fatti dal costruttore, riducendo
+ *                        la complessita' ciclomatica
  *  - v.1.1 (26/02/2008): Aggiunta la documentazione JavaDoc.
  *  - v.1.0 (26/02/2008): Impostazione base della classe
  */

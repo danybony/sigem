@@ -1,6 +1,20 @@
 
 package logic.simulazione;
 
+/*
+ * Azienda: Stylosoft
+ * Nome file: Simulazione.java
+ * Package: logic.simulazione
+ * Autore: Luca Rubin
+ * Data: 29/02/2008
+ * Versione: 1.
+ * Licenza: open-source
+ * Registro delle modifiche:
+ *  - v.1.2 (29/02/2008): Completata la documentazione
+ *  - v.1.1 (26/02/2008): Aggiunta la documentazione JavaDoc.
+ *  - v.1.0 (26/02/2008): Impostazione base della classe
+ */
+
 import java.util.LinkedList;
 import logic.Processore;
 import logic.parametri.ConfigurazioneIniziale;
