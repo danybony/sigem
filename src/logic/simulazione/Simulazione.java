@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import logic.Processore;
 import logic.parametri.ConfigurazioneIniziale;
 
+
 public class Simulazione{
     
     private Processore proc;

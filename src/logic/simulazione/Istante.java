@@ -6,10 +6,6 @@ import logic.gestioneMemoria.OperazioneInMemoria;
 import logic.schedulazione.PCB;
 
 
-/**
- * 
- * @author 
- */
 public class Istante {
     
     private PCB processoInEsecuzione;
