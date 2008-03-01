@@ -15,10 +15,15 @@ import logic.parametri.ConfigurazioneIniziale;
  */
 public abstract class GestoreMemoria {
     
-    private Memoria MemoriaRam;
-    private Memoria MemoriaSwap;
-    private int n_frame_fault=0;
-    private int n_first_fault=0;
-       
+    protected int n_total_fault=0;
+    protected int n_first_fault=0;
+    protected int n_accessi_ram=0;
+    protected int n_accessi_disco=0;
+    
+    public int getTotalFault() { return n_total_fault; }
+    public int getFirstFault() { return n_first_fault; }
+    public int getAccessiRam() { return n_accessi_ram; }
+    public int getAccessiDisco() { return n_accessi_disco; }
+    
     public abstract LinkedList<Azione> Esegui( LinkedList<FrameMemoria> ListaPagine, int UT );
 }
