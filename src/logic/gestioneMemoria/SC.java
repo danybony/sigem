@@ -22,7 +22,7 @@ public class SC implements IRimpiazzo {
     private Vector<Dati> Tabella=new Vector<Dati>();
     
     
-    SC( int dim ) {
+    public SC( int dim ) {
         for( int i=0; i<dim; i++ )
             Tabella.add( new Dati() );
     }

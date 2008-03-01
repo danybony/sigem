@@ -22,7 +22,7 @@ public class FIFO implements IRimpiazzo {
     private Vector<Dati> Tabella=new Vector<Dati>();
     
     
-    FIFO( int dim ) {
+    public FIFO( int dim ) {
         for( int i=0; i<dim; i++ )
             Tabella.add( new Dati() );
     }

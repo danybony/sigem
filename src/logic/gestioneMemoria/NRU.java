@@ -30,7 +30,7 @@ public class NRU implements IRimpiazzo {
     private Vector<Dati> Tabella=new Vector<Dati>();
     
     
-    NRU( int dim ) {
+    public NRU( int dim ) {
         for( int i=0; i<dim; i++ )
             Tabella.add( new Dati() );
     }
