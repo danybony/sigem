@@ -2,8 +2,7 @@ package logic;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import logic.gestioneMemoria.FrameMemoria;
-import logic.gestioneMemoria.OperazioneInMemoria;
+import logic.gestioneMemoria.*;
 import logic.parametri.ConfigurazioneIniziale;
 import logic.parametri.Processo.Accesso;
 import logic.schedulazione.*;
