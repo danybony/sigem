@@ -111,11 +111,13 @@ public class Processore {
      */
     public LinkedList<Istante> creaSimulazione(){
         
-        LinkedList<Istante> simulazione = new LinkedList<Istante>();        
+        LinkedList<Istante> simulazione = new LinkedList<Istante>();  
+        
+        boolean stop, fullRAM, fullSwap;
         
         while(!scheduler.fineSimulazione()){
             
-            boolean stop = false;
+            stop = false;
             
             stop = scheduler.eseguiAttivazione();
             
@@ -136,7 +138,11 @@ public class Processore {
                  portare in RAM quei FrameMemoria */
                 LinkedList<OperazioneInMemoria> istruzioni = gestoreMemoria.esegui(frameNecessari);
                 
-                simulazione.add(creaIstante(corrente,istruzioni));
+                fullRAM = gestoreMemoria.getFullRAM();
+                
+                fullSwap = gestoreMemoria.getFullSwap();
+                
+                simulazione.add(creaIstante(corrente,istruzioni,fullRAM,fullSwap));
                 //da aggiungere il PCB dell'ultimo terminato
             
             } else {
@@ -199,7 +205,8 @@ public class Processore {
      * 
      * @return Ritorna l'istante corrente.
      */   
-    private Istante creaIstante(PCB corrente, LinkedList<OperazioneInMemoria> istruzioni){
+    private Istante creaIstante(PCB corrente, LinkedList<OperazioneInMemoria> istruzioni,
+                                boolean fullRAM, boolean fullSwap){
         
         int fault = calcolaFault(istruzioni);
         
@@ -208,12 +215,12 @@ public class Processore {
         if(scheduler.getProcessiTerminati().size() > 0 && 
                 (PCB)scheduler.getProcessiTerminati().get(0) == ultimoEseguito){
             
-            istante = new Istante(corrente, ultimoEseguito, fault, istruzioni);
+            istante = new Istante(corrente, ultimoEseguito, false, fault, istruzioni, fullRAM, fullSwap);
             
         }
         else{
             
-            istante = new Istante(corrente, null, fault, istruzioni);
+            istante = new Istante(corrente, null, false, fault, istruzioni, fullRAM, fullSwap);
             
         }
         
