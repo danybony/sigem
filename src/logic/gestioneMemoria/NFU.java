@@ -15,7 +15,7 @@ public class NFU implements IRimpiazzo {
     private class Dati {
       private int Contatore;
       private boolean R;
-      Dati() { R=false; Contatore=0; }
+      private FrameMemoria F=null;
     }
     
     private Vector<Dati> Tabella=new Vector<Dati>();
@@ -26,17 +26,19 @@ public class NFU implements IRimpiazzo {
             Tabella.add( new Dati() );
     }
     
-    public void InserisciEntry( int Posizione, int UT, boolean M ) {
+    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) {
         Tabella.elementAt(Posizione).Contatore=0;
         Tabella.elementAt(Posizione).R=true;
+        Tabella.elementAt(Posizione).F=F;
     }
     
     public void LiberaEntry( int Posizione ) {
         Tabella.elementAt(Posizione).Contatore=0;
         Tabella.elementAt(Posizione).R=false;
+        Tabella.elementAt(Posizione).F=null;
     }
     
-    public int SelezionaEntry() {
+    public FrameMemoria SelezionaEntry() {
         int pos=0; int C=Tabella.firstElement().Contatore;
         for (int i=0; i<Tabella.size(); i++ ) {
             if ( Tabella.elementAt(i).Contatore<C ) {
@@ -44,7 +46,7 @@ public class NFU implements IRimpiazzo {
                 pos=i;
             }
         }
-        return pos;
+        return Tabella.elementAt(pos).F;
     }
     
    public void AggiornaEntry( int Posizione, boolean M ) { 

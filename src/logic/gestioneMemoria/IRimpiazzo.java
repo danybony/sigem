@@ -11,9 +11,9 @@ package logic.gestioneMemoria;
  */
 public interface IRimpiazzo {
 
-    public void InserisciEntry( int Posizione, int UT, boolean M );
+    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M );
     public void LiberaEntry( int Posizione );
-    public int SelezionaEntry();
+    public FrameMemoria SelezionaEntry();
     public void AggiornaEntry( int Posizione, boolean M );
     public void AggiornaEntries( );
     

@@ -17,7 +17,7 @@ public class LRU implements IRimpiazzo {
     
     private class Dati {
       private int UltimoAccesso;
-      Dati() { UltimoAccesso=0; }
+      private FrameMemoria F;
     }
     
     private Vector<Dati> Tabella=new Vector<Dati>();
@@ -28,16 +28,18 @@ public class LRU implements IRimpiazzo {
             Tabella.add( new Dati() );
     }
     
-    public void InserisciEntry( int Posizione, int UT, boolean M ) { 
+    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).UltimoAccesso=Contatore;
+        Tabella.elementAt(Posizione).F=F;
         Contatore=Contatore+1;
     }
     
     public void LiberaEntry( int Posizione ) {
         Tabella.elementAt(Posizione).UltimoAccesso=0;
+        Tabella.elementAt(Posizione).F=null;
     }
     
-    public int SelezionaEntry() {
+    public FrameMemoria SelezionaEntry() {
         int pos=0; int T=Tabella.firstElement().UltimoAccesso;
         for (int i=0; i<Tabella.size(); i++ ) {
             if ( Tabella.elementAt(i).UltimoAccesso<T ) {
@@ -45,13 +47,13 @@ public class LRU implements IRimpiazzo {
                 pos=i;
             }
         }
-        return pos;
+        return Tabella.elementAt(pos).F;
     }
     
     public void AggiornaEntry( int Posizione, boolean M ) {
         Tabella.elementAt(Posizione).UltimoAccesso=Contatore;
         Contatore=Contatore+1;
     }
-    public void AggiornaEntries( ) {  }
+    public void AggiornaEntries( ) { }
     
 }

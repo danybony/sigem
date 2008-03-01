@@ -16,7 +16,7 @@ public class NRU implements IRimpiazzo {
     private class Dati {
       private boolean M;
       private boolean R;
-      Dati() { R=false; M=false; }
+      private FrameMemoria F=null;
       private int Classe() {
         if (R==false)
             if (M==false) return 0;
@@ -35,23 +35,25 @@ public class NRU implements IRimpiazzo {
             Tabella.add( new Dati() );
     }
     
-    public void InserisciEntry( int Posizione, int UT, boolean M ) { 
+    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).M=M;
+        Tabella.elementAt(Posizione).F=F;
     }
     
     public void LiberaEntry( int Posizione ) { 
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).M=false;
+        Tabella.elementAt(Posizione).F=null;
     }
     
-    public int SelezionaEntry() { 
+    public FrameMemoria SelezionaEntry() { 
       int classe=0,pos=0;
       for (int i=0; i<Tabella.size(); i++ ) {
-        if ( Tabella.elementAt(i).Classe()==0 ) return i;
+        if ( Tabella.elementAt(i).Classe()==0 ) return Tabella.elementAt(i).F;
         else if ( Tabella.elementAt(i).Classe()<classe ) pos=i;
       }
-      return pos;
+      return Tabella.elementAt(pos).F;
     }
     
     public void AggiornaEntry( int Posizione, boolean M ) {

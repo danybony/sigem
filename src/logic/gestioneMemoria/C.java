@@ -16,7 +16,7 @@ public class C implements IRimpiazzo {
     
     private class Dati {
       private boolean R;
-      Dati() { R=false; }
+      private FrameMemoria F=null;
     }
     
     private Vector<Dati> Tabella=new Vector<Dati>();
@@ -27,15 +27,17 @@ public class C implements IRimpiazzo {
             Tabella.add( new Dati() );
     }
     
-    public void InserisciEntry( int Posizione, int UT, boolean M ) { 
+    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).R=true;
+        Tabella.elementAt(Posizione).F=F;
     }
     
     public void LiberaEntry( int Posizione ) { 
         Tabella.elementAt(Posizione).R=false;
+        Tabella.elementAt(Posizione).F=null;
     }
     
-    public int SelezionaEntry() {
+    public FrameMemoria SelezionaEntry() {
         boolean trovata=false;
         int dim=Tabella.size();        
         while( !trovata ) {
@@ -47,7 +49,7 @@ public class C implements IRimpiazzo {
         }
         int temp=Lancetta;
         Lancetta=(Lancetta+1)%dim;
-        return temp;
+        return Tabella.elementAt(temp).F;
     }
     
     public void AggiornaEntry( int Posizione, boolean M ) {}

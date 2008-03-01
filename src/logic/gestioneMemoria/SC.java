@@ -14,9 +14,9 @@ import java.util.Vector;
 public class SC implements IRimpiazzo {
   
     private class Dati {
-      private int TArrivo;
-      private boolean R;
-      Dati() { R=false; TArrivo=0; }
+      private int TArrivo=0;
+      private boolean R=false;
+      private FrameMemoria F=null;
     }
     
     private Vector<Dati> Tabella=new Vector<Dati>();
@@ -27,17 +27,19 @@ public class SC implements IRimpiazzo {
             Tabella.add( new Dati() );
     }
     
-    public void InserisciEntry( int Posizione, int UT, boolean M ) {
+    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) {
         Tabella.elementAt(Posizione).TArrivo=UT;
         Tabella.elementAt(Posizione).R=true;
+        Tabella.elementAt(Posizione).F=F;
     }
     
     public void LiberaEntry( int Posizione ) {
         Tabella.elementAt(Posizione).TArrivo=0;
         Tabella.elementAt(Posizione).R=false;
+        Tabella.elementAt(Posizione).F=null;
     }
     
-    public int SelezionaEntry() {
+    public FrameMemoria SelezionaEntry() {
         
         int i=0,pos=0; Dati DMinore=Tabella.firstElement();       
         boolean primo=false;
@@ -78,9 +80,9 @@ public class SC implements IRimpiazzo {
             }
         }
         
-        return pos;
+        return Tabella.elementAt(pos).F;
             
-        }
+    }
     
     public void AggiornaEntry( int Posizione, boolean M ) {}
     public void AggiornaEntries( ) {}
