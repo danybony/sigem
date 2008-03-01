@@ -47,7 +47,7 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
             if ( !MemoriaRam.cerca(F) ) { // Pagina non in ram
                 n_total_fault++;
                 if ( !MemoriaSwap.cerca(F) ) { // Pagina neanche in swap
-                    n_first_fault++;
+                    n_nonswap_fault++;
                     try {
                         int Posizione_Inserimento=MemoriaRam.aggiungi(F);
                         PoliticaRimpiazzo.InserisciEntry( F, Posizione_Inserimento, UT, F.getModifica() );

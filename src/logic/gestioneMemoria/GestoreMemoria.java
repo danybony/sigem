@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public abstract class GestoreMemoria {
     
     protected int n_total_fault=0;
-    protected int n_first_fault=0;
+    protected int n_nonswap_fault=0;
     protected int n_accessi_ram=0;
     protected int n_accessi_disco=0;
     
