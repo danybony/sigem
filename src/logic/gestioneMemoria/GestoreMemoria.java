@@ -6,8 +6,6 @@
 package logic.gestioneMemoria;
 
 import java.util.LinkedList;
-import logic.gestioneMemoria.FrameMemoria;
-import logic.parametri.ConfigurazioneIniziale;
 
 /**
  *
