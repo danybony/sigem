@@ -6,12 +6,11 @@
 package logic.gestioneMemoria;
 
 import java.util.Vector;
-
 /**
  *
  * @author Davide
  */
-public class FirstFit implements IAllocazione {
+public class NextFit implements IAllocazione {
     public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi ) {
         boolean trovato=false; int i=0;
         while ( i<Liberi.size() && trovato==false ) {

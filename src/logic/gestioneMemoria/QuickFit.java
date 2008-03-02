@@ -6,12 +6,11 @@
 package logic.gestioneMemoria;
 
 import java.util.Vector;
-
 /**
  *
  * @author Davide
  */
-public class BestFit implements IAllocazione {
+public class QuickFit {
     public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi ) {
         int Dim=F.getDimensione(),Pos=0,Min=Dim-Liberi.elementAt(Pos).getDimensione();
         if ( Min<0 ) Min=-Min;
