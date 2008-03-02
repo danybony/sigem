@@ -1,6 +1,16 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Azienda: Stylosoft
+ * Nome file: RAMPaginata.java
+ * Package: logic.gestioneMemoria
+ * Autore: Alberto Zatton
+ * Data: 29/02/2008
+ * Versione: 1.1
+ * Licenza: open-source
+ * Registro delle modifiche:
+ *  - v.1.1 (02/03/2008): Nuovo costruttore come da issue 28
+ *                        Nuovo metodo indiceDi(FrameMemoria) come da issue 29
+ *                        Aggiunta intestazione e commenti sui parametri
+ *  - v.1.0 (29/02/2008): Impostazione base della classe
  */
 
 package logic.gestioneMemoria;
@@ -8,8 +18,7 @@ package logic.gestioneMemoria;
 import logic.parametri.ConfigurazioneIniziale;
 
 /**
- *
- * @author PC
+ * Classe che modella la RAM, gestendola come collezione di pagine.
  */
 class RAMPaginata extends MemoriaPaginata{
 
@@ -17,11 +26,18 @@ class RAMPaginata extends MemoriaPaginata{
         super(numPagine);
     }
     
-    @Override
+    
     /**Metodo che aggiunge una pagina nella RAM. Se ha successo, ritorna un int
      * che rappresenta l'id della "cella" in cui ha inserito la pagina; in caso
      * di fallimento solleva un'eccezione che deve essere opportunamente gestita
+     * 
+     * @param pag
+     *      Riferimento alla pagina da aggiungere in RAM
+     * @return
+     *      La posizione della pagina all'interno della RAM dopo l'inserimento
+     *      (indice int del Vector)
      */
+    @Override
     public int aggiungi(FrameMemoria pag) throws MemoriaEsaurita{
 
         if(pagineResidue>0) {
@@ -57,36 +73,59 @@ class RAMPaginata extends MemoriaPaginata{
         }
     }
     
-    @Override
+    
     /**Metodo che marca la pagina come non più in RAM, liberando spazio
+     * 
+     * @param pag
+     *      Pagina da marcare come non più in RAM
+     * 
+     * @return
+     *      Il riferimento alla pagina marcata
      */
+    @Override
     public FrameMemoria rimuovi(FrameMemoria pag){
         pag.setInRAM(false);
         pagineResidue++;
         return pag;
     }
     
-    @Override
+    
     /**Metodo che cerca se una pagina è già presente in RAM
      * 
+     * @param pag
+     *      Il riferimento alla pagina da cercare
+     * @return
+     *      TRUE se la pagina è in RAM, FALSE altrimenti
      */
+    @Override
     public boolean cerca(FrameMemoria pag){
         return memoria.contains(pag);
     }
     
     /**Metodo che, dato un frame memoria, ritorna la sua posizione all'interno
      * della RAM.
+     * 
+     * @param pag
+     *      Il riferimento alla pagina di cui si vuole trovare l'indice
+     * @return
+     *      L'indice della pagina riferita da pag (se è presente in RAM),
+     *      altrimenti ritorna -1
+     * 
      */
     public int indiceDi(FrameMemoria pag){
         return memoria.indexOf(pag);
     }
     
-    @Override
+    
     /**Metodo che marca come eliminabili le pagine riferite da un processo che
      * ha finito la sua esecuzione. Durante il prossimo inserimento, queste
      * pagine saranno considerate memoria libera, quindi si potranno inserire
      * nuove pagine senza interrogare la politica di rimpiazzo.
+     * 
+     * @param idProcesso
+     *      Intero che identifica il processo che ha finito la sua esecuzione
      */
+    @Override
     public void liberaMemoria(int idProcesso){
         FrameMemoria paginaAux;
         for(int i=0; i<memoria.size(); i++){
