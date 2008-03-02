@@ -70,7 +70,8 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         while( I.hasNext() ) {
             
             FrameMemoria F=I.next();
-            F.setTArrivo=UT;
+            F=(Segmento)F;
+            F.setTempoInRAM(UT);
             
             if ( !MemoriaRam.cerca(F) ) {
                 if ( !MemoriaSwap.cerca(F) ) { // F mai caricato

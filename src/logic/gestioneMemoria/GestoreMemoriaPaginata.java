@@ -37,24 +37,24 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
         }
     }
     
-    public LinkedList<Azione> LiberaMemoria ( LinkedList<FrameMemoria> ListaPagine ) {
+    public void liberamemoria ( PCB idProcesso ) {
         
-        Iterator<FrameMemoria> I=ListaPagine.iterator();
-        
-        while( I.hasNext() ) {
-            FrameMemoria F=I.next();
-            int Pos=MemoriaRam.cerca(F);
-            if ( Pos>-1 ) {
-                MemoriaRam.rimuovi(F);
-                PoliticaRimpiazzo.LiberaEntry(Pos);
-                // Azione ELIMINA(F)
-            }
-            Pos=MemoriaSwap.cerca(F);
-            if ( Pos>-1 ) {
-                MemoriaSwap.rimuovi(F);
-            }
+    }
+    
+    private int inserisci( MemoriaPaginata M, FrameMemoria F, int UT ) throws MemoriaEsaurita {
+        int Posizione_Inserimento=M.aggiungi(F);
+        if ( M instanceof RAMPaginata ) {
+            PoliticaRimpiazzo.InserisciEntry( F, Posizione_Inserimento, UT, F.getModifica() );
         }
-        
+        return Posizione_Inserimento;
+    }
+    
+    private FrameMemoria rimuovi( Memoria M, FrameMemoria F ) {
+        FrameMemoria Da_Rimuovere=F;
+        if ( M instanceof RAMPaginata ) {
+            Da_Rimuovere=PoliticaRimpiazzo.SelezionaEntry();
+        }
+        return M.rimuovi(Da_Rimuovere);
     }
     
     public LinkedList<Azione> esegui( LinkedList<FrameMemoria> ListaPagine, int UT ) {
@@ -70,72 +70,48 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
         while( I.hasNext() ) {
             
             FrameMemoria F=I.next();
-            int Pos_Ram=MemoriaRam.cerca(F);
-            int Pos_Swap=MemoriaSwap.cerca(F);
             
-            if ( Pos_Ram<0 ) { // Pagina non in ram
-                n_total_fault++;
-                if ( Pos_Swap<0 ) { // Pagina neanche in swap
-                    n_nonswap_fault++;
+            if ( !MemoriaRam.cerca(F) ) { // Pagina non in ram
+                //n_total_fault++;
+                if ( !MemoriaSwap.cerca(F) ) { // Pagina neanche in swap
+                    //n_nonswap_fault++;
                     try {
-                        int Posizione_Inserimento=MemoriaRam.aggiungi(F);
-                        PoliticaRimpiazzo.InserisciEntry( F, Posizione_Inserimento, UT, F.getModifica() );
-                        n_accessi_ram+=1; n_accessi_disco+=1; 
-                        // crea comando inserimento INSERISCI(F,Posizione_Inserimento)
-                        ListaAzioni.add( new Azione(1,F,Posizione_Inserimento) );
+                        ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
                     } 
                     catch ( MemoriaEsaurita RamEsaurita ) {
-                        FrameMemoria Frame_Ram=PoliticaRimpiazzo.SelezionaEntry();
                         try {
-                            FrameMemoria Temp=MemoriaRam.rimuovi(Frame_Ram);
-                            n_accessi_ram+=1;
-                            if (Temp.getModifica()==true) {
-                                int Posizione_Swap=MemoriaSwap.aggiungi(Temp);
-                                n_accessi_disco+=1;
-                                // RAMTOSWAP(Temp,Posizione_Ram,Posizione_Swap) 
-                                ListaAzioni.add( new Azione(3,Temp,Posizione_Swap) );
+                            FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
+                            ListaAzioni.add( new AzionePagina(3, Frame_Rimosso ) );
+                            if ( Frame_Rimosso.getModifica()==true ) {
+                                ListaAzioni.add( new AzionePagina(2, Frame_Rimosso, 
+                                        inserisci(MemoriaSwap,Frame_Rimosso,UT) ) );
                             }
-                            int Posizione_Ram=MemoriaRam.aggiungi(F);
-                            n_accessi_ram+=1; n_accessi_disco+=1;
-                            PoliticaRimpiazzo.InserisciEntry( F, Posizione_Ram, UT, F.getModifica() );
-                            // INSERISCI(F,Posizione_Ram) crea comando rimpiazzo
-                            ListaAzioni.add( new Azione(1,F,Posizione_Ram) );
+                            ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
                         }
                         catch ( MemoriaEsaurita SwapEsaurita ) {
                             // EXIT() situazione grave (memoria finita)
-                            ListaAzioni.add( new Azione(0,null) );
+                            ListaAzioni.add( new AzionePagina(0,null) );
                         }
                     }
                 }
                 else { // pagina in swap
                     try {
-                        FrameMemoria Frame_Swap=MemoriaSwap.rimuovi(F);
-                        n_accessi_disco+=1;
-                        int Posizione_Ram=MemoriaRam.aggiungi(F);
-                        n_accessi_ram+=1;
-                        PoliticaRimpiazzo.InserisciEntry( F, Posizione_Ram, UT, F.getModifica() );
-                        // SWAPTORAM(F,Posizione_Swap,Posizione_Ram)
-                        ListaAzioni.add( new Azione(4,F,Posizione_Ram) );
+                        ListaAzioni.add( new AzionePagina(4, rimuovi( MemoriaSwap, F ) ) );
+                        ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
                     }
                     catch ( MemoriaEsaurita RamEsaurita ) {
-                        FrameMemoria Frame_Ram=PoliticaRimpiazzo.SelezionaEntry();
                         try {
-                            FrameMemoria Temp=MemoriaRam.rimuovi(Frame_Ram);
-                            if (Temp.getModifica()==true) {
-                                int Posizione_Swap_Temp=MemoriaSwap.aggiungi(Temp);
-                                n_accessi_ram+=1; n_accessi_disco+=1;
-                                // RAMTOSWAP(Temp,Posizione_Ram,Posizione_Swap_Temp)
-                                ListaAzioni.add( new Azione(3,Temp,Posizione_Swap_Temp) );                                
+                            FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
+                            ListaAzioni.add( new AzionePagina(3, Frame_Rimosso ) );
+                            if ( Frame_Rimosso.getModifica()==true ) {
+                                ListaAzioni.add( new AzionePagina(2, Frame_Rimosso, 
+                                        inserisci(MemoriaSwap,Frame_Rimosso,UT) ) );
                             }
-                            int Posizione_Ram=MemoriaRam.aggiungi(F);
-                            n_accessi_ram+=1;
-                            PoliticaRimpiazzo.InserisciEntry( F, Posizione_Ram, UT, F.getModifica() );                            
-                            // SWAPTORAM(F,Posizione_Swap,Posizione_Ram)
-                            ListaAzioni.add( new Azione(4,F,Posizione_Ram) );
+                            ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
                         }
                         catch ( MemoriaEsaurita SwapEsaurita ) {
-                            // caso estremo
-                            ListaAzioni.add( new Azione(0,null) );
+                            // EXIT() situazione grave (memoria finita)
+                            ListaAzioni.add( new AzionePagina(0,null) );
                         }
                     }
                 }
@@ -143,8 +119,8 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
             }
             else { // gia in ram
                 n_accessi_ram+=1;
-                PoliticaRimpiazzo.AggiornaEntry(Pos_Ram, F.getModifica() );
-                ListaAzioni.add( new Azione(5,F) );
+                PoliticaRimpiazzo.AggiornaEntry(MemoriaRam.indiceDi(F), F.getModifica() );
+                ListaAzioni.add( new AzionePagina(5,F) );
             }
 
 
