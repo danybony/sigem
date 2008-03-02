@@ -23,5 +23,5 @@ public abstract class GestoreMemoria {
     public int getAccessiRam() { return n_accessi_ram; }
     public int getAccessiDisco() { return n_accessi_disco; }
     
-    public abstract LinkedList<Azione> Esegui( LinkedList<FrameMemoria> ListaFrame, int UT );
+    public abstract LinkedList<Azione> esegui( LinkedList<FrameMemoria> ListaFrame, int UT );
 }

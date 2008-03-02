@@ -47,6 +47,7 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
             if ( Pos>-1 ) {
                 MemoriaRam.rimuovi(F);
                 PoliticaRimpiazzo.LiberaEntry(Pos);
+                // Azione ELIMINA(F)
             }
             Pos=MemoriaSwap.cerca(F);
             if ( Pos>-1 ) {
@@ -56,7 +57,7 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
         
     }
     
-    public LinkedList<Azione> Esegui( LinkedList<FrameMemoria> ListaPagine, int UT ) {
+    public LinkedList<Azione> esegui( LinkedList<FrameMemoria> ListaPagine, int UT ) {
         
         LinkedList<Azione> ListaAzioni=null;
         
