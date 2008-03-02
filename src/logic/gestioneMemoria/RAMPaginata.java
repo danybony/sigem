@@ -74,6 +74,13 @@ class RAMPaginata extends MemoriaPaginata{
         return memoria.contains(pag);
     }
     
+    /**Metodo che, dato un frame memoria, ritorna la sua posizione all'interno
+     * della RAM.
+     */
+    public int indiceDi(FrameMemoria pag){
+        return memoria.indexOf(pag);
+    }
+    
     @Override
     /**Metodo che marca come eliminabili le pagine riferite da un processo che
      * ha finito la sua esecuzione. Durante il prossimo inserimento, queste
