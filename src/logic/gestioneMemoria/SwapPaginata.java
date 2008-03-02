@@ -25,11 +25,11 @@ class SwapPaginata extends MemoriaPaginata{
  * Costruttore che inizializza il numero delle pagine che può contenere la
  * memoria
  * 
- * @param numPagine
- *      Numero di pagine che può contenere la memoria
+ * @param conf
+ *      Riferimento all'istanza di ConfigurazioneIniziale
  */
-public SwapPaginata(int numPagine){
-        super(numPagine);
+public SwapPaginata(ConfigurazioneIniziale conf){
+        super(conf.getDimensioneSwap()/conf.getDimensionePagina());
     }
     
     

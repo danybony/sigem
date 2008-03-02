@@ -22,8 +22,15 @@ import logic.parametri.ConfigurazioneIniziale;
  */
 class RAMPaginata extends MemoriaPaginata{
 
-    public RAMPaginata(int numPagine){
-        super(numPagine);
+    /**
+     * Costruttore di RAMPaginata. Imposta la capienza della RAM, quantificata
+     * in numero di pagine.
+     * 
+     * @param conf
+     *      Riferimento all'istanza di ConfigurazioneIniziale
+     */
+    public RAMPaginata(ConfigurazioneIniziale conf){
+        super(conf.getDimensioneRAM()/conf.getDimensionePagina());
     }
     
     

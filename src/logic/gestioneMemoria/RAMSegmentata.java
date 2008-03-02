@@ -163,6 +163,23 @@ class RAMSegmentata extends MemoriaSegmentata{
         return spaziLiberi;
     }
     
+    /**
+     * Metodo che costruisce un Vector composto dai segmenti presenti in
+     * RAM. Utile per gli algoritmi di rimpiazzo dei segmenti.
+     * 
+     * @return
+     *      Un Vector contenente tutti i segmenti presenti in RAM
+     */
+    public Vector<FrameMemoria> getFrameOccupati(){
+        Vector<FrameMemoria> segmenti=new Vector<FrameMemoria>();
+        FrameMemoria segAux;
+        for(int i=0;i<memoria.size();i++) {
+            segAux=memoria.get(i);
+            if(!segAux.getIndirizzo().equals("spazio")) segmenti.add(segAux);
+        }
+        return segmenti;
+    }
+    
 
     /**
      * Metodo che restituisce il segmento con lo spazio libero più grande.
