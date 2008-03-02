@@ -17,6 +17,7 @@ package logic.simulazione;
  */
 
 import java.util.LinkedList;
+import logic.gestioneMemoria.Azione;
 import logic.gestioneMemoria.OperazioneInMemoria;
 import logic.schedulazione.PCB;
 
@@ -57,7 +58,7 @@ public class Istante {
      * Lista dei cambiamenti avvenuti in memoria: aggiunta o rimozione di 
      * pagine/segmenti.
      */
-    private LinkedList<OperazioneInMemoria> cambiamentiInMemoria;
+    private LinkedList<Azione> cambiamentiInMemoria;
     
     /**
      * Segnala l'eventuale riempimento della memoria centrale RAM.
@@ -96,7 +97,7 @@ public class Istante {
             PCB terminato,
             boolean nuovoProcesso,
             int fault,
-            LinkedList<OperazioneInMemoria> memoria,
+            LinkedList<Azione> memoria,
             boolean full_RAM,
             boolean full_Swap
             ){
@@ -142,7 +143,7 @@ public class Istante {
     /**
      * Ritorna una lista che descrive le operazioni avvenute in memoria.
      */
-    public LinkedList<OperazioneInMemoria> getCambiamentiInMemoria(){
+    public LinkedList<Azione> getCambiamentiInMemoria(){
         return this.cambiamentiInMemoria;
     }
     
