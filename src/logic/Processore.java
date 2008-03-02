@@ -81,7 +81,22 @@ public class Processore {
         
         if(conf.getModalitaGestioneMemoria() == 1){
             
-            this.gestoreMemoria = new GestioneMemoriaPaginata();
+            IPoliticaP politicaMem = null;
+            
+            switch (conf.getPoliticaGestioneMemoria()){            
+                case 1:politicaMem = new NRU();
+                case 2:politicaMem = new FIFO();
+                case 3:politicaMem = new FC();
+                case 4:politicaMem = new C();
+                case 5:politicaMem = new LRU();
+                case 6:politicaMem = new NFU();
+                case 7:politicaMem = new A();
+            }
+            
+            int dimRAM = conf.getDimensioneRAM()/conf.getDimensionePagina();
+            int dimSwap = conf.getDimensioneSwap()/conf.getDimensionePagina();
+            
+            this.gestoreMemoria = new GestioneMemoriaPaginata(politicaMem, dimRAM, dimSwap);
             
         }
         else {
@@ -111,6 +126,8 @@ public class Processore {
      */
     public LinkedList<Istante> creaSimulazione(){
         
+        int tempoCorrente = 0;
+        
         LinkedList<Istante> simulazione = new LinkedList<Istante>();  
         
         boolean stop, fullRAM, fullSwap;
@@ -136,7 +153,8 @@ public class Processore {
                  FrameMemoria necessari al processo in esecuzione e riceve la 
                  lista delle istruzioni effettuate dal gestore della memoria per
                  portare in RAM quei FrameMemoria */
-                LinkedList<OperazioneInMemoria> istruzioni = gestoreMemoria.esegui(frameNecessari);
+                LinkedList<OperazioneInMemoria> istruzioni = gestoreMemoria.esegui(frameNecessari,
+                                                             tempoCorrente);
                 
                 fullRAM = gestoreMemoria.getFullRAM();
                 
@@ -159,6 +177,8 @@ public class Processore {
             }
             
             ultimoEseguito = corrente;
+            
+            tempoCorrente ++;
             
         }
         
