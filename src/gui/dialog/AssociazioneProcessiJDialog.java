@@ -183,7 +183,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
-        //listaProcessi = new Processo[jTableAssociazioneProcessi.getRowCount()];
+        listaProcessi = new LinkedList<Processo>();
         for (int row=0; row<jTableAssociazioneProcessi.getRowCount(); row++) {
             listaProcessi.add( new Processo (
                                 (String) jTableAssociazioneProcessi.getValueAt(row, 0),
