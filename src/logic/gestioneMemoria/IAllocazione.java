@@ -5,10 +5,12 @@
 
 package logic.gestioneMemoria;
 
+import java.util.Vector;
+
 /**
  *
  * @author Davide
  */
 public interface IAllocazione {
-    
+    public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi );
 }
