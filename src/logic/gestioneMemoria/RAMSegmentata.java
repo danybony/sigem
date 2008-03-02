@@ -1,6 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Azienda: Stylosoft
+ * Nome file: RAMSegmentata.java
+ * Package: logic.gestioneMemoria
+ * Autore: Alberto Zatton
+ * Data: 29/02/2008
+ * Versione: 1.1
+ * Licenza: open-source
+ * Registro delle modifiche:
+ *  - v.1.1 (02/03/2008): Aggiunti i commenti sui parametri e sul tipo di ritorno
+ *                        dei metodi
+ *  - v.1.0 (29/02/2008): Impostazione base della classe
  */
 
 package logic.gestioneMemoria;
@@ -9,19 +18,39 @@ package logic.gestioneMemoria;
 import java.util.Vector;
 import logic.parametri.ConfigurazioneIniziale;
 
+/**
+ * Classe che rappresenta la RAM modellata tramite segmenti
+ */
 class RAMSegmentata extends MemoriaSegmentata{
 
+    /**
+     * Costruttore di RAMSegmentata che setta lo spazio complessivo in memoria
+     * e la inizializza con un unico grande segmento che rappresenta lo spazio
+     * libero
+     * 
+     * @param conf
+     *      Riferimento all'istanza di ConfigurazioneIniziale
+     */
     public RAMSegmentata(ConfigurazioneIniziale conf){
         super(conf.getDimensioneRAM());
         memoria.add(new Segmento("spazio", conf.getDimensioneRAM()));
         memoria.get(0).setIdProcesso(-1);
     }
     
-    @Override
-    /**Metodo che aggiunge un segmento nella RAM. Come parametri richiede il 
+    
+    /**
+     * Metodo che aggiunge un segmento nella RAM. Come parametri richiede il 
      * riferimento al segmento e il riferimento allo spazio in cui si vuole
      * inserire il segmento
+     * 
+     * @param seg
+     *      Riferimento al nuovo segmento da inserire
+     * 
+     * @param spazio
+     *      Riferimento allo spazio dove inserire il nuovo segmento
+     *      
      */
+    @Override
     public void aggiungi(FrameMemoria seg, FrameMemoria spazio){
         /**Calcolo lo spazio che rimarrà libero al termine dell'inserimento*/ 
         int spazioRimasto=spazio.getDimensione()-seg.getDimensione();
@@ -41,9 +70,14 @@ class RAMSegmentata extends MemoriaSegmentata{
         spazioRimasto-=seg.getDimensione();
     }
     
-    @Override
-    /**Metodo che toglie un segmento dalla RAM.
+    
+    /**
+     * Metodo che toglie un segmento dalla RAM.
+     * 
+     * @param seg
+     *      Riferimento al segmento da togliere dalla RAM
      */
+    @Override
     public FrameMemoria rimuovi(FrameMemoria seg){
         /**Salvo la posizione del segmento in memoria. Servirà in seguito*/
         int pos=memoria.indexOf(seg);
@@ -66,10 +100,15 @@ class RAMSegmentata extends MemoriaSegmentata{
         return seg;
     }
     
-    @Override
-    /**Metodo che elimina i segmenti non più riferiti perchè il relativo processo
+    
+    /**
+     * Metodo che elimina i segmenti non più riferiti perchè il relativo processo
      * ha terminato l'esecuzione
+     * 
+     * @param idProcesso
+     *      Intero che identifica il processo che ha finito di eseguire
      */
+    @Override
     public void liberaMemoria(int idProcesso){
         FrameMemoria segAux1;
         FrameMemoria segAux2;
@@ -107,10 +146,12 @@ class RAMSegmentata extends MemoriaSegmentata{
         }
     }
     
-    /**Metodo che costruisce un Vector composto dagli spazi vuoti disponibili in
+    /**
+     * Metodo che costruisce un Vector composto dagli spazi vuoti disponibili in
      * RAM. Utile per gli algoritmi di allocazione dei segmenti.
      * 
      * @return
+     *      Un Vector contenente tutti gli spazi vuoti in RAM
      */
     public Vector<FrameMemoria> getFrameLiberi(){
         Vector<FrameMemoria> spaziLiberi=new Vector<FrameMemoria>();
@@ -123,10 +164,13 @@ class RAMSegmentata extends MemoriaSegmentata{
     }
     
 
-    /**Metodo che restituisce il segmento con lo spazio libero più grande.
+    /**
+     * Metodo che restituisce il segmento con lo spazio libero più grande.
      * Utile per gli algoritmi di rimpiazzo dei segmenti.
      * 
      * @return
+     *      Un riferimento allo spazio libero contiguo più grande disponibile
+     *      in RAM
      */
     public FrameMemoria getSpazioMaggiore(){
         FrameMemoria frameMax=new Segmento("spazio",0);
@@ -142,8 +186,17 @@ class RAMSegmentata extends MemoriaSegmentata{
     }
     
     
+    
+    /**
+     * Metodo che cerca se il segmento richiesto è già presente in RAM
+     * 
+     * @param seg
+     *      Riferimento al segmento da controllare
+     * 
+     * @return
+     *      TRUE se il segmento è in RAM, FALSE altrimenti
+     */
     @Override
-    /**Metodo che cerca se il segmento richiesto è già presente in RAM*/
     public boolean cerca(FrameMemoria seg){
         return memoria.contains(seg);
     }

@@ -1,40 +1,76 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Azienda: Stylosoft
+ * Nome file: SwapSegmentata.java
+ * Package: logic.gestioneMemoria
+ * Autore: Alberto Zatton
+ * Data: 29/02/2008
+ * Versione: 1.1
+ * Licenza: open-source
+ * Registro delle modifiche:
+ *  - v.1.1 (02/03/2008): Aggiunti i commenti sui parametri e sul tipo di ritorno
+ *                        dei metodi
+ *  - v.1.0 (29/02/2008): Impostazione base della classe
  */
 
 package logic.gestioneMemoria;
 
 import logic.parametri.ConfigurazioneIniziale;
 
-
+/**
+ * Classe che rappresenta la memoria di Swap modellata attraverso segmenti
+ */
 class SwapSegmentata extends MemoriaSegmentata{
 
+    /**
+     * Costruttore di SwapSegmentata. Si limita ad impostare la capienza della
+     * memoria
+     * 
+     * @param conf
+     *      Riferimento all'istanza di ConfigurazioneIniziale
+     */
     public SwapSegmentata(ConfigurazioneIniziale conf){
         super(conf.getDimensioneSwap());
     }
     
-    @Override
-    /**Metodo che aggiunge un segmento nello Swap.
+    
+    /**
+     * Metodo che aggiunge un segmento nello Swap.
+     * 
+     * @param seg
+     *      Riferimento al segmento da inserire
+     * @param spazio
+     *      Parametro fittizio e inutilizzato, presente in quanto richiesto
+     *      nella superclasse
      */
+    @Override
     public void aggiungi(FrameMemoria seg, FrameMemoria spazio){
         memoria.add(seg);
         spazioResiduo-=seg.getDimensione();
     }
     
-    @Override
-    /**Metodo che toglie un segmento dallo Swap.
+    
+    /**
+     * Metodo che toglie un segmento dallo Swap.
+     * 
+     * @param seg
+     *      Riferimento al segmento da rimuovere
      */
+    @Override
     public FrameMemoria rimuovi(FrameMemoria seg){
         memoria.remove(seg);
         spazioResiduo-=seg.getDimensione();
         return seg;
     }
     
-    @Override
-    /**Metodo che elimina dallo Swap i segmenti relativi ad un processo che ha
+    
+    /**
+     * Metodo che elimina dallo Swap i segmenti relativi ad un processo che ha
      * finito la sua esecuzione.
+     * 
+     * @param idProcesso
+     *      Intero che identifica il processo la cui esecuzione è terminata
      */
+    @Override
     public void liberaMemoria(int idProcesso){
         for(int i=0;i<memoria.size();i++){
             if (memoria.get(i).getIdProcesso()==idProcesso){
@@ -44,8 +80,11 @@ class SwapSegmentata extends MemoriaSegmentata{
         }
     }
     
+    
+    /**
+     * Metodo cerca non usato in SwapSegmentata
+     */
     @Override
-    /**Metodo cerca non usato in SwapSegmentata*/
     public boolean cerca(FrameMemoria seg){
         return true;
     }
