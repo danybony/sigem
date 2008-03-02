@@ -3,10 +3,12 @@
  * Nome file: ConfigurazioneAmbienteJDialog.java
  * Package: gui.dialog.java
  * Autore: Giordano Cariani
- * Data: 28/02/2008
- * Versione: 1.0
+ * Data: 02/03/2008
+ * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche: *  
+ *  - v.1.1 (02/03/2008): Impostato gli intervalli dei valori per gli jspinner
+ *                        inserita label "passo 1 di 4"
  *  - v.1.0 (01/03/2008): Creazione JDialog e impostazione grafica
  */
 
@@ -24,6 +26,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     private static final int DIMRAM = 9;
     private static final int DIMSWAP = 7;
     private static final int DIMPAGINE = 3;
+    private static final int DIMBUS = 7;
     
     private int numProcessi;
     private int dimensioneRAM;
@@ -45,6 +48,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         initSpinnerDimensioneSWAP();
         initSpinnerPagine();
         initSpinnerTempi();
+        initSpinnerBandaBusDati();
     }
     
     public ConfigurazioneAmbienteJDialog(ConfigurazioneAmbienteJDialog conf, SiGeMv2View view) {
@@ -61,7 +65,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         jLabelDimensionePagina = new javax.swing.JLabel();
         jLabelTempoContextSwitch = new javax.swing.JLabel();
         jLabelTempoAccessoDisco = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelBandaBusDati = new javax.swing.JLabel();
         jSpinnerProcessi = new javax.swing.JSpinner();
         jSpinnerDimensioneRAM = new javax.swing.JSpinner();
         jSpinnerDimensioneAreaSWAP = new javax.swing.JSpinner();
@@ -71,33 +75,34 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         jSpinnerBandaBusDati = new javax.swing.JSpinner();
         jButtonAvanti = new javax.swing.JButton();
         jButtonAnnulla = new javax.swing.JButton();
+        jLabelPasso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabelConfigurazioneIniziale.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelConfigurazioneIniziale.setFont(new java.awt.Font("Tahoma", 1, 18));
         jLabelConfigurazioneIniziale.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelConfigurazioneIniziale.setText("CONFIGURAZIONE INIZIALE");
 
-        jLabelProcessi.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelProcessi.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelProcessi.setText("Processi (da 1 a 20)");
 
         jLabelDimensioneRAM.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabelDimensioneRAM.setText("Dimensione RAM (kb)");
+        jLabelDimensioneRAM.setText("Dimensione RAM (KB)");
 
         jLabelDimensionaAreaSWAP.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabelDimensionaAreaSWAP.setText("Dimensione Area SWAP (kb)");
+        jLabelDimensionaAreaSWAP.setText("Dimensione Area SWAP (KB)");
 
         jLabelDimensionePagina.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabelDimensionePagina.setText("Dimensione Pagina (kb)");
+        jLabelDimensionePagina.setText("Dimensione Pagina (KB)");
 
-        jLabelTempoContextSwitch.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelTempoContextSwitch.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelTempoContextSwitch.setText("Tempo Context Switch (ms)");
 
-        jLabelTempoAccessoDisco.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelTempoAccessoDisco.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelTempoAccessoDisco.setText("Tempo di accesso al disco (ms)");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("Banda del bus di dati");
+        jLabelBandaBusDati.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelBandaBusDati.setText("Banda del bus di dati");
 
         jButtonAvanti.setText("Avanti");
         jButtonAvanti.addActionListener(new java.awt.event.ActionListener() {
@@ -113,6 +118,10 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabelPasso.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelPasso.setText("Passo 1 di 1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,38 +129,43 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelConfigurazioneIniziale, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelProcessi)
-                                    .addComponent(jLabelDimensioneRAM)
-                                    .addComponent(jLabelDimensionaAreaSWAP)
-                                    .addComponent(jLabelDimensionePagina)
-                                    .addComponent(jLabelTempoContextSwitch)
-                                    .addComponent(jLabelTempoAccessoDisco)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSpinnerBandaBusDati)
-                                    .addComponent(jSpinnerTempoAccessoDisco)
-                                    .addComponent(jSpinnerTempoContextSwitch)
-                                    .addComponent(jSpinnerDimensionePagina)
-                                    .addComponent(jSpinnerDimensioneAreaSWAP)
-                                    .addComponent(jSpinnerDimensioneRAM)
-                                    .addComponent(jSpinnerProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))))
-                        .addContainerGap())
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabelConfigurazioneIniziale, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabelProcessi)
+                                        .addComponent(jLabelDimensioneRAM)
+                                        .addComponent(jLabelDimensionaAreaSWAP)
+                                        .addComponent(jLabelDimensionePagina)
+                                        .addComponent(jLabelTempoContextSwitch)
+                                        .addComponent(jLabelTempoAccessoDisco)
+                                        .addComponent(jLabelBandaBusDati))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jSpinnerBandaBusDati)
+                                        .addComponent(jSpinnerTempoAccessoDisco)
+                                        .addComponent(jSpinnerTempoContextSwitch)
+                                        .addComponent(jSpinnerDimensionePagina)
+                                        .addComponent(jSpinnerDimensioneAreaSWAP)
+                                        .addComponent(jSpinnerDimensioneRAM)
+                                        .addComponent(jSpinnerProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))))
+                            .addContainerGap())
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jButtonAvanti)
+                            .addGap(29, 29, 29)
+                            .addComponent(jButtonAnnulla)
+                            .addGap(119, 119, 119)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonAvanti)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButtonAnnulla)
-                        .addGap(119, 119, 119))))
+                        .addComponent(jLabelPasso)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jLabelPasso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelConfigurazioneIniziale)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -179,13 +193,13 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
                     .addComponent(jSpinnerTempoAccessoDisco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabelBandaBusDati)
                     .addComponent(jSpinnerBandaBusDati, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAvanti)
                     .addComponent(jButtonAnnulla))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -213,11 +227,12 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;
     private javax.swing.JButton jButtonAvanti;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelBandaBusDati;
     private javax.swing.JLabel jLabelConfigurazioneIniziale;
     private javax.swing.JLabel jLabelDimensionaAreaSWAP;
     private javax.swing.JLabel jLabelDimensionePagina;
     private javax.swing.JLabel jLabelDimensioneRAM;
+    private javax.swing.JLabel jLabelPasso;
     private javax.swing.JLabel jLabelProcessi;
     private javax.swing.JLabel jLabelTempoAccessoDisco;
     private javax.swing.JLabel jLabelTempoContextSwitch;
@@ -278,7 +293,16 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         tempo[5]=2000;
         return tempo;
     }
-
+   private Integer[] impostaBUS() {
+        Integer[] dimensioniBUS= new Integer[DIMBUS];
+        Double potenza;
+        for (int i=0; i<DIMBUS; i++) {
+            potenza = Math.pow(2,(i));
+            dimensioniBUS[i] = potenza.intValue();
+        }
+        return dimensioniBUS;
+    }
+   
     private void initJSpinnerProcessi() {
         jSpinnerProcessi.setModel(new SpinnerListModel(impostaNumProcessi()));
     }
@@ -298,6 +322,10 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     private void initSpinnerTempi() {
         jSpinnerTempoContextSwitch.setModel(new SpinnerListModel(impostaTempi()));
         jSpinnerTempoAccessoDisco.setModel(new SpinnerListModel(impostaTempi()));
+    }
+    
+    private void initSpinnerBandaBusDati() {
+        jSpinnerBandaBusDati.setModel(new SpinnerListModel(impostaBUS()));
     }
     
     public int getNumProcessi() {

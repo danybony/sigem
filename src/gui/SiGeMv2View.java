@@ -3,12 +3,12 @@
  * Nome file: SiGeMv2View
  * Package: gui
  * Autore: Cariani Giordano
- * Data: 01/03.2008
- * Versione: 1.0
+ * Data: 02/03/2008
+ * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche:
- 
- *  - v.0.0 (02/02/2006): Creato scheletro interfaccia grafica
+ * - v.1.1 (02/03/2008): Create le 3 finestre e inizializzazione grafico processi (dopo wizard)
+ * - v.1.0 (01/03/2008): Creato scheletro interfaccia grafica
  * */
 package gui;
 
@@ -38,13 +38,15 @@ import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
 import logic.caricamento.GestioneFile;
+import logic.parametri.ConfigurazioneIniziale;
+import logic.parametri.Processo;
 import gui.view.*;
 import gui.dialog.*;
 import gui.utility.IconStylosoft;
 
 public class SiGeMv2View {
 
-    // ------------------------------
+        // ------------------------------
 	// CAMPI DATI INTERFACCIA GRAFICA
 	// ------------------------------
 
@@ -77,7 +79,7 @@ public class SiGeMv2View {
 	private ActionListener lnrWindow;
 
 	/** Il frame dell'applicazione */
-	private JFrame frame = new JFrame("SGPEMv2");
+	private JFrame frame = new JFrame("SIGEMv2");
 	
 	/** Rappresenta lo stato dela Gui, vale true se la simulazione e' in avanzamento automatico,
 	 * false, se e' interrotta.*/
@@ -125,12 +127,38 @@ public class SiGeMv2View {
         
         /** Wizard per la configurazione dei processi */
         private ConfigurazioneAmbienteJDialog  configurazioneAmbiente;
-        //METODI PER L'INTERFACCIA GRAFICA
+        
+        /* Configurazione iniziale */
+        private ConfigurazioneIniziale configurazioneIniziale;
+        
+	// ----------------------------------
+	// METODI GESTIONE COMPONENTI GRAFICI
+	// ----------------------------------
+
+	/**
+	 * Costruttore della classe GuiBlueThoth. Carica le politiche di ordinamento
+	 * disponibili. Visualizza il frame principale.
+	 */
+	public SiGeMv2View() throws Exception {
+		// i controlli da fare prima della chiusura dell'applicazione
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				// schiacciando il pulsante "x" del frame, la finestra non si
+				// chiude
+				frame.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        			System.exit(0);
+
+			}
+		});
+		createRootWindow();
+		setDefaultLayout();
+		showFrame();
+	}
 
         /** Disegna le statistiche sulla vista ViewStatistiche */
 	public void visualizzaStatistiche() {
             /*
-		if ((views[3]).getComponent() instanceof ViewStatistiche) {
+		if ((views[2]).getComponent() instanceof ViewStatistiche) {
 			ViewStatistiche currView = (ViewStatistiche) views[3].getComponent();
 			currView.generaStatistiche(statistiche);
 		}
@@ -159,14 +187,16 @@ public class SiGeMv2View {
 
 		// Creo le viste e le aggiungo al viewMap
 		views[0] = new View("Processi",
-				IconStylosoft.getGeneralIcon("process"), new ViewStatoAvanzamentoProcessi());
+				IconStylosoft.getGeneralIcon("processi"), new ViewStatoAvanzamentoProcessi());
 		viewMap.addView(0, views[0]);
+                
 		views[1] = new View("Frame Memoria", IconStylosoft.getGeneralIcon("mv"),
 				new ViewFrameMemoria());
 		viewMap.addView(1, views[1]);
 		views[2] = new View("Statistiche", IconStylosoft
-				.getGeneralIcon("statistiche"), new ViewStatistiche());
+				.getGeneralIcon("statistiche"), new ViewStatistiche(this));
 		viewMap.addView(2, views[2]);
+                
 		
 		// Aggiungo i pulsanti help alle viste
 		JButton button = new JButton(IconStylosoft.getGeneralIcon("help"));
@@ -179,7 +209,7 @@ public class SiGeMv2View {
 						"Visualizza help", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		views[1].getCustomTabComponents().add(button);
+//		views[1].getCustomTabComponents().add(button);
 
 		rootWindow = DockingUtil.createRootWindow(viewMap, true);
 
@@ -405,8 +435,6 @@ public class SiGeMv2View {
 		jFileItemSalvaConfigurazione.setEnabled(false);
 
 		fileMenu.addSeparator();
-
-		fileMenu.addSeparator();
 		jFileItemEsci = new JMenuItem("Esci");
 		jFileItemEsci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -488,7 +516,7 @@ public class SiGeMv2View {
 	private JToolBar createToolBar() {
 		JToolBar toolBar = new JToolBar();
 
-		jButtonNuovaConfigurazione = new JButton(IconStylosoft.getGeneralIcon("new"));
+		jButtonNuovaConfigurazione = new JButton(IconStylosoft.getGeneralIcon("newConf"));
 		jButtonNuovaConfigurazione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                                 creaConfigurazione();
@@ -585,20 +613,15 @@ public class SiGeMv2View {
 	 * Imposta il layout di default delle viste
 	 */
 	private void setDefaultLayout() {
-		rootWindow.setWindow(new SplitWindow(true, 0.6615854f, new SplitWindow(
-				false, 0.66f, new TabWindow(new DockingWindow[] { views[5],
-						views[3] }), views[4]), new SplitWindow(false,
-				0.63448274f, new SplitWindow(false, 0.4532967f,
-						new SplitWindow(true, 0.5045593f, views[2], views[6]),
-						views[0]), views[1])));
-
+            rootWindow.setWindow(
+                    new SplitWindow(true, 0.6615854f, 
+                    new SplitWindow(false, 0.8f, views[0], views[2]),
+                    views[1]));
 		WindowBar windowBar = rootWindow.getWindowBar(Direction.DOWN);
 
 		while (windowBar.getChildWindowCount() > 0)
 			windowBar.getChildWindow(0).close();
 
-		// se voglio minimizzare una vista all'apertura del programma
-		// windowBar.addTab(views[3]);
         }
         
         /**
@@ -629,6 +652,31 @@ public class SiGeMv2View {
             jButtonSalvaConfigurazione.setEnabled(true);
             jFileItemSalvaConfigurazione.setEnabled(true);
         }
+
+        public void setIstanteZero() {
+		statoGui = false;
+		if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
+			ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
+					.getComponent();
+			Vector procName = new Vector();
+			LinkedList<Processo> processi = configurazioneIniziale.getListaProcessi();
+			for (int i = 0; i < processi.size(); i++) {
+				procName.add(processi.get(i).getNome());
+			}
+			currView.initializeViewStatoAvanzamentoProcessi(procName);
+		}
+
+	};
+
+    public ConfigurazioneIniziale getConfigurazioneIniziale() {
+        return configurazioneIniziale;
+    }
+
+    public void setConfigurazioneIniziale(ConfigurazioneIniziale configurazioneIniziale) {
+        this.configurazioneIniziale = configurazioneIniziale;
+    }
+
+        
 
 	public static void main(String[] args) throws Exception {
 		// Set InfoNode Look and Feel

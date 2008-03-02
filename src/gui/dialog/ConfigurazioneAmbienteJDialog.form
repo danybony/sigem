@@ -24,38 +24,44 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelConfigurazioneIniziale" alignment="0" pref="380" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabelProcessi" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelDimensioneRAM" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelDimensionaAreaSWAP" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelDimensionePagina" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelTempoContextSwitch" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelTempoAccessoDisco" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace pref="23" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jSpinnerBandaBusDati" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerTempoAccessoDisco" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerTempoContextSwitch" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerDimensionePagina" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerDimensioneAreaSWAP" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerDimensioneRAM" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerProcessi" alignment="0" pref="171" max="32767" attributes="1"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelConfigurazioneIniziale" alignment="0" pref="380" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabelProcessi" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelDimensioneRAM" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelDimensionaAreaSWAP" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelDimensionePagina" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelTempoContextSwitch" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelTempoAccessoDisco" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelBandaBusDati" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="23" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jSpinnerBandaBusDati" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="jSpinnerTempoAccessoDisco" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="jSpinnerTempoContextSwitch" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="jSpinnerDimensionePagina" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="jSpinnerDimensioneAreaSWAP" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="jSpinnerDimensioneRAM" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="jSpinnerProcessi" alignment="0" pref="171" max="32767" attributes="1"/>
+                                  </Group>
                               </Group>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jButtonAvanti" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <Component id="jButtonAnnulla" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jButtonAvanti" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="jButtonAnnulla" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
+                      <Component id="jLabelPasso" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -64,6 +70,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <Component id="jLabelPasso" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabelConfigurazioneIniziale" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -98,7 +105,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelBandaBusDati" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jSpinnerBandaBusDati" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -106,7 +113,7 @@
                   <Component id="jButtonAvanti" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonAnnulla" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -114,7 +121,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabelConfigurazioneIniziale">
       <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
@@ -123,7 +130,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelProcessi">
       <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Processi (da 1 a 20)"/>
@@ -134,7 +141,7 @@
         <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Dimensione RAM (kb)"/>
+        <Property name="text" type="java.lang.String" value="Dimensione RAM (KB)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelDimensionaAreaSWAP">
@@ -142,7 +149,7 @@
         <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Dimensione Area SWAP (kb)"/>
+        <Property name="text" type="java.lang.String" value="Dimensione Area SWAP (KB)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelDimensionePagina">
@@ -150,12 +157,12 @@
         <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Dimensione Pagina (kb)"/>
+        <Property name="text" type="java.lang.String" value="Dimensione Pagina (KB)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelTempoContextSwitch">
       <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Tempo Context Switch (ms)"/>
@@ -163,13 +170,13 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelTempoAccessoDisco">
       <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Tempo di accesso al disco (ms)"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="jLabelBandaBusDati">
       <Properties>
         <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
@@ -206,6 +213,15 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAnnullaActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelPasso">
+      <Properties>
+        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="10" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Passo 1 di 1"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

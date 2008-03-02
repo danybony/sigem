@@ -7,12 +7,17 @@
  * Versione: 1.0
  * Licenza: open-source
  * Registro delle modifiche: *  
+ *  - v.1.1 (02/03/2008): inserita label "passo 4 di 4"
+ *                        inserita inizializzazione grafico processi
  *  - v.1.0 (01/03/2008): Creazione JDialog e impostazione grafica
  */
 
 package gui.dialog;
 
 import gui.SiGeMv2View;
+import java.util.LinkedList;
+import logic.parametri.ConfigurazioneIniziale;
+import logic.parametri.Processo;
 import javax.swing.JComboBox;
 import javax.swing.table.TableColumn;
 import javax.swing.DefaultCellEditor;
@@ -25,8 +30,10 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
    private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
     private PoliticheJDialog politica;
     private ProcessiJDialog processi;
-    private Object[][] associazione;
+    private String associazione;
     private SiGeMv2View view;
+    private ConfigurazioneIniziale confIniziale;
+    private LinkedList<Processo> listaProcessi;
     
     /** Creates new form AssociazioneProcessiJDialog */
     public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, ProcessiJDialog proc, SiGeMv2View view) {
@@ -52,10 +59,11 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         jButtonIndietro = new javax.swing.JButton();
         jButtonOk = new javax.swing.JButton();
         jButtonAnnulla = new javax.swing.JButton();
+        jLabelPasso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabelAssociazioneProcessi.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelAssociazioneProcessi.setFont(new java.awt.Font("Tahoma", 1, 18));
         jLabelAssociazioneProcessi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI");
 
@@ -80,6 +88,10 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabelPasso.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelPasso.setText("Passo 4 di 4");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,16 +109,20 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPaneAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-                            .addComponent(jLabelAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE))))
+                            .addComponent(jLabelAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(416, Short.MAX_VALUE)
+                        .addComponent(jLabelPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jLabelPasso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelAssociazioneProcessi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addComponent(jScrollPaneAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonIndietro)
@@ -117,8 +133,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
     private void initJTable() {
-        jTableAssociazioneProcessi = new javax.swing.JTable(new ModelloProcessi(processi.getCombinazioneProcessi(), 4));
+        jTableAssociazioneProcessi = new javax.swing.JTable(new ModelloAssociazione(processi.getCombinazioneProcessi()));
         
         setAssociazioneColonna(jTableAssociazioneProcessi.getColumnModel().getColumn(3));
         
@@ -158,7 +175,6 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                     .addComponent(jButtonOk)
                     .addComponent(jButtonAnnulla))
                 .addContainerGap()));
-        pack();
     }
 
     private void jButtonIndietroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIndietroActionPerformed
@@ -167,13 +183,24 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
-        associazione = new Object [jTableAssociazioneProcessi.getRowCount()][jTableAssociazioneProcessi.getColumnCount()];
-        for (int row=0; row<jTableAssociazioneProcessi.getRowCount(); row++)
-            for (int col=0; col<jTableAssociazioneProcessi.getColumnCount(); col++)
-                associazione[row][col] = jTableAssociazioneProcessi.getValueAt(row, col);
-                
+        //listaProcessi = new Processo[jTableAssociazioneProcessi.getRowCount()];
+        for (int row=0; row<jTableAssociazioneProcessi.getRowCount(); row++) {
+            listaProcessi.add( new Processo (
+                                (String) jTableAssociazioneProcessi.getValueAt(row, 0),
+                                ((Integer)jTableAssociazioneProcessi.getValueAt(row, 1)).intValue(),
+                                ((Integer)jTableAssociazioneProcessi.getValueAt(row, 2)).intValue()
+                                ));
+        }
+        
+        try {
+            inizializzaConfigurazioneIniziale();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         this.setVisible(false);
-        view.abilitaTutto();                                    
+        view.abilitaTutto();
+        view.setIstanteZero();
 }//GEN-LAST:event_jButtonOkActionPerformed
 
     private void jButtonAnnullaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnullaActionPerformed
@@ -186,13 +213,36 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButtonIndietro;
     private javax.swing.JButton jButtonOk;
     private javax.swing.JLabel jLabelAssociazioneProcessi;
+    private javax.swing.JLabel jLabelPasso;
     private javax.swing.JScrollPane jScrollPaneAssociazioneProcessi;
     // End of variables declaration//GEN-END:variables
 
    private javax.swing.JTable jTableAssociazioneProcessi;
-    
+
+   private void inizializzaConfigurazioneIniziale() throws Exception {
+        confIniziale = new ConfigurazioneIniziale(configurazioneAmbiente.getBandaBusDati(),
+                                                  politica.getGestioneMemoria(),
+                                                  politica.getPolitica(),
+                                                  politica.getPoliticaSchedulazione(),
+                                                  configurazioneAmbiente.getDimensioneRAM(),
+                                                  configurazioneAmbiente.getDimensioneAreaSWAP(),
+                                                  configurazioneAmbiente.getTempoContextSwitch(),
+                                                  configurazioneAmbiente.getTempoAccessoDisco(),
+                                                  configurazioneAmbiente.getDimensionePagina(),
+                                                  listaProcessi);
+        
+
+        view.setConfigurazioneIniziale(confIniziale);
+        
+    }
+
     public void setAssociazioneColonna(TableColumn associazioneColonna) {
-        String [] valueItems = new String [] { "Pagina", "Segmento"};
+        int numPagine = configurazioneAmbiente.getDimensioneRAM() 
+                        / configurazioneAmbiente.getDimensionePagina();
+        
+        Integer [] valueItems = new Integer [numPagine];
+        for (int i=0; i<numPagine; i++)
+                valueItems[i]= i+1;
         
         JComboBox jComboBoxAssociazione = new JComboBox(valueItems);
         associazioneColonna.setCellEditor(new DefaultCellEditor(jComboBoxAssociazione));
@@ -202,11 +252,13 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         associazioneColonna.setCellRenderer(renderer);
     }
 
-    public Object[][] getAssociazione() {
+    public String getAssociazione() {
         return associazione;
     }
 
-    public void setAssociazione(Object[][] associazione) {
+    public void setAssociazione(String associazione) {
         this.associazione = associazione;
     }
+    
+   
 }

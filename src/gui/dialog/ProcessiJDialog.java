@@ -3,10 +3,11 @@
  * Nome file: ProcessiJDialog.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 01/03/2008
+ * Data: 02/03/2008
  * Versione: 1.0
  * Licenza: open-source
  * Registro delle modifiche: *  
+ *  - v.1.1 (02/03/2008): inserita label "passo 3 di 4"
  *  - v.1.0 (01/03/2008): Creazione JDialog e impostazione grafica
  */
 
@@ -48,6 +49,7 @@ private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
         jButtonIndietro = new javax.swing.JButton();
         jButtonAvanti = new javax.swing.JButton();
         jButtonAnnulla = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -70,6 +72,15 @@ private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
         });
 
         jButtonAnnulla.setText("Annulla");
+        jButtonAnnulla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAnnullaActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Passo 3 di 4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,14 +101,19 @@ private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
                             .addComponent(jScrollPaneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                             .addComponent(jLabelParametriProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(317, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelParametriProcessi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                .addComponent(jScrollPaneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonIndietro)
@@ -169,12 +185,17 @@ private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
         associazioneProcessi = new AssociazioneProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, politiche, this, view);
         associazioneProcessi.setVisible(true);
     }//GEN-LAST:event_jButtonAvantiActionPerformed
+
+    private void jButtonAnnullaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnullaActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonAnnullaActionPerformed
     
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;
     private javax.swing.JButton jButtonAvanti;
     private javax.swing.JButton jButtonIndietro;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelParametriProcessi;
     private javax.swing.JScrollPane jScrollPaneProcessi;
     // End of variables declaration//GEN-END:variables
