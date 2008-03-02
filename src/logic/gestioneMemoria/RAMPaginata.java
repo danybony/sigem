@@ -9,7 +9,7 @@
  * Registro delle modifiche:
  *  - v.1.1 (02/03/2008): Nuovo costruttore come da issue 28
  *                        Nuovo metodo indiceDi(FrameMemoria) come da issue 29
- *                        Aggiunta intestazione e commenti sui parametri
+ *                        Aggiunti i commenti sui metodi e sul tipo di ritorno
  *  - v.1.0 (29/02/2008): Impostazione base della classe
  */
 
@@ -27,7 +27,8 @@ class RAMPaginata extends MemoriaPaginata{
     }
     
     
-    /**Metodo che aggiunge una pagina nella RAM. Se ha successo, ritorna un int
+    /**
+     * Metodo che aggiunge una pagina nella RAM. Se ha successo, ritorna un int
      * che rappresenta l'id della "cella" in cui ha inserito la pagina; in caso
      * di fallimento solleva un'eccezione che deve essere opportunamente gestita
      * 
@@ -74,7 +75,8 @@ class RAMPaginata extends MemoriaPaginata{
     }
     
     
-    /**Metodo che marca la pagina come non più in RAM, liberando spazio
+    /**
+     * Metodo che marca la pagina come non più in RAM, liberando spazio
      * 
      * @param pag
      *      Pagina da marcare come non più in RAM
@@ -90,7 +92,8 @@ class RAMPaginata extends MemoriaPaginata{
     }
     
     
-    /**Metodo che cerca se una pagina è già presente in RAM
+    /**
+     * Metodo che cerca se una pagina è già presente in RAM
      * 
      * @param pag
      *      Il riferimento alla pagina da cercare
@@ -102,7 +105,8 @@ class RAMPaginata extends MemoriaPaginata{
         return memoria.contains(pag);
     }
     
-    /**Metodo che, dato un frame memoria, ritorna la sua posizione all'interno
+    /**
+     * Metodo che, dato un frame memoria, ritorna la sua posizione all'interno
      * della RAM.
      * 
      * @param pag
@@ -117,7 +121,8 @@ class RAMPaginata extends MemoriaPaginata{
     }
     
     
-    /**Metodo che marca come eliminabili le pagine riferite da un processo che
+    /**
+     * Metodo che marca come eliminabili le pagine riferite da un processo che
      * ha finito la sua esecuzione. Durante il prossimo inserimento, queste
      * pagine saranno considerate memoria libera, quindi si potranno inserire
      * nuove pagine senza interrogare la politica di rimpiazzo.
