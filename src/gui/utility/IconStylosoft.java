@@ -40,7 +40,7 @@ public class IconStylosoft {
     public ImageIcon getIcon(String name) {
 
         // Build the URL String
-        String imageName = "/images/" + name + ".gif";
+        String imageName = "/images/" + name + ".png";
 
         // Get a URL pointing to the image
         URL iconURL = this.getClass().getResource(imageName);
