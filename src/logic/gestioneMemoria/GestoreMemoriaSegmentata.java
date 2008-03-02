@@ -37,7 +37,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
     private FrameMemoria RimuoviFrame( Vector<FrameMemoria> Frames ) {
         FrameMemoria F=null; 
         for(int i=0;i<Frames.size();i++) {
-            if( Frames.elementAt(i).getTArrivo() < F.getTArrivo() )
+            if( Frames.elementAt(i).getTempoInRAM() < F.getTempoInRAM() )
                 F=Frames.elementAt(i);
         }
         return F;
@@ -59,7 +59,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             M=(RAMSegmentata)M;
             FrameRimosso=RimuoviFrame( M.getFrameOccupati() );
         }
-        return M.rimuovi(FrameRimosso);;
+        return M.rimuovi(FrameRimosso);
     }
     
     public LinkedList<Azione> esegui( LinkedList<FrameMemoria> ListaSegmenti, int UT ){
@@ -97,7 +97,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                         Azioni.add( new AzionePagina( 3, FrameRimosso ) );
                         if ( FrameRimosso.getModifica()==true ) {                            
                             Inserisci( MemoriaSwap, FrameRimosso );
-                            Azioni.add( new AzionePagina( 2, FrameRimosso );
+                            Azioni.add( new AzionePagina( 2, FrameRimosso ) );
                         }
                     }
                     
