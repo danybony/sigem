@@ -10,7 +10,7 @@ import java.util.Vector;
  *
  * @author Davide
  */
-public class QuickFit {
+public class QuickFit implements IAllocazione {
     public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi ) {
         int Dim=F.getDimensione(),Pos=0,Min=Dim-Liberi.elementAt(Pos).getDimensione();
         if ( Min<0 ) Min=-Min;
