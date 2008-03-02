@@ -7,27 +7,34 @@ package logic.gestioneMemoria;
 
 import java.util.LinkedList;
 import java.util.Iterator;
-
+import logic.parametri.ConfigurazioneIniziale;
 /**
  *
  * @author Davide
  */
 class GestoreMemoriaPaginata extends GestoreMemoria {
     
-    private int numero_frame_ram;
-    private int numero_frame_swap;
-    private IRimpiazzo PoliticaRimpiazzo;
+    private int numero_frame_ram=0;
+    private int numero_frame_swap=0;
+    private IRimpiazzo PoliticaRimpiazzo=null;
     private RAMPaginata MemoriaRam=null;
     private SwapPaginata MemoriaSwap=null;
     
-    public GestoreMemoriaPaginata(IRimpiazzo p, int n_frame_ram, int n_frame_swap){
+    public GestoreMemoriaPaginata( ConfigurazioneIniziale C ){
         
-        PoliticaRimpiazzo=p;
-        numero_frame_ram=n_frame_ram;
-        numero_frame_swap=n_frame_swap;
-        MemoriaRam= new RAMPaginata(n_frame_ram);
-        MemoriaSwap= new SwapPaginata(n_frame_swap);
-    
+        numero_frame_ram=C.getDimensioneRAM()/C.getDimensionePagina();
+        numero_frame_swap=C.getDimensioneSwap()/C.getDimensionePagina();
+        MemoriaRam= new RAMPaginata(C);
+        MemoriaSwap= new SwapPaginata(C);           
+        switch ( C.getPoliticaGestioneMemoria() ) {
+            case 1:PoliticaRimpiazzo = new NRU(numero_frame_ram);
+            case 2:PoliticaRimpiazzo = new FIFO(numero_frame_ram);
+            case 3:PoliticaRimpiazzo = new SC(numero_frame_ram);
+            case 4:PoliticaRimpiazzo = new C(numero_frame_ram);
+            case 5:PoliticaRimpiazzo = new LRU(numero_frame_ram);
+            case 6:PoliticaRimpiazzo = new NFU(numero_frame_ram);
+            case 7:PoliticaRimpiazzo = new A(numero_frame_ram);
+        }
     }
     
     public LinkedList<Azione> LiberaMemoria ( LinkedList<FrameMemoria> ListaPagine ) {
