@@ -37,7 +37,7 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
         }
     }
     
-    public void liberamemoria ( PCB idProcesso ) {
+    public void liberamemoria ( ) {
         
     }
     
@@ -118,13 +118,9 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
 
             }
             else { // gia in ram
-                n_accessi_ram+=1;
                 PoliticaRimpiazzo.AggiornaEntry(MemoriaRam.indiceDi(F), F.getModifica() );
                 ListaAzioni.add( new AzionePagina(5,F) );
             }
-
-
-
         }
         return ListaAzioni;
     }
