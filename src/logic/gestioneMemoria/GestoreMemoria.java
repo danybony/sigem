@@ -19,7 +19,7 @@ public abstract class GestoreMemoria {
     protected int n_accessi_disco=0;
     
     public int getTotalFault() { return n_total_fault; }
-    public int getFirstFault() { return n_first_fault; }
+    public int getFirstFault() { return n_nonswap_fault; }
     public int getAccessiRam() { return n_accessi_ram; }
     public int getAccessiDisco() { return n_accessi_disco; }
     
