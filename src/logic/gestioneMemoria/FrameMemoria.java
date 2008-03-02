@@ -56,7 +56,7 @@ public interface FrameMemoria {
     /**
      * Ritorna il processo che detiene elemento che modella la memoria.
      */
-    public PCB getIdProcesso();
+    public int getIdProcesso();
     
     /**
      * Imposta il processo che detiene l'elemento che modella la memoria.

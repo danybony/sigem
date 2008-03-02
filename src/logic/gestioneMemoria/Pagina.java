@@ -144,10 +144,10 @@ public class Pagina implements FrameMemoria{
     }
     
     /**
-     * Ritorna il PCB del processo che la detiene.
+     * Ritorna un intero che corrisponde all'id del processo che la detiene.
      */
-    public PCB getIdProcesso(){
-        return idProcesso;
+    public int getIdProcesso(){
+        return idProcesso.getRifProcesso().getId();
     }
     
     /**
