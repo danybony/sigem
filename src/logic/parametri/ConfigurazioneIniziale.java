@@ -45,7 +45,7 @@ public class ConfigurazioneIniziale {
      *  <tr align="center"><td>0</td><td colspan="2">nessuna polititica specificata</td></tr>
      *  <tr align="center"><td>1</td><td>  NRU  </td><td>    First-Fit   </td></tr>
      *  <tr align="center"><td>2</td><td>  FIFO </td><td>    Next-Fit    </td></tr>
-     *  <tr align="center"><td>3</td><td>  FC   </td><td>    Best-Fit    </td></tr>
+     *  <tr align="center"><td>3</td><td>  SC   </td><td>    Best-Fit    </td></tr>
      *  <tr align="center"><td>4</td><td>  C    </td><td>    Worst-Fit   </td></tr>
      *  <tr align="center"><td>5</td><td>  LRU  </td><td>    Quick-Fit   </td></tr>
      *  <tr align="center"><td>6</td><td>  NFU  </td><td>    -           </td></tr>
@@ -283,7 +283,7 @@ public class ConfigurazioneIniziale {
      *  <tr align="center"><td>0</td><td colspan="2">nessuna polititica specificata</td></tr>
      *  <tr align="center"><td>1</td><td>  NRU  </td><td>    First-Fit   </td></tr>
      *  <tr align="center"><td>2</td><td>  FIFO </td><td>    Next-Fit    </td></tr>
-     *  <tr align="center"><td>3</td><td>  FC   </td><td>    Best-Fit    </td></tr>
+     *  <tr align="center"><td>3</td><td>  SC   </td><td>    Best-Fit    </td></tr>
      *  <tr align="center"><td>4</td><td>  C    </td><td>    Worst-Fit   </td></tr>
      *  <tr align="center"><td>5</td><td>  LRU  </td><td>    Quick-Fit   </td></tr>
      *  <tr align="center"><td>6</td><td>  NFU  </td><td>    -           </td></tr>
