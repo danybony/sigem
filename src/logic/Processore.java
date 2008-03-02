@@ -153,7 +153,7 @@ public class Processore {
                  FrameMemoria necessari al processo in esecuzione e riceve la 
                  lista delle istruzioni effettuate dal gestore della memoria per
                  portare in RAM quei FrameMemoria */
-                LinkedList<OperazioneInMemoria> istruzioni = gestoreMemoria.esegui(frameNecessari,
+                LinkedList<Azione> istruzioni = gestoreMemoria.esegui(frameNecessari,
                                                              tempoCorrente);
                 
                 fullRAM = gestoreMemoria.getFullRAM();
@@ -191,6 +191,9 @@ public class Processore {
      * di istruzioni sulla memoria.
      * Il numero di fault è costituito dalla somma delle operazioni corrispondenti 
      * ad una scrittura di una pagina su RAM.
+     * Queste si possono verificare solo nel caso il valore del TipoAzione sia
+     * <li>1 INSERISCI
+     * <li>4 SWAPTORAM
      * 
      * @param istruzioni 
      *      La lista di istruzioni effettuate dal gestore della memoria in questo
@@ -199,7 +202,7 @@ public class Processore {
      * 
      * @return Il numero di fault di pagina avvenuti in questo istante.
      */
-    private int calcolaFault(LinkedList<OperazioneInMemoria> istruzioni) {
+    private int calcolaFault(LinkedList<Azione> istruzioni) {
        
         if(istruzioni == null){
             
@@ -207,8 +210,20 @@ public class Processore {
             
         }
         
-        //necessito di tutti i campi di OperazioneInMemoria
-        return 42;
+        int numeroFault = 0;
+        
+        for (int i = 0; i < istruzioni.size(); i++){
+            
+            if (istruzioni.get(i).getAzione() == 1 || istruzioni.get(i).getAzione() == 4){
+                
+                numeroFault ++;
+                
+            }
+                
+            
+        }
+        
+        return numeroFault;
     }
     
     /**
@@ -225,7 +240,7 @@ public class Processore {
      * 
      * @return Ritorna l'istante corrente.
      */   
-    private Istante creaIstante(PCB corrente, LinkedList<OperazioneInMemoria> istruzioni,
+    private Istante creaIstante(PCB corrente, LinkedList<Azione> istruzioni,
                                 boolean fullRAM, boolean fullSwap){
         
         int fault = calcolaFault(istruzioni);
