@@ -11,8 +11,8 @@ import logic.parametri.ConfigurazioneIniziale;
 class SwapPaginata extends MemoriaPaginata{
     
 
-public SwapPaginata(ConfigurazioneIniziale conf){
-        super(conf.getDimensioneSwap()/conf.getDimensionePagina());
+public SwapPaginata(int numPagine){
+        super(numPagine);
     }
     
     @Override

@@ -13,8 +13,8 @@ import logic.parametri.ConfigurazioneIniziale;
  */
 class RAMPaginata extends MemoriaPaginata{
 
-    public RAMPaginata(ConfigurazioneIniziale conf){
-        super(conf.getDimensioneRAM()/conf.getDimensionePagina());
+    public RAMPaginata(int numPagine){
+        super(numPagine);
     }
     
     @Override
