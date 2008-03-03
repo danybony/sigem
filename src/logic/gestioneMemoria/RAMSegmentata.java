@@ -7,6 +7,8 @@
  * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.2 (03/03/2008): Modificate tutte le occorenze del costruttore di Segmento
+ *                        secondo la nuova specifica
  *  - v.1.1 (02/03/2008): Aggiunti i commenti sui parametri e sul tipo di ritorno
  *                        dei metodi
  *  - v.1.0 (29/02/2008): Impostazione base della classe
@@ -33,8 +35,7 @@ class RAMSegmentata extends MemoriaSegmentata{
      */
     public RAMSegmentata(ConfigurazioneIniziale conf){
         super(conf.getDimensioneRAM());
-        memoria.add(new Segmento("spazio", conf.getDimensioneRAM()));
-        memoria.get(0).setIdProcesso(-1);
+        memoria.add(new Segmento("spazio", conf.getDimensioneRAM(),-1));
     }
     
     
@@ -65,8 +66,7 @@ class RAMSegmentata extends MemoriaSegmentata{
          * originale e la grandezza del nuovo segmento inserito. Come parametri
          * al nuovo segmento passo valori speciali che lo identificano come spazio
          */
-        memoria.add(pos+1, new Segmento("spazio",spazioRimasto));
-        memoria.get(pos+1).setIdProcesso(-1);
+        memoria.add(pos+1, new Segmento("spazio",spazioRimasto,-1));
         spazioRimasto-=seg.getDimensione();
     }
     
@@ -92,7 +92,7 @@ class RAMSegmentata extends MemoriaSegmentata{
             FrameMemoria frameAux1=memoria.get(pos);
             FrameMemoria frameAux2=memoria.get(pos-1);
             if(frameAux1.getIdProcesso()==-1 && frameAux2.getIdProcesso()==-1) {
-                memoria.add(new Segmento("spazio",frameAux1.getDimensione()+frameAux2.getDimensione()));
+                memoria.add(new Segmento("spazio",frameAux1.getDimensione()+frameAux2.getDimensione(),-1));
                 memoria.remove(pos+1);
                 memoria.remove(pos+1);
             }
@@ -126,7 +126,7 @@ class RAMSegmentata extends MemoriaSegmentata{
                 if(segAux2.getIndirizzo().equals("spazio") || segAux2.getIdProcesso()==idProcesso){
                     
                     /**Unisco i due segmenti*/
-                    memoria.add(i,new Segmento("spazio", segAux1.getDimensione()+segAux2.getDimensione()));
+                    memoria.add(i,new Segmento("spazio", segAux1.getDimensione()+segAux2.getDimensione(),-1));
                     memoria.remove(i+1);
                     memoria.remove(i+1);
                     
@@ -138,8 +138,7 @@ class RAMSegmentata extends MemoriaSegmentata{
                      * processo. Converto a spazio il segmento corrente nel caso
                      * in cui non sia più referenziato da nessun processo*/
                     if(segAux1.getIdProcesso()==idProcesso){
-                        memoria.set(i, new Segmento("spazio",segAux1.getDimensione()));
-                        memoria.get(i).setIdProcesso(-1);
+                        memoria.set(i, new Segmento("spazio",segAux1.getDimensione(),-1));
                     }
                 }
             }
@@ -190,7 +189,7 @@ class RAMSegmentata extends MemoriaSegmentata{
      *      in RAM
      */
     public FrameMemoria getSpazioMaggiore(){
-        FrameMemoria frameMax=new Segmento("spazio",0);
+        FrameMemoria frameMax=new Segmento("spazio",0,-1);
         FrameMemoria frameAux;
         for(int i=0; i<memoria.size();i++){
             frameAux=memoria.get(i);
