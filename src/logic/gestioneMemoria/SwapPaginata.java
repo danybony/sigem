@@ -7,6 +7,7 @@
  * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.2 (03/03/2008): Modificato il metodo rimuovi: ora ritorna un bool
  *  - v.1.1 (02/03/2008): Aggiunti i commenti sui parametri e sul tipo di ritorno
  *                        dei metodi
  *  - v.1.0 (29/02/2008): Impostazione base della classe
@@ -59,10 +60,13 @@ public SwapPaginata(ConfigurazioneIniziale conf){
      *      Riferimento alla pagina da togliere
      */
     @Override
-    public FrameMemoria rimuovi(FrameMemoria pag){
-        memoria.remove(pag);
-        pagineResidue++;
-        return pag;
+    public boolean rimuovi(FrameMemoria pag){
+        if(memoria.remove(pag)) {
+            pagineResidue++;
+            return true;
+        }
+        
+        return false;
     }
     
     

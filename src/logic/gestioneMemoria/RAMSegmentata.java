@@ -9,6 +9,7 @@
  * Registro delle modifiche:
  *  - v.1.2 (03/03/2008): Modificate tutte le occorenze del costruttore di Segmento
  *                        secondo la nuova specifica
+ *                        Modificato il metodo rimuovi: ora ritorna un bool
  *  - v.1.1 (02/03/2008): Aggiunti i commenti sui parametri e sul tipo di ritorno
  *                        dei metodi
  *  - v.1.0 (29/02/2008): Impostazione base della classe
@@ -78,7 +79,7 @@ class RAMSegmentata extends MemoriaSegmentata{
      *      Riferimento al segmento da togliere dalla RAM
      */
     @Override
-    public FrameMemoria rimuovi(FrameMemoria seg){
+    public boolean rimuovi(FrameMemoria seg){
         /**Salvo la posizione del segmento in memoria. Servirà in seguito*/
         int pos=memoria.indexOf(seg);
         
@@ -97,7 +98,7 @@ class RAMSegmentata extends MemoriaSegmentata{
                 memoria.remove(pos+1);
             }
         }
-        return seg;
+        return true;
     }
     
     

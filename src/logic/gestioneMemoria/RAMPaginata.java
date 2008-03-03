@@ -7,6 +7,7 @@
  * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.1 (03/03/2008): Modificato il metodo rimuovi: ora ritorna un bool
  *  - v.1.1 (02/03/2008): Nuovo costruttore come da issue 28
  *                        Nuovo metodo indiceDi(FrameMemoria) come da issue 29
  *                        Aggiunti i commenti sui metodi e sul tipo di ritorno
@@ -88,14 +89,12 @@ class RAMPaginata extends MemoriaPaginata{
      * @param pag
      *      Pagina da marcare come non più in RAM
      * 
-     * @return
-     *      Il riferimento alla pagina marcata
      */
     @Override
-    public FrameMemoria rimuovi(FrameMemoria pag){
+    public boolean rimuovi(FrameMemoria pag){
         pag.setInRAM(false);
         pagineResidue++;
-        return pag;
+        return true;
     }
     
     
