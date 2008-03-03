@@ -12,10 +12,9 @@ import logic.parametri.ConfigurazioneIniziale;
  *
  * @author Davide
  */
-class GestoreMemoriaPaginata extends GestoreMemoria {
+public class GestoreMemoriaPaginata extends GestoreMemoria {
     
     private int numero_frame_ram=0;
-    private int numero_frame_swap=0;
     private IRimpiazzo PoliticaRimpiazzo=null;
     private RAMPaginata MemoriaRam=null;
     private SwapPaginata MemoriaSwap=null;
@@ -23,7 +22,6 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
     public GestoreMemoriaPaginata( ConfigurazioneIniziale C ){
         
         numero_frame_ram=C.getDimensioneRAM()/C.getDimensionePagina();
-        numero_frame_swap=C.getDimensioneSwap()/C.getDimensionePagina();
         MemoriaRam= new RAMPaginata(C);
         MemoriaSwap= new SwapPaginata(C);           
         switch ( C.getPoliticaGestioneMemoria() ) {
@@ -37,8 +35,9 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
         }
     }
     
-    public void liberamemoria ( ) {
-        
+    public void notificaProcessoTerminato(int id) {
+        MemoriaRam.liberaMemoria(id);
+        MemoriaSwap.liberaMemoria(id);
     }
     
     private int inserisci( MemoriaPaginata M, FrameMemoria F, int UT ) throws MemoriaEsaurita {
@@ -72,9 +71,7 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
             FrameMemoria F=I.next();
             
             if ( !MemoriaRam.cerca(F) ) { // Pagina non in ram
-                n_total_fault++;
                 if ( !MemoriaSwap.cerca(F) ) { // Pagina neanche in swap
-                    //n_nonswap_fault++;
                     try {
                         ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
                     } 

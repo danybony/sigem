@@ -34,10 +34,15 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         }
     }
     
+    public void notificaProcessoTerminato(int id) {
+        MemoriaRam.liberaMemoria(id);
+        MemoriaSwap.liberaMemoria(id);
+    }
+    
     private FrameMemoria RimuoviFrame( Vector<FrameMemoria> Frames ) {
         FrameMemoria F=null; 
         for(int i=0;i<Frames.size();i++) {
-            if( Frames.elementAt(i).getTempoInRAM() < F.getTempoInRAM() )
+            if( ((Segmento)Frames.elementAt(i)).getTempoInRam() < ((Segmento)F).getTempoInRam() )
                 F=Frames.elementAt(i);
         }
         return F;
@@ -46,8 +51,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
     private FrameMemoria Inserisci( MemoriaSegmentata M, FrameMemoria F ) {
         FrameMemoria FrameLibero=null;
         if ( M instanceof RAMSegmentata ) {
-            M=(RAMSegmentata)M;
-            FrameLibero=PoliticaAllocazione.Alloca( F,M.getFrameLiberi() ); 
+            FrameLibero=PoliticaAllocazione.Alloca( F,((RAMSegmentata)M).getFrameLiberi() ); 
         }        
         M.aggiungi(F, FrameLibero);
         return FrameLibero;
@@ -56,8 +60,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
     private FrameMemoria Rimuovi( MemoriaSegmentata M, FrameMemoria F ) {
         FrameMemoria FrameRimosso=F;
         if ( M instanceof RAMSegmentata ) {
-            M=(RAMSegmentata)M;
-            FrameRimosso=RimuoviFrame( M.getFrameOccupati() );
+            FrameRimosso=RimuoviFrame( ((RAMSegmentata)M).getFrameOccupati() );
         }
         return M.rimuovi(FrameRimosso);
     }
@@ -70,11 +73,9 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         while( I.hasNext() ) {
             
             FrameMemoria F=I.next();
-            F=(Segmento)F;
-            F.setTempoInRAM(UT);
+            ((Segmento)F).setTempoInRAM(UT);
             
             if ( !MemoriaRam.cerca(F) ) {
-                n_total_fault+=1;
                 if ( !MemoriaSwap.cerca(F) ) { // F mai caricato
                     
                     while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() ) {
