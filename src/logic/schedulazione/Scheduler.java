@@ -114,28 +114,7 @@ public class Scheduler {
 	static final int NUOVO_PROCESSO = 0;
 
 	/** Tempo rimanente di esecuzione del PCBCorrente. */
-	static final int PCB_TERMINATO = 1;
-
-        /**
-         * Metodo che restituisce il numero di istanti rimanenti all'arrivo di un
-         * nuovo processo nella coda dei pronti.
-         * 
-         * @return Ritorna il numero di istanti rimanenti.
-         */
-        public int getTempoNuovoProcesso(){
-            return tempoEvento[NUOVO_PROCESSO];
-        }
-        
-        /**
-         * Metodo che restituisce il numero di istanti rimanenti alla terminazione
-         * di un PCB attualmente in stato di pronto.
-         * 
-         * @return Ritorna il numero di istanti rimanenti.
-         */
-        public int getTempoPCBTerminato(){
-            return tempoEvento[PCB_TERMINATO];
-        }
-        
+	static final int PCB_TERMINATO = 1;        
         
 	/**
 	 * Salva il valore ritornato dal metodo tempoProssimoProcesso() per
