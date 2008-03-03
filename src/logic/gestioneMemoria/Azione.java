@@ -12,6 +12,15 @@ package logic.gestioneMemoria;
 public abstract class Azione {
     
     private int TipoAzione;
+    
+    /* 0 ERROR
+     * 1 INSERT RAM
+     * 2 INSERT SWAP
+     * 3 REMOVE RAM
+     * 4 REMOVE SWAP
+     * 5 LEGGI
+     */
+    
     private FrameMemoria Frame;
     
     public Azione( int T, FrameMemoria F ) {
