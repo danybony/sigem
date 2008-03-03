@@ -1,13 +1,5 @@
 package logic;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import logic.gestioneMemoria.*;
-import logic.parametri.ConfigurazioneIniziale;
-import logic.parametri.Processo.Accesso;
-import logic.schedulazione.*;
-
-
 /*
  * Azienda: Stylosoft
  * Nome file: Processore.java
@@ -22,7 +14,14 @@ import logic.schedulazione.*;
  *  - v.1.1 (26/02/2008): Aggiunta la descrizione dei parametri nella javadoc.
  *  - v.1.0 (26/02/2008): Creazione e scrittura documentazione.
  */
+
 import logic.simulazione.Istante;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import logic.gestioneMemoria.*;
+import logic.parametri.ConfigurazioneIniziale;
+import logic.parametri.Processo.Accesso;
+import logic.schedulazione.*;
 
 /**
  * 
@@ -115,14 +114,25 @@ public class Processore {
         
         LinkedList<Istante> simulazione = new LinkedList<Istante>();  
         
-        boolean stop, fullRAM, fullSwap;
+        boolean stop, fullRAM, fullSwap, nuovoProcesso;
         
         while(!scheduler.fineSimulazione()){
             
             stop = false;
             
+            nuovoProcesso = false;
+            
+            /* Memorizza il numero di processi in arrivo prima dell'attivazione */
+            int numInArrivo = scheduler.getProcessiInArrivo().size();
+            
             stop = scheduler.eseguiAttivazione();
             
+            /* Controlla se il numero di processi in arrivo è dimunuito */
+            if (numInArrivo < scheduler.getProcessiInArrivo().size()){
+                
+                nuovoProcesso = true;
+                
+            }
             /* Ottiene dallo scheduler il PCB del processo correntemente in 
              esecuzione */
             PCB corrente = scheduler.getPCBCorrente();
@@ -145,12 +155,12 @@ public class Processore {
                 
                 fullSwap = gestoreMemoria.getFullSwap();
                 
-                simulazione.add(creaIstante(corrente,istruzioni,fullRAM,fullSwap));
+                simulazione.add(creaIstante(corrente,istruzioni,nuovoProcesso,fullRAM,fullSwap));
                 //da aggiungere il PCB dell'ultimo terminato
         
             } else {
                 /* Non c'è un processo in esecuzione */
-                simulazione.add(creaIstante(corrente,null,fullRAM,fullSwap));
+                simulazione.add(creaIstante(corrente,null,nuovoProcesso,fullRAM,fullSwap));
             }
             
             /* Se c'è un processo in esecuzione esegue nuovamente il metodo 
@@ -204,8 +214,7 @@ public class Processore {
                 
                 numeroFault ++;
                 
-            }
-                
+            }                
             
         }
         
@@ -227,7 +236,7 @@ public class Processore {
      * @return Ritorna l'istante corrente.
      */   
     private Istante creaIstante(PCB corrente, LinkedList<Azione> istruzioni,
-                                boolean fullRAM, boolean fullSwap){
+                                boolean nuovoProcesso, boolean fullRAM, boolean fullSwap){
         
         int fault = calcolaFault(istruzioni);
         
@@ -236,12 +245,14 @@ public class Processore {
         if(scheduler.getProcessiTerminati().size() > 0 && 
                 (PCB)scheduler.getProcessiTerminati().get(0) == ultimoEseguito){
             
-            istante = new Istante(corrente, ultimoEseguito, false, fault, istruzioni, fullRAM, fullSwap);
+            istante = new Istante(corrente, ultimoEseguito, nuovoProcesso, fault, 
+                                istruzioni, fullRAM, fullSwap);
             
         }
         else{
             
-            istante = new Istante(corrente, null, false, fault, istruzioni, fullRAM, fullSwap);
+            istante = new Istante(corrente, null, nuovoProcesso, fault, 
+                                istruzioni, fullRAM, fullSwap);
             
         }
         
