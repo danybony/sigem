@@ -14,14 +14,10 @@ import java.util.LinkedList;
 public abstract class GestoreMemoria {
     
     protected int n_total_fault=0;
-    protected int n_nonswap_fault=0;
-    protected int n_accessi_ram=0;
-    protected int n_accessi_disco=0;
+    // protected int n_nonswap_fault=0;
     
     public int getTotalFault() { return n_total_fault; }
-    public int getFirstFault() { return n_nonswap_fault; }
-    public int getAccessiRam() { return n_accessi_ram; }
-    public int getAccessiDisco() { return n_accessi_disco; }
+    // public int getFirstFault() { return n_nonswap_fault; }
     
     public abstract LinkedList<Azione> esegui( LinkedList<FrameMemoria> ListaFrame, int UT );
 }

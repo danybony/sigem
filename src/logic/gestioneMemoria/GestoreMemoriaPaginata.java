@@ -72,7 +72,7 @@ class GestoreMemoriaPaginata extends GestoreMemoria {
             FrameMemoria F=I.next();
             
             if ( !MemoriaRam.cerca(F) ) { // Pagina non in ram
-                //n_total_fault++;
+                n_total_fault++;
                 if ( !MemoriaSwap.cerca(F) ) { // Pagina neanche in swap
                     //n_nonswap_fault++;
                     try {

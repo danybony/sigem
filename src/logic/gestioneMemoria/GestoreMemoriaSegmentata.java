@@ -74,6 +74,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             F.setTempoInRAM(UT);
             
             if ( !MemoriaRam.cerca(F) ) {
+                n_total_fault+=1;
                 if ( !MemoriaSwap.cerca(F) ) { // F mai caricato
                     
                     while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() ) {
