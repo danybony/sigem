@@ -16,6 +16,7 @@ package logic.parametri;
  *  - v.1.0 (26/02/2008): Impostazione base della classe
  */
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 
@@ -27,7 +28,7 @@ import java.util.LinkedList;
  * dati.<br>
  */
 
-public class ConfigurazioneIniziale {
+public class ConfigurazioneIniziale implements Serializable{
 
     /**
      * Capacità del bus dati utilizzato per la comunicazione
