@@ -16,8 +16,6 @@ package logic.gestioneMemoria;
  *  - v.1.0 (26/02/2008): Impostazione base della classe
  */
 
-import logic.schedulazione.PCB;
-
 /**
  * Classe per la modellazione della memoria come pagine.
  */
@@ -56,19 +54,19 @@ public class Pagina implements FrameMemoria{
     /**
      * Indica chi detiene la pagina
      */
-    private PCB idProcesso;
+    private int idProcesso;
     
     /**
      * Costruttore della classe
      * 
      * @param indirizzoPagina
      *      indirizzo della pagina
-     * @param idProcesso
-     *      PCB del processo che detiene la pagina
      * @param dimensione
      *      dimensione della pagina
+     * @param idProcesso
+     *      id del processo che detiene la pagina
      */
-    public Pagina(String indirizzoPagina,PCB idProcesso,int dimensione){
+    public Pagina(String indirizzoPagina,int dimensione,int idProcesso){
         INDIRIZZO=indirizzoPagina;
         this.idProcesso=idProcesso;
         this.DIMENSIONE=dimensione;
@@ -147,13 +145,13 @@ public class Pagina implements FrameMemoria{
      * Ritorna un intero che corrisponde all'id del processo che la detiene.
      */
     public int getIdProcesso(){
-        return idProcesso.getRifProcesso().getId();
+        return idProcesso;
     }
     
     /**
-     * Imposta il PCB del processo che detiene la pagina.
+     * Imposta l'id del processo che detiene la pagina.
      */
-    public boolean setIdProcesso(PCB idProcessoPassato){
+    public boolean setIdProcesso(int idProcessoPassato){
         idProcesso=idProcessoPassato;
         return true;
     }

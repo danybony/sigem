@@ -23,10 +23,6 @@ public class GestioneFile {
 
     private String percosoFileConfigurazione;
 
-
-    private String percosoFileLog;
-
-
     private ConfigurazioneIniziale mConfigurazioneIniziale;
 
     

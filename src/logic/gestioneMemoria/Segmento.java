@@ -54,7 +54,7 @@ public class Segmento implements FrameMemoria{
     /**
      * Specifica l'ID del processo che detiene il segmento.
      */
-    private PCB idProcesso;
+    private int idProcesso;
     
     /**
      * Tempo trascorso da quando il segmento è in RAM
@@ -69,9 +69,9 @@ public class Segmento implements FrameMemoria{
      * @param dimensione
      *      dimensione del segmento
      * @param idProcesso
-     *      PCB del processo di riferimento
+     *      id del processo di riferimento
      */
-    public Segmento(String indirizzo, int dimensione, PCB idProcesso){
+    public Segmento(String indirizzo, int dimensione, int idProcesso){
         this.INDIRIZZO=indirizzo;
         this.dimensione=dimensione;
         this.idProcesso=idProcesso;
@@ -138,13 +138,13 @@ public class Segmento implements FrameMemoria{
      * segmento.
      */
     public int getIdProcesso(){
-        return idProcesso.getRifProcesso().getId();
+        return idProcesso;
     }
     
     /**
-     * Imposta il PCB del processo che detiene il segmento.
+     * Imposta l'id del processo che detiene il segmento.
      */
-    public boolean setIdProcesso(PCB idProcessoPassato){
+    public boolean setIdProcesso(int idProcessoPassato){
         idProcesso=idProcessoPassato;
         return true;
     }
