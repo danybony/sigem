@@ -81,27 +81,12 @@ public class Processore {
         
         if(conf.getModalitaGestioneMemoria() == 1){
             
-            IPoliticaP politicaMem = null;
-            
-            switch (conf.getPoliticaGestioneMemoria()){            
-                case 1:politicaMem = new NRU();
-                case 2:politicaMem = new FIFO();
-                case 3:politicaMem = new FC();
-                case 4:politicaMem = new C();
-                case 5:politicaMem = new LRU();
-                case 6:politicaMem = new NFU();
-                case 7:politicaMem = new A();
-            }
-            
-            int dimRAM = conf.getDimensioneRAM()/conf.getDimensionePagina();
-            int dimSwap = conf.getDimensioneSwap()/conf.getDimensionePagina();
-            
-            this.gestoreMemoria = new GestioneMemoriaPaginata(politicaMem, dimRAM, dimSwap);
+            this.gestoreMemoria = new GestioneMemoriaPaginata(conf);
             
         }
         else {
             
-            this.gestoreMemoria = new GestioneMemoriaSegmentata();
+            this.gestoreMemoria = new GestioneMemoriaSegmentata(conf);
             
         }      
     }
@@ -162,10 +147,10 @@ public class Processore {
                 
                 simulazione.add(creaIstante(corrente,istruzioni,fullRAM,fullSwap));
                 //da aggiungere il PCB dell'ultimo terminato
-            
+        
             } else {
                 /* Non c'è un processo in esecuzione */
-                simulazione.add(creaIstante(corrente,null));
+                simulazione.add(creaIstante(corrente,null,fullRAM,fullSwap));
             }
             
             /* Se c'è un processo in esecuzione esegue nuovamente il metodo 
@@ -194,6 +179,7 @@ public class Processore {
      * Queste si possono verificare solo nel caso il valore del TipoAzione sia
      * <li>1 INSERISCI
      * <li>4 SWAPTORAM
+     * <br>
      * 
      * @param istruzioni 
      *      La lista di istruzioni effettuate dal gestore della memoria in questo
