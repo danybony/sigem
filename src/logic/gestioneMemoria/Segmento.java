@@ -57,6 +57,11 @@ public class Segmento implements FrameMemoria{
     private PCB idProcesso;
     
     /**
+     * Tempo trascorso da quando il segmento è in RAM
+     */
+    private int tempoInRAM = 0;
+    
+    /**
      * Costruttore della classe.
      * 
      * @param indirizzo
@@ -114,9 +119,17 @@ public class Segmento implements FrameMemoria{
     
     /**
      * Definisce se un segmento e' in RAM.
+     *
+     * Se un segmento viene tolto dalla RAM, il suo tempo in RAM viene posto
+     * automaticamnete a zero.
+     * 
+     * @param nuovoStato
+     *      true se e' in RAM; false altrimenti.
      */
     public boolean setInRAM(boolean nuovoStato){
         inRAM=nuovoStato;
+        if(nuovoStato==false)
+            this.tempoInRAM=0;
         return true;
     }
     
@@ -152,5 +165,28 @@ public class Segmento implements FrameMemoria{
     public boolean setModifica(boolean nuovoStato){
         this.modificato=nuovoStato;
         return true;
+    }
+    
+    /**
+     * Ritorna il tempo trascorso da quando il segmento e' in RAM.
+     */
+    public int getTempoInRam(){
+        return this.tempoInRAM;
+    }
+    
+    /**
+     * Imposta il tempo trascorso da quando il segmento e' in RAM.
+     * 
+     * @param nuovoTempo
+     *      il tempo da quando il segmento e' in RAM
+     * 
+     * @return booleano che segnala se il nuovo tempo assegnato e' corretto
+     */
+    public boolean setTempoInRAM(int nuovoTempo){
+        if(nuovoTempo>0){
+            this.tempoInRAM=nuovoTempo;
+            return true;
+        }
+        else return false;
     }
 }
