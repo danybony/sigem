@@ -245,6 +245,8 @@ public class Processore {
         if(scheduler.getProcessiTerminati().size() > 0 && 
                 (PCB)scheduler.getProcessiTerminati().get(0) == ultimoEseguito){
             
+            gestoreMemoria.notificaProcessoTerminato();
+            
             istante = new Istante(corrente, ultimoEseguito, nuovoProcesso, fault, 
                                 istruzioni, fullRAM, fullSwap);
             
