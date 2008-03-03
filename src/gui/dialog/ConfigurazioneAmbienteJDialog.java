@@ -86,13 +86,13 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         jLabelProcessi.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelProcessi.setText("Processi (da 1 a 20)");
 
-        jLabelDimensioneRAM.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelDimensioneRAM.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelDimensioneRAM.setText("Dimensione RAM (KB)");
 
-        jLabelDimensionaAreaSWAP.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelDimensionaAreaSWAP.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelDimensionaAreaSWAP.setText("Dimensione Area SWAP (KB)");
 
-        jLabelDimensionePagina.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelDimensionePagina.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelDimensionePagina.setText("Dimensione Pagina (KB)");
 
         jLabelTempoContextSwitch.setFont(new java.awt.Font("Tahoma", 1, 12));
@@ -101,7 +101,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         jLabelTempoAccessoDisco.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelTempoAccessoDisco.setText("Tempo di accesso al disco (ms)");
 
-        jLabelBandaBusDati.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelBandaBusDati.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelBandaBusDati.setText("Banda del bus di dati");
 
         jButtonAvanti.setText("Avanti");
@@ -120,7 +120,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
 
         jLabelPasso.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelPasso.setText("Passo 1 di 1");
+        jLabelPasso.setText("Passo 1 di 4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
