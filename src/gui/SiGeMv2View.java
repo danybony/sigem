@@ -79,7 +79,7 @@ public class SiGeMv2View {
 	private ActionListener lnrWindow;
 
 	/** Il frame dell'applicazione */
-	private JFrame frame = new JFrame("SIGEMv2");
+	private JFrame frame = new JFrame("SiGeMv2");
 	
 	/** Rappresenta lo stato dela Gui, vale true se la simulazione e' in avanzamento automatico,
 	 * false, se e' interrotta.*/
@@ -664,6 +664,13 @@ public class SiGeMv2View {
 				procName.add(processi.get(i).getNome());
 			}
 			currView.initializeViewStatoAvanzamentoProcessi(procName);
+		}
+                
+                if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
+			ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+					.getComponent();
+			currView.inizializzaViewFrame((configurazioneIniziale.getDimensioneRAM() / configurazioneIniziale.getDimensionePagina()), 
+                                configurazioneIniziale.getDimensionePagina());
 		}
 
 	};

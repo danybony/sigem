@@ -250,5 +250,5 @@ public class ViewStatistiche extends JScrollPane {
 			this.setViewportView(getP1());
 		}
              */
-	}
+	}        
 }

@@ -30,9 +30,8 @@ import java.awt.BorderLayout;
  * Questa classe modella un JPanel con funzionalit� che permettono di disegnare e aggiornare
  * un grafico che rappresenta l'avanzamento temporale dell'esecuzione dei processi.
  * 
- * @author Sarto Carlo
- * @version 1.4
- * @see GpfxUtilsBlueThoth
+ * @author Cariani Giordano
+ * @version 1.0
  */
 public class ViewStatoAvanzamentoProcessi extends JPanel {
 	/** Necessario per il Serializable. */
