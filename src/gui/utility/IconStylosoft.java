@@ -44,7 +44,6 @@ public class IconStylosoft {
 
         // Get a URL pointing to the image
         URL iconURL = this.getClass().getResource(imageName);
-        //System.out.println( "Icon URL: " + iconURL +" f " + imageName );
         if (iconURL == null)
             return null;
         // Build and return a new ImageIcon built from this URL
