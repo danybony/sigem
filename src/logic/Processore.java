@@ -80,12 +80,12 @@ public class Processore {
         
         if(conf.getModalitaGestioneMemoria() == 1){
             
-            this.gestoreMemoria = new GestioneMemoriaPaginata(conf);
+            this.gestoreMemoria = new GestoreMemoriaPaginata(conf);
             
         }
         else {
             
-            this.gestoreMemoria = new GestioneMemoriaSegmentata(conf);
+            this.gestoreMemoria = new GestoreMemoriaSegmentata(conf);
             
         }      
     }
