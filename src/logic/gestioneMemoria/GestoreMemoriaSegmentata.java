@@ -52,7 +52,8 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         FrameMemoria FrameLibero=null;
         if ( M instanceof RAMSegmentata ) {
             FrameLibero=PoliticaAllocazione.Alloca( F,((RAMSegmentata)M).getFrameLiberi() ); 
-        }        
+            ((RAMSegmentata)M).rimuovi(FrameLibero);
+        }
         M.aggiungi(F, FrameLibero);
         return FrameLibero;
     }
@@ -83,7 +84,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                     while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() ) {
                         FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, F );
                         Azioni.add( new AzionePagina( 3, FrameRimosso ) );
-                        if ( FrameRimosso.getModifica()==true ) {                            
+                        if ( FrameRimosso.getModifica()==true ) {                                                        
                             Inserisci( MemoriaSwap, FrameRimosso );
                             Azioni.add( new AzionePagina( 2, FrameRimosso ) );
                         }

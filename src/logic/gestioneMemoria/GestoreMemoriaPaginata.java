@@ -78,6 +78,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                     } 
                     catch ( MemoriaEsaurita RamEsaurita ) {
                         try {
+                            ListaAzioni.add( new AzionePagina(0,null) );
                             FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
                             ListaAzioni.add( new AzionePagina(3, Frame_Rimosso ) );
                             if ( Frame_Rimosso.getModifica()==true ) {
@@ -88,7 +89,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                         }
                         catch ( MemoriaEsaurita SwapEsaurita ) {
                             // EXIT() situazione grave (memoria finita)
-                            ListaAzioni.add( new AzionePagina(0,null) );
+                            ListaAzioni.add( new AzionePagina(-1,null) );
                         }
                     }
                 }
@@ -99,6 +100,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                     }
                     catch ( MemoriaEsaurita RamEsaurita ) {
                         try {
+                            ListaAzioni.add( new AzionePagina(0,null) );
                             FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
                             ListaAzioni.add( new AzionePagina(3, Frame_Rimosso ) );
                             if ( Frame_Rimosso.getModifica()==true ) {
@@ -109,7 +111,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                         }
                         catch ( MemoriaEsaurita SwapEsaurita ) {
                             // EXIT() situazione grave (memoria finita)
-                            ListaAzioni.add( new AzionePagina(0,null) );
+                            ListaAzioni.add( new AzionePagina(-1,null) );
                         }
                     }
                 }
