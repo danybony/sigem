@@ -7,19 +7,22 @@ package logic.simulazione;
  * Package: logic.simulazione
  * Autore: Luca Rubin
  * Data: 29/02/2008
- * Versione: 1.5
+ * Versione: 1.6
  * Licenza: open-source
  * Registro delle modifiche:
- *  - v.1.5 (29/02/2008): Completata la documentazione
+ *  - v.1.6 (04/03/2008): Aggiunta della Classe interna Statistiche e implementazione
+ *                        dei suoi metodi; aggiornamento dei metodi della classe
+ *                        esterna per adattarli alla nuova classe.
+ *  - v.1.5 (29/02/2008): Completata la documentazione.
  *  - v.1.4 (29/02/2008): Implementata la modalita' di ricerca di istanti significativi;
  *                        corretto il problema di scorrimento degli stati (in alcuni casi
                           veniva ritornato lo stato corrente al posto di quello precedente
-                          o successivo)
+                          o successivo).
  *  - v.1.3 (28/02/2008): Modificata la modalita' di scorrimento degli istanti
- *                        con l'utilizzo di un iteratore
- *  - v.1.2 (27/02/2008): Aggiunti metodi di salto a eventi significativi
+ *                        con l'utilizzo di un iteratore.
+ *  - v.1.2 (27/02/2008): Aggiunti metodi di salto a eventi significativi.
  *  - v.1.1 (26/02/2008): Aggiunta la documentazione JavaDoc.
- *  - v.1.0 (26/02/2008): Impostazione base della classe
+ *  - v.1.0 (26/02/2008): Impostazione base della classe.
  */
 
 import java.util.LinkedList;
@@ -68,6 +71,152 @@ public class Player{
     public enum Evento{FAULT, SWITCH, FULL_RAM, FULL_SWAP, END_PROC, NEW_PROC}
     
     /**
+     * L'istanza della classe Statistiche.
+     */
+    public static Statistiche stat;
+    
+    /**
+     * Classe che raccoglie dati statistici rispetto all'istante corrente.
+     * Questa classe e' necessaria per il fatto che gli Istanti sono
+     * rappresentati in modo differenziale.
+     */
+    public static class Statistiche{
+        
+        /**
+         * Numero di KB utilizzati della RAM.
+         */
+        private int utilizzoRAM;
+        
+        /**
+         * Numero di KB utilizzati nell'area di Swap.
+         */
+        private int utilizzoSwap;
+        
+        /**
+         * Numero di fault in memoria.
+         */
+        private int numeroFault;
+        
+        /**
+         * Numero di istanti rimanenti alla fine della simulazione.
+         */
+        private int numeroIstantiRimanenti;
+        
+        /**
+         * Costruttore della classe. Inizializza a zero i campi dato.
+         */
+        Statistiche(){
+            this.numeroFault = 0;
+            this.utilizzoRAM = 0;
+            this.utilizzoSwap = 0;
+            this.numeroIstantiRimanenti = 0;
+        }
+        
+        /**
+         * Ritorna il numero di KB utilizzati nella RAM.
+         */
+        public int getUtilizzoRAM(){
+            return this.utilizzoRAM;
+        }
+        
+        /**
+         * Ritorna il numero di KB utilizzati nell'area di Swap.
+         */
+        public int getUtilizzoSwap(){
+            return this.utilizzoSwap;
+        }
+        
+        /**
+         * Ritorna il numero di fault avvenuti in memoria.
+         */
+        public int getNumeroFault(){
+            return this.numeroFault;
+        }
+        
+        /**
+         * Ritorna il numero di istanti rimanenti per la conclusione della
+         * simulazione.
+         */
+        public int getNumeroIstantiRimanenti(){
+            return this.numeroIstantiRimanenti;
+        }
+        
+        /**
+         * Aggiorna le statistiche in base al nuovo istante corrente.
+         * 
+         * @param nuovoIstante
+         *          il nuovo istante corrente
+         * 
+         * @param avanti
+         *          parametro booleano che indica se il nuovo istante e'
+         *          successivo (true) o precedente (false) rispetto al vecchio
+         *          istante corrente.
+         */
+        public void AggiornaStatistiche(Istante nuovoIstante, boolean avanti ){
+            if(avanti){ // istante successivo a quello corrente
+                utilizzoRAM=;
+                utilizzoSwap=;
+                numeroFault += nuovoIstante.getFault();
+                numeroIstantiRimanenti--;
+            }
+            else{ // istante precedente a quello corrente
+                utilizzoRAM=;
+                utilizzoSwap=;
+                numeroFault -= nuovoIstante.getFault();
+                numeroIstantiRimanenti++;
+            }
+        }
+        
+        /**
+         * Aggiorna le statistiche in base ad una lista di istanti consecutivi
+         * rispetto al vecchio istante corrente.
+         * 
+         * @param listaNuoviIstanti
+         *          la lista di nuovi istanti
+         * 
+         * @param avanti
+         *          parametro booleano che indica se i nuovi istanti sono
+         *          successivi (true) o precedenti (false) rispetto al vecchio
+         *          istante corrente.
+         * 
+         */
+        public void AggiornaStatistiche(LinkedList<Istante> listaNuoviIstanti,
+                                        boolean avanti)
+        {
+            int numeroNuoviIstanti = listaNuoviIstanti.size();
+            int corrente = 0;
+            if(avanti){ // istante successivo a quello corrente
+                while(corrente<numeroNuoviIstanti){
+                    utilizzoRAM=;
+                    utilizzoSwap=;
+                    numeroFault += listaNuoviIstanti.get(corrente).getFault();
+                    numeroIstantiRimanenti--;
+                }
+            }
+            else{ // istante precedente a quello corrente
+                while(corrente<numeroNuoviIstanti){
+                    utilizzoRAM=;
+                    utilizzoSwap=;
+                    numeroFault -= listaNuoviIstanti.get(corrente).getFault();
+                    numeroIstantiRimanenti++;
+                }
+            }
+        }
+        
+        /**
+         * Azzera tutte le statistiche
+         */
+        public void azzera(){
+            this.numeroFault = 0;
+            this.utilizzoRAM = 0;
+            this.utilizzoSwap = 0;
+            this.numeroIstantiRimanenti = 0;
+        }
+    }
+    
+    
+    
+    /**
      * Costruttore della classe.<br>
      * Si occupa dell'istanziazione dell'oggetto simulazione, sulla base della
      * configurazione iniziale passata.
@@ -78,6 +227,7 @@ public class Player{
     public Player(ConfigurazioneIniziale conf){
         simulazioneEseguita = new Simulazione(conf);
         listaIstanti = null;
+        stat = new Statistiche();
     }
     
     /**
@@ -100,6 +250,7 @@ public class Player{
      * Se viene ritornato un riferimento nullo significa che non ci sono istanti
      * precedenti a quello attuale, cio' significa che: o la simulazione e' vuota,
      * o siamo all'inizio della simulazione stessa (siamo cioe' all'istante zero).
+     * Vengono automaticamente aggiornate le statistiche.
      */
     public Istante istantePrecedente(){
         /*
@@ -115,7 +266,9 @@ public class Player{
         }
         if(istanteCorrente.hasPrevious()){
             indiceElementoCorrente--;
-            return istanteCorrente.previous();
+            Istante prev = istanteCorrente.previous();
+            stat.AggiornaStatistiche(prev, false);
+            return prev;
         }
         else
             return null;
@@ -126,6 +279,7 @@ public class Player{
      * Se viene ritornato un riferimento nullo significa che non ci sono istanti
      * successivi a quello attuale, cio' significa che: o la simulazione e' vuota,
      * o siamo alla fine della simulazione stessa.
+     * Vengono automaticamente aggiornate le statistiche.
      */
     public Istante istanteSuccessivo(){
         /*
@@ -141,7 +295,9 @@ public class Player{
         }
         if(istanteCorrente.hasNext()){
             indiceElementoCorrente++;
-            return istanteCorrente.next();
+            Istante next = istanteCorrente.next();
+            stat.AggiornaStatistiche(next, true);
+            return next;
         }
         else
             return null;
@@ -170,6 +326,7 @@ public class Player{
      * l'ultimo elemento e' l'istante significativo trovato.<br>
      * Se viene ritornato un riferimento nullo significa che non e' stato trovato
      * l'evento significativo.
+     * Vengono automaticamente aggiornate le statistiche.
      * 
      * @param tipoEventoSignificativo
      *              specifica il tipo di evento da ricercare
@@ -210,8 +367,10 @@ public class Player{
             nuovo = istantePrecedente();
                     
         }
-        if(trovato)
+        if(trovato){
+            stat.AggiornaStatistiche(listaIstantiDaRitornare, false);
             return listaIstantiDaRitornare;
+        }
         else
             return null;
     }
@@ -240,6 +399,7 @@ public class Player{
      * l'ultimo elemento e' l'istante significativo trovato.<br>
      * Se viene ritornato un riferimento nullo significa che non e' stato trovato
      * l'evento significativo.
+     * Vengono automaticamente aggiornate le statistiche.
      * 
      * @param tipoEventoSignificativo
      *              specifica il tipo di evento da ricercare
@@ -280,8 +440,10 @@ public class Player{
             nuovo = istanteSuccessivo();
                     
         }
-        if(trovato)
+        if(trovato){
+            stat.AggiornaStatistiche(listaIstantiDaRitornare, true);
             return listaIstantiDaRitornare;
+        }
         else
             return null;
     }
@@ -290,13 +452,19 @@ public class Player{
      * Ritorna il primo istante della simulazione.<br>
      * Se viene ritornato un riferimento nullo, significa che la simulazione
      * è vuota.
+     * Vengono automaticamente aggiornate le statistiche mediante la creazione 
+     * di un nuovo oggetto interno Statistiche.
      */
     public Istante primoIstante(){
         while(istanteCorrente.hasPrevious()){
             istanteCorrente.previous();
         }
-        if(istanteCorrente.hasNext())
-            return istanteCorrente.next();
+        if(istanteCorrente.hasNext()){
+            Istante primo = istanteCorrente.next();
+            stat.azzera();
+            stat.AggiornaStatistiche(primo, true);
+            return primo;
+        }
         return null;
         
     }
@@ -305,6 +473,7 @@ public class Player{
      * Ritorna la lista degli istanti che portano dall'istante attuale a quello
      * finale. Il ritorno di una lista vuota, sta a significare che siamo gia'
      * all'istante finale oppure la simulazione è vuota.
+     * Vengono automaticamente aggiornate le statistiche.
      */
     public LinkedList<Istante> ultimoIstante(){
         LinkedList<Istante> listaAllaFine = new LinkedList<Istante>();
@@ -313,6 +482,7 @@ public class Player{
             listaAllaFine.add(nuovo);
             nuovo = istanteSuccessivo(); 
         }
+        stat.AggiornaStatistiche(listaAllaFine, true);
         return listaAllaFine;
     }
     
@@ -322,5 +492,11 @@ public class Player{
     public int numeroIstanti(){
         return this.listaIstanti.size();
     }
-
+    
+    /**
+     * Ritorna un riferimento all'oggetto interno Statistiche
+     */
+    public Statistiche getStatistiche(){
+        return this.stat;
+    }
 }

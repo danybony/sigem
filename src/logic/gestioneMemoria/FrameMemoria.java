@@ -14,8 +14,6 @@ package logic.gestioneMemoria;
  *  - v.1.0 (26/02/2008): Impostazione base della classe
  */
 
-import logic.schedulazione.PCB;
-
 
 /**
  * Interfaccia che rappresenta la struttura base di una pagina o segmento.<br>
