@@ -14,4 +14,8 @@ package logic.parametri;
  *  - v.1.0 (26/02/2008): Impostazione base della classe
  */
 
+/**
+ * Eccezione lanciata nel momento in cui viene costruita una ConfigurazioneIniziale
+ * con valori non validi per i propri campi dati.
+ */
 class EccezioneConfigurazioneNonValida extends Exception{}

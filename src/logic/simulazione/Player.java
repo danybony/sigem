@@ -176,9 +176,7 @@ public class Player{
      * 
      * @return  lista di istanti che portano all'evento significativo
      */
-    public LinkedList<Istante> precedenteIstanteSignificativo
-            (Evento e) throws EccezioneEventoNonDefinito
-    {
+    public LinkedList<Istante> precedenteIstanteSignificativo(Evento e){
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
         Istante nuovo = istantePrecedente();
         boolean trovato = false;
@@ -208,8 +206,6 @@ public class Player{
                     if(nuovo.getNuovoProcesso())
                         trovato=true;
                     break;
-                default:
-                    throw new EccezioneEventoNonDefinito();
             }
             nuovo = istantePrecedente();
                     
@@ -250,9 +246,7 @@ public class Player{
      * 
      * @return  lista di istanti che portano all'evento significativo
      */
-    public LinkedList<Istante> prossimoIstanteSignificativo
-            (Evento e) throws EccezioneEventoNonDefinito
-    {
+    public LinkedList<Istante> prossimoIstanteSignificativo(Evento e){
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
         Istante nuovo = istanteSuccessivo();
         boolean trovato = false;
@@ -282,8 +276,6 @@ public class Player{
                     if(nuovo.getNuovoProcesso())
                         trovato=true;
                     break;
-                default:
-                    throw new EccezioneEventoNonDefinito();
             }
             nuovo = istanteSuccessivo();
                     
