@@ -4,10 +4,12 @@
  * Package: logic.gestioneMemoria
  * Autore: Alberto Zatton
  * Data: 29/02/2008
- * Versione: 1.1
+ * Versione: 1.3
  * Licenza: open-source
  * Registro delle modifiche:
- *  - v.1.1 (03/03/2008): Modificato il metodo rimuovi: ora ritorna un bool
+ *  - v.1.3 (04/03/2008): Modificato il costruttore: ora ha 2 parametri e può
+ *                        lanciare l'eccezione PaginaNulla
+ *  - v.1.2 (03/03/2008): Modificato il metodo rimuovi: ora ritorna un bool
  *  - v.1.1 (02/03/2008): Nuovo costruttore come da issue 28
  *                        Nuovo metodo indiceDi(FrameMemoria) come da issue 29
  *                        Aggiunti i commenti sui metodi e sul tipo di ritorno
@@ -30,8 +32,8 @@ class RAMPaginata extends MemoriaPaginata{
      * @param conf
      *      Riferimento all'istanza di ConfigurazioneIniziale
      */
-    public RAMPaginata(ConfigurazioneIniziale conf){
-        super(conf.getDimensioneRAM()/conf.getDimensionePagina());
+    public RAMPaginata(ConfigurazioneIniziale conf) throws PaginaNulla{
+        super(conf.getDimensioneRAM(),conf.getDimensionePagina());
     }
     
     

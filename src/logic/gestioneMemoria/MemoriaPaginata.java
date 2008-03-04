@@ -4,9 +4,11 @@
  * Package: logic.gestioneMemoria
  * Autore: Alberto Zatton
  * Data: 29/02/2008
- * Versione: 1.1
+ * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.2 (04/03/2008): Modificato il costruttore: in caso di dimensione nulla
+ *                        per la pagina lancia un'eccezione
  *  - v.1.1 (02/03/2008): Aggiunti i commenti sui parametri e sul tipo di ritorno
  *                        dei metodi
  *  - v.1.0 (29/02/2008): Impostazione base della classe
@@ -34,8 +36,13 @@ abstract class MemoriaPaginata extends Memoria{
      * @param numeroPagine
      *      Capacità della memoria espressa in numero di pagine che può contenere
      */
-    public MemoriaPaginata(int numeroPagine) {
-        pagineResidue=numeroPagine;
+    public MemoriaPaginata(int dimMemoria, int dimPagina) throws PaginaNulla{
+        if(dimPagina!=0){
+            pagineResidue=dimMemoria/dimPagina;
+        }
+        else{
+            throw new PaginaNulla();
+        }
     }
 
     /**

@@ -7,6 +7,7 @@
  * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.3 (04/03/2008): Il metodo aggiungi ora può lanciare l'eccezione MemoriaEsaurita()
  *  - v.1.2 (03/03/2008): Modificato il metodo rimuovi: adesso ritorna un bool
  *  - v.1.1 (02/03/2008): Aggiunti i commenti sui parametri e sul tipo di ritorno
  *                        dei metodi
@@ -44,9 +45,15 @@ class SwapSegmentata extends MemoriaSegmentata{
      *      nella superclasse
      */
     @Override
-    public void aggiungi(FrameMemoria seg, FrameMemoria spazio){
-        memoria.add(seg);
-        spazioResiduo-=seg.getDimensione();
+    public void aggiungi(FrameMemoria seg, FrameMemoria spazio) throws MemoriaEsaurita{
+        if(spazioResiduo>seg.getDimensione()){
+            memoria.add(seg);
+            spazioResiduo-=seg.getDimensione();
+        }
+        else{
+            throw new MemoriaEsaurita(0);
+        }
+        
     }
     
     
@@ -59,7 +66,7 @@ class SwapSegmentata extends MemoriaSegmentata{
     @Override
     public boolean rimuovi(FrameMemoria seg){
         if(memoria.remove(seg)) {
-            spazioResiduo-=seg.getDimensione();
+            spazioResiduo+=seg.getDimensione();
             return true;
         }
         
@@ -78,6 +85,7 @@ class SwapSegmentata extends MemoriaSegmentata{
     public void liberaMemoria(int idProcesso){
         for(int i=0;i<memoria.size();i++){
             if (memoria.get(i).getIdProcesso()==idProcesso){
+                spazioResiduo+=memoria.get(i).getDimensione();
                 rimuovi(memoria.get(i));
                 i-=1;
             }
