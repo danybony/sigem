@@ -5,10 +5,11 @@ package logic.schedulazione;
  * Nome file: RRConPriorita.java
  * Package: logic.scheduler
  * Autore: Daniele Bonaldo
- * Data: 22/02/2008
- * Versione: 1.00
+ * Data: 29/02/2008
+ * Versione: 1.01
  * Licenza: open-source
  * Registro delle modifiche: *  
+ *  - v.1.01 (29/02/2008): Modifiche alla documentazione.
  *  - v.1.00 (22/02/2008): Creazione e scrittura documentazione.
  */
 
@@ -19,19 +20,19 @@ import logic.parametri.ProcessoConPriorita;
 
 /**
  * Classe concreta, estende la classe astratta ConQuanti, e implementa
- * l'interfaccia ConPriorita e l'interfaccia PoliticaOrdinamentoProcessi. 
+ * l'interfaccia PoliticaOrdinamentoProcessi. 
  * Questa classe ha il compito di simulare una politica di ordinamento 
  * Round Robin con priorità. Questa è una politica con ordinamento a quanti,
  * ovvero ogni processo esegue per al più un quanto di
  * tempo alla volta. La particolarità di questa politica, a differenza di quella
  * Round Robin, è che i processi vengono mantenuti in una struttura dati
- * ordinata per priorità. Ogni processo conivolto in questa politica, ha infatti
+ * ordinata per priorità. Ogni processo coinvolto in questa politica, ha infatti
  * un valore di priorità proprio, che determina in quale lista della struttura
  * dati questo deve essere inserito. L'estrazione di un PCB associato ad un
  * processo, procederà cercando quello con priorità più alta. Al termine della
  * sua esecuzione il PCB verrà rimesso in coda alla lista da cui è stato
  * estratto. La politica non prevede prerilascio per priorità, quindi se durante
- * l'secuzione di un processo con priorità bassa, ne arrivasse uno con priorità
+ * l'esecuzione di un processo con priorità bassa, ne arrivasse uno con priorità
  * più alta, il primo rimarrebbe in esecuzione fino al termine del quanto di
  * tempo a sua disposizione, mentre l'altro verrebbe inserito nella coda dei
  * pronti. Non capiterà che un PCB con priorità bassa vada in esecuzione prima
@@ -39,7 +40,7 @@ import logic.parametri.ProcessoConPriorita;
  * 
  * 
  * @author Daniele Bonaldo
- * @version 1.00 22/02/2008
+ * @version 1.01 29/02/2008
  */
 
 public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProcessi {

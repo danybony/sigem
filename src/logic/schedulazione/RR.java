@@ -103,11 +103,7 @@ public class RR extends ConQuanti implements PoliticaOrdinamentoProcessi {
 	}
 
 	/**
-	 * Simula l'esecuzione del processo che "possiede" la CPU per un numero
-	 * definito di unità di tempo. Metodo invocato dallo Scheduler, che calcola
-	 * il parametro istantiSicuri. Questo metodo deve però dare la priorità alla
-	 * scadenza del quanto di tempo, nel caso istantiSicuri sia maggiore del
-	 * tempo ancora disponibile al processo in esecuzione.
+	 * Simula l'esecuzione del processo che "possiede" la CPU.         * 
 	 *
 	 */
 	public void esegui() {
@@ -178,9 +174,9 @@ public class RR extends ConQuanti implements PoliticaOrdinamentoProcessi {
 	}
 
 	/**
-	 * Ritorna un ArrayList contenente IProcesso estratti dalla coda dei pronti.
+	 * Ritorna un ArrayList contenente Processo estratti dalla coda dei pronti.
 	 * 
-	 * @return ArrayList di IProcesso dei PCB nella codaPronti.
+	 * @return ArrayList di Processo dei PCB nella codaPronti.
 	 */
 	public ArrayList getCodaPronti() {
 		// inizializzo un ArrayList con la dimensione della coda.

@@ -16,8 +16,7 @@ import java.util.ArrayList;
 
 
 /**
- * Lo scopo dell'interfaccia PoliticaOrdinamento, è quello di specializzare il
- * concetto di Politica. Una Politica di Ordinamento ha il compito di ordinare i
+ * Una Politica di Ordinamento ha il compito di ordinare i
  * processi che sono attivi in un sistema, scegliendo quale di questi deve
  * eseguire ad ogni istante. Una politica di ordinamento viene specializzata a
  * seconda dei sistemi in cui questa verrà applicata. Elemento comune tra le

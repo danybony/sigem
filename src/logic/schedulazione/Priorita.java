@@ -65,10 +65,6 @@ public class Priorita implements PoliticaOrdinamentoProcessi {
 	/**
 	 * Il metodo esegui, si occupa di far avanzare il tempo dello scheduler e
 	 * quindi lo stato della simulazione.
-	 * Prende come parametro un valore di tipo intero, che indica per quanto può
-	 * avanzare l'esecuzione, senza che si verifichi qualche evento, per il
-	 * quale lo scheduler deve intervenire. Ritorna un oggetto di tipo Istante,
-	 * calcolato sull'intervallo di tempo eseguito.
 	 * 
 	 */
 	public void esegui() {

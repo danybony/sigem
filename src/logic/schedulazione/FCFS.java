@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
- * Classe concreta che implementa l'interfaccia Batch. La classe FCFS
- * rappresenta il funzionamento della politica di ordinamento First Come First
- * Served, tipica dei sistemi Batch. Questo tipo di politica ordina la coda dei
- * processi pronti secondo il loro tempo d'arrivo e li fa eseguire uno alla
- * volta fino al completamento. La classe possiede quindi una struttura dati di
- * tipo FIFO, contenente PCB, sulla quale vengono fatte le operazioni di
- * inserimento e di estrazione. Dunque, l'estrazione del PCB da mandare in
- * escuzione sarà fatto in testa alla strutura mentre ogni nuovo PCB che entra
- * nello stato di pronto verrà inserito in coda.
+ * La classe FCFS rappresenta il funzionamento della politica di ordinamento 
+ * First Come First Served, tipica dei sistemi Batch. 
+ * Questo tipo di politica ordina la coda dei processi pronti secondo il loro 
+ * tempo d'arrivo e li fa eseguire uno alla volta fino al completamento. 
+ * La classe possiede quindi una struttura dati di tipo FIFO, contenente PCB, 
+ * sulla quale vengono fatte le operazioni di inserimento e di estrazione. 
+ * Dunque, l'estrazione del PCB da mandare in escuzione sarà fatto in testa alla 
+ * strutura mentre ogni nuovo PCB che entra nello stato di pronto verrà inserito 
+ * in coda.
  * 
  * @author Bonaldo Daniele
  * @version 1.1 20/02/2008
@@ -45,7 +45,7 @@ public class FCFS implements PoliticaOrdinamentoProcessi {
 	protected Scheduler scheduler = null;
 
 	/**
-	 * Costruttore che si occuopa di inizializzare la struttura dati utilizzata
+	 * Costruttore che si occupa di inizializzare la struttura dati utilizzata
 	 * per rappresentare la coda dei processi pronti per l'esecuzione. Essa sarà
 	 * inizialmente vuota.
 	 */
@@ -64,19 +64,10 @@ public class FCFS implements PoliticaOrdinamentoProcessi {
 	}
 
 	/**
-	 * Simula l'esecuzione del processo che "possiede" la CPU per un numero
-	 * definito di unit� di tempo. Metodo invocato dallo Scheduler, che calcola
-	 * il parametro istantiSicuri.
+	 * Simula l'esecuzione del processo che "possiede" la CPU.
 	 *
 	 */
-	public void esegui() {
-
-		// Per il tempo (istantiSicuri), durante il quale il processo eseguir�,
-		// incremento il valore degli istanti eseguiti e il tempo dello
-		// scheduler.
-
-		// ritorna l'istante riferito al tempo in cui il processo ha eseguito,
-		// calcolato dallo scheduler.
+	public void esegui() {		
 
 		scheduler.incrementaTempoScheduler();
 
@@ -120,10 +111,10 @@ public class FCFS implements PoliticaOrdinamentoProcessi {
 	}
 
 	/**
-	 * Ritorna un ArrayList contenente oggetti di tipo IProcesso estratti dalla
+	 * Ritorna un ArrayList contenente oggetti di tipo Processo estratti dalla
 	 * coda dei pronti.
 	 * 
-	 * @return ArrayList di oggetti di tipo IProcesso associati ai PCB contenuti
+	 * @return ArrayList di oggetti di tipo Processo associati ai PCB contenuti
 	 *         nella codaPronti.
 	 */
 	public ArrayList getCodaPronti() {

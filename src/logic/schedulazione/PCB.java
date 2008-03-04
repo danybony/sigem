@@ -84,13 +84,8 @@ public class PCB {
 	}
 
 	/**
-	 * Metodo che viene invocato alla fine di un certo intervallo di tempo
-	 * d'esecuzione di un processo. Se un processo esegue ininterrottamente per
-	 * t istanti di tempo, esso si occuper� di incrementare di t il numero di
-	 * istanti eseguiti, decrementare di t il numero di istanti rimanenti al
-	 * termine dell'esecuzione del processo e decrementare di t il tempo per cui
-	 * il processo necessita delle risorse ad esso assegnate, qualora ve ne
-	 * fossero nel campo dati risorseUtilizzate.
+	 * Metodo che incrementa gli istantiEseguiti e decrementa gli 
+         * istantiDaEseguire di un'unità di tempo.
 	 * 	 
 	 */
 	public void incIstantiEseguiti() {

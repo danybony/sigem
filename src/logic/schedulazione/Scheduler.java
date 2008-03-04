@@ -19,14 +19,7 @@ import java.util.*;
 import logic.parametri.Processo;
 /**
  * Questa classe implementa i meccanismi necessari per realizzare una
- * simulazione discreta di processi in un elaboratore multi-programmato. Uno
- * scheduler di questo tipo deve ordinare e gestire gli eventi che possono
- * sorgere durante la schedulazione. 
- * Lo spazio degli eventi gestiti dallo scheduler sono: </br>
- * <ol>
- * <li>Arrivo di un nuovo processo.</li> 
- * <li>Terminazione di un PCB.</li>
- * </ol>
+ * simulazione discreta di processi in un elaboratore multi-programmato. 
  * Lo Scheduler viene interrogato per ogni istante dal Processore, a cui ritorna 
  * un riferimento al PCB correntemente in esecuzione, che potrà essere un riferimento
  * nullo nel caso in cui nessun processo abbia il controllo della CPU.
@@ -68,14 +61,7 @@ public class Scheduler {
 	 * terminazione.
 	 * 
 	 */
-	ArrayList processiTerminati = new ArrayList();
-
-	/**
-	 * Questo campo dati rappresenta la tabella di tutti i PCB (processi attivi)
-	 * nell'istante temporale definito dalla variabile tempoCorrente.
-	 * 
-	 */
-	LinkedList tabellaPCB = new LinkedList();
+	ArrayList processiTerminati = new ArrayList();	
 
 	/**
 	 * Questa variabile è il contatore interno della classe Scheduler. Esso è
@@ -101,11 +87,9 @@ public class Scheduler {
         }
         
 	/**
-	 * Questa struttura serve per memorizzare i tempi dei quattro eventi che
+	 * Questa struttura serve per memorizzare i tempi dei due eventi che
 	 * possono ricorrere in questa simulazione di schedulazione. Tali eventi
-	 * specificano lo spazio degli eventi, noto allo scheduler. Il minore dei
-	 * tempi di questi eventi rappresenta quanto tempo il PCBCorrente puo'
-	 * eseguire, senza che lo stato interno dello scheduler sia alterato.
+	 * specificano lo spazio degli eventi, noto allo scheduler.
 	 */
 	int tempoEvento[] = new int[2];
 
@@ -117,7 +101,7 @@ public class Scheduler {
 	static final int PCB_TERMINATO = 1;        
         
 	/**
-	 * Salva il valore ritornato dal metodo tempoProssimoProcesso() per
+	 * Salva il valore ritornato dal metodo tempoProssimoEvento() per
 	 * stabilire la correttezza del parametro tempo nel metodo
 	 * incrementaTempoScheduler().
 	 */
@@ -242,10 +226,7 @@ public class Scheduler {
 			Processo processo = (Processo) processiInArrivo.removeFirst();
 
 			/* Crea il PCB relativo al processo */
-			PCB PCBNuovo = new PCB(processo);
-
-			/* Inserisce il nuovo PCB nella tabella dei PCB */
-			tabellaPCB.add(PCBNuovo);
+			PCB PCBNuovo = new PCB(processo);			
 
 			/* SCHEDULING */
 			/* Inserisce il nuovo PCB nella politica di ordinamento */
@@ -426,20 +407,7 @@ public class Scheduler {
 		return politicaOrdinamento;
 
 	}
-
-
-	/**
-	 * Ritorna la tabella dei PCB. Questo metodo condivide la memoria e la
-	 * struttura.
-	 * 
-	 * @return Ritorna la tabella dei PCB.
-	 */
-	public LinkedList getTabellaPCB() {
-
-		return tabellaPCB;
-
-	}
-	
+		
 	/**
 	 * Ritorna un intero che rappresenta il numero di volte che un'istanza della
 	 * classe Scheduler ha eseguito.
@@ -482,8 +450,7 @@ public class Scheduler {
 
 	/**
 	 * Questo metodo incrementa il tempo corrente dello scheduler e decrementa
-	 * automaticamente i tempi dei prossimi eventi in base al valore tempo
-	 * ricevuto come parametro. E' invocato dalla politica di ordinamento per
+	 * automaticamente i tempi dei prossimi.' invocato dalla politica di ordinamento per
 	 * avanzare direttamente di un tempo stabilito nel parametro tempo. Questo,
 	 * deve essere necessariamente positivo e superiormente limitato dal valore
 	 * tempoProssimoEvento (non strettamente). Nel caso cio' non fosse
@@ -573,9 +540,8 @@ public class Scheduler {
 	 * rilasciate. Questo simula il comportamento del sistema operativo che
 	 * provvede a rilasciare le risorse detenute da un prorgamma se questo
 	 * termina senza averle rilasciate (quindi forza il rilascio). In seguito
-	 * provvede ad eliminare il PCBCorrente dalla tabella dei PCB, inserire il
-	 * processo correlato al PCBCorrente nella lista dei processi terminati e di
-	 * porre il PCBCorrente a null.
+	 * provvede ad  inserire il processo correlato al PCBCorrente nella lista 
+         * dei processi terminati e di porre il PCBCorrente a null.
 	 */
 	void terminaPCBCorrente() {
 		/* TERMINATION */
@@ -583,8 +549,6 @@ public class Scheduler {
 		PCB PCBTerminato = PCBCorrente;
 
 		PCBCorrente = null;
-
-		tabellaPCB.remove(PCBTerminato);
 
 		processiTerminati.add(PCBTerminato.getRifProcesso());
 

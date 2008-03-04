@@ -20,7 +20,7 @@ import java.util.LinkedList;
 
 
 /**
- * Classe concreta, implementa l'interfaccia Batch. Questa classe rappresenta la
+ * Classe concreta. Questa classe rappresenta la
  * politica di ordinamento Shortest Job First, che viene usualmente applicata
  * nei sistemi Batch. Essa richiede la conoscenza dei tempi di
  * esecuzione infatti viene eseguito sempre il lavoro più breve. Ovviamente, non
@@ -35,7 +35,7 @@ import java.util.LinkedList;
 public class SJF implements PoliticaOrdinamentoProcessi {
 
 	/**
-	 * Coda dei processi pronti, � ordinata per tempo di esecuzione crescente.
+	 * Coda dei processi pronti, è ordinata per tempo di esecuzione crescente.
 	 */
 	protected LinkedList codaPronti;
 
@@ -46,7 +46,7 @@ public class SJF implements PoliticaOrdinamentoProcessi {
 
 	/**
 	 * Costruttore, inizializza la struttura dati utilizzata per rappresentare
-	 * la coda dei processi pronti per l'esecuzione. La coda sar� inizialmente
+	 * la coda dei processi pronti per l'esecuzione. La coda sarà inizialmente
 	 * vuota.
 	 */
 	public SJF() {
@@ -66,22 +66,10 @@ public class SJF implements PoliticaOrdinamentoProcessi {
 	}
 
 	/**
-	 * Il metodo esegui si occupa di incrementare gli istanti di tempo eseguiti
-	 * da un processo e di far avanzare il tempo di utilizzo dello scheduler.
-	 * Prende come parametro un valore di tipo intero, che indica per quanto pu�
-	 * avanzare l'esecuzione senza che si verifichi qualche evento per il
-	 * quale lo scheduler deve intervenire. Ritorna un oggetto, di tipo Istante,
-	 * calcolato sull'intervallo di tempo eseguito.
+	 * Simula l'esecuzione del processo che "possiede" la CPU.
 	 * 
 	 */
-	public void esegui() {
-
-		//Per il tempo (istantiSicuri), durante il quale il processo eseguir�
-		// l'incremento del valore degli istanti eseguiti e del tempo dello
-		// scheduler.
-
-		// ritorna l'istante riferito al tempo in cui il processo ha eseguito,
-		// calcolato dallo scheduler.
+	public void esegui() {		
 
 		scheduler.incrementaTempoScheduler();
 
@@ -144,9 +132,9 @@ public class SJF implements PoliticaOrdinamentoProcessi {
 	}
 
 	/**
-	 * Ritorna un ArrayList contenente IProcesso estratti dalla coda dei pronti.
+	 * Ritorna un ArrayList contenente Processo estratti dalla coda dei pronti.
 	 * 
-	 * @return ArrayList di IProcesso dei PCB nella codaPronti.
+	 * @return ArrayList di Processo dei PCB nella codaPronti.
 	 */
 	public ArrayList getCodaPronti() {
 		// inizializzo un ArrayList con la dimensione della coda.
