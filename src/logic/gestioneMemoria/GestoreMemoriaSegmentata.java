@@ -62,7 +62,8 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         if ( M instanceof RAMSegmentata ) {
             FrameRimosso=RimuoviFrame( ((RAMSegmentata)M).getFrameOccupati() );
         }
-        return M.rimuovi(FrameRimosso);
+        if ( M.rimuovi(FrameRimosso) ) return FrameRimosso;
+        else return null;
     }
     
     public LinkedList<Azione> esegui( LinkedList<FrameMemoria> ListaSegmenti, int UT ){
@@ -76,21 +77,6 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             ((Segmento)F).setTempoInRAM(UT);
             
             if ( !MemoriaRam.cerca(F) ) {
-                if ( !MemoriaSwap.cerca(F) ) { // F mai caricato
-                    
-                    while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() ) {
-                        FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, F );
-                        Azioni.add( new AzionePagina( 3, FrameRimosso ) );
-                        if ( FrameRimosso.getModifica()==true ) {                            
-                            Inserisci( MemoriaSwap, FrameRimosso );
-                            Azioni.add( new AzionePagina( 2, FrameRimosso ) );
-                        }    
-                    }
-                    
-                    Azioni.add( new AzionePagina( 1, Inserisci( MemoriaRam, F ) ) );
-                    
-                }
-                else { // F in swap
                     
                     Azioni.add( new AzionePagina( 4, Rimuovi(MemoriaSwap, F) ) );
                     
@@ -104,10 +90,10 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                     }
                     
                     Azioni.add( new AzionePagina( 1, Inserisci( MemoriaRam, F ) ) );
-                }
             }
             else Azioni.add( new AzionePagina( 5, F ) );
         }
         return Azioni;
     }
+    
 }
