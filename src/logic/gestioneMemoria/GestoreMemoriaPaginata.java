@@ -53,7 +53,8 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         if ( M instanceof RAMPaginata ) {
             Da_Rimuovere=PoliticaRimpiazzo.SelezionaEntry();
         }
-        return M.rimuovi(Da_Rimuovere);
+        if ( M.rimuovi(Da_Rimuovere) ) return Da_Rimuovere;
+        else return null;
     }
     
     public LinkedList<Azione> esegui( LinkedList<FrameMemoria> ListaPagine, int UT ) {
