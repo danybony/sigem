@@ -54,7 +54,7 @@ class RAMSegmentata extends MemoriaSegmentata{
      */
     @Override
     public void aggiungi(FrameMemoria seg, FrameMemoria spazio){
-        /**Calcolo lo spazio che rimarrà libero al termine dell'inserimento*/ 
+        /**Calcolo lo spazio che rimarrï¿½ libero al termine dell'inserimento*/ 
         int spazioRimasto=spazio.getDimensione()-seg.getDimensione();
         /**Cerco il segmento spazio all'interno di memoria*/
         int pos=0;
@@ -80,7 +80,7 @@ class RAMSegmentata extends MemoriaSegmentata{
      */
     @Override
     public boolean rimuovi(FrameMemoria seg){
-        /**Salvo la posizione del segmento in memoria. Servirà in seguito*/
+        /**Salvo la posizione del segmento in memoria. Servirï¿½ in seguito*/
         int pos=memoria.indexOf(seg);
         
         /**Tolgo il segmento dalla memoria*/
@@ -103,7 +103,7 @@ class RAMSegmentata extends MemoriaSegmentata{
     
     
     /**
-     * Metodo che elimina i segmenti non più riferiti perchè il relativo processo
+     * Metodo che elimina i segmenti non piï¿½ riferiti perchï¿½ il relativo processo
      * ha terminato l'esecuzione
      * 
      * @param idProcesso
@@ -119,11 +119,11 @@ class RAMSegmentata extends MemoriaSegmentata{
             segAux1=memoria.get(i);
             segAux2=memoria.get(i+1);
             
-            /**Controllo se il segmento referenziato è uno spazio oppure un
+            /**Controllo se il segmento referenziato ï¿½ uno spazio oppure un
              * segmento da eliminare*/
             if(segAux1.getIndirizzo().equals("spazio") || segAux1.getIdProcesso()==idProcesso){
                 
-                /**Controllo se il segmento successivo è dello stesso tipo*/
+                /**Controllo se il segmento successivo ï¿½ dello stesso tipo*/
                 if(segAux2.getIndirizzo().equals("spazio") || segAux2.getIdProcesso()==idProcesso){
                     
                     /**Unisco i due segmenti*/
@@ -135,9 +135,9 @@ class RAMSegmentata extends MemoriaSegmentata{
                     i=i-1;
                 }
                 else{
-                    /**Il segmento successivo è ancora referenziato da qualche
+                    /**Il segmento successivo ï¿½ ancora referenziato da qualche
                      * processo. Converto a spazio il segmento corrente nel caso
-                     * in cui non sia più referenziato da nessun processo*/
+                     * in cui non sia piï¿½ referenziato da nessun processo*/
                     if(segAux1.getIdProcesso()==idProcesso){
                         memoria.set(i, new Segmento("spazio",segAux1.getDimensione(),-1));
                     }
@@ -182,11 +182,11 @@ class RAMSegmentata extends MemoriaSegmentata{
     
 
     /**
-     * Metodo che restituisce il segmento con lo spazio libero più grande.
+     * Metodo che restituisce il segmento con lo spazio libero piï¿½ grande.
      * Utile per gli algoritmi di rimpiazzo dei segmenti.
      * 
      * @return
-     *      Un riferimento allo spazio libero contiguo più grande disponibile
+     *      Un riferimento allo spazio libero contiguo piï¿½ grande disponibile
      *      in RAM
      */
     public FrameMemoria getSpazioMaggiore(){
@@ -205,13 +205,13 @@ class RAMSegmentata extends MemoriaSegmentata{
     
     
     /**
-     * Metodo che cerca se il segmento richiesto è già presente in RAM
+     * Metodo che cerca se il segmento richiesto ï¿½ giï¿½ presente in RAM
      * 
      * @param seg
      *      Riferimento al segmento da controllare
      * 
      * @return
-     *      TRUE se il segmento è in RAM, FALSE altrimenti
+     *      TRUE se il segmento ï¿½ in RAM, FALSE altrimenti
      */
     @Override
     public boolean cerca(FrameMemoria seg){
