@@ -13,12 +13,13 @@ public abstract class Azione {
     
     private int TipoAzione;
     
-    /* 0 ERROR
-     * 1 INSERT RAM
-     * 2 INSERT SWAP
-     * 3 REMOVE RAM
-     * 4 REMOVE SWAP
-     * 5 LEGGI
+    /* -1    SWAP PIENA
+     *  0    RAMP IENA
+     *  1    INSERT RAM
+     *  2    INSERT SWAP
+     *  3    REMOVE RAM
+     *  4    REMOVE SWAP
+     *  5    LEGGI
      */
     
     private FrameMemoria Frame;
