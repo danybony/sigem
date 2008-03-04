@@ -114,9 +114,9 @@ public class Processore {
         
         LinkedList<Istante> simulazione = new LinkedList<Istante>();  
         
-        boolean stop, fullRAM, fullSwap, nuovoProcesso;
+        boolean stop, nuovoProcesso, SwapPiena = false;
         
-        while(!scheduler.fineSimulazione()){
+        while(!scheduler.fineSimulazione() && !SwapPiena){
             
             stop = false;
             
@@ -151,16 +151,14 @@ public class Processore {
                 LinkedList<Azione> istruzioni = gestoreMemoria.esegui(frameNecessari,
                                                              tempoCorrente);
                 
-                fullRAM = gestoreMemoria.getFullRAM();
+                SwapPiena = controllaSwapPiena(istruzioni);
                 
-                fullSwap = gestoreMemoria.getFullSwap();
-                
-                simulazione.add(creaIstante(corrente,istruzioni,nuovoProcesso,fullRAM,fullSwap));
+                simulazione.add(creaIstante(corrente,istruzioni,nuovoProcesso,SwapPiena));
                 //da aggiungere il PCB dell'ultimo terminato
         
             } else {
                 /* Non c'è un processo in esecuzione */
-                simulazione.add(creaIstante(corrente,null,nuovoProcesso,fullRAM,fullSwap));
+                simulazione.add(creaIstante(corrente,null,nuovoProcesso,SwapPiena));
             }
             
             /* Se c'è un processo in esecuzione esegue nuovamente il metodo 
@@ -220,6 +218,68 @@ public class Processore {
         
         return numeroFault;
     }
+
+    /**
+     * Metodo il cui compito è ritornare tramite un booleano se l'area di Swap è 
+     * piena o meno.
+     * 
+     * @param istruzioni
+     *      La lista delle istruzioni ritornate dal GestoreMemoria
+     * 
+     * @return Ritorna un boolean rappresentante il fatto che la memoria di Swap
+     * sia piena.
+     */
+    private boolean controllaSwapPiena(LinkedList<Azione> istruzioni) {
+        
+        if(istruzioni == null){
+            
+            return false;
+            
+        }
+        
+        for (int i = 0; i < istruzioni.size(); i++){
+            
+            if (istruzioni.get(i).getAzione() == -1){
+                
+                return true;
+                
+            }                
+            
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Metodo il cui compito è ritornare tramite un booleano se la RAM è piena o 
+     * meno.
+     * 
+     * @param istruzioni
+     *      La lista delle istruzioni ritornate dal GestoreMemoria
+     * 
+     * @return Ritorna un boolean rappresentante il fatto che la memoria di Swap
+     * sia piena.
+     */
+    private boolean controllaRAMPiena(LinkedList<Azione> istruzioni) {
+        
+        if(istruzioni == null){
+            
+            return false;
+            
+        }
+        
+        for (int i = 0; i < istruzioni.size(); i++){
+            
+            if (istruzioni.get(i).getAzione() == 0){
+                
+                return true;
+                
+            }                
+            
+        }
+        
+        return false;
+    }
     
     /**
      * Metodo con il compito di creare una istanza della classe Istante riguardante
@@ -236,9 +296,11 @@ public class Processore {
      * @return Ritorna l'istante corrente.
      */   
     private Istante creaIstante(PCB corrente, LinkedList<Azione> istruzioni,
-                                boolean nuovoProcesso, boolean fullRAM, boolean fullSwap){
+                                boolean nuovoProcesso, boolean SwapPiena){
         
         int fault = calcolaFault(istruzioni);
+        
+        boolean RAMPiena = controllaRAMPiena(istruzioni);
         
         Istante istante = null;
         
@@ -248,13 +310,13 @@ public class Processore {
             gestoreMemoria.notificaProcessoTerminato(ultimoEseguito.getRifProcesso().getId());
             
             istante = new Istante(corrente, ultimoEseguito, nuovoProcesso, fault, 
-                                istruzioni, fullRAM, fullSwap);
+                                istruzioni, RAMPiena, SwapPiena);
             
         }
         else{
             
             istante = new Istante(corrente, null, nuovoProcesso, fault, 
-                                istruzioni, fullRAM, fullSwap);
+                                istruzioni, RAMPiena, SwapPiena);
             
         }
         
