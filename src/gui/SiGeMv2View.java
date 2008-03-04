@@ -3,10 +3,11 @@
  * Nome file: SiGeMv2View
  * Package: gui
  * Autore: Cariani Giordano
- * Data: 02/03/2008
- * Versione: 1.1
+ * Data: 04/03/2008
+ * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche:
+ * - v.1.2 (04/03/2008): implementazione di Simulazione
  * - v.1.1 (02/03/2008): Create le 3 finestre e inizializzazione grafico processi (dopo wizard)
  * - v.1.0 (01/03/2008): Creato scheletro interfaccia grafica
  * */
@@ -40,6 +41,7 @@ import com.jgoodies.looks.Options;
 import logic.caricamento.GestioneFile;
 import logic.parametri.ConfigurazioneIniziale;
 import logic.parametri.Processo;
+import logic.simulazione.Simulazione;
 import gui.view.*;
 import gui.dialog.*;
 import gui.utility.IconStylosoft;
@@ -123,14 +125,16 @@ public class SiGeMv2View {
          */
 
 	/** Contiene finestre e funzioni per selezionare un file sul filesystem */
-	private GestioneFile gestioneFile = new GestioneFile();
+	private GestioneFile gestioneFile;
         
         /** Wizard per la configurazione dei processi */
         private ConfigurazioneAmbienteJDialog  configurazioneAmbiente;
         
-        /* Configurazione iniziale */
+        /** Configurazione iniziale */
         private ConfigurazioneIniziale configurazioneIniziale;
         
+        /** Simulazione */
+        private Simulazione simulazione;
 	// ----------------------------------
 	// METODI GESTIONE COMPONENTI GRAFICI
 	// ----------------------------------
@@ -389,7 +393,6 @@ public class SiGeMv2View {
 		JMenuBar menu = new JMenuBar();
 		menu.add(createFileMenu());
 		menu.add(createSimulazioneMenu());
-		//menu.add(createFinestreMenu());
 		menu.add(createHelpMenu());
 		return menu;
 	}
@@ -546,7 +549,7 @@ public class SiGeMv2View {
 		jButtonSimulazioneStop = new JButton(IconStylosoft.getGeneralIcon("stop"));
 		jButtonSimulazioneStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//SimStop();
+				fermaSimulazione();
 			}
 		});
 		jButtonSimulazioneStop.setToolTipText("Ferma l'avanzamento automatico della "
@@ -555,7 +558,7 @@ public class SiGeMv2View {
 		jButtonSimulazionePlay = new JButton(IconStylosoft.getGeneralIcon("play"));
 		jButtonSimulazionePlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//SimEsegue();
+				avviaSimulazione();
 			}
 		});
 		jButtonSimulazionePlay.setToolTipText("Avvia l'avanzamento automatico della "
@@ -670,10 +673,51 @@ public class SiGeMv2View {
 			ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
 					.getComponent();
 			currView.inizializzaViewFrame((configurazioneIniziale.getDimensioneRAM() / configurazioneIniziale.getDimensionePagina()), 
-                                configurazioneIniziale.getDimensionePagina());
+                                                        1);
 		}
+                
+                creaSimulazione();
 
 	};
+        
+        /** Istanzia una nuova simulazione */
+        private void creaSimulazione() {
+            simulazione = new Simulazione(configurazioneIniziale);
+        }
+        
+        /** Parte la simulazione */
+        private void avviaSimulazione() {
+            jButtonApriConfigurazione.setEnabled(false);
+            jButtonNuovaConfigurazione.setEnabled(false);
+            jButtonSalvaConfigurazione.setEnabled(false);
+            jButtonSimulazioneFine.setEnabled(false);
+            jButtonSimulazioneInizio.setEnabled(false);
+            jFileItemApriConfigurazione.setEnabled(false);
+            jFileItemNuovaConfigurazione.setEnabled(false);
+            jFileItemSalvaConfigurazione.setEnabled(false);
+            jSimulazioneItemFine.setEnabled(false);
+            jSimulazioneItemInizio.setEnabled(false);
+            jSimulazioneItemInizio.setEnabled(false);
+            jSimulazioneItemPlay.setEnabled(false);
+             // completare
+        }
+        
+        /** Stoppa la simulazione */
+        private void fermaSimulazione(){
+            jButtonApriConfigurazione.setEnabled(true);
+            jButtonNuovaConfigurazione.setEnabled(true);
+            jButtonSalvaConfigurazione.setEnabled(true);
+            jButtonSimulazioneFine.setEnabled(true);
+            jButtonSimulazioneInizio.setEnabled(true);
+            jFileItemApriConfigurazione.setEnabled(true);
+            jFileItemNuovaConfigurazione.setEnabled(true);
+            jFileItemSalvaConfigurazione.setEnabled(true);
+            jSimulazioneItemFine.setEnabled(true);
+            jSimulazioneItemInizio.setEnabled(true);
+            jSimulazioneItemInizio.setEnabled(true);
+            jSimulazioneItemPlay.setEnabled(true);
+            // completare
+        }
 
     public ConfigurazioneIniziale getConfigurazioneIniziale() {
         return configurazioneIniziale;
