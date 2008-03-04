@@ -51,8 +51,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
     private FrameMemoria Inserisci( MemoriaSegmentata M, FrameMemoria F ) {
         FrameMemoria FrameLibero=null;
         if ( M instanceof RAMSegmentata ) {
-            FrameLibero=PoliticaAllocazione.Alloca( F,((RAMSegmentata)M).getFrameLiberi() ); 
-            ((RAMSegmentata)M).rimuovi(FrameLibero);
+            FrameLibero=PoliticaAllocazione.Alloca( F,((RAMSegmentata)M).getFrameLiberi() );
         }
         M.aggiungi(F, FrameLibero);
         return FrameLibero;
