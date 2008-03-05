@@ -76,8 +76,8 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         while( I.hasNext() && !errore ) {
             
             FrameMemoria F=I.next();
-            ((Segmento)F).setTempoInRAM(UT);
             MemoriaSwap.rimuovi(F);
+            ((Segmento)F).setTempoInRAM(UT);
             
             if ( !MemoriaRam.cerca(F) ) {
                     
