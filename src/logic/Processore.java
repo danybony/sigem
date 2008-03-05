@@ -24,7 +24,7 @@ import logic.parametri.Processo.Accesso;
 import logic.schedulazione.*;
 
 /**
- * 
+ * Classe che ha il compito di
  * 
  * @author Daniele Bonaldo
  * @version 1.3 29/02/2008
@@ -57,7 +57,7 @@ public class Processore {
     
     /**
      * Unico costruttore della classe Processore.
-     * Imposta lo scheduler e il gestore della memoria necesasri per la simulazione.
+     * Imposta lo scheduler e il gestore della memoria necessari per la simulazione.
      * 
      * @param conf 
      *      Indica la configurazione iniziale da cui inizializzare lo Scheduler
@@ -67,13 +67,13 @@ public class Processore {
         PoliticaOrdinamentoProcessi politica = null;
         
         switch (conf.getPoliticaSchedulazioneProcessi()){            
-            case 1:politica = new FCFS();
-            case 2:politica = new SJF();
-            case 3:politica = new SRTN();
-            case 4:politica = new RR();
-            case 5:politica = new RRConPriorita();
-            case 6:politica = new RRConPrioritaConPrerilascio();
-            case 7:politica = new Priorita();
+            case 1:politica = new FCFS(); break;
+            case 2:politica = new SJF(); break;
+            case 3:politica = new SRTN(); break;
+            case 4:politica = new RR(); break;
+            case 5:politica = new RRConPriorita(); break;
+            case 6:politica = new RRConPrioritaConPrerilascio(); break;
+            case 7:politica = new Priorita(); break;
         }
         
         this.scheduler = new Scheduler(politica, conf.getListaProcessi()); 

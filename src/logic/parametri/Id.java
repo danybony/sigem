@@ -21,7 +21,7 @@ package logic.parametri;
  */
 public class Id {
 	/**
-	 * Campo dati statico che cionta le istanze degli oggetti di tipo Id
+	 * Campo dati statico che conta le istanze degli oggetti di tipo Id
 	 */
 	private static int counter = 0;
 

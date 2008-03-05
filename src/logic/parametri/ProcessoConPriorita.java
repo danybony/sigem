@@ -22,8 +22,6 @@ package logic.parametri;
  * @version 1.00 22/02/2008
  */
 public class ProcessoConPriorita extends Processo {
-	/** Necessario per il Serializable.*/
-	private static final long serialVersionUID = 201L;
 
 	/** Campo dati contenente la priorità associata al processo */
 	private int priorita;
