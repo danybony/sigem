@@ -18,7 +18,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
     private IRimpiazzo PoliticaRimpiazzo=null;
     private RAMPaginata MemoriaRam=null;
     private SwapPaginata MemoriaSwap=null;
-    boolean PaginaNulla=false;
+    private boolean PaginaNulla=false;
     
     public GestoreMemoriaPaginata( ConfigurazioneIniziale C ){
         
