@@ -48,7 +48,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         return F;
     }
     
-    private FrameMemoria Inserisci( MemoriaSegmentata M, FrameMemoria F ) {
+    private FrameMemoria Inserisci( MemoriaSegmentata M, FrameMemoria F ) throws MemoriaEsaurita {
         FrameMemoria FrameLibero=null;
         if ( M instanceof RAMSegmentata ) {
             FrameLibero=PoliticaAllocazione.Alloca( F,((RAMSegmentata)M).getFrameLiberi() );
@@ -71,27 +71,40 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         LinkedList<Azione> Azioni=new LinkedList();
         Iterator<FrameMemoria> I=ListaSegmenti.iterator();
         
-        while( I.hasNext() ) {
+        boolean errore=false;
+        
+        while( I.hasNext() && !errore ) {
             
             FrameMemoria F=I.next();
             ((Segmento)F).setTempoInRAM(UT);
+            MemoriaSwap.rimuovi(F);
             
             if ( !MemoriaRam.cerca(F) ) {
                     
-                    Azioni.add( new AzionePagina( 4, Rimuovi(MemoriaSwap, F) ) );
+                    Azioni.add( new AzioneSegmento( 4, Rimuovi(MemoriaSwap, F) ) );
                     
-                    while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() ) {
+                    while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() && !errore ) {
+                        Azioni.add( new AzioneSegmento(0,null) );
                         FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, F );
                         Azioni.add( new AzionePagina( 3, FrameRimosso ) );
                         if ( FrameRimosso.getModifica()==true ) {                                                        
-                            Inserisci( MemoriaSwap, FrameRimosso );
-                            Azioni.add( new AzionePagina( 2, FrameRimosso ) );
+                            try { 
+                                  Inserisci( MemoriaSwap, FrameRimosso );
+                                  Azioni.add( new AzioneSegmento( 2, FrameRimosso ) );
+                            }
+                            catch ( MemoriaEsaurita SwapEsaurita ) {
+                                Azioni.add( new AzioneSegmento(-1,null) );
+                                errore=true;
+                            }
+                            
                         }
-                    }
                     
-                    Azioni.add( new AzionePagina( 1, Inserisci( MemoriaRam, F ) ) );
+                    }
+                    if ( errore==false ) 
+                        try { Azioni.add( new AzioneSegmento( 1, Inserisci( MemoriaRam, F ) ) ); }
+                        catch ( MemoriaEsaurita Impossibile ) { }
             }
-            else Azioni.add( new AzionePagina( 5, F ) );
+            else Azioni.add( new AzioneSegmento( 5, F ) );
         }
         return Azioni;
     }
