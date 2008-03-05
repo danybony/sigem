@@ -85,7 +85,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                     
                     while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() && !errore ) {
                         Azioni.add( new AzioneSegmento(0,null) );
-                        FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, F );
+                        FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
                         Azioni.add( new AzionePagina( 3, FrameRimosso ) );
                         if ( FrameRimosso.getModifica()==true ) {                                                        
                             try { 
