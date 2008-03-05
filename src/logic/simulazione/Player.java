@@ -27,6 +27,7 @@ package logic.simulazione;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
+import logic.gestioneMemoria.Azione;
 import logic.parametri.ConfigurazioneIniziale;
 
 /**
@@ -142,6 +143,56 @@ public class Player{
         }
         
         /**
+         * Aggiorna l'occupazione della RAM e dello Swap.
+         */
+        private void AggiornaOccupazioni(Istante nuovoIstante, boolean avanti){
+            LinkedList<Azione> listaAzioni = nuovoIstante.getCambiamentiInMemoria();
+            int numeroAzioniMemoria=listaAzioni.size();
+            int i=0;
+            Azione azioneCorrente = null;
+            if(avanti){ // Istante successivo al corrente
+                while(i<numeroAzioniMemoria){
+                    azioneCorrente = listaAzioni.get(i);
+                    switch(azioneCorrente.getAzione()){
+                        case 1: // INSERT RAM
+                                utilizzoRAM += azioneCorrente.getFrame().getDimensione();
+                                break;
+                        case 2: // INSERT SWAP
+                                utilizzoSwap += azioneCorrente.getFrame().getDimensione();
+                                break;
+                        case 3: // REMOVE RAM
+                                utilizzoRAM -= azioneCorrente.getFrame().getDimensione();
+                                break;
+                        case 4: // REMOVE SWAP
+                                utilizzoSwap -= azioneCorrente.getFrame().getDimensione();
+                                break;
+                    
+                    }
+                }
+            }
+            else{ // Istante precedente al corrente
+                while(i<numeroAzioniMemoria){
+                    azioneCorrente = listaAzioni.get(i);
+                    switch(azioneCorrente.getAzione()){
+                        case 1: // INSERT RAM
+                                utilizzoRAM -= azioneCorrente.getFrame().getDimensione();
+                                break;
+                        case 2: // INSERT SWAP
+                                utilizzoSwap -= azioneCorrente.getFrame().getDimensione();
+                                break;
+                        case 3: // REMOVE RAM
+                                utilizzoRAM += azioneCorrente.getFrame().getDimensione();
+                                break;
+                        case 4: // REMOVE SWAP
+                                utilizzoSwap += azioneCorrente.getFrame().getDimensione();
+                                break;
+                    
+                    }
+                }
+            }
+        }
+        
+        /**
          * Aggiorna le statistiche in base al nuovo istante corrente.
          * 
          * @param nuovoIstante
@@ -152,16 +203,14 @@ public class Player{
          *          successivo (true) o precedente (false) rispetto al vecchio
          *          istante corrente.
          */
-        public void AggiornaStatistiche(Istante nuovoIstante, boolean avanti ){
+        void AggiornaStatistiche(Istante nuovoIstante, boolean avanti ){
             if(avanti){ // istante successivo a quello corrente
-                utilizzoRAM=;
-                utilizzoSwap=;
+                AggiornaOccupazioni(nuovoIstante, avanti);
                 numeroFault += nuovoIstante.getFault();
                 numeroIstantiRimanenti--;
             }
             else{ // istante precedente a quello corrente
-                utilizzoRAM=;
-                utilizzoSwap=;
+                AggiornaOccupazioni(nuovoIstante, avanti);
                 numeroFault -= nuovoIstante.getFault();
                 numeroIstantiRimanenti++;
             }
@@ -180,24 +229,25 @@ public class Player{
          *          istante corrente.
          * 
          */
-        public void AggiornaStatistiche(LinkedList<Istante> listaNuoviIstanti,
+        void AggiornaStatistiche(LinkedList<Istante> listaNuoviIstanti,
                                         boolean avanti)
         {
             int numeroNuoviIstanti = listaNuoviIstanti.size();
             int corrente = 0;
+            Istante nuovoIstante = null;
             if(avanti){ // istante successivo a quello corrente
                 while(corrente<numeroNuoviIstanti){
-                    utilizzoRAM=;
-                    utilizzoSwap=;
-                    numeroFault += listaNuoviIstanti.get(corrente).getFault();
+                    nuovoIstante = listaNuoviIstanti.get(corrente);
+                    AggiornaOccupazioni(nuovoIstante, avanti);
+                    numeroFault += nuovoIstante.getFault();
                     numeroIstantiRimanenti--;
                 }
             }
             else{ // istante precedente a quello corrente
                 while(corrente<numeroNuoviIstanti){
-                    utilizzoRAM=;
-                    utilizzoSwap=;
-                    numeroFault -= listaNuoviIstanti.get(corrente).getFault();
+                    nuovoIstante = listaNuoviIstanti.get(corrente);
+                    AggiornaOccupazioni(nuovoIstante, avanti);
+                    numeroFault -= nuovoIstante.getFault();
                     numeroIstantiRimanenti++;
                 }
             }
@@ -206,7 +256,7 @@ public class Player{
         /**
          * Azzera tutte le statistiche
          */
-        public void azzera(){
+        void AzzeraStatistiche(){
             this.numeroFault = 0;
             this.utilizzoRAM = 0;
             this.utilizzoSwap = 0;
@@ -461,7 +511,7 @@ public class Player{
         }
         if(istanteCorrente.hasNext()){
             Istante primo = istanteCorrente.next();
-            stat.azzera();
+            stat.AzzeraStatistiche();
             stat.AggiornaStatistiche(primo, true);
             return primo;
         }

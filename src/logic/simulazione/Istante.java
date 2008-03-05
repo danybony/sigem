@@ -133,7 +133,7 @@ public class Istante {
     }
     
     /**
-     * Ritorna il numero di fault avvenuti in memori all'istante t.
+     * Ritorna il numero di fault avvenuti in memoria all'istante t.
      */
     public int getFault(){
         return this.numeroFault;
