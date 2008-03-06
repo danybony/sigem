@@ -7,7 +7,7 @@
  * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche:
- * - v.1.2 (04/03/2008): implementazione di Simulazione
+ * - v.1.2 (05/03/2008): implementazione di Player
  * - v.1.1 (02/03/2008): Create le 3 finestre e inizializzazione grafico processi (dopo wizard)
  * - v.1.0 (01/03/2008): Creato scheletro interfaccia grafica
  * */
@@ -41,10 +41,11 @@ import com.jgoodies.looks.Options;
 import logic.caricamento.GestioneFile;
 import logic.parametri.ConfigurazioneIniziale;
 import logic.parametri.Processo;
-import logic.simulazione.Simulazione;
+
 import gui.view.*;
 import gui.dialog.*;
 import gui.utility.IconStylosoft;
+import logic.simulazione.Player;
 
 public class SiGeMv2View {
 
@@ -133,8 +134,8 @@ public class SiGeMv2View {
         /** Configurazione iniziale */
         private ConfigurazioneIniziale configurazioneIniziale;
         
-        /** Simulazione */
-        private Simulazione simulazione;
+        /** Player */
+        private Player player;
 	// ----------------------------------
 	// METODI GESTIONE COMPONENTI GRAFICI
 	// ----------------------------------
@@ -676,13 +677,13 @@ public class SiGeMv2View {
                                                         1);
 		}
                 
-                creaSimulazione();
+                creaPlayer();
 
 	};
         
         /** Istanzia una nuova simulazione */
-        private void creaSimulazione() {
-            simulazione = new Simulazione(configurazioneIniziale);
+        private void creaPlayer() {
+            player = new Player(configurazioneIniziale);
         }
         
         /** Parte la simulazione */
