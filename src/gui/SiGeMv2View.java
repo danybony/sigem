@@ -38,14 +38,15 @@ import java.util.Vector;
 import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
-import logic.caricamento.GestioneFile;
-import logic.parametri.ConfigurazioneIniziale;
-import logic.parametri.Processo;
-
 import gui.view.*;
 import gui.dialog.*;
 import gui.utility.IconStylosoft;
+
+import logic.caricamento.GestioneFile;
+import logic.parametri.ConfigurazioneIniziale;
+import logic.parametri.Processo;
 import logic.simulazione.Player;
+
 
 public class SiGeMv2View {
 
