@@ -51,10 +51,6 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         initSpinnerBandaBusDati();
     }
     
-    public ConfigurazioneAmbienteJDialog(ConfigurazioneAmbienteJDialog conf, SiGeMv2View view) {
-        this.view = view;
-        setNumProcessi(conf.getNumProcessi());
-    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
