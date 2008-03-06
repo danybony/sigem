@@ -268,7 +268,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         return dimensioniSWAP;
     }
 
-        private Integer[] impostaPagine() {
+    private Integer[] impostaPagine() {
         Integer[] dimensioniPagine= new Integer[DIMPAGINE];
         Double potenza;
         dimensioniPagine[0]=1;
