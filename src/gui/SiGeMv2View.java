@@ -657,7 +657,8 @@ public class SiGeMv2View {
             jButtonSalvaConfigurazione.setEnabled(true);
             jFileItemSalvaConfigurazione.setEnabled(true);
         }
-
+        
+        /** inizializza le viste e prepara l'applicazione per l'esecuzione della simulazione */
         public void setIstanteZero() {
 		statoGui = false;
 		if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
