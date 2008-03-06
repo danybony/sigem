@@ -77,11 +77,12 @@ public class ViewFrameMemoria extends JPanel {
     private void creaPagine(int totale, int dim) {
             int fisso = 60;
             int spostamento=5;
-            int coordX =0, coordY=10, indice=0;
+            int coordX=0, coordY=10, indice=0;
+            /*
             for (int i=0; i<totale; i++) {
                 int dimensione = dim*fisso;
                 if (i==0)
-                    pagineSquare.add(new SquareDraw(0, coordY, dimensione, dimensione, Color.blue));
+                    pagineSquare.add(new SquareDraw(0, coordY, dimensione, dimensione, Color.lightGray));
                 else {
                     if (i%5==0) {
                         indice =0;
@@ -90,13 +91,26 @@ public class ViewFrameMemoria extends JPanel {
                     }           
                     coordX = (indice*fisso)+(indice*spostamento);
                     if (i%2==0)
-                        pagineSquare.add(new SquareDraw(coordX, coordY, dimensione, dimensione, Color.blue));
+                        pagineSquare.add(new SquareDraw(coordX, coordY, dimensione, dimensione, Color.lightGray));
                     else
-                        pagineSquare.add(new SquareDraw(coordX, coordY, dimensione, dimensione, Color.cyan));
+                        pagineSquare.add(new SquareDraw(coordX, coordY, dimensione, dimensione, Color.GRAY));
                 }
                 indice++;
-        }
-    }
+             */
+            for (int i=0; i<totale; i++) {
+                int dimensione = dim*fisso;
+                if (i==0)
+                    pagineSquare.add(new SquareDraw(coordX, coordY, dimensione, dimensione, Color.lightGray));
+                else if (i%5==0) {
+                        indice=0;
+                        coordX=0;
+                        coordY+= fisso+spostamento;
+                }           
+                coordX = (indice*fisso)+(indice*spostamento);
+                pagineSquare.add(new SquareDraw(coordX, coordY, dimensione, dimensione, Color.lightGray));
+                indice++;
+            }
+     }
     
     /**
      * Disegna tutte le pagine. 

@@ -19,7 +19,7 @@ import gui.SiGeMv2View;
  * @author  Jordy
  */
 public class ProcessiJDialog extends javax.swing.JDialog {
-private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
+    private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
     private PoliticheJDialog politiche;
     private AssociazioneProcessiJDialog associazioneProcessi;
     private SiGeMv2View view;
