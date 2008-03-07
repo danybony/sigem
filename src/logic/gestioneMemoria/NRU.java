@@ -1,6 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Azienda: Stylosoft
+ * Nome file: NextFit.java
+ * Package: logic.gestioneMemoria
+ * Autore: Davide Compagnin
+ * Data: 30/02/2008
+ * Versione: 1.0
+ * Licenza: open-source
+ * Registro delle modifiche:
+ *  - v.1.0 (30/02/2008): Impostazione base della classe
  */
 
 package logic.gestioneMemoria;
@@ -8,15 +15,31 @@ package logic.gestioneMemoria;
 import java.util.Vector;
 
 /**
- *
- * @author Davide
+ * Classe pubblica concreta che implementa l'interfaccia IRimpiazzo. Essa 
+ * prende il nome di NRU per Not Recently Used cioè rimpiazza la pagina non 
+ * usata di recente
+ * @author Davide Compagnin
  */
 public class NRU implements IRimpiazzo {
-  
+    /**
+     * Classe interna privata che memorizza un boolean M che indica se la pagina
+     * è stata modificata, un boolean R che indica se la pagina è stata riferita,
+     * oltre al riferimento F alla pagina. 
+     *   R=false	M=false	Classe=0
+     *   R=false	M=true	Classe=1
+     *   R=true         M=false	Classe=2
+     *   R=true         M=true	Classe=3
+     */
     private class Dati {
       private boolean M;
       private boolean R;
       private FrameMemoria F=null;
+      /**
+       * Metodo
+       * che ritorna la classe a cui appartiene una pagina:
+       * @return
+       *  Classe di appartenenza
+       */
       private int Classe() {
         if (R==false)
             if (M==false) return 0;
@@ -29,24 +52,49 @@ public class NRU implements IRimpiazzo {
     
     private Vector<Dati> Tabella=new Vector<Dati>();
     
-    
+    /**
+     * Data la dimensione intera della memoria interpretata come il numero
+     * di FrameMemoria, istanzia Tabella con valori di default
+     * @param dim
+     *  Dimensione della memoria in numero di pageframe
+     */
     public NRU( int dim ) {
         for( int i=0; i<dim; i++ )
             Tabella.add( new Dati() );
     }
-    
+    /**
+     * Imposta F riferimento alla pagina nella Posizione indicata, imposta R a 
+     * true e M con il valore del parametro passato
+     * @param F
+     *  Frame da inserire
+     * @param Posizione
+     *  Posizione di inserimento
+     * @param UT
+     *  Tempo Corrente
+     * @param M
+     *  Bit di modifica
+     */
     public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).M=M;
         Tabella.elementAt(Posizione).F=F;
     }
-    
+    /**
+     * Resetta i campi dati relativi alla pagina nella Posizione specificata dal
+     * parametro
+     * @param Posizione
+     *  Posizione di reset
+     */
     public void LiberaEntry( int Posizione ) { 
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).M=false;
         Tabella.elementAt(Posizione).F=null;
     }
-    
+    /**
+     * Implementa l'algoritmo. Restituisce un riferimento alla pagina di Classe minore.
+     * @return
+     *  Riferimento alla pagina di classe minore
+     */
     public FrameMemoria SelezionaEntry() { 
       int classe=0,pos=0;
       for (int i=0; i<Tabella.size(); i++ ) {
@@ -55,12 +103,20 @@ public class NRU implements IRimpiazzo {
       }
       return Tabella.elementAt(pos).F;
     }
-    
+    /**
+     * Aggiorna i flag R e M della pagina in Posizione
+     * @param Posizione
+     *  posizione di aggiornamento
+     * @param M
+     *  Bit di modifica
+     */
     public void AggiornaEntry( int Posizione, boolean M ) {
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).M=M;
     }
-    
+    /**
+     * Per ogni pagina resetta R a false
+     */
     public void AggiornaEntries( ) { 
         for(int i=0; i<Tabella.size(); i++)
             Tabella.elementAt(i).R=false;

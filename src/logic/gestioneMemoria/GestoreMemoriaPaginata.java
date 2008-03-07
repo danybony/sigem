@@ -1,8 +1,20 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- * Aggiunto controllo rimozione pagina non esistente
- * Aggiunto controllo inserimento numero maggiore di pagine rispetto a quelle disponibili
+ * Azienda: Stylosoft
+ * Nome file: GestoreMemoriaPaginata.java
+ * Package: logic.gestioneMemoria
+ * Autore: Davide Compagnin
+ * Data: 29/02/2008
+ * Versione: 1.5
+ * Licenza: open-source
+ * Registro delle modifiche:
+ *  - v.1.5 (05/03/2008): Aggiunto controllo inserimento numero maggiore di pagine 
+                          rispetto a quelle disponibili
+ *  - v.1.4 (04/03/2008): Aggiunto controllo rimozione pagina non esistente
+ *  - v.1.3 (04/03/2008): Eliminazione ricerca in Swap ma eliminiazione a priori, 
+                          con controllo e modifica del metodo rimuovi
+ *  - v.1.2 (03/03/2008): Aggiunta del metodo notificaProcessoTerminato
+ *  - v.1.1 (02/03/2008): Modificato il costruttore in base alla configurazione iniziale
+ *  - v.1.0 (29/02/2008): Impostazione base della classe
  */
 
 package logic.gestioneMemoria;
@@ -11,17 +23,39 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import logic.parametri.ConfigurazioneIniziale;
 /**
- *
- * @author Davide
+ * Si occupa interamente ed esclusivamente della 
+ * gestione della memoria paginata, ossia quando l'utente richiede una 	simulazione
+ * di un sistema a memoria virtuale paginata. Questa classe 
+ * fornisce al Processore una lista di azioni, che descrive precisamente tutte le 
+ * operazioni che dovranno esser eseguite in memoria nel corso 	dell'esecuzione della simulazione.
+ * @author Davide Compagnin
  */
 public class GestoreMemoriaPaginata extends GestoreMemoria {
-    
+    /**
+     * Numero di frame totali in RAM
+     */
     private int numero_frame_ram=0;
+    /**
+     * Riferimento alla politica di Rimpiazzo
+     */
     private IRimpiazzo PoliticaRimpiazzo=null;
+    /**
+     * Riferimento alla memoria RAM
+     */
     private RAMPaginata MemoriaRam=null;
+    /**
+     * Riferimanto alla Memoria Swap
+     */
     private SwapPaginata MemoriaSwap=null;
+    /**
+     * Indicatore di dimensione pagina nulla
+     */
     private boolean PaginaNulla=false;
-    
+    /**
+     * Costruttore del GestoreMemoriaPaginato
+     * @param C
+     *  Configurazione Iniziale dalla quale impostare i valori
+     */
     public GestoreMemoriaPaginata( ConfigurazioneIniziale C ){
         
         
@@ -45,12 +79,27 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         }
         
     }
-    
+    /**
+     * Rilascia la memoria del processo terminato
+     * @param id
+     * Identificativo del processo
+     */
     public void notificaProcessoTerminato(int id) {
         MemoriaRam.liberaMemoria(id);
         MemoriaSwap.liberaMemoria(id);
     }
-    
+    /**
+     * Metodo di inserimento di utilità interna
+     * @param M
+     *   Riferimento alla Memoria
+     * @param F
+     *   Pagina da Inserire
+     * @param UT
+     *   Unità di tempo corrente
+     * @return
+     *   Posizione d'inserimento
+     * @throws logic.gestioneMemoria.MemoriaEsaurita
+     */
     private int inserisci( MemoriaPaginata M, FrameMemoria F, int UT ) throws MemoriaEsaurita {
         int Posizione_Inserimento=M.aggiungi(F);
         if ( M instanceof RAMPaginata ) {
@@ -58,7 +107,15 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         }
         return Posizione_Inserimento;
     }
-    
+    /**
+     * Metodo di utilità interno che rimuove una pagina dalla memoria
+     * @param M
+     *  Riferimento alla memoria
+     * @param F
+     *  Pagina da rimuovere
+     * @return
+     *  Pagina Rimossa
+     */
     private FrameMemoria rimuovi( Memoria M, FrameMemoria F ) {
         FrameMemoria Da_Rimuovere=F;
         if ( M instanceof RAMPaginata ) {
@@ -67,7 +124,15 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         if ( !M.rimuovi(Da_Rimuovere) ) return null;
         return Da_Rimuovere;
     }
-    
+    /**
+     * Metodo principale d'esecuzione
+     * @param ListaPagine
+     *  Lista di pagine da caricare
+     * @param UT
+     *  Unità di tempo corrente
+     * @return
+     *  Lista di azioni compiute
+     */
     public LinkedList<Azione> esegui( LinkedList<FrameMemoria> ListaPagine, int UT ) {
         
         LinkedList<Azione> ListaAzioni=new LinkedList<Azione>();
