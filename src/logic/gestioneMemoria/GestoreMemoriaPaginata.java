@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  * Aggiunto controllo rimozione pagina non esistente
+ * Aggiunto controllo inserimento numero maggiore di pagine rispetto a quelle disponibili
  */
 
 package logic.gestioneMemoria;
