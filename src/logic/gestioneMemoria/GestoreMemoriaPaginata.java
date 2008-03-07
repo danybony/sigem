@@ -111,8 +111,9 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                 }
             }
             else { // gia in ram
-                PoliticaRimpiazzo.AggiornaEntry(MemoriaRam.indiceDi(F), F.getModifica() );
-                ListaAzioni.add( new AzionePagina(5,F) );
+                int Posizione=MemoriaRam.indiceDi(F);
+                PoliticaRimpiazzo.AggiornaEntry(Posizione, F.getModifica() );
+                ListaAzioni.add( new AzionePagina(5,F,Posizione) );
             }
         }
         return ListaAzioni;
