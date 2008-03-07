@@ -74,8 +74,12 @@ public class Simulazione{
     
     /**
      * Ritorna il numero degli istanti che compongono la simulazione.
+     * Se la simulazione non è stata creata e quindi non ci sono istanti generati
+     * ritorna zero.
      */
     public int numeroIstanti(){
+        if(listaIstanti==null)
+            return 0;
         return listaIstanti.size();
     }
 }
