@@ -223,10 +223,10 @@ public class Scheduler {
 		while (tempoEvento[NUOVO_PROCESSO] == 0) {
 
 			/* ACTIVATION */
-			Processo processo = (Processo) processiInArrivo.removeFirst();
+			final Processo processo = (Processo) processiInArrivo.removeFirst();
 
 			/* Crea il PCB relativo al processo */
-			PCB PCBNuovo = new PCB(processo);			
+			final PCB PCBNuovo = new PCB(processo);			
 
 			/* SCHEDULING */
 			/* Inserisce il nuovo PCB nella politica di ordinamento */
@@ -288,7 +288,7 @@ public class Scheduler {
                                 /* La lista dei PCB pronti e' vuota */                                
 
                                 /* Testa se la simulazione e' finita. */
-                                if (processiInArrivo.size() == 0) {
+                                if (processiInArrivo.isEmpty()) {
                                         /* La simulazione e' terminata */
 
                                         fineSimulazione = true;

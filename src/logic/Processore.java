@@ -302,7 +302,7 @@ public class Processore {
         
         boolean RAMPiena = controllaRAMPiena(istruzioni);
         
-        Istante istante = null;
+        Istante istante;
         
         if(scheduler.getProcessiTerminati().size() > 0 && 
                 (PCB)scheduler.getProcessiTerminati().get(0) == ultimoEseguito){

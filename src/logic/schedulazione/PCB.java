@@ -146,8 +146,9 @@ public class PCB {
 		 * anche essere nullo. In entrambi i casi i due oggetti che voglio
 		 * confrontare sono sicuramente diversi e dunque ritorno false.
 		 */
-		else
+		else{
 			return false;
+                }
 	}
 
 }
