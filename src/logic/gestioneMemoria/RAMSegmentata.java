@@ -67,7 +67,13 @@ public class RAMSegmentata extends MemoriaSegmentata{
          * originale e la grandezza del nuovo segmento inserito. Come parametri
          * al nuovo segmento passo valori speciali che lo identificano come spazio
          */
-        memoria.add(pos+1, new Segmento("spazio",spazioRimasto,-1));
+        if (spazioRimasto!=0){
+            memoria.add(pos+1, new Segmento("spazio",spazioRimasto,-1));
+            memoria.remove(pos+2);
+        }
+        else{
+            memoria.remove(pos+1);
+        }
         spazioRimasto-=seg.getDimensione();
     }
     
@@ -80,6 +86,7 @@ public class RAMSegmentata extends MemoriaSegmentata{
      */
     @Override
     public boolean rimuovi(FrameMemoria seg){
+        if(memoria.contains(seg)){
         /**Salvo la posizione del segmento in memoria. Servir� in seguito*/
         int pos=memoria.indexOf(seg);
         
@@ -99,6 +106,8 @@ public class RAMSegmentata extends MemoriaSegmentata{
             }
         }
         return true;
+        }
+        return false;
     }
     
     
