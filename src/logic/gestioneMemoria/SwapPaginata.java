@@ -47,7 +47,7 @@ public SwapPaginata(ConfigurazioneIniziale conf)throws PaginaNulla{
         if(pagineResidue>0){
             memoria.add(pag);
             pagineResidue--;
-            return memoria.size();
+            return memoria.size()-1;
         }
         else{
             throw new MemoriaEsaurita(0);
@@ -91,10 +91,10 @@ public SwapPaginata(ConfigurazioneIniziale conf)throws PaginaNulla{
     
     
     /**
-     * Metodo lasciato vuoto in quanto mai usato in Swap
+     * Metodo che ritorna TRUE se la pagina è in memoria, FALSE altrimenti
      */
     @Override
     public boolean cerca(FrameMemoria pag){
-        return true;
+        return memoria.contains(pag);
     }
 }
