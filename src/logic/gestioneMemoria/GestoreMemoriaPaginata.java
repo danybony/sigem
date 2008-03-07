@@ -1,6 +1,7 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
+ * Aggiunto controllo rimozione pagina non esistente
  */
 
 package logic.gestioneMemoria;
@@ -62,7 +63,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         if ( M instanceof RAMPaginata ) {
             Da_Rimuovere=PoliticaRimpiazzo.SelezionaEntry();
         }
-        M.rimuovi(Da_Rimuovere);
+        if ( !M.rimuovi(Da_Rimuovere) ) return null;
         return Da_Rimuovere;
     }
     
@@ -87,7 +88,8 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
             
             if ( !MemoriaRam.cerca(F) ) {// Pagina non in ram
                 try {
-                    ListaAzioni.add( new AzionePagina(4, rimuovi( MemoriaSwap, F ) ) );
+                    FrameMemoria Temp=rimuovi( MemoriaSwap, F );
+                    if (Temp!=null) ListaAzioni.add( new AzionePagina(4, Temp ) );
                     ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
                 }
                 catch ( MemoriaEsaurita RamEsaurita ) {
