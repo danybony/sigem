@@ -82,6 +82,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         
         Iterator<FrameMemoria> I=ListaPagine.iterator();
         boolean Errore=false;
+        int n_inserimenti=0;
         while( I.hasNext() && !Errore ) {
             
             FrameMemoria F=I.next();
@@ -91,6 +92,11 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                     FrameMemoria Temp=rimuovi( MemoriaSwap, F );
                     if (Temp!=null) ListaAzioni.add( new AzionePagina(4, Temp ) );
                     ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
+                    n_inserimenti++;
+                    if ( n_inserimenti > numero_frame_ram ) {
+                        ListaAzioni.add( new AzionePagina(-1,null) );
+                        Errore=true;
+                    }
                 }
                 catch ( MemoriaEsaurita RamEsaurita ) {
                     try {
@@ -102,6 +108,11 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                                     inserisci(MemoriaSwap,Frame_Rimosso,UT) ) );
                         }
                         ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
+                        n_inserimenti++;
+                        if ( n_inserimenti > numero_frame_ram ) {
+                            ListaAzioni.add( new AzionePagina(-1,null) );
+                            Errore=true;
+                        }
                     }
                     catch ( MemoriaEsaurita SwapEsaurita ) {
                         // EXIT() situazione grave (memoria finita)
