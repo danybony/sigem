@@ -114,7 +114,7 @@ public class SimulazioneTest {
 /*
  * Cronologia dei test effettuati:
  * 
- * public void crea(): 
+ * public LinkedList<Istante> crea(): 
  * -.descrizione: prova con configuarazione 
  *                    ConfigurazioneIniziale( 1,1,1,1,512,256,1,1,4,new LinkedList());
  *  .input: nuova simulazione come sopra
@@ -123,7 +123,7 @@ public class SimulazioneTest {
  * 
  * 
  * 
- * public void numeroIstanti():
+ * public int numeroIstanti():
  * - .descrizione: simulazione con ConfigurazioneIniziale( 1,1,1,1,512,256,1,1,4,new LinkedList());
  *                  senza invocazione di crea()
  *   .input: simulazione non creata
@@ -134,23 +134,5 @@ public class SimulazioneTest {
  *                  con invocazione di crea()
  *   .input: simulazione creata
  *   .output: 1
- *   .esito: positivo* 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
+ *   .esito: positivo
  */

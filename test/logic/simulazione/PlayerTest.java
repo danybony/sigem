@@ -6,6 +6,8 @@
 package logic.simulazione;
 
 import java.util.LinkedList;
+import logic.parametri.ConfigurazioneIniziale;
+import logic.parametri.EccezioneConfigurazioneNonValida;
 import logic.simulazione.Player.Evento;
 import logic.simulazione.Player.Statistiche;
 import org.junit.After;
@@ -21,7 +23,25 @@ import static org.junit.Assert.*;
  */
 public class PlayerTest {
 
+    ConfigurazioneIniziale conf;
+    
     public PlayerTest() {
+        try {
+
+            conf = new ConfigurazioneIniziale(
+                                                1,
+                                                1,
+                                                1,
+                                                1,
+                                                512,
+                                                256,
+                                                1,
+                                                1,
+                                                4,
+                                                new LinkedList());
+        } catch (EccezioneConfigurazioneNonValida ex) {
+            fail("Costruzione test fallita per configurazione non valida");
+        }
     }
 
     @BeforeClass
@@ -46,12 +66,11 @@ public class PlayerTest {
     @Test
     public void caricaSimulazione() {
         System.out.println("caricaSimulazione");
-        Player instance = null;
-        boolean expResult = false;
+        Player instance = new Player(conf);
+        boolean expResult = true;
         boolean result = instance.caricaSimulazione();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -60,12 +79,12 @@ public class PlayerTest {
     @Test
     public void istantePrecedente() {
         System.out.println("istantePrecedente");
-        Player instance = null;
+        Player instance = new Player(conf);
+        instance.caricaSimulazione();
         Istante expResult = null;
         Istante result = instance.istantePrecedente();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -74,12 +93,12 @@ public class PlayerTest {
     @Test
     public void istanteSuccessivo() {
         System.out.println("istanteSuccessivo");
-        Player instance = null;
+        Player instance = new Player(conf);
+        instance.caricaSimulazione();
         Istante expResult = null;
         Istante result = instance.istanteSuccessivo();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -88,13 +107,13 @@ public class PlayerTest {
     @Test
     public void precedenteIstanteSignificativo() {
         System.out.println("precedenteIstanteSignificativo");
-        Evento e = null;
-        Player instance = null;
+        Evento e = Evento.END_PROC;
+        Player instance = new Player(conf);
+        instance.caricaSimulazione();
         LinkedList<Istante> expResult = null;
         LinkedList<Istante> result = instance.precedenteIstanteSignificativo(e);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -103,13 +122,13 @@ public class PlayerTest {
     @Test
     public void prossimoIstanteSignificativo() {
         System.out.println("prossimoIstanteSignificativo");
-        Evento e = null;
-        Player instance = null;
+        Evento e = Evento.FAULT;
+        Player instance = new Player(conf);
+        instance.caricaSimulazione();
         LinkedList<Istante> expResult = null;
         LinkedList<Istante> result = instance.prossimoIstanteSignificativo(e);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -118,12 +137,11 @@ public class PlayerTest {
     @Test
     public void primoIstante() {
         System.out.println("primoIstante");
-        Player instance = null;
+        Player instance = new Player(conf);
         Istante expResult = null;
         Istante result = instance.primoIstante();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -132,12 +150,15 @@ public class PlayerTest {
     @Test
     public void ultimoIstante() {
         System.out.println("ultimoIstante");
-        Player instance = null;
-        LinkedList<Istante> expResult = null;
+        Player instance = new Player(conf);
+        instance.caricaSimulazione();
+        LinkedList<Istante> expResult = new LinkedList<Istante>();
         LinkedList<Istante> result = instance.ultimoIstante();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if(result.size()==expResult.size())
+            System.out.println("Ultimo istante ok");
+        else
+            fail("Ultimo istante fallito");
+
     }
 
     /**
@@ -146,12 +167,12 @@ public class PlayerTest {
     @Test
     public void numeroIstanti() {
         System.out.println("numeroIstanti");
-        Player instance = null;
-        int expResult = 0;
+        Player instance = new Player(conf);
+        instance.caricaSimulazione();
+        int expResult = 1;
         int result = instance.numeroIstanti();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -160,12 +181,72 @@ public class PlayerTest {
     @Test
     public void getStatistiche() {
         System.out.println("getStatistiche");
-        Player instance = null;
+        Player instance = new Player(conf);
         Statistiche expResult = null;
         Statistiche result = instance.getStatistiche();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if(result==null)
+            fail("Fallimento getStatistiche");
+
     }
 
 }
+
+
+/*
+ * Cronologia dei test effettuati:
+ * 
+ * :
+ * -.descrizione: 
+ *  .input: 
+ *  .output: 
+ *  .esito: 
+ * 
+ * :
+ * -.descrizione: 
+ *  .input: 
+ *  .output: 
+ *  .esito: 
+ * 
+ * :
+ * -.descrizione: 
+ *  .input: 
+ *  .output: 
+ *  .esito: 
+ * 
+ * :
+ * -.descrizione: 
+ *  .input: 
+ *  .output: 
+ *  .esito: 
+ * :
+ * -.descrizione: 
+ *  .input: 
+ *  .output: 
+ *  .esito: 
+ * 
+ * :
+ * -.descrizione: 
+ *  .input: 
+ *  .output: 
+ *  .esito: 
+ * 
+ * :
+ * -.descrizione: 
+ *  .input: 
+ *  .output: 
+ *  .esito: 
+ * 
+ * :
+ * -.descrizione: 
+ *  .input: 
+ *  .output: 
+ *  .esito: 
+ * 
+ * :
+ * -.descrizione: 
+ *  .input: 
+ *  .output: 
+ *  .esito: 
+ * 
+ * 
+ */

@@ -21,7 +21,10 @@ import static org.junit.Assert.*;
  */
 public class IstanteTest {
 
+    Istante instance;
+    
     public IstanteTest() {
+        instance = new Istante(null,null,true,3,null,false,true);
     }
 
     @BeforeClass
@@ -46,12 +49,9 @@ public class IstanteTest {
     @Test
     public void getProcessoInEsecuzione() {
         System.out.println("getProcessoInEsecuzione");
-        Istante instance = null;
         PCB expResult = null;
         PCB result = instance.getProcessoInEsecuzione();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -60,12 +60,9 @@ public class IstanteTest {
     @Test
     public void getProcessoPrecedenteTerminato() {
         System.out.println("getProcessoPrecedenteTerminato");
-        Istante instance = null;
         PCB expResult = null;
         PCB result = instance.getProcessoPrecedenteTerminato();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -74,12 +71,9 @@ public class IstanteTest {
     @Test
     public void getNuovoProcesso() {
         System.out.println("getNuovoProcesso");
-        Istante instance = null;
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.getNuovoProcesso();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -88,12 +82,9 @@ public class IstanteTest {
     @Test
     public void getFault() {
         System.out.println("getFault");
-        Istante instance = null;
-        int expResult = 0;
+        int expResult = 3;
         int result = instance.getFault();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -102,12 +93,9 @@ public class IstanteTest {
     @Test
     public void getCambiamentiInMemoria() {
         System.out.println("getCambiamentiInMemoria");
-        Istante instance = null;
         LinkedList<Azione> expResult = null;
         LinkedList<Azione> result = instance.getCambiamentiInMemoria();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -116,12 +104,9 @@ public class IstanteTest {
     @Test
     public void getFull_RAM() {
         System.out.println("getFull_RAM");
-        Istante instance = null;
         boolean expResult = false;
         boolean result = instance.getFull_RAM();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -130,12 +115,64 @@ public class IstanteTest {
     @Test
     public void getFull_Swap() {
         System.out.println("getFull_Swap");
-        Istante instance = null;
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.getFull_Swap();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }
+
+
+/*
+ * Cronologia dei test effettuati:
+ * 
+ * public void getProcessoInEsecuzione():
+ * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ *                campi dati
+ *  .input: Istante(null,null,true,3,null,false,true)
+ *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
+ *  .esito: Positivo
+ * 
+ * public void getProcessoPrecedenteTerminato():
+ * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ *                campi dati
+ *  .input: Istante(null,null,true,3,null,false,true)
+ *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
+ *  .esito: Positivo
+ * 
+ * public void getNuovoProcesso():
+ * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ *                campi dati
+ *  .input: Istante(null,null,true,3,null,false,true)
+ *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
+ *  .esito: Positivo
+ * 
+ * public void getFault():
+ * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ *                campi dati
+ *  .input: Istante(null,null,true,3,null,false,true)
+ *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
+ *  .esito: Positivo
+ * 
+ * public void getCambiamentiInMemoria():
+ * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ *                campi dati
+ *  .input: Istante(null,null,true,3,null,false,true)
+ *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
+ *  .esito: Positivo
+ * 
+ * public void getFull_RAM():
+ * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ *                campi dati
+ *  .input: Istante(null,null,true,3,null,false,true)
+ *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
+ *  .esito: Positivo
+ * 
+ * public void getFull_Swap():
+ * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ *                campi dati
+ *  .input: Istante(null,null,true,3,null,false,true)
+ *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
+ *  .esito: Positivo
+ * 
+ */
