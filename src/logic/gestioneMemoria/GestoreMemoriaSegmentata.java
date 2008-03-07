@@ -1,6 +1,8 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
+ * Aggiustata la rimozione iniziale
+ * Aggiunto controllo dimensione sui segmenti e sulla somma
  */
 
 package logic.gestioneMemoria;
@@ -19,10 +21,11 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
     private IAllocazione PoliticaAllocazione=null;
     private RAMSegmentata MemoriaRam=null;
     private SwapSegmentata MemoriaSwap=null;
-    
+    private int dimensione_ram=0;
+            
     public GestoreMemoriaSegmentata( ConfigurazioneIniziale C ){
         
-        
+        dimensione_ram=C.getDimensioneRAM();
         MemoriaRam= new RAMSegmentata(C);
         MemoriaSwap= new SwapSegmentata(C);           
         switch ( C.getPoliticaGestioneMemoria() ) {
@@ -71,19 +74,24 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         LinkedList<Azione> Azioni=new LinkedList();
         Iterator<FrameMemoria> I=ListaSegmenti.iterator();
         
-        boolean errore=false;
+        boolean Errore=false;
+        int spazio_a_disposizione=dimensione_ram;
         
-        while( I.hasNext() && !errore ) {
+        while( I.hasNext() && !Errore ) {
             
             FrameMemoria F=I.next();
-            MemoriaSwap.rimuovi(F);
             ((Segmento)F).setTempoInRAM(UT);
             
             if ( !MemoriaRam.cerca(F) ) {
-                    
-                    Azioni.add( new AzioneSegmento( 4, Rimuovi(MemoriaSwap, F) ) );
-                    
-                    while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() && !errore ) {
+                if ( ((Segmento)F).getDimensione() > dimensione_ram && spazio_a_disposizione>0 ) {
+                    Errore=true;
+                    Azioni.add( new AzioneSegmento(-1,null) );
+                }
+                else {
+                    FrameMemoria Temp=Rimuovi( MemoriaSwap, F );
+                    if (Temp!=null) Azioni.add( new AzioneSegmento(4, Temp ) );
+
+                    while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() && !Errore ) {
                         Azioni.add( new AzioneSegmento(0,null) );
                         FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
                         Azioni.add( new AzionePagina( 3, FrameRimosso ) );
@@ -94,15 +102,20 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                             }
                             catch ( MemoriaEsaurita SwapEsaurita ) {
                                 Azioni.add( new AzioneSegmento(-1,null) );
-                                errore=true;
+                                Errore=true;
                             }
-                            
+
                         }
-                    
+
                     }
-                    if ( errore==false ) 
-                        try { Azioni.add( new AzioneSegmento( 1, Inserisci( MemoriaRam, F ) ) ); }
+                    if ( Errore==false ) 
+                        try { 
+                            Azioni.add( new AzioneSegmento( 1, Inserisci( MemoriaRam, F ) ) ); 
+                            spazio_a_disposizione-=F.getDimensione();
+                        }
                         catch ( MemoriaEsaurita Impossibile ) { }
+                }
+   
             }
             else Azioni.add( new AzioneSegmento( 5, F ) );
         }
