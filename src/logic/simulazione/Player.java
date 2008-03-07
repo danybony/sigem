@@ -147,7 +147,9 @@ public class Player{
          */
         private void AggiornaOccupazioni(Istante nuovoIstante, boolean avanti){
             LinkedList<Azione> listaAzioni = nuovoIstante.getCambiamentiInMemoria();
-            int numeroAzioniMemoria=listaAzioni.size();
+            int numeroAzioniMemoria = 0;
+            if(listaAzioni!=null)
+                listaAzioni.size();
             int i=0;
             Azione azioneCorrente = null;
             if(avanti){ // Istante successivo al corrente
@@ -168,6 +170,7 @@ public class Player{
                                 break;
                     
                     }
+                    i++;
                 }
             }
             else{ // Istante precedente al corrente
@@ -188,6 +191,7 @@ public class Player{
                                 break;
                     
                     }
+                    i++;
                 }
             }
         }
@@ -232,7 +236,9 @@ public class Player{
         void AggiornaStatistiche(LinkedList<Istante> listaNuoviIstanti,
                                         boolean avanti)
         {
-            int numeroNuoviIstanti = listaNuoviIstanti.size();
+            int numeroNuoviIstanti = 0;
+            if(listaNuoviIstanti!=null)
+                numeroNuoviIstanti = listaNuoviIstanti.size();
             int corrente = 0;
             Istante nuovoIstante = null;
             if(avanti){ // istante successivo a quello corrente
@@ -241,6 +247,7 @@ public class Player{
                     AggiornaOccupazioni(nuovoIstante, avanti);
                     numeroFault += nuovoIstante.getFault();
                     numeroIstantiRimanenti--;
+                    corrente++;
                 }
             }
             else{ // istante precedente a quello corrente
@@ -249,6 +256,7 @@ public class Player{
                     AggiornaOccupazioni(nuovoIstante, avanti);
                     numeroFault -= nuovoIstante.getFault();
                     numeroIstantiRimanenti++;
+                    corrente++;
                 }
             }
         }
@@ -291,7 +299,7 @@ public class Player{
         listaIstanti = simulazioneEseguita.crea();
         //Metto l'iteratore prima del primo elemento
         istanteCorrente=listaIstanti.listIterator();
-        indiceElementoCorrente = 0;
+        indiceElementoCorrente = -1;
         return true;
     }
     
@@ -303,6 +311,8 @@ public class Player{
      * Vengono automaticamente aggiornate le statistiche.
      */
     public Istante istantePrecedente(){
+        if(istanteCorrente==null)
+            return null;
         /*
          * Dato che l'iteratore punta in mezzo agli elementi della lista,
          * puo' capitare, in certi casi, che la funzione ritorni l'elemento
@@ -332,6 +342,8 @@ public class Player{
      * Vengono automaticamente aggiornate le statistiche.
      */
     public Istante istanteSuccessivo(){
+        if(istanteCorrente==null)
+            return null;
         /*
          * Dato che l'iteratore punta in mezzo agli elementi della lista,
          * puo' capitare, in certi casi, che la funzione ritorni l'elemento
@@ -506,6 +518,8 @@ public class Player{
      * di un nuovo oggetto interno Statistiche.
      */
     public Istante primoIstante(){
+        if(istanteCorrente==null)
+            return null;
         while(istanteCorrente.hasPrevious()){
             istanteCorrente.previous();
         }
@@ -540,6 +554,8 @@ public class Player{
      * Ritorna il numero di istanti che copongono la simulazione.
      */
     public int numeroIstanti(){
+        if(listaIstanti==null)
+            return 0;
         return this.listaIstanti.size();
     }
     
