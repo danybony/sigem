@@ -6,10 +6,11 @@ package logic.simulazione;
  * Nome file: Simulazione.java
  * Package: logic.simulazione
  * Autore: Luca Rubin
- * Data: 29/02/2008
- * Versione: 1.
+ * Data: 07/03/2008
+ * Versione: 1.3
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.3 (07/03/2008): Correzione errori rilevati in fase di test
  *  - v.1.2 (29/02/2008): Completata la documentazione
  *  - v.1.1 (26/02/2008): Aggiunta la documentazione JavaDoc.
  *  - v.1.0 (26/02/2008): Impostazione base della classe

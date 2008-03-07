@@ -6,10 +6,11 @@ package logic.simulazione;
  * Nome file: Player.java
  * Package: logic.simulazione
  * Autore: Luca Rubin
- * Data: 29/02/2008
- * Versione: 1.6
+ * Data: 07/03/2008
+ * Versione: 1.7
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.7 (07/03/2008): Correzione errori rilevati in fase di test
  *  - v.1.6 (04/03/2008): Aggiunta della Classe interna Statistiche e implementazione
  *                        dei suoi metodi; aggiornamento dei metodi della classe
  *                        esterna per adattarli alla nuova classe.
