@@ -94,9 +94,12 @@ public class RAMPaginata extends MemoriaPaginata{
      */
     @Override
     public boolean rimuovi(FrameMemoria pag){
-        pag.setInRAM(false);
-        pagineResidue++;
-        return true;
+        if(memoria.contains(pag)){
+            pag.setInRAM(false);
+            pagineResidue++;
+            return true;
+        }
+        else return false;
     }
     
     
