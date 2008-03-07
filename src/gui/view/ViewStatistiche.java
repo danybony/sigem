@@ -24,23 +24,8 @@ import gui.SiGeMv2View;
 
 /**
  * Questa classe implementa un JScrollPane che contiene in forma tabellare, dati relativi
- * alle statistiche sulla simulazioni. Quindi valori del tipo:
- * <ol>
- * <li>Occupazione della CPU del singolo processo</li>
- * <li>Occupazione delle risorse per ogni processo</li>
- * <li>Tempo di turn around</li>
- * <li>Tempo medio di turn around</li>
- * <li>Throughput</li>
- * <li>Tempo di risposta</li>
- * <li>Tempo di attesa</li>
- * <li>Tempo medio di attesa</li>
- * <li>Tempo medio di risposta</li>
- * </ol>
- * 
- * @author Sarto Carlo
- * @version 1.2
+ * alle statistiche sulla simulazioni. 
  * @see SiGeMv2View
- * @see Statistiche
  */
 public class ViewStatistiche extends JScrollPane {
 	/** Necessario per il Serializable. */
@@ -186,26 +171,6 @@ public class ViewStatistiche extends JScrollPane {
         */
              
 
-	/**
-	 * Questo metodo crea un JButton a cui � associato un ActionListener che
-	 * richiama il metodo gui.SiGeMv2View.richiediStatistiche().
-	 * 
-	 * @return javax.swing.JButton
-	 */
-	private JButton getJButtonVisualizza() {
-            /*
-		if (jButton == null) {
-			jButton = new JButton("visualizza statistiche");
-			jButton.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					gui.richiediStatistiche();
-				}
-			});
-		}
-             */
-		return jButton;
-             
-	}
              
 
 	/**
