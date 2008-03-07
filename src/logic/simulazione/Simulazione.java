@@ -50,7 +50,7 @@ public class Simulazione{
     /**
      * Costruttore della classe.<br>
      * Esso si preoccupa di creare il processore con la configurazione passata
-     * come parametro.
+     * come parametro. 
      * 
      * @param conf
      *            la configurazione da utilizzare per la creazione della 
