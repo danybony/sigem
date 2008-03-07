@@ -134,42 +134,42 @@ public class IstanteTest {
  *  .esito: Positivo
  * 
  * public void getProcessoPrecedenteTerminato():
- * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ * -.descrizione: Test su un dato istante in input dei metodi di interrogazione dei
  *                campi dati
  *  .input: Istante(null,null,true,3,null,false,true)
  *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
  *  .esito: Positivo
  * 
  * public void getNuovoProcesso():
- * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ * -.descrizione: Test su un dato istante in input dei metodi di interrogazione dei
  *                campi dati
  *  .input: Istante(null,null,true,3,null,false,true)
  *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
  *  .esito: Positivo
  * 
  * public void getFault():
- * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ * -.descrizione: Test su un dato istante in input dei metodi di interrogazione dei
  *                campi dati
  *  .input: Istante(null,null,true,3,null,false,true)
  *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
  *  .esito: Positivo
  * 
  * public void getCambiamentiInMemoria():
- * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ * -.descrizione: Test su un dato istante in input dei metodi di interrogazione dei
  *                campi dati
  *  .input: Istante(null,null,true,3,null,false,true)
  *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
  *  .esito: Positivo
  * 
  * public void getFull_RAM():
- * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ * -.descrizione: Test su un dato istante in input dei metodi di interrogazione dei
  *                campi dati
  *  .input: Istante(null,null,true,3,null,false,true)
  *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
  *  .esito: Positivo
  * 
  * public void getFull_Swap():
- * -.descrizione: Test su un dato istante in input dei medoti di interrogazione dei
+ * -.descrizione: Test su un dato istante in input dei metodi di interrogazione dei
  *                campi dati
  *  .input: Istante(null,null,true,3,null,false,true)
  *  .output: Il campo dati corrispondente al nome del metodo relativo all'istante in input
