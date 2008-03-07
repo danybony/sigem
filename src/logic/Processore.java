@@ -45,7 +45,7 @@ public class Processore {
      * esecuzione e di operare sulla memoria.
      * 
      */
-    private GestoreMemoria gestoreMemoria = null;
+     private GestoreMemoria gestoreMemoria = null;
             
     /**
      * Riferimento dell'ultimo PCB mandato in esecuzione. Servirà nel metodo
@@ -74,6 +74,7 @@ public class Processore {
             case 5:politica = new RRConPriorita(); break;
             case 6:politica = new RRConPrioritaConPrerilascio(); break;
             case 7:politica = new Priorita(); break;
+            default:politica = new FCFS();
         }
         
         this.scheduler = new Scheduler(politica, conf.getListaProcessi()); 
@@ -196,7 +197,7 @@ public class Processore {
      * 
      * @return Il numero di fault di pagina avvenuti in questo istante.
      */
-    private int calcolaFault(LinkedList<Azione> istruzioni) {
+     private int calcolaFault(LinkedList<Azione> istruzioni) {
        
         if(istruzioni == null){
             
@@ -208,7 +209,7 @@ public class Processore {
         
         for (int i = 0; i < istruzioni.size(); i++){
             
-            if (istruzioni.get(i).getAzione() == 1 || istruzioni.get(i).getAzione() == 4){
+            if (istruzioni.get(i).getAzione() == 1){
                 
                 numeroFault ++;
                 
@@ -295,7 +296,7 @@ public class Processore {
      * 
      * @return Ritorna l'istante corrente.
      */   
-    private Istante creaIstante(PCB corrente, LinkedList<Azione> istruzioni,
+     private Istante creaIstante(PCB corrente, LinkedList<Azione> istruzioni,
                                 boolean nuovoProcesso, boolean SwapPiena){
         
         int fault = calcolaFault(istruzioni);
@@ -338,7 +339,7 @@ public class Processore {
      * @return Ritorna la LinkedList dei FrameMemoria necessari al PCB corrente
      * nell'istante attuale.
      */
-    private LinkedList<FrameMemoria> estraiFrame(PCB corrente){
+     private LinkedList<FrameMemoria> estraiFrame(PCB corrente){
         
         /* Ottiene l'identificativo dell'istante di esecuzione corrente */
         int istanteCorrente = corrente.getIstantiEseguiti();
@@ -353,7 +354,7 @@ public class Processore {
         /* Scorre le richieste finchè non passa ad un istante successivo a quello 
          corrente o raggiunge la fine della lista.
          Da notare che la lista è ordinata in ordine crescente di richiesta */
-        for(int i=0; i <= istanteCorrente && i < frameTotali.size(); i++)
+        for(int i=0; i < frameTotali.size(); i++)
             
             if((frameTotali.get(i)).getIstanteRichiesta() == istanteCorrente)
                 

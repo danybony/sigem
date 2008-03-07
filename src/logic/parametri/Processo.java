@@ -231,8 +231,10 @@ public class Processo implements Serializable {
 			 * se i due oggetti di tipo processo hanno lo stesso id allora sono
 			 * uguali.
 			 */
-			if (this.id == proc.getId())
-				return true;
+			if (this.id == proc.getId()){
+                            return true;
+                        }
+				
 		}
 		/*
 		 * In questo punto ho che o i due oggetti di tipo processo hanno diverso
