@@ -29,13 +29,13 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
             MemoriaRam= new RAMPaginata(C);
             MemoriaSwap= new SwapPaginata(C);
             switch ( C.getPoliticaGestioneMemoria() ) {
-                case 1:PoliticaRimpiazzo = new NRU(numero_frame_ram);
-                case 2:PoliticaRimpiazzo = new FIFO(numero_frame_ram);
-                case 3:PoliticaRimpiazzo = new SC(numero_frame_ram);
-                case 4:PoliticaRimpiazzo = new C(numero_frame_ram);
-                case 5:PoliticaRimpiazzo = new LRU(numero_frame_ram);
-                case 6:PoliticaRimpiazzo = new NFU(numero_frame_ram);
-                case 7:PoliticaRimpiazzo = new A(numero_frame_ram);
+                case 1:PoliticaRimpiazzo = new NRU(numero_frame_ram); break;
+                case 2:PoliticaRimpiazzo = new FIFO(numero_frame_ram); break;
+                case 3:PoliticaRimpiazzo = new SC(numero_frame_ram); break;
+                case 4:PoliticaRimpiazzo = new C(numero_frame_ram); break;
+                case 5:PoliticaRimpiazzo = new LRU(numero_frame_ram); break;
+                case 6:PoliticaRimpiazzo = new NFU(numero_frame_ram); break;
+                case 7:PoliticaRimpiazzo = new A(numero_frame_ram); break;
             }
         }
         catch ( PaginaNulla paginanulla ) {
@@ -62,13 +62,13 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         if ( M instanceof RAMPaginata ) {
             Da_Rimuovere=PoliticaRimpiazzo.SelezionaEntry();
         }
-        if ( M.rimuovi(Da_Rimuovere) ) return Da_Rimuovere;
-        else return null;
+        M.rimuovi(Da_Rimuovere);
+        return Da_Rimuovere;
     }
     
     public LinkedList<Azione> esegui( LinkedList<FrameMemoria> ListaPagine, int UT ) {
         
-        LinkedList<Azione> ListaAzioni=null;
+        LinkedList<Azione> ListaAzioni=new LinkedList<Azione>();
         
         if ( PaginaNulla==true ) { 
             ListaAzioni.add( new AzionePagina(-1,null) );
@@ -85,28 +85,28 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
             
             FrameMemoria F=I.next();
             
-            if ( !MemoriaRam.cerca(F) ) { // Pagina non in ram
+            if ( !MemoriaRam.cerca(F) ) {// Pagina non in ram
+                try {
+                    ListaAzioni.add( new AzionePagina(4, rimuovi( MemoriaSwap, F ) ) );
+                    ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
+                }
+                catch ( MemoriaEsaurita RamEsaurita ) {
                     try {
-                        ListaAzioni.add( new AzionePagina(4, rimuovi( MemoriaSwap, F ) ) );
+                        ListaAzioni.add( new AzionePagina(0,null) );
+                        FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
+                        ListaAzioni.add( new AzionePagina(3, Frame_Rimosso ) );
+                        if ( Frame_Rimosso.getModifica()==true ) {
+                            ListaAzioni.add( new AzionePagina(2, Frame_Rimosso, 
+                                    inserisci(MemoriaSwap,Frame_Rimosso,UT) ) );
+                        }
                         ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
                     }
-                    catch ( MemoriaEsaurita RamEsaurita ) {
-                        try {
-                            ListaAzioni.add( new AzionePagina(0,null) );
-                            FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
-                            ListaAzioni.add( new AzionePagina(3, Frame_Rimosso ) );
-                            if ( Frame_Rimosso.getModifica()==true ) {
-                                ListaAzioni.add( new AzionePagina(2, Frame_Rimosso, 
-                                        inserisci(MemoriaSwap,Frame_Rimosso,UT) ) );
-                            }
-                            ListaAzioni.add( new AzionePagina(1, F, inserisci(MemoriaRam,F,UT) ) );
-                        }
-                        catch ( MemoriaEsaurita SwapEsaurita ) {
-                            // EXIT() situazione grave (memoria finita)
-                            ListaAzioni.add( new AzionePagina(-1,null) );
-                            Errore=true;
-                        }
+                    catch ( MemoriaEsaurita SwapEsaurita ) {
+                        // EXIT() situazione grave (memoria finita)
+                        ListaAzioni.add( new AzionePagina(-1,null) );
+                        Errore=true;
                     }
+                }
             }
             else { // gia in ram
                 PoliticaRimpiazzo.AggiornaEntry(MemoriaRam.indiceDi(F), F.getModifica() );
