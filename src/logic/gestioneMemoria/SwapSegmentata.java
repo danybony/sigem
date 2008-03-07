@@ -46,7 +46,7 @@ public class SwapSegmentata extends MemoriaSegmentata{
      */
     @Override
     public void aggiungi(FrameMemoria seg, FrameMemoria spazio) throws MemoriaEsaurita{
-        if(spazioResiduo>seg.getDimensione()){
+        if(spazioResiduo>=seg.getDimensione()){
             memoria.add(seg);
             spazioResiduo-=seg.getDimensione();
         }
@@ -94,10 +94,10 @@ public class SwapSegmentata extends MemoriaSegmentata{
     
     
     /**
-     * Metodo cerca non usato in SwapSegmentata
+     * Metodo che ritorna TRUE se il segmento è in memoria, FALSE altrimenti
      */
     @Override
     public boolean cerca(FrameMemoria seg){
-        return true;
+        return memoria.contains(seg);
     }
 }
