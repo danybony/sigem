@@ -22,7 +22,7 @@ import logic.parametri.ConfigurazioneIniziale;
 /**
  * Classe che rappresenta lo swap, implementato tramite collezione di pagine
  */
-class SwapPaginata extends MemoriaPaginata{
+public class SwapPaginata extends MemoriaPaginata{
     
 /**
  * Costruttore che inizializza il numero delle pagine che può contenere la

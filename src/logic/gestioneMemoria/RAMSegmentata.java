@@ -24,7 +24,7 @@ import logic.parametri.ConfigurazioneIniziale;
 /**
  * Classe che rappresenta la RAM modellata tramite segmenti
  */
-class RAMSegmentata extends MemoriaSegmentata{
+public class RAMSegmentata extends MemoriaSegmentata{
 
     /**
      * Costruttore di RAMSegmentata che setta lo spazio complessivo in memoria

@@ -23,7 +23,7 @@ import logic.parametri.ConfigurazioneIniziale;
 /**
  * Classe che modella la RAM, gestendola come collezione di pagine.
  */
-class RAMPaginata extends MemoriaPaginata{
+public class RAMPaginata extends MemoriaPaginata{
 
     /**
      * Costruttore di RAMPaginata. Imposta la capienza della RAM, quantificata

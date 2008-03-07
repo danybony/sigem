@@ -21,7 +21,7 @@ import logic.parametri.ConfigurazioneIniziale;
 /**
  * Classe che rappresenta la memoria di Swap modellata attraverso segmenti
  */
-class SwapSegmentata extends MemoriaSegmentata{
+public class SwapSegmentata extends MemoriaSegmentata{
 
     /**
      * Costruttore di SwapSegmentata. Si limita ad impostare la capienza della
