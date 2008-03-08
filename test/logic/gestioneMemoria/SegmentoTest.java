@@ -196,14 +196,14 @@ public class SegmentoTest {
 /*
  * Cronologia dei test effettuati:
  * 
- * public void getSolaLettura():
+ * :
  * -.descrizione: Test su una pagina in input dei medoti di interrogazione dei
  *                campi dati
  *  .input: Una pagina di prova
  *  .output: Il campo dati corrispondente
  *  .esito: Positivo
  * 
- * public void setSolaLettura():
+ * :
  * -.descrizione: Test su una pagina in input dei medoti di impostazione dei
  *                campi dati
  *  .input: Una pagina di prova
