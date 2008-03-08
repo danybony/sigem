@@ -4,9 +4,10 @@
  * Package: logic.gestioneMemoria
  * Autore: Davide Compagnin
  * Data: 29/02/2008
- * Versione: 1.5
+ * Versione: 1.6
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.6 (08/03/2008): Corretta logica di inserimento
  *  - v.1.5 (08/03/2008): Corretto controllo sulla dimensione segmento e possibilità di allocazione
  *  - v.1.4 (08/03/2008): Corretto bug azione inserimento
  *  - v.1.3 (04/03/2008): Aggiunto controllo dimensione sui segmenti e sulla somma delle dimensioni
@@ -157,14 +158,17 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             ((Segmento)F).setTempoInRAM(UT);
             
             if ( !MemoriaRam.cerca(F) ) {
+                FrameMemoria Temp=Rimuovi( MemoriaSwap, F );
+                if (Temp!=null) Azioni.add( new AzioneSegmento(4, Temp ) );
+                else {  spazio_a_disposizione-=F.getDimensione(); }
+                
+                
                 if ( ((Segmento)F).getDimensione() > dimensione_ram || spazio_a_disposizione<=0 ) {
                     Errore=true;
                     Azioni.add( new AzioneSegmento(-1,null) );
                 }
                 else {
-                    FrameMemoria Temp=Rimuovi( MemoriaSwap, F );
-                    if (Temp!=null) Azioni.add( new AzioneSegmento(4, Temp ) );
-
+                    
                     while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() && !Errore ) {
                         Azioni.add( new AzioneSegmento(0,null) );
                         FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
@@ -185,7 +189,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                     if ( Errore==false ) 
                         try { 
                             Azioni.add( new AzioneSegmento( 1, F, Inserisci( MemoriaRam, F ) ) ); 
-                            spazio_a_disposizione-=F.getDimensione();
+                            
                         }
                         catch ( MemoriaEsaurita Impossibile ) { }
                 }
