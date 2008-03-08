@@ -3,12 +3,12 @@
  * Nome file: Azione.java
  * Package: logic.gestioneMemoria
  * Autore: Davide Compagnin
- * Data: 30/02/2008
+ * Data: 29/02/2008
  * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche:
  *  - v.1.1 (02/03/2008): Definiti nuovi valori per le azioni
- *  - v.1.0 (30/02/2008): Prima Scrittura
+ *  - v.1.0 (29/02/2008): Prima Scrittura
  */
 
 package logic.gestioneMemoria;

@@ -3,12 +3,12 @@
  * Nome file: AzionePagina.java
  * Package: logic.gestioneMemoria
  * Autore: Davide Compagnin
- * Data: 30/02/2008
+ * Data: 29/02/2008
  * Versione: 1.0
  * Licenza: open-source
  * Registro delle modifiche:
  *  
- *  - v.1.0 (30/02/2008): Impostazione base della classe in seguito ad estensione da classe astratta
+ *  - v.1.0 (29/02/2008): Impostazione base della classe in seguito ad estensione da classe astratta
  */
 package logic.gestioneMemoria;
 
