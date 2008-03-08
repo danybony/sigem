@@ -4,10 +4,10 @@
  * Package: logic.gestioneMemoria
  * Autore: Davide Compagnin
  * Data: 30/02/2008
- * Versione: 1.1
+ * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche:
- *
+ *  - v.1.2 (08/03/2008): Corretto bug sul calcolo del contatore
  *  - v.1.1 (02/03/2008): Definito il valore di incremento del contatore
  *  - v.1.0 (30/02/2008): Impostazione base della classe
  */
@@ -106,8 +106,13 @@ public class A implements IRimpiazzo {
         for( int i=0; i<Tabella.size(); i++ )
             if ( Tabella.elementAt(i).R==true ) {
                 Tabella.elementAt(i).R=false;
+                Tabella.elementAt(i).Contatore/=2;
                 Tabella.elementAt(i).Contatore+=Integer.MAX_VALUE/2;
             }
             else Tabella.elementAt(i).Contatore/=2;     
+    }
+    
+    public int getC(int Posizione) {
+        return Tabella.elementAt(Posizione).Contatore;
     }
 }
