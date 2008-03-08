@@ -4,9 +4,10 @@
  * Package: logic.gestioneMemoria
  * Autore: Davide Compagnin
  * Data: 29/02/2008
- * Versione: 1.6
+ * Versione: 1.7
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.7 (08/03/2008): Corretta condizione di errore sulla dimensione
  *  - v.1.6 (08/03/2008): Corretta logica di inserimento
  *  - v.1.5 (08/03/2008): Corretto controllo sulla dimensione segmento e possibilità di allocazione
  *  - v.1.4 (08/03/2008): Corretto bug azione inserimento
@@ -163,7 +164,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                 else {  spazio_a_disposizione-=F.getDimensione(); }
                 
                 
-                if ( ((Segmento)F).getDimensione() > dimensione_ram || spazio_a_disposizione<=0 ) {
+                if ( ((Segmento)F).getDimensione() > dimensione_ram || spazio_a_disposizione<0 ) {
                     Errore=true;
                     Azioni.add( new AzioneSegmento(-1,null) );
                 }
