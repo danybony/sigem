@@ -140,6 +140,12 @@ public class SiGeMv2View {
         
         /** Player */
         private Player player;
+        
+        /** Istante */
+        private Istante istante;
+        
+        /** Processi */
+        LinkedList<Processo> processiEseguiti;
 	// ----------------------------------
 	// METODI GESTIONE COMPONENTI GRAFICI
 	// ----------------------------------
@@ -773,15 +779,22 @@ public class SiGeMv2View {
             
             simulazioneCarica();
             
-            Istante istante = player.primoIstante();
-            LinkedList<Processo> processoEseguiti = new LinkedList<Processo>();
+            if (istante == null) {
+                istante = player.primoIstante();
+                processiEseguiti = new LinkedList<Processo>();
+            }
+            else
+                istante=player.istanteSuccessivo();
+            
             for (int i=0; i<player.numeroIstanti(); i++) {
                 PCB pcbAttuale = istante.getProcessoInEsecuzione();
                 Processo processo = pcbAttuale.getRifProcesso();
-                processoEseguiti.add(processo);
-                visualizzaOrdProcessi(processoEseguiti);
+                processiEseguiti.add(processo);
+                visualizzaOrdProcessi(processiEseguiti);
                 istante=player.istanteSuccessivo();
             }
+            //completare la gestione del frame memoria
+            //aggiornare le statistiche
         }
         
         /** Carica il player */
@@ -806,7 +819,6 @@ public class SiGeMv2View {
             jButtonSimulazioneIndietro.setEnabled(true);
             jButtonSimulazionePausa.setEnabled(true);
             jSimulazioneItemPausa.setEnabled(false);
-            // completare
         }
 
         /** Ferma la simulazione */
@@ -818,8 +830,7 @@ public class SiGeMv2View {
             jSimulazioneItemPlay.setEnabled(true);
             jSimulazioneItemPausa.setEnabled(false);
             jSimulazioneItemIndietro.setEnabled(true);
-            jSimulazioneItemAvanti.setEnabled(true);
-            
+            jSimulazioneItemAvanti.setEnabled(true);   
         }
         
         /** Porta la simulazione allo stato iniziale */
@@ -832,13 +843,10 @@ public class SiGeMv2View {
             jSimulazioneItemStop.setEnabled(false);
             jButtonSimulazioneIndietro.setEnabled(false);
             jSimulazioneItemIndietro.setEnabled(false);
-            jFileItemApriConfigurazione.setEnabled(true);
-            jButtonApriConfigurazione.setEnabled(true);
-            jFileItemNuovaConfigurazione.setEnabled(true);
-            jButtonNuovaConfigurazione.setEnabled(true);
-            jFileItemSalvaConfigurazione.setEnabled(true);
-            jButtonSalvaConfigurazione.setEnabled(true);
-            //completare
+            
+            istante = player.primoIstante();
+            processiEseguiti = new LinkedList<Processo>();
+            visualizzaOrdProcessi(processiEseguiti);
         }
         
         /** Porta la simulazione allo stato finale */
@@ -857,7 +865,16 @@ public class SiGeMv2View {
             jButtonSimulazioneStop.setEnabled(false);
             jSimulazioneItemIndietro.setEnabled(true);
             jButtonSimulazioneIndietro.setEnabled(true);
-            //completare
+            
+            LinkedList<Istante> istanti = player.ultimoIstante();
+            processiEseguiti = new LinkedList<Processo>();
+            for (int i=0; i<istanti.size(); i++) {
+                PCB pcbAttuale = istanti.get(i).getProcessoInEsecuzione();
+                Processo processo = pcbAttuale.getRifProcesso();
+                processiEseguiti.add(processo);
+            }
+            visualizzaOrdProcessi(processiEseguiti);
+            
         }
         
         /** Porta la simulazione allo stato successivo */
@@ -866,7 +883,12 @@ public class SiGeMv2View {
             jSimulazioneItemPausa.setEnabled(false);
             jButtonSimulazioneIndietro.setEnabled(true);
             jSimulazioneItemIndietro.setEnabled(true);
-            
+         
+            istante = player.istanteSuccessivo();
+            PCB pcbAttuale = istante.getProcessoInEsecuzione();
+            Processo processo = pcbAttuale.getRifProcesso();
+            processiEseguiti.add(processo);
+            visualizzaOrdProcessi(processiEseguiti);
         }
         
         /** Porta la simulazione allo stato precedente */
@@ -875,6 +897,10 @@ public class SiGeMv2View {
             jSimulazioneItemPausa.setEnabled(false);
             jButtonSimulazioneAvanti.setEnabled(true);
             jSimulazioneItemAvanti.setEnabled(true);            
+            
+            istante = player.istantePrecedente();
+            processiEseguiti.pop();
+            visualizzaOrdProcessi(processiEseguiti);
         }
         
         /** Aggiorna il contenuto della vista ViewStatoAvanzamentoProcessi */
