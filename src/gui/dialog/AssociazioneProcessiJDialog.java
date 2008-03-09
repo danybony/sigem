@@ -88,7 +88,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabelPasso.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelPasso.setFont(new java.awt.Font("Tahoma", 0, 10));
         jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPasso.setText("Passo 4 di 4");
 
@@ -99,9 +99,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
+                        .addGap(140, 140, 140)
                         .addComponent(jButtonIndietro)
-                        .addGap(14, 14, 14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonOk)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonAnnulla))
@@ -125,9 +125,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 .addComponent(jScrollPaneAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonIndietro)
+                    .addComponent(jButtonOk)
                     .addComponent(jButtonAnnulla)
-                    .addComponent(jButtonOk))
+                    .addComponent(jButtonIndietro))
                 .addContainerGap())
         );
 

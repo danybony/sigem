@@ -114,7 +114,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabelPasso.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelPasso.setFont(new java.awt.Font("Tahoma", 0, 10));
         jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPasso.setText("Passo 1 di 4");
 
@@ -150,9 +150,9 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
                             .addContainerGap())
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(jButtonAvanti)
-                            .addGap(29, 29, 29)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jButtonAnnulla)
-                            .addGap(119, 119, 119)))
+                            .addGap(138, 138, 138)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabelPasso)
                         .addContainerGap())))

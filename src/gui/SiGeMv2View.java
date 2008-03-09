@@ -83,7 +83,7 @@ public class SiGeMv2View {
 	private ActionListener lnrWindow;
 
 	/** Il frame dell'applicazione */
-	private JFrame frame = new JFrame("SiGeMv2");
+	private JFrame frame = new JFrame("SiGeM");
 	
 	/** Rappresenta lo stato dela Gui, vale true se la simulazione e' in avanzamento automatico,
 	 * false, se e' interrotta.*/
@@ -690,6 +690,7 @@ public class SiGeMv2View {
         
         /** Parte la simulazione */
         private void avviaSimulazione() {
+            statoGui = true;
             jButtonApriConfigurazione.setEnabled(false);
             jButtonNuovaConfigurazione.setEnabled(false);
             jButtonSalvaConfigurazione.setEnabled(false);
@@ -702,7 +703,8 @@ public class SiGeMv2View {
             jSimulazioneItemInizio.setEnabled(false);
             jSimulazioneItemInizio.setEnabled(false);
             jSimulazioneItemPlay.setEnabled(false);
-             // completare
+            
+            player.caricaSimulazione();
         }
         
         /** Stoppa la simulazione */

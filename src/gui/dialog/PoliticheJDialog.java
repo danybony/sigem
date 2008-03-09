@@ -121,10 +121,10 @@ public class PoliticheJDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabelTecnicaGestioneMemoria.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelTecnicaGestioneMemoria.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelTecnicaGestioneMemoria.setText("Tecnica di gestione memoria");
 
-        jComboBoxSuddivisioneMemoria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBoxSuddivisioneMemoria.setFont(new java.awt.Font("Tahoma", 0, 12));
         jComboBoxSuddivisioneMemoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "pagine", "segmenti" }));
         jComboBoxSuddivisioneMemoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,7 +132,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabelPasso.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabelPasso.setFont(new java.awt.Font("Tahoma", 0, 10));
         jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPasso.setText("Passo 2 di 4");
 
@@ -145,13 +145,6 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabelPolitiche, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jButtonIndietro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonAvanti)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonAnnulla))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -175,7 +168,14 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                         .addComponent(jComboBoxSuddivisioneMemoria, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabelPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabelPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addComponent(jButtonIndietro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonAvanti)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonAnnulla)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -202,9 +202,9 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                 .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonIndietro)
                     .addComponent(jButtonAvanti)
-                    .addComponent(jButtonAnnulla))
+                    .addComponent(jButtonAnnulla)
+                    .addComponent(jButtonIndietro))
                 .addContainerGap())
         );
 
