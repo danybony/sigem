@@ -45,7 +45,8 @@ import gui.utility.IconStylosoft;
 import logic.caricamento.GestioneFile;
 import logic.parametri.ConfigurazioneIniziale;
 import logic.parametri.Processo;
-import logic.simulazione.Player;
+import logic.simulazione.*;
+import logic.schedulazione.PCB;
 
 
 public class SiGeMv2View {
@@ -104,11 +105,13 @@ public class SiGeMv2View {
 	
 	// Pulsanti ToolBar
 	private JButton jButtonSimulazionePlay, jButtonSimulazioneStop, jButtonSimulazioneInizio, jButtonSimulazioneFine;
+        private JButton jButtonSimulazioneIndietro, jButtonSimulazioneAvanti, jButtonSimulazionePausa;
 
 	private JButton jButtonNuovaConfigurazione, jButtonApriConfigurazione, jButtonSalvaConfigurazione, jButtonHelp;
 
 	// Pulsanti Menu Simulazione
 	private JMenuItem jSimulazioneItemPlay, jSimulazioneItemStop, jSimulazioneItemInizio, jSimulazioneItemFine;
+        private JMenuItem jSimulazioneItemIndietro, jSimulazioneItemAvanti, jSimulazioneItemPausa;
 
 	// Pulsanti Menu File
 	private JMenuItem jFileItemNuovaConfigurazione, jFileItemApriConfigurazione;
@@ -461,38 +464,66 @@ public class SiGeMv2View {
 		jSimulazioneItemPlay = new JMenuItem(IconStylosoft.getGeneralIcon("play"));
 		jSimulazioneItemPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+                            simulazioneAvvia();
 			}
 		});
 		simulazioneMenu.add(jSimulazioneItemPlay);
 
 		jSimulazioneItemStop = new JMenuItem(IconStylosoft.getGeneralIcon("stop"));
 		jSimulazioneItemStop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//SimStop();
-			}
+                    public void actionPerformed(ActionEvent e) {
+                        simulazioneStop();
+                    }
 		});
 		simulazioneMenu.add(jSimulazioneItemStop);
+
+                jSimulazioneItemPausa = new JMenuItem(IconStylosoft.getGeneralIcon("pause"));
+		jSimulazioneItemPausa.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+                        simulazionePausa();
+                    }
+		});
+		simulazioneMenu.add(jSimulazioneItemPausa);
 
 		simulazioneMenu.addSeparator();
 
 		jSimulazioneItemInizio = new JMenuItem(IconStylosoft.getGeneralIcon("prev"));
 		jSimulazioneItemInizio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//SimInizio();
-			}
+                    public void actionPerformed(ActionEvent e) {
+			simulazioneInizio();
+                    }
 		});
 		simulazioneMenu.add(jSimulazioneItemInizio);
 
+                jSimulazioneItemIndietro = new JMenuItem(IconStylosoft.getGeneralIcon("rew"));
+                jSimulazioneItemIndietro.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        simulazioneIndietro();
+                    }
+		});
+                simulazioneMenu.add(jSimulazioneItemIndietro);
+
+                jSimulazioneItemAvanti = new JMenuItem(IconStylosoft.getGeneralIcon("ffwd"));
+                jSimulazioneItemAvanti.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        simulazioneAvanti();
+                    }
+		});
+                simulazioneMenu.add(jSimulazioneItemAvanti);
+
 		jSimulazioneItemFine = new JMenuItem(IconStylosoft.getGeneralIcon("next"));
 		jSimulazioneItemFine.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//SimInizio();
-			}
+                    public void actionPerformed(ActionEvent e) {
+                        simulazioneFine();
+                    }
 		});
 		simulazioneMenu.add(jSimulazioneItemFine);
-
+                
 		jSimulazioneItemFine.setEnabled(false);
 		jSimulazioneItemInizio.setEnabled(false);
+                jSimulazioneItemIndietro.setEnabled(false);
+                jSimulazioneItemAvanti.setEnabled(false);
+                jSimulazioneItemPausa.setEnabled(false);
 		jSimulazioneItemPlay.setEnabled(false);
 		jSimulazioneItemStop.setEnabled(false);
 
@@ -551,7 +582,7 @@ public class SiGeMv2View {
 		jButtonSimulazioneStop = new JButton(IconStylosoft.getGeneralIcon("stop"));
 		jButtonSimulazioneStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fermaSimulazione();
+				simulazioneStop();
 			}
 		});
 		jButtonSimulazioneStop.setToolTipText("Ferma l'avanzamento automatico della "
@@ -559,29 +590,53 @@ public class SiGeMv2View {
 
 		jButtonSimulazionePlay = new JButton(IconStylosoft.getGeneralIcon("play"));
 		jButtonSimulazionePlay.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				avviaSimulazione();
-			}
+                    public void actionPerformed(ActionEvent e) {
+                        simulazioneAvvia();
+                    }
 		});
 		jButtonSimulazionePlay.setToolTipText("Avvia l'avanzamento automatico della "
 				+ "simulazione");
 
 		jButtonSimulazioneInizio = new JButton(IconStylosoft.getGeneralIcon("prev"));
 		jButtonSimulazioneInizio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//SimInizio();
-			}
+                    public void actionPerformed(ActionEvent e) {
+                        simulazioneInizio();
+                    }
 		});
 		jButtonSimulazioneInizio.setToolTipText("Riporta la simulazione all'istante iniziale");
 
 		jButtonSimulazioneFine = new JButton(IconStylosoft.getGeneralIcon("next"));
 		jButtonSimulazioneFine.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//SimFine();
-			}
+                    public void actionPerformed(ActionEvent e) {
+                        simulazioneFine();
+                    }
 		});
 		jButtonSimulazioneFine.setToolTipText("Porta la simulazione all'istante finale");
-			
+                
+                jButtonSimulazioneIndietro = new JButton(IconStylosoft.getGeneralIcon("rew"));
+                jButtonSimulazioneIndietro.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                       simulazioneIndietro();
+                    }
+		});
+                jButtonSimulazioneIndietro.setToolTipText("Porta la simulazione all'istante precedente");
+
+                jButtonSimulazioneAvanti = new JButton(IconStylosoft.getGeneralIcon("ffwd"));
+                jButtonSimulazioneAvanti.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        simulazioneAvanti();
+                    }
+		});
+                jButtonSimulazioneAvanti.setToolTipText("Porta la simulazione all'istante successivo");
+                
+                jButtonSimulazionePausa = new JButton(IconStylosoft.getGeneralIcon("pause"));
+                jButtonSimulazionePausa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        simulazionePausa();
+                    }
+		});
+                jButtonSimulazionePausa.setToolTipText("Ferma la simulazione in questo istante");
+                
 		jButtonHelp = new JButton(IconStylosoft.getGeneralIcon("help"));
 		//jButtonHelp.addActionListener(new CSH.DisplayHelpFromSource(hb));
 		jButtonHelp.setToolTipText("Apre la finestra di aiuto");
@@ -596,7 +651,10 @@ public class SiGeMv2View {
 		toolBar.addSeparator();
 		toolBar.add(jButtonSimulazionePlay);
 		toolBar.add(jButtonSimulazioneStop);
+                toolBar.add(jButtonSimulazionePausa);
 		toolBar.add(jButtonSimulazioneInizio);
+                toolBar.add(jButtonSimulazioneIndietro);
+                toolBar.add(jButtonSimulazioneAvanti);
 		toolBar.add(jButtonSimulazioneFine);
 
 		toolBar.addSeparator();
@@ -606,6 +664,9 @@ public class SiGeMv2View {
 		jButtonSimulazionePlay.setEnabled(false);
 		jButtonSimulazioneStop.setEnabled(false);
 		jButtonSimulazioneInizio.setEnabled(false);
+                jButtonSimulazionePausa.setEnabled(false);
+                jButtonSimulazioneAvanti.setEnabled(false);
+                jButtonSimulazioneIndietro.setEnabled(false);
 		jButtonSimulazioneFine.setEnabled(false);
 		jButtonSalvaConfigurazione.setEnabled(false);
 		
@@ -649,11 +710,13 @@ public class SiGeMv2View {
             jSimulazioneItemFine.setEnabled(true);
             jSimulazioneItemInizio.setEnabled(true);
             jSimulazioneItemPlay.setEnabled(true);
-            jSimulazioneItemStop.setEnabled(true);    
+            jSimulazioneItemStop.setEnabled(true);
+            jSimulazioneItemAvanti.setEnabled(true);
             jButtonSimulazionePlay.setEnabled(true);
             jButtonSimulazioneStop.setEnabled(true);
             jButtonSimulazioneInizio.setEnabled(true);
             jButtonSimulazioneFine.setEnabled(true);
+            jButtonSimulazioneAvanti.setEnabled(true);
             jButtonSalvaConfigurazione.setEnabled(true);
             jFileItemSalvaConfigurazione.setEnabled(true);
         }
@@ -689,26 +752,45 @@ public class SiGeMv2View {
         }
         
         /** Parte la simulazione */
-        private void avviaSimulazione() {
+        private void simulazioneAvvia() {
             statoGui = true;
             jButtonApriConfigurazione.setEnabled(false);
             jButtonNuovaConfigurazione.setEnabled(false);
             jButtonSalvaConfigurazione.setEnabled(false);
             jButtonSimulazioneFine.setEnabled(false);
             jButtonSimulazioneInizio.setEnabled(false);
+            jButtonSimulazioneAvanti.setEnabled(false);
             jFileItemApriConfigurazione.setEnabled(false);
             jFileItemNuovaConfigurazione.setEnabled(false);
             jFileItemSalvaConfigurazione.setEnabled(false);
             jSimulazioneItemFine.setEnabled(false);
             jSimulazioneItemInizio.setEnabled(false);
-            jSimulazioneItemInizio.setEnabled(false);
+            jSimulazioneItemAvanti.setEnabled(false);
             jSimulazioneItemPlay.setEnabled(false);
             
+            jButtonSimulazionePausa.setEnabled(true);
+            jSimulazioneItemPausa.setEnabled(true);
+            
+            simulazioneCarica();
+            
+            Istante istante = player.primoIstante();
+            LinkedList<Processo> processoEseguiti = new LinkedList<Processo>();
+            for (int i=0; i<player.numeroIstanti(); i++) {
+                PCB pcbAttuale = istante.getProcessoInEsecuzione();
+                Processo processo = pcbAttuale.getRifProcesso();
+                processoEseguiti.add(processo);
+                visualizzaOrdProcessi(processoEseguiti);
+                istante=player.istanteSuccessivo();
+            }
+        }
+        
+        /** Carica il player */
+        private void simulazioneCarica() {
             player.caricaSimulazione();
         }
         
         /** Stoppa la simulazione */
-        private void fermaSimulazione(){
+        private void simulazioneStop(){
             jButtonApriConfigurazione.setEnabled(true);
             jButtonNuovaConfigurazione.setEnabled(true);
             jButtonSalvaConfigurazione.setEnabled(true);
@@ -719,11 +801,82 @@ public class SiGeMv2View {
             jFileItemSalvaConfigurazione.setEnabled(true);
             jSimulazioneItemFine.setEnabled(true);
             jSimulazioneItemInizio.setEnabled(true);
-            jSimulazioneItemInizio.setEnabled(true);
             jSimulazioneItemPlay.setEnabled(true);
+            jSimulazioneItemIndietro.setEnabled(true);
+            jButtonSimulazioneIndietro.setEnabled(true);
+            jButtonSimulazionePausa.setEnabled(true);
+            jSimulazioneItemPausa.setEnabled(false);
             // completare
         }
 
+        /** Ferma la simulazione */
+        private void simulazionePausa() {
+            jButtonSimulazionePausa.setEnabled(false);
+            jButtonSimulazionePlay.setEnabled(true);
+            jButtonSimulazioneAvanti.setEnabled(true);
+            jButtonSimulazioneIndietro.setEnabled(true);
+            jSimulazioneItemPlay.setEnabled(true);
+            jSimulazioneItemPausa.setEnabled(false);
+            jSimulazioneItemIndietro.setEnabled(true);
+            jSimulazioneItemAvanti.setEnabled(true);
+            
+        }
+        
+        /** Porta la simulazione allo stato iniziale */
+        private void simulazioneInizio() {
+            jButtonSimulazionePausa.setEnabled(false);
+            jSimulazioneItemPausa.setEnabled(false);
+            jButtonSimulazionePlay.setEnabled(true);
+            jSimulazioneItemPlay.setEnabled(true);
+            jButtonSimulazioneStop.setEnabled(false);
+            jSimulazioneItemStop.setEnabled(false);
+            jButtonSimulazioneIndietro.setEnabled(false);
+            jSimulazioneItemIndietro.setEnabled(false);
+            jFileItemApriConfigurazione.setEnabled(true);
+            jButtonApriConfigurazione.setEnabled(true);
+            jFileItemNuovaConfigurazione.setEnabled(true);
+            jButtonNuovaConfigurazione.setEnabled(true);
+            jFileItemSalvaConfigurazione.setEnabled(true);
+            jButtonSalvaConfigurazione.setEnabled(true);
+            //completare
+        }
+        
+        /** Porta la simulazione allo stato finale */
+        private void simulazioneFine() {
+            jFileItemApriConfigurazione.setEnabled(true);
+            jButtonApriConfigurazione.setEnabled(true);
+            jFileItemNuovaConfigurazione.setEnabled(true);
+            jButtonNuovaConfigurazione.setEnabled(true);
+            jFileItemSalvaConfigurazione.setEnabled(true);
+            jButtonSalvaConfigurazione.setEnabled(true);
+            jButtonSimulazioneAvanti.setEnabled(false);
+            jSimulazioneItemAvanti.setEnabled(false);
+            jSimulazioneItemFine.setEnabled(false);
+            jButtonSimulazioneFine.setEnabled(false);
+            jSimulazioneItemStop.setEnabled(false);
+            jButtonSimulazioneStop.setEnabled(false);
+            jSimulazioneItemIndietro.setEnabled(true);
+            jButtonSimulazioneIndietro.setEnabled(true);
+            //completare
+        }
+        
+        /** Porta la simulazione allo stato successivo */
+        private void simulazioneAvanti() {
+            jButtonSimulazionePausa.setEnabled(false);
+            jSimulazioneItemPausa.setEnabled(false);
+            jButtonSimulazioneIndietro.setEnabled(true);
+            jSimulazioneItemIndietro.setEnabled(true);
+            
+        }
+        
+        /** Porta la simulazione allo stato precedente */
+        private void simulazioneIndietro() {
+            jButtonSimulazionePausa.setEnabled(false);
+            jSimulazioneItemPausa.setEnabled(false);
+            jButtonSimulazioneAvanti.setEnabled(true);
+            jSimulazioneItemAvanti.setEnabled(true);            
+        }
+        
         /** Aggiorna il contenuto della vista ViewStatoAvanzamentoProcessi */
 	public void visualizzaOrdProcessi(LinkedList<Processo> processiEseguiti) {          
             // aggiorna il grafico ordinamento dei processi
