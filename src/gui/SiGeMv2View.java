@@ -724,6 +724,20 @@ public class SiGeMv2View {
             // completare
         }
 
+        /** Aggiorna il contenuto della vista ViewStatoAvanzamentoProcessi */
+	public void visualizzaOrdProcessi(LinkedList<Processo> processiEseguiti) {          
+            // aggiorna il grafico ordinamento dei processi
+            if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
+                    ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
+                                    .getComponent();
+                    int idProcessiEseguiti[] = new int[processiEseguiti.size()];
+                    for (int i = 0; i < processiEseguiti.size(); i++)
+                        idProcessiEseguiti[i] = processiEseguiti.get(i).getId();
+
+                    currView.disegnaGrafico(idProcessiEseguiti);
+            }
+        }
+        
     public ConfigurazioneIniziale getConfigurazioneIniziale() {
         return configurazioneIniziale;
     }
