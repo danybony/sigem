@@ -38,6 +38,8 @@ import java.util.Vector;
 import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
+import java.util.concurrent.TimeUnit; 
+
 import gui.view.*;
 import gui.dialog.*;
 import gui.utility.IconStylosoft;
@@ -758,7 +760,7 @@ public class SiGeMv2View {
         }
         
         /** Parte la simulazione */
-        private void simulazioneAvvia() {
+        private synchronized void simulazioneAvvia() {
             statoGui = true;
             jButtonApriConfigurazione.setEnabled(false);
             jButtonNuovaConfigurazione.setEnabled(false);
@@ -788,10 +790,17 @@ public class SiGeMv2View {
             
             for (int i=0; i<player.numeroIstanti(); i++) {
                 PCB pcbAttuale = istante.getProcessoInEsecuzione();
-                Processo processo = pcbAttuale.getRifProcesso();
-                processiEseguiti.add(processo);
+                if (pcbAttuale != null)
+                    processiEseguiti.add(pcbAttuale.getRifProcesso());
+                //else
+                //  processiEseguiti.add(null);
                 visualizzaOrdProcessi(processiEseguiti);
-                istante=player.istanteSuccessivo();
+                try {   
+                    Thread.sleep(1000); 
+                } catch (InterruptedException ie) {
+                    ie.printStackTrace();
+                }
+                istante=player.istanteSuccessivo();                
             }
             //completare la gestione del frame memoria
             //aggiornare le statistiche
@@ -817,7 +826,7 @@ public class SiGeMv2View {
             jSimulazioneItemPlay.setEnabled(true);
             jSimulazioneItemIndietro.setEnabled(true);
             jButtonSimulazioneIndietro.setEnabled(true);
-            jButtonSimulazionePausa.setEnabled(true);
+            jButtonSimulazionePausa.setEnabled(false);
             jSimulazioneItemPausa.setEnabled(false);
         }
 
@@ -884,7 +893,13 @@ public class SiGeMv2View {
             jButtonSimulazioneIndietro.setEnabled(true);
             jSimulazioneItemIndietro.setEnabled(true);
          
-            istante = player.istanteSuccessivo();
+            if (istante == null) {
+                simulazioneCarica();
+                istante = player.primoIstante();
+                processiEseguiti = new LinkedList<Processo>();
+            }
+            else
+                istante = player.istanteSuccessivo();
             PCB pcbAttuale = istante.getProcessoInEsecuzione();
             Processo processo = pcbAttuale.getRifProcesso();
             processiEseguiti.add(processo);
