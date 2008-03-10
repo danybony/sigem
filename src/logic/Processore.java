@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import logic.gestioneMemoria.*;
 import logic.parametri.ConfigurazioneIniziale;
+import logic.parametri.Processo;
 import logic.parametri.Processo.Accesso;
 import logic.schedulazione.*;
 
@@ -306,7 +307,7 @@ public class Processore {
         Istante istante;
         
         if(scheduler.getProcessiTerminati().size() > 0 && 
-                ((PCB)scheduler.getProcessiTerminati().get(0)).getRifProcesso().
+                ((Processo)scheduler.getProcessiTerminati().get(0)).
                         equals(ultimoEseguito.getRifProcesso())){
             
             gestoreMemoria.notificaProcessoTerminato(ultimoEseguito.getRifProcesso().getId());
