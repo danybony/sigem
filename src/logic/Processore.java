@@ -306,7 +306,8 @@ public class Processore {
         Istante istante;
         
         if(scheduler.getProcessiTerminati().size() > 0 && 
-                (PCB)scheduler.getProcessiTerminati().get(0) == ultimoEseguito){
+                ((PCB)scheduler.getProcessiTerminati().get(0)).getRifProcesso().
+                        equals(ultimoEseguito.getRifProcesso())){
             
             gestoreMemoria.notificaProcessoTerminato(ultimoEseguito.getRifProcesso().getId());
             
