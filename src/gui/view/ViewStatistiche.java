@@ -33,11 +33,7 @@ public class ViewStatistiche extends JScrollPane {
 	/** Necessario per il Serializable. */
 	private static final long serialVersionUID = 1109913847658572644L;
 	/** Il secondo pannello della vista, che contiene le statistiche*/
-	private JPanel p2 = null;
-	/** contiene il pulsante "visualizza statistiche" */
-	private JButton jButton = null;
-	/** contiene il pulsante "disabilita visualizzazione statistiche" */
-	private JButton jButton2 = null;
+	private JPanel panel = null;
 	
 	JPanel panelStat = null; 
 	/** Il possessore di questo JScrollPane.*/
@@ -53,10 +49,9 @@ public class ViewStatistiche extends JScrollPane {
 	public ViewStatistiche(SiGeMv2View gui) {
 		super();
 		this.gui = gui;
-		this.setViewportView(getP2());
-		p2 = getP2();
+		this.setViewportView(getpanel());
+		panel = getpanel();
 		this.stato = false;
-		//abilitaVisualizzazione(false);
 	}
 	
 	/**
@@ -64,12 +59,10 @@ public class ViewStatistiche extends JScrollPane {
 	 * 	
 	 * @return javax.swing.JPanel	
 	 */
-	private JPanel getP2() {
-            p2 = new JPanel();
-            p2.setLayout(new BorderLayout());
-            //p2.add(jTextArea,BorderLayout.CENTER);
-            //p2.add(getJButtonDisabilita(),BorderLayout.NORTH);
-            return p2;
+	private JPanel getpanel() {
+            panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+            return panel;
 	}
 	
 	/**
@@ -121,30 +114,9 @@ public class ViewStatistiche extends JScrollPane {
 		jTextPane.setText(contenuto);
 		panelStat.add(jTextPane);
 
-		p2 = getP2();
-		p2.add(panelStat, BorderLayout.CENTER);
-		this.setViewportView(p2);
+		panel = getpanel();
+		panel.add(panelStat, BorderLayout.CENTER);
+		this.setViewportView(panel);
 	}
 
-	/**
-	 * Abilita o disabilita la visualizzazione delle statistiche.
-	 * 
-	 * @param x
-	 *            true per abilitare false per disabilitare.
-	 */
-	public void abilitaVisualizzazione(boolean x) {
-            /*
-		// abilita le statistiche
-		if (x) {
-			jButton.setEnabled(true);
-			if (stato) {
-				gui.richiediStatistiche();
-			}
-		} else {
-			this.stato = false;
-			jButton.setEnabled(false);
-			this.setViewportView(getP1());
-		}
-             */
-	}        
 }
