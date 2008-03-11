@@ -240,10 +240,12 @@ public class PoliticheJDialog extends javax.swing.JDialog {
 
     private void jComboBoxSuddivisioneMemoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSuddivisioneMemoriaActionPerformed
        if ("pagine".equalsIgnoreCase((String) jComboBoxSuddivisioneMemoria.getItemAt(jComboBoxSuddivisioneMemoria.getSelectedIndex()))) {
+           setGestioneMemoria(1);
            jComboBoxRimpiazzoSegmenti.setEnabled(false);
            jComboBoxRimpiazzoPagine.setEnabled(true);
        }
        else if ("segmenti".equalsIgnoreCase((String) jComboBoxSuddivisioneMemoria.getItemAt(jComboBoxSuddivisioneMemoria.getSelectedIndex()))) {
+           setGestioneMemoria(2);
            jComboBoxRimpiazzoPagine.setEnabled(false);
            jComboBoxRimpiazzoSegmenti.setEnabled(true);
        }

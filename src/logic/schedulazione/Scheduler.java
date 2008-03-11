@@ -21,9 +21,9 @@ import logic.parametri.Processo;
  * Questa classe implementa i meccanismi necessari per realizzare una
  * simulazione discreta di processi in un elaboratore multi-programmato. 
  * Lo Scheduler viene interrogato per ogni istante dal Processore, a cui ritorna 
- * un riferimento al PCB correntemente in esecuzione, che potrà essere un riferimento
+ * un riferimento al PCB correntemente in esecuzione, che potra' essere un riferimento
  * nullo nel caso in cui nessun processo abbia il controllo della CPU.
- * L'esecuzione dei vari processi avverrà in maniera specializzata a seconda della 
+ * L'esecuzione dei vari processi avverra' in maniera specializzata a seconda della 
  * politica di ordinamento scelta.
  * 
  * @author Daniele Bonaldo
@@ -36,7 +36,7 @@ public class Scheduler {
 
 	/**
 	 * Il PCBCorrente rappresenta il PCB che, all'istante definito nella
-	 * variabile tempoCorrente, è nello stato di esecuzione. Il caso in cui tale
+	 * variabile tempoCorrente, e' nello stato di esecuzione. Il caso in cui tale
 	 * campo dati fosse null, rappresenta la situazione nella quale la CPU non
 	 * sta eseguendo nessun processo.
 	 */
@@ -44,7 +44,7 @@ public class Scheduler {
 
 	/**
 	 * Questo campo dati specifica la politica di schedulazione che si intende
-	 * utilizzare per questo scheduler. All'interno di questa è definita la coda
+	 * utilizzare per questo scheduler. All'interno di questa e' definita la coda
 	 * dei PCB nello stato di pronto.
 	 */
 	PoliticaOrdinamentoProcessi politicaOrdinamento = null;
@@ -64,14 +64,14 @@ public class Scheduler {
 	ArrayList processiTerminati = new ArrayList();	
 
 	/**
-	 * Questa variabile è il contatore interno della classe Scheduler. Esso è
+	 * Questa variabile e' il contatore interno della classe Scheduler. Esso e'
 	 * una rappresentazione del clock della CPU.
 	 * 
 	 */
 	int tempoCorrente = 0;
         
         /**
-         * Questa variabile indica se la simulazione è giunta al termine o meno.
+         * Questa variabile indica se la simulazione e' giunta al termine o meno.
          * 
          */
         boolean fineSimulazione = false;
@@ -80,7 +80,7 @@ public class Scheduler {
         /**
          * Questo metodo ritorna lo stato della simulazione.
          * 
-         * @return Ritorna true se la simulazione è terminata, false altrimenti.
+         * @return Ritorna true se la simulazione e' terminata, false altrimenti.
          */
         public boolean fineSimulazione(){
             return fineSimulazione;
@@ -207,7 +207,7 @@ public class Scheduler {
 
 	/**
 	 * Questo metodo si occupa di attivare un nuovo processo arrivato. Per fare
-	 * ciò, lo Scheduler deve istanziare il PCB (Process Control Block) relativo
+	 * cio', lo Scheduler deve istanziare il PCB (Process Control Block) relativo
 	 * al processo che si intende attivare. Nel caso la politica di
 	 * schedulazione adottata dallo scheduler fosse con prerilascio,
 	 * l'attivamento di un nuovo processo potrebbe interrompere il PCB nello
@@ -256,15 +256,15 @@ public class Scheduler {
 
         /**
 	 * Questo metodo si occupa di preparare il prossimo PCB in esecuzione.
-         * Per fare ciò controlla se è il momento corrispondente all'arrivo di 
+         * Per fare cio' controlla se e' il momento corrispondente all'arrivo di 
          * un nuovo processo e in caso affermativo lo attiva.
-         * Se non c'è nessun PCB in esecuzione, allora estrae il primo PCB dalla
+         * Se non c'e' nessun PCB in esecuzione, allora estrae il primo PCB dalla
          * coda dei pronti, organizzata secondo la politica di ordinamento corrente.
-         * Se non c'è nessun PCB è in esecuzione e la coda dei pronti è vuota, 
+         * Se non c'e' nessun PCB e' in esecuzione e la coda dei pronti e' vuota, 
          * viene controllata la lista dei processi in arrivo ancora da attivare:
-         * se è vuota significa che la simulazione è terminata.
+         * se e' vuota significa che la simulazione e' terminata.
          * 
-	 * @return Ritorna un valore booleano che indica la necessità di eseguire
+	 * @return Ritorna un valore booleano che indica la necessita' di eseguire
          * anche l'avanzamento tramite la politica di ordinamento dei processi.
 	 */
 	public boolean eseguiAttivazione() {
@@ -296,7 +296,7 @@ public class Scheduler {
                                 } 
                                 
                                 /* Incrementa il contatore interno dello scheduler,
-                                 visto che ritornando true non verrà
+                                 visto che ritornando true non verra'
                                  invocato incrementaTempoScheduler() */
                                 incrementaTempo();
                                 
@@ -310,10 +310,10 @@ public class Scheduler {
          }
 
 	/**
-	 * Questo metodo viene invocato solo nel caso ci sia un PCB che può 
+	 * Questo metodo viene invocato solo nel caso ci sia un PCB che puo' 
          * eseguire. Esegue il PCBCorrente in modo specializzato secondo la
          * politica di ordinamento,che invoca il metodo incrementaTempoScheduler().
-         * Inoltre se il PCBcorrente terminerà la sua esecuzione, verrà invocato il
+         * Inoltre se il PCBcorrente terminera' la sua esecuzione, verra' invocato il
          * metodo terminaPCBCorrente().
 	 * 
 	 */
@@ -385,7 +385,7 @@ public class Scheduler {
 	 * Ritorna il PCB attualmente nello stato di esecuzione. Questo metodo
 	 * condivide la memoria.
 	 * 
-	 * @return Ritorna il PCB in esecuzione. Se nessun PCB è in esecuzione,
+	 * @return Ritorna il PCB in esecuzione. Se nessun PCB e' in esecuzione,
 	 *         ritorna null.
 	 * @see <a href="../parametri/PCB.html">PCB</a>
 	 */

@@ -19,8 +19,8 @@ import java.util.ArrayList;
  * Una Politica di Ordinamento ha il compito di ordinare i
  * processi che sono attivi in un sistema, scegliendo quale di questi deve
  * eseguire ad ogni istante. Una politica di ordinamento viene specializzata a
- * seconda dei sistemi in cui questa verrà applicata. Elemento comune tra le
- * varie politiche di ordinamento, è quello di dover mantenere i processi pronti
+ * seconda dei sistemi in cui questa verra' applicata. Elemento comune tra le
+ * varie politiche di ordinamento, e' quello di dover mantenere i processi pronti
  * all'interno di una struttura dati.
  * 
  * @author Daniele Bonaldo
@@ -51,14 +51,14 @@ public interface PoliticaOrdinamentoProcessi {
 	 * interfaccia.
 	 * 
          * @param scheduler
-	 *            è il riferimento dello scheduler che detiene la politica di
+	 *            e' il riferimento dello scheduler che detiene la politica di
 	 *            ordinamento.
 	 */
 	public void setScheduler(Scheduler scheduler);
         
         /**
 	 * Rimuove l'elemento specificato dalla struttura dati definita nella classe
-	 * che lo implementerà.
+	 * che lo implementera'.
 	 * 
 	 * @return Ritorna il PCB estratto.
 	 */
@@ -69,7 +69,7 @@ public interface PoliticaOrdinamentoProcessi {
 	 * implementer�.
 	 * 
 	 * @param pcb
-	 *            è il PCB da inserire nella struttura dati.
+	 *            e' il PCB da inserire nella struttura dati.
 	 */
 	public void inserisci(PCB pcb);
         
@@ -77,7 +77,7 @@ public interface PoliticaOrdinamentoProcessi {
 	 * Ritorna il numero di PCB correnti presenti nella struttura dati definita
 	 * nella classe che andr� ad implementarlo.
 	 * 
-	 * @return Ritorna la capacità corrente della struttura.
+	 * @return Ritorna la capacita' corrente della struttura.
 	 */
 	public abstract int size();
 }

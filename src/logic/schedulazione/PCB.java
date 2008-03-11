@@ -19,10 +19,10 @@ import logic.parametri.Processo;
  * Classe che rappresenta un process control block, ovvero un particolare
  * oggetto che indicheremo con l'acronimo PCB e che si occupa di mantenere
  * memorizzati tutti i dati di un processo che evolvono col trascorrere della
- * simulazione. Istanze di questa classe perciò si occupano di memorizzare i
- * dati dinamici relativi a dei processi. Ogni processo sarà associato ad
- * un'istanza di questa classe e ogni istanza di questa classe sarà associata ad
- * uno ed un solo processo. Dunque dall'istanza di PCB potrà identificare in
+ * simulazione. Istanze di questa classe percio' si occupano di memorizzare i
+ * dati dinamici relativi a dei processi. Ogni processo sara' associato ad
+ * un'istanza di questa classe e ogni istanza di questa classe sara' associata ad
+ * uno ed un solo processo. Dunque dall'istanza di PCB potra' identificare in
  * modo univoco il processo associato, risalendo ai dati dinamici che lo
  * caratterizzano.
  * 
@@ -32,7 +32,7 @@ import logic.parametri.Processo;
 public class PCB {
 	/**
 	 * Campo dati che si occupa di mantenere un riferimento al processo a cui il
-	 * PCB sarà associato.
+	 * PCB sara' associato.
 	 */
 	private Processo processo;
 
@@ -47,10 +47,10 @@ public class PCB {
 	}
 
 	/**
-	 * Campo dati contenente per ogni unità di tempo il numero di istanti per
+	 * Campo dati contenente per ogni unita' di tempo il numero di istanti per
 	 * cui il processo associato al PCB ha eseguito. Viene inizializzato
-	 * automaticamente a zero in fase di creazione dei PCB perchè un PCB appena
-	 * creato non è sicuramente mai entrato in esecuzione.
+	 * automaticamente a zero in fase di creazione dei PCB perche' un PCB appena
+	 * creato non e' sicuramente mai entrato in esecuzione.
 	 */
 	private int istantiEseguiti = 0;
 
@@ -85,7 +85,7 @@ public class PCB {
 
 	/**
 	 * Metodo che incrementa gli istantiEseguiti e decrementa gli 
-         * istantiDaEseguire di un'unità di tempo.
+         * istantiDaEseguire di un'unita' di tempo.
 	 * 	 
 	 */
 	public void incIstantiEseguiti() {
@@ -129,7 +129,7 @@ public class PCB {
 	 */
 	public boolean equals(Object o) {
 		/*
-		 * Controllo se l'oggetto passato ha TD sottotipo di PCB. Se è così
+		 * Controllo se l'oggetto passato ha TD sottotipo di PCB. Se e' così
 		 * faccio RTTI a PCB e eseguo l'equals sul campo dati processo. Due PCB
 		 * sono uguali solo se si riferiscono allo stesso oggetto
 		 */
@@ -142,7 +142,7 @@ public class PCB {
 			return processo.equals(pcb.processo);
 		}
 		/*
-		 * l'oggetto o non ha TD sottotipo di PCB. Ciò significa che esso può
+		 * l'oggetto o non ha TD sottotipo di PCB. Cio' significa che esso puo'
 		 * anche essere nullo. In entrambi i casi i due oggetti che voglio
 		 * confrontare sono sicuramente diversi e dunque ritorno false.
 		 */

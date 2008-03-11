@@ -25,7 +25,7 @@ package logic.schedulazione;
  * rispetto a quello che sta eseguendo. I PCB vengono mantenuti ordinati
  * rispetto al tempo di esecuzione in maniera crescente, su una struttura dati.
  * L'estrazione invece viene fatta dalla testa della struttura dati, proprio
- * perchè questa viene mantenuta ordinata.
+ * perche' questa viene mantenuta ordinata.
  * 
  * @author Bonaldo Daniele
  * @version 1.1 20/02/2008
@@ -36,7 +36,7 @@ public class SRTN extends SJF {
 	/**
 	 * Costruttore, richiama i costruttori della classe superiore (SJF), e crea
 	 * la struttura dati per implementare la politica di ordinamento SRTN. La
-	 * struttura sarà inizialmente vuota.
+	 * struttura sara' inizialmente vuota.
 	 */
 	public SRTN() {
 		super();
@@ -64,17 +64,17 @@ public class SRTN extends SJF {
 
 	/**
 	 * Inserisce un nuovo PCB pronto all'interno della struttura dati. Il
-	 * comportamento di questo metodo è differente da quello delle altre
-	 * politiche, infatti la politica è con prerilascio, quindi prima di inserie
+	 * comportamento di questo metodo e' differente da quello delle altre
+	 * politiche, infatti la politica e' con prerilascio, quindi prima di inserie
 	 * il PCB del processo pronto nella codaPronti, viene controllato se il
-	 * tempo di esecuzione di quest'ultimo è minore del PCB del processo che sta
+	 * tempo di esecuzione di quest'ultimo e' minore del PCB del processo che sta
 	 * eseguendo. In questo caso il PCB del processo in esecuzione viene
 	 * reinserito nella coda dei pronti e viene schedulato quello appena
 	 * arrivato. Altrimenti il PCB passato come parametro viene inserito come
 	 * avviene nello stesso metodo della classe SJF.
 	 * 
 	 * @param pronto
-	 *            è il PCB da inserire nella struttura dati, come processo
+	 *            e' il PCB da inserire nella struttura dati, come processo
 	 *            pronto per eseguire.
 	 */
 

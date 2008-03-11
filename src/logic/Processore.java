@@ -49,7 +49,7 @@ public class Processore {
      private GestoreMemoria gestoreMemoria = null;
             
     /**
-     * Riferimento dell'ultimo PCB mandato in esecuzione. Servirà nel metodo
+     * Riferimento dell'ultimo PCB mandato in esecuzione. Servira' nel metodo
      * creaIstante e, nel caso corrisponda con il primo elemento della lista dei
      * processi terminato, deve essere essere inserito nell'istante corrente come 
      * processo appena terminato.
@@ -95,7 +95,7 @@ public class Processore {
     /**
      * Metodo principale della classe Processore, incaricato di creare tutta la 
      * simulazione, rappresentata da una collezione di istanti.
-     * La terminazione della simulazione è segnalata dallo scheduler, che è a 
+     * La terminazione della simulazione e' segnalata dallo scheduler, che e' a 
      * conoscenza dello stato dei processi in attesa o in arrivo, oltre che di
      * quello in esecuzione.<BR>
      * Dopo aver attivato il processo in esecuzione nell'istante di tempo corrente,
@@ -103,8 +103,8 @@ public class Processore {
      * estrarre una lista di FrameMemoria necessari al processo in esecuzione.
      * Questa lista viene passata al gestore della memoria che ha il compito di 
      * caricare i frame in RAM, ritornando la lista di operazioni eseguite.<BR>
-     * Da questa lista di operazioni verrà poi ricavato il numero di fault di 
-     * pagina e verrà quindi creata l'istanza di classe Istante corrispondente
+     * Da questa lista di operazioni verra' poi ricavato il numero di fault di 
+     * pagina e verra' quindi creata l'istanza di classe Istante corrispondente
      * al momento attuale della simulazione.
      * 
      * 
@@ -129,7 +129,13 @@ public class Processore {
             
             stop = scheduler.eseguiAttivazione();
             
-            /* Controlla se il numero di processi in arrivo è dimunuito */
+            if (scheduler.fineSimulazione()){
+                
+                return simulazione;
+                
+            }
+            
+            /* Controlla se il numero di processi in arrivo e' dimunuito */
             if (numInArrivo < scheduler.getProcessiInArrivo().size()){
                 
                 nuovoProcesso = true;
@@ -146,7 +152,7 @@ public class Processore {
                  nell'istante della sua esecuzione corrente */
                 LinkedList<FrameMemoria> frameNecessari = estraiFrame(corrente);
                 
-                /* Interroga il gestore della memoria sulla disponibilità dei 
+                /* Interroga il gestore della memoria sulla disponibilita' dei 
                  FrameMemoria necessari al processo in esecuzione e riceve la 
                  lista delle istruzioni effettuate dal gestore della memoria per
                  portare in RAM quei FrameMemoria */
@@ -159,11 +165,11 @@ public class Processore {
                 //da aggiungere il PCB dell'ultimo terminato
         
             } else {
-                /* Non c'è un processo in esecuzione */
+                /* Non c'e' un processo in esecuzione */
                 simulazione.add(creaIstante(corrente,null,nuovoProcesso,SwapPiena));
             }
             
-            /* Se c'è un processo in esecuzione esegue nuovamente il metodo 
+            /* Se c'e' un processo in esecuzione esegue nuovamente il metodo 
              principale dello scheduler incrementandone il contatore interno */
             if (!stop){
                 
@@ -177,14 +183,14 @@ public class Processore {
             
         }
         
-        /* La simulazione è terminata */
+        /* La simulazione e' terminata */
         return simulazione;
     }
 
     /**
      * Metodo che si occupa di estrarre il numero fdi fault di pagina da una lista
      * di istruzioni sulla memoria.
-     * Il numero di fault è costituito dalla somma delle operazioni corrispondenti 
+     * Il numero di fault e' costituito dalla somma delle operazioni corrispondenti 
      * ad una scrittura di una pagina su RAM.
      * Queste si possono verificare solo nel caso il valore del TipoAzione sia
      * <li>1 INSERISCI
@@ -193,7 +199,7 @@ public class Processore {
      * 
      * @param istruzioni 
      *      La lista di istruzioni effettuate dal gestore della memoria in questo
-     *      istante. Può essere uguale a null nel caso non siano state effettuate 
+     *      istante. Puo' essere uguale a null nel caso non siano state effettuate 
      *      istruzioni.
      * 
      * @return Il numero di fault di pagina avvenuti in questo istante.
@@ -222,7 +228,7 @@ public class Processore {
     }
 
     /**
-     * Metodo il cui compito è ritornare tramite un booleano se l'area di Swap è 
+     * Metodo il cui compito e' ritornare tramite un booleano se l'area di Swap e' 
      * piena o meno.
      * 
      * @param istruzioni
@@ -253,7 +259,7 @@ public class Processore {
     }
     
     /**
-     * Metodo il cui compito è ritornare tramite un booleano se la RAM è piena o 
+     * Metodo il cui compito e' ritornare tramite un booleano se la RAM e' piena o 
      * meno.
      * 
      * @param istruzioni
@@ -286,13 +292,13 @@ public class Processore {
     /**
      * Metodo con il compito di creare una istanza della classe Istante riguardante
      * l'istante corrente della simulazione.
-     * Controlla se l'ultimo PCB eseguito è lo stesso in testa alla testa dei terminati.
-     * In caso affermativo, ultimoEseguito è appena terminato, e quindi verrà salvato 
+     * Controlla se l'ultimo PCB eseguito e' lo stesso in testa alla testa dei terminati.
+     * In caso affermativo, ultimoEseguito e' appena terminato, e quindi verra' salvato 
      * nell'istante corrente.
      * 
      * @param istruzioni
      *      La lista di istruzioni effettuate dal gestore della memoria in questo
-     *      istante. Può essere uguale a null nel caso non siano state effettuate 
+     *      istante. Puo' essere uguale a null nel caso non siano state effettuate 
      *      istruzioni.
      * 
      * @return Ritorna l'istante corrente.
@@ -353,9 +359,9 @@ public class Processore {
          processo a cui appartiene il PCB corrente */
         ArrayList<Accesso> frameTotali = corrente.getRifProcesso().getAccessi();
         
-        /* Scorre le richieste finchè non passa ad un istante successivo a quello 
+        /* Scorre le richieste finche' non passa ad un istante successivo a quello 
          corrente o raggiunge la fine della lista.
-         Da notare che la lista è ordinata in ordine crescente di richiesta */
+         Da notare che la lista e' ordinata in ordine crescente di richiesta */
         for(int i=0; i < frameTotali.size(); i++)
             
             if((frameTotali.get(i)).getIstanteRichiesta() == istanteCorrente)

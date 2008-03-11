@@ -22,7 +22,7 @@ import java.util.LinkedList;
  * Classe concreta, estende la classe astratta ConQuanti e implementa
  * l'interfaccia PoliticaOrdinamentoProcessi. Questa classe ha il compito di 
  * simulare una politica di ordinamento per sistemi Interattivi. 
- * La politica Round Robin, è una politica con ordinamento a quanti, ovvero ogni 
+ * La politica Round Robin, e' una politica con ordinamento a quanti, ovvero ogni 
  * processo esegue per al più un quanto di tempo alla volta. La struttura dati 
  * su cui vengono mantenuti i processi pronti diventa quindi una lista circolare 
  * di processi. L'inserimento viene sempre fatto in coda a questa lista, mentre 
@@ -41,7 +41,7 @@ public class RR extends ConQuanti implements PoliticaOrdinamentoProcessi {
 	protected LinkedList codaPronti;
 
 	/**
-	 * Riferimento dell'ultimo PCB mandato in esecuzione. Servirà nel metodo
+	 * Riferimento dell'ultimo PCB mandato in esecuzione. Servira' nel metodo
 	 * esegui e, nel caso ultimoEseguito e il PCB in esecuzione fossero
 	 * differenti, deve essere resettato il contatore.
 	 */
@@ -110,13 +110,13 @@ public class RR extends ConQuanti implements PoliticaOrdinamentoProcessi {
 		// Ottengo il PCB in esecuzione
 		PCB inEsecuzione = scheduler.getPCBCorrente();
 
-		// Se l'ultimo PCB eseguito, è diverso da quello in esecuzione il
+		// Se l'ultimo PCB eseguito, e' diverso da quello in esecuzione il
 		// contatore deve essere resettato.
 		// altrimenti avrei una inconsistenza.
 		if (!(inEsecuzione.equals(ultimoEseguito))) {
 			this.reset();
 		}
-		// Trovo il minore tra istantiSicuri e le unità di tempo ancora
+		// Trovo il minore tra istantiSicuri e le unita' di tempo ancora
 		// disponibili al PCB
 		int rimanenzaQuanto = getTimeSlice() - getContatore();
 		int limite;
@@ -126,7 +126,7 @@ public class RR extends ConQuanti implements PoliticaOrdinamentoProcessi {
 			limite = 1;
 		}
 
-		// incremento il contatore delle unità di tempo individuate
+		// incremento il contatore delle unita' di tempo individuate
 		// precedentemente
 		setContatore(getContatore() + limite);
 

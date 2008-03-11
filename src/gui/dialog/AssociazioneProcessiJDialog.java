@@ -44,6 +44,14 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         this.view = view;
         initComponents();
         initJTable();
+        
+        if (politica.getGestioneMemoria() == 1){
+            jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI - PAGINE");
+        }
+        else {
+            jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI - SEGMENTI");
+        }
+        
     }
 
     /** This method is called from within the constructor to

@@ -15,7 +15,7 @@ package logic.parametri;
 /**
  * La classe ProcessoConPriorita rappresenta i processi che, oltre ai dati
  * comuni ad ogni processo ed ereditati dunque dalla classe Processo, sono
- * caratterizzati dall'avere una certa priorità, la quale non si esclude possa
+ * caratterizzati dall'avere una certa priorita', la quale non si esclude possa
  * anche cambiare nel corso dell'evoluzione della simulazione.
  * 
  * @author Daniele Bonaldo
@@ -23,33 +23,33 @@ package logic.parametri;
  */
 public class ProcessoConPriorita extends Processo {
 
-	/** Campo dati contenente la priorità associata al processo */
+	/** Campo dati contenente la priorita' associata al processo */
 	private int priorita;
 
 	/**
-	 * Metodo che ritorna il valore di priorità associato al processo.
+	 * Metodo che ritorna il valore di priorita' associato al processo.
 	 * 
-	 * @return La priorità associata al processo.
+	 * @return La priorita' associata al processo.
 	 */
 	public int getPriorita() {
 		return priorita;
 	}
 
 	/**
-	 * Metodo che si occupa di definire la priorità da associare ad un processo.
-	 * Viene invocato ogni volta in cui la priorità di un processo dovesse
+	 * Metodo che si occupa di definire la priorita' da associare ad un processo.
+	 * Viene invocato ogni volta in cui la priorita' di un processo dovesse
 	 * cambiare col proseguimento della simulazione.
 	 * 
 	 * @param priorita
-	 *            La priorità da associare al processo.
+	 *            La priorita' da associare al processo.
 	 */
 	public void setPriorita(int priorita) {
 		this.priorita = priorita;
 	}
 
 	/**
-	 * Costruttore di processi con priorità. Esso si occupa di settare il campo
-	 * dati priorità e delega tutto il resto al costruttore della classe
+	 * Costruttore di processi con priorita'. Esso si occupa di settare il campo
+	 * dati priorita' e delega tutto il resto al costruttore della classe
 	 * Processo
 	 * 
 	 * @param nome
@@ -59,7 +59,7 @@ public class ProcessoConPriorita extends Processo {
 	 * @param tesecuzione
 	 *            Il tempo totale d'esecuzione di un processo
 	 * @param priorita
-	 *            La priorità d'associare al processo
+	 *            La priorita' d'associare al processo
 	 */
 	public ProcessoConPriorita(String nome, int tarrivo, int tesecuzione,
 			int priorita) {

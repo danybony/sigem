@@ -29,7 +29,7 @@ import logic.parametri.*;
 public class Priorita implements PoliticaOrdinamentoProcessi {
 
 	/**
-	 * Coda dei processi pronti, è ordinata per tempo priorità decrescente.
+	 * Coda dei processi pronti, e' ordinata per tempo priorita' decrescente.
 	 */
 	protected LinkedList codaPronti;
 
@@ -40,7 +40,7 @@ public class Priorita implements PoliticaOrdinamentoProcessi {
 
 	/**
 	 * Costruttore, inizializza la struttura dati utilizzata per rappresentare
-	 * la coda dei processi pronti per l'esecuzione. La coda sarà inizialmente
+	 * la coda dei processi pronti per l'esecuzione. La coda sara' inizialmente
 	 * vuota.
 	 */
 	public Priorita() {

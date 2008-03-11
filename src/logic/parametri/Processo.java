@@ -20,7 +20,7 @@ import logic.gestioneMemoria.FrameMemoria;
 /**
  * La classe Processo rappresenta la classe base per tutti i processi, almeno
  * per quelli che sono dati in dotazione alla consegna del prodotto. Essa
- * contiene in sè tutti i campi dati e metodi comuni ad ogni tipo di processo. 
+ * contiene in se' tutti i campi dati e metodi comuni ad ogni tipo di processo. 
  * 
  * @author Daniele Bonaldo
  * @version 1.03
@@ -74,7 +74,7 @@ public class Processo implements Serializable {
                 /**
                  * Costruttore che si occupa di creare un oggetto rappresentante tutte le
                  * informazioni che riguardano una richiesta d'accesso ad un FrameMemoria 
-                 * da parte di un processo che andrà a contenerlo.
+                 * da parte di un processo che andra' a contenerlo.
                  * 
                  * @param frame
                  *            Il FrameMemoria a cui il processo richiede di poter accedere
@@ -106,7 +106,7 @@ public class Processo implements Serializable {
 
 	/**
 	 * Campo dati che contiene la lista degli accessi a FrameMemoria che un processo
-	 * andrà a richiedere durante il suo ciclo di vita. Tale lista di accessi è
+	 * andra' a richiedere durante il suo ciclo di vita. Tale lista di accessi e'
 	 * ordinata per istante di esecuzione crescente e alla creazione viene posta
 	 * inizialmete uguale a una lista vuota.
 	 */
@@ -149,13 +149,13 @@ public class Processo implements Serializable {
 				accessi.add(i, accesso);
 				return true;
 			}
-		}// esco dal for perchè l'oggetto va inserito in fondo all'ArrayList
+		}// esco dal for perche' l'oggetto va inserito in fondo all'ArrayList
 		return accessi.add(accesso);
 	}
         
 	/**
 	 * Campo dati contentente l'istante in cui un processo diventa attivo, cio
-	 * è l'istante a partire dal quale un processo può concorrere per andare 
+	 * e' l'istante a partire dal quale un processo puo' concorrere per andare 
 	 * in esecuzione.
 	 */
 	private int tempoArrivo;
@@ -238,9 +238,9 @@ public class Processo implements Serializable {
 		}
 		/*
 		 * In questo punto ho che o i due oggetti di tipo processo hanno diverso
-		 * id, oppure l'oggetto processo non ha TD sottotipo di Processo che può
+		 * id, oppure l'oggetto processo non ha TD sottotipo di Processo che puo'
 		 * significare che processo==null o processo non ha TD sottotipo di
-		 * processo. Comunque sia so con certezza che this!=processo perciò
+		 * processo. Comunque sia so con certezza che this!=processo percio'
 		 * ritorno false.
 		 */
 		return false;

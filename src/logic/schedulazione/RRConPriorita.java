@@ -22,21 +22,21 @@ import logic.parametri.ProcessoConPriorita;
  * Classe concreta, estende la classe astratta ConQuanti, e implementa
  * l'interfaccia PoliticaOrdinamentoProcessi. 
  * Questa classe ha il compito di simulare una politica di ordinamento 
- * Round Robin con priorità. Questa è una politica con ordinamento a quanti,
+ * Round Robin con priorita'. Questa e' una politica con ordinamento a quanti,
  * ovvero ogni processo esegue per al più un quanto di
- * tempo alla volta. La particolarità di questa politica, a differenza di quella
- * Round Robin, è che i processi vengono mantenuti in una struttura dati
- * ordinata per priorità. Ogni processo coinvolto in questa politica, ha infatti
- * un valore di priorità proprio, che determina in quale lista della struttura
+ * tempo alla volta. La particolarita' di questa politica, a differenza di quella
+ * Round Robin, e' che i processi vengono mantenuti in una struttura dati
+ * ordinata per priorita'. Ogni processo coinvolto in questa politica, ha infatti
+ * un valore di priorita' proprio, che determina in quale lista della struttura
  * dati questo deve essere inserito. L'estrazione di un PCB associato ad un
- * processo, procederà cercando quello con priorità più alta. Al termine della
- * sua esecuzione il PCB verrà rimesso in coda alla lista da cui è stato
- * estratto. La politica non prevede prerilascio per priorità, quindi se durante
- * l'esecuzione di un processo con priorità bassa, ne arrivasse uno con priorità
+ * processo, procedera' cercando quello con priorita' più alta. Al termine della
+ * sua esecuzione il PCB verra' rimesso in coda alla lista da cui e' stato
+ * estratto. La politica non prevede prerilascio per priorita', quindi se durante
+ * l'esecuzione di un processo con priorita' bassa, ne arrivasse uno con priorita'
  * più alta, il primo rimarrebbe in esecuzione fino al termine del quanto di
  * tempo a sua disposizione, mentre l'altro verrebbe inserito nella coda dei
- * pronti. Non capiterà che un PCB con priorità bassa vada in esecuzione prima
- * di un PCB con priorità alta, già presente nella coda dei pronti.
+ * pronti. Non capitera' che un PCB con priorita' bassa vada in esecuzione prima
+ * di un PCB con priorita' alta, gia' presente nella coda dei pronti.
  * 
  * 
  * @author Daniele Bonaldo
@@ -51,7 +51,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 	protected ArrayList codaPronti;
 
 	/**
-	 * Riferimento dell'ultimo PCB mandato in esecuzione. Servirà nel metodo
+	 * Riferimento dell'ultimo PCB mandato in esecuzione. Servira' nel metodo
 	 * esegui e nel caso ultimoEseguito e il PCB in esecuzione fossero
 	 * differenti, caso in cui deve anche essere resettato il contatore.
 	 */
@@ -64,7 +64,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 
 	/**
 	 * Costruttore di default. Richiama il costruttore ad un parametro, con
-	 * valore 3, assegnando di defualt un timeslice di 3 unità di tempo.
+	 * valore 3, assegnando di defualt un timeslice di 3 unita' di tempo.
 	 * 
 	 */
 	public RRConPriorita() {
@@ -81,8 +81,8 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 	public RRConPriorita(int timeSlice) {
 
 		super(timeSlice);
-		// creo 5 code delle priorità, una per ogni possibile livello di
-		// priorità
+		// creo 5 code delle priorita', una per ogni possibile livello di
+		// priorita'
 		codaPronti = new ArrayList(5);
 		for (int i = 0; i < 5; i++) {
 			codaPronti.add(i, new LinkedList());
@@ -91,7 +91,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 
 	/**
 	 * Inserisce un nuovo PCB nella coda dei pronti. L'inserimento viene
-	 * effettuato tenendo conto della priorità di ogni PCB.
+	 * effettuato tenendo conto della priorita' di ogni PCB.
 	 * 
 	 * @param pronto
 	 *            E' il PCB che rappresenta il processo appena arrivato nella
@@ -107,7 +107,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 
 	/**
 	 * Estrae e ritorna il PCB del processo che deve andare in esecuzione.
-	 * L'estrazione viene fatta cercando il PCB con priorità maggiore
+	 * L'estrazione viene fatta cercando il PCB con priorita' maggiore
 	 * all'interno della codaPronti.
 	 * 
 	 * @return Ritorna il PCB che deve eseguire.
@@ -115,7 +115,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 	public PCB estrai() {
 		PCB corrente = null;
 		// La ricerca parte dall'ultimo elemento della coda, quello in cui i PCB
-		// hanno priorità maggiore.
+		// hanno priorita' maggiore.
 		for (int i = codaPronti.size() - 1; i >= 0; i--) {
 			if (!((LinkedList) codaPronti.get(i)).isEmpty()) {
 				corrente = (PCB) ((LinkedList) codaPronti.get(i)).removeFirst();
@@ -150,7 +150,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 		ArrayList stati = new ArrayList();
 		// Si scorre la codaPronti dalla fine, in tale posizione si trovano
 		// infatti
-		// i PCB con priorità più alta.
+		// i PCB con priorita' più alta.
 		for (int i = codaPronti.size() - 1; i >= 0; i--) {
 			LinkedList tmp = (LinkedList) codaPronti.get(i);
 			for (int j = 0; j < tmp.size(); j++) {
@@ -163,7 +163,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 
 	/**
 	 * Simula l'esecuzione del processo che "possiede" la CPU per un numero
-	 * definito di unità di tempo. Metodo invocato dallo Scheduler.
+	 * definito di unita' di tempo. Metodo invocato dallo Scheduler.
 	 * 
 	 */
 	public void esegui() {
@@ -171,14 +171,14 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 		// Ottengo il PCB in esecuzione
 		PCB inEsecuzione = scheduler.getPCBCorrente();
 
-		// Se l'ultimo PCB eseguito, è diverso da quello in esecuzione il
+		// Se l'ultimo PCB eseguito, e' diverso da quello in esecuzione il
 		// contatore deve essere resettato.
 		// altrimenti avrei una inconsistenza.
 		if (!(inEsecuzione.equals(ultimoEseguito))) {
 			this.reset();
 		}
 
-		// Trovo il minore tra istantiSicuri e le unità di tempo ancora
+		// Trovo il minore tra istantiSicuri e le unita' di tempo ancora
 		// disponibili al PCB
 		int rimanenzaQuanto = getTimeSlice() - getContatore();
 		int limite;
@@ -188,7 +188,7 @@ public class RRConPriorita extends ConQuanti implements PoliticaOrdinamentoProce
 			limite = 1;
 		}
 
-		// incremento il contatore delle unità di tempo individuate
+		// incremento il contatore delle unita' di tempo individuate
 		// precedentemente
 		setContatore(getContatore() + limite);
 

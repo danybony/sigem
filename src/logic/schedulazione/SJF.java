@@ -24,9 +24,9 @@ import java.util.LinkedList;
  * politica di ordinamento Shortest Job First, che viene usualmente applicata
  * nei sistemi Batch. Essa richiede la conoscenza dei tempi di
  * esecuzione infatti viene eseguito sempre il lavoro più breve. Ovviamente, non
- * è equo con i lavori non presenti all'inizio, a differenza della classe che
- * estenderà questa politica (SRTF). La struttura dati che conterrà i processi
- * pronti sarà quindi ordinata per tempi di esecuzione crescenti.
+ * e' equo con i lavori non presenti all'inizio, a differenza della classe che
+ * estendera' questa politica (SRTF). La struttura dati che conterra' i processi
+ * pronti sara' quindi ordinata per tempi di esecuzione crescenti.
  * 
  * @author Bonaldo Daniele
  * @version 1.1 20/02/2008
@@ -35,7 +35,7 @@ import java.util.LinkedList;
 public class SJF implements PoliticaOrdinamentoProcessi {
 
 	/**
-	 * Coda dei processi pronti, è ordinata per tempo di esecuzione crescente.
+	 * Coda dei processi pronti, e' ordinata per tempo di esecuzione crescente.
 	 */
 	protected LinkedList codaPronti;
 
@@ -46,7 +46,7 @@ public class SJF implements PoliticaOrdinamentoProcessi {
 
 	/**
 	 * Costruttore, inizializza la struttura dati utilizzata per rappresentare
-	 * la coda dei processi pronti per l'esecuzione. La coda sarà inizialmente
+	 * la coda dei processi pronti per l'esecuzione. La coda sara' inizialmente
 	 * vuota.
 	 */
 	public SJF() {
@@ -92,7 +92,7 @@ public class SJF implements PoliticaOrdinamentoProcessi {
 		for (int i = 0; i < codaPronti.size() && !inserito; i++) {
 			tmp = (PCB) codaPronti.get(i);
 			// confronto gli istanti da eseguire del processo da inserire e di
-			// quelli già presenti nella codaPronti.
+			// quelli gia' presenti nella codaPronti.
 			if ((tmp.getIstantiDaEseguire()) > pronto.getIstantiDaEseguire()) {
 				// Se il PCB da inserire deve eseguire per meno tempo, lo
 				// inserisco all'indice i.

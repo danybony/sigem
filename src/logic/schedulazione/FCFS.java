@@ -24,8 +24,8 @@ import java.util.LinkedList;
  * tempo d'arrivo e li fa eseguire uno alla volta fino al completamento. 
  * La classe possiede quindi una struttura dati di tipo FIFO, contenente PCB, 
  * sulla quale vengono fatte le operazioni di inserimento e di estrazione. 
- * Dunque, l'estrazione del PCB da mandare in escuzione sarà fatto in testa alla 
- * strutura mentre ogni nuovo PCB che entra nello stato di pronto verrà inserito 
+ * Dunque, l'estrazione del PCB da mandare in escuzione sara' fatto in testa alla 
+ * strutura mentre ogni nuovo PCB che entra nello stato di pronto verra' inserito 
  * in coda.
  * 
  * @author Bonaldo Daniele
@@ -46,7 +46,7 @@ public class FCFS implements PoliticaOrdinamentoProcessi {
 
 	/**
 	 * Costruttore che si occupa di inizializzare la struttura dati utilizzata
-	 * per rappresentare la coda dei processi pronti per l'esecuzione. Essa sarà
+	 * per rappresentare la coda dei processi pronti per l'esecuzione. Essa sara'
 	 * inizialmente vuota.
 	 */
 	public FCFS() {
@@ -87,16 +87,16 @@ public class FCFS implements PoliticaOrdinamentoProcessi {
 	/**
 	 * Estrae e ritorna il PCB che deve andare in esecuzione.
 	 * 
-	 * @return Ritorna il PCB del processo che deve andare ad eseguire. (Sarà
+	 * @return Ritorna il PCB del processo che deve andare ad eseguire. (Sara'
 	 *         sempre quello nella testa della coda dei pronti)
 	 */
 	public PCB estrai() {
-		// controllo se la codaPronti è vuota.
+		// controllo se la codaPronti e' vuota.
 		if (codaPronti.size() > 0) {
 			// in caso negativo: estrazione del primo elemento.
 			return (PCB) codaPronti.removeFirst();
 		} else
-			// Se la coda è vuota ritorno null.
+			// Se la coda e' vuota ritorno null.
 			return null;
 
 	}

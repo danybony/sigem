@@ -15,11 +15,11 @@ package logic.schedulazione;
 
 /**
  * Classe astratta che implementa l'interfaccia PoliticaOrdinamento. Lo scopo di
- * questa classe è quello di definire una ulteriore caratteristica del
+ * questa classe e' quello di definire una ulteriore caratteristica del
  * comportamento di una politica di ordinamento concreta. Una politica con
  * quanti stabilisce un intervallo di tempo (detto time slice) durante il quale
- * un processo può eseguire. Alla scadenza del quanto di tempo, se il processo
- * non ha finito la sua esecuzione esso potrà essere re-inserito nella coda dei
+ * un processo puo' eseguire. Alla scadenza del quanto di tempo, se il processo
+ * non ha finito la sua esecuzione esso potra' essere re-inserito nella coda dei
  * processi pronti oppure continuare con la sua esecuzione a seconda di cosa le
  * classi concrete che implementano la presente prevedranno di fare.
  * 
@@ -40,9 +40,9 @@ public abstract class ConQuanti implements PoliticaOrdinamentoProcessi {
 	}
 
 	/**
-	 * Campo dato di tipo intero che indica per ogni processo quante unità di
+	 * Campo dato di tipo intero che indica per ogni processo quante unita' di
 	 * tempo del quanto a sua disposizione sono state sfruttate. Tale valore non
-	 * potrà mai essere superiore al valore del timeSlice e deve essere
+	 * potra' mai essere superiore al valore del timeSlice e deve essere
 	 * aggiornato a seconda del numero di istanti per cui il processo ha
 	 * effettivamente eseguito.
 	 */
