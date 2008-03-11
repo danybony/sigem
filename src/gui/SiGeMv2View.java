@@ -703,7 +703,7 @@ public class SiGeMv2View {
 		frame.getContentPane().add(createToolBar(), BorderLayout.NORTH);
 		frame.getContentPane().add(rootWindow, BorderLayout.CENTER);
 		frame.setJMenuBar(createMenuBar());
-		frame.setSize(1000, 700);
+		frame.setSize(1024, 768);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
@@ -714,13 +714,9 @@ public class SiGeMv2View {
         
         public void abilitaTutto(){
             jSimulazioneItemFine.setEnabled(true);
-            jSimulazioneItemInizio.setEnabled(true);
             jSimulazioneItemPlay.setEnabled(true);
-            jSimulazioneItemStop.setEnabled(true);
             jSimulazioneItemAvanti.setEnabled(true);
             jButtonSimulazionePlay.setEnabled(true);
-            jButtonSimulazioneStop.setEnabled(true);
-            jButtonSimulazioneInizio.setEnabled(true);
             jButtonSimulazioneFine.setEnabled(true);
             jButtonSimulazioneAvanti.setEnabled(true);
             jButtonSalvaConfigurazione.setEnabled(true);
@@ -851,9 +847,10 @@ public class SiGeMv2View {
             jButtonSimulazioneIndietro.setEnabled(false);
             jSimulazioneItemIndietro.setEnabled(false);
             
-            istante = player.primoIstante();
+            istante = null;
             processiEseguiti = new LinkedList<Processo>();
             visualizzaOrdProcessi(processiEseguiti);
+            visualizzaStatistiche(player, istante);
         }
         
         /** Porta la simulazione allo stato finale */
@@ -881,6 +878,7 @@ public class SiGeMv2View {
                 processiEseguiti.add(processo);
             }
             visualizzaOrdProcessi(processiEseguiti);
+            visualizzaStatistiche(player, istanti.get(istanti.size()-1));
             
         }
         
@@ -903,6 +901,16 @@ public class SiGeMv2View {
             processiEseguiti.add(processo);
             visualizzaOrdProcessi(processiEseguiti);
             visualizzaStatistiche(player, istante);
+            
+            if (player.istanteSuccessivo() == null) {
+                //Disabilito alcuni bottoni e ne attivo altri
+                jSimulazioneItemAvanti.setEnabled(false);
+                jButtonSimulazioneAvanti.setEnabled(false);
+                jSimulazioneItemPausa.setEnabled(false);
+                jButtonSimulazionePausa.setEnabled(false);
+                jButtonSimulazioneFine.setEnabled(false);
+                jSimulazioneItemFine.setEnabled(false);
+            }
         }
         
         /** Porta la simulazione allo stato precedente */
@@ -915,6 +923,7 @@ public class SiGeMv2View {
             istante = player.istantePrecedente();
             processiEseguiti.pop();
             visualizzaOrdProcessi(processiEseguiti);
+            visualizzaStatistiche(player, istante);
         }
         
         /** Aggiorna il contenuto della vista ViewStatoAvanzamentoProcessi */
