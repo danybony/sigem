@@ -82,7 +82,7 @@ public class Player{
      * Questa classe e' necessaria per il fatto che gli Istanti sono
      * rappresentati in modo differenziale.
      */
-    public static class Statistiche{
+    public class Statistiche{
         
         /**
          * Numero di KB utilizzati della RAM.
@@ -111,7 +111,7 @@ public class Player{
             this.numeroFault = 0;
             this.utilizzoRAM = 0;
             this.utilizzoSwap = 0;
-            this.numeroIstantiRimanenti = 0;
+            this.numeroIstantiRimanenti = Player.this.numeroIstanti();
         }
         
         /**
@@ -286,7 +286,6 @@ public class Player{
     public Player(ConfigurazioneIniziale conf){
         simulazioneEseguita = new Simulazione(conf);
         listaIstanti = null;
-        stat = new Statistiche();
     }
     
     /**
@@ -301,6 +300,7 @@ public class Player{
         //Metto l'iteratore prima del primo elemento
         istanteCorrente=listaIstanti.listIterator();
         indiceElementoCorrente = -1;
+        stat = new Statistiche();
         return true;
     }
     
