@@ -128,6 +128,12 @@ public class ConfigurazioneIniziale implements Serializable{
     private final int DIMENSIONE_PAGINA;
     
     /**
+     * Il time slice per le politiche di schedulazione dei processi con 
+     * prerilascio, espresso in millisecondi.
+     */
+    private final int TIME_SLICE;
+    
+    /**
      * Lista di processi da utilizzare nella simulazione.
      */
     private final LinkedList<Processo> LISTA_PROCESSI;
@@ -181,7 +187,8 @@ public class ConfigurazioneIniziale implements Serializable{
                                   int tempoContextSwitch,
                                   int tempoAccessoDisco,
                                   int dimPagina,
-                                  LinkedList<Processo> listaProcessi
+                                  LinkedList<Processo> listaProcessi,
+                                  int timeSlice
                                   ) 
                                   throws EccezioneConfigurazioneNonValida{
         
@@ -214,6 +221,7 @@ public class ConfigurazioneIniziale implements Serializable{
         if(tempoContextSwitch<=0)throw new EccezioneConfigurazioneNonValida();
         if(tempoAccessoDisco<=0)throw new EccezioneConfigurazioneNonValida();
         if(listaProcessi==null)throw new EccezioneConfigurazioneNonValida();
+        if(timeSlice <= 0)throw new EccezioneConfigurazioneNonValida();
         
         // tutti i parametri sono conformi; posso procedere con la creazione
         // dell'oggetto
@@ -227,6 +235,7 @@ public class ConfigurazioneIniziale implements Serializable{
         this.TEMPO_ACCESSO_DISCO=tempoAccessoDisco;
         this.DIMENSIONE_PAGINA=dimPagina;
         this.LISTA_PROCESSI=listaProcessi;
+        this.TIME_SLICE=timeSlice;
     }
 
     /**
@@ -340,6 +349,14 @@ public class ConfigurazioneIniziale implements Serializable{
      */
     public LinkedList<Processo> getListaProcessi(){
         return LISTA_PROCESSI;
+    }
+    
+    /**
+     * Ritorna il tempo di time slice per le politiche di schedulazione di
+     * processi con prerilascio. Il tempo è espresso in millisecondi.
+     */
+    public int getTimeSlice(){
+        return this.TIME_SLICE;
     }
 }
 
