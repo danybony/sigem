@@ -14,6 +14,7 @@
 
 package gui.dialog;
 import gui.SiGeMv2View;
+import javax.swing.SpinnerListModel;
 /**
  *
  * @author  Jordy
@@ -27,6 +28,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     private int gestioneMemoria;
     private int politica;
     private int politicaSchedulazione;
+    private int timeSlice;
     
     /** Creates new form PoliticheJDialog */
     public PoliticheJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, SiGeMv2View view) {
@@ -34,6 +36,9 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         configurazioneAmbiente = conf;
         this.view = view;
         initComponents();
+        initJSpinnerProcessi();
+        jLabelTimeSlice.setVisible(false);
+        jSpinnerTimeSlice.setVisible(false);
         gestionePoliticaPagine((String)jComboBoxRimpiazzoPagine.getItemAt(0));
         gestioneSchedulazione((String) jComboBoxSchedulazione.getItemAt(0));
         jComboBoxRimpiazzoSegmenti.setEnabled(false);
@@ -60,6 +65,8 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         jLabelTecnicaGestioneMemoria = new javax.swing.JLabel();
         jComboBoxSuddivisioneMemoria = new javax.swing.JComboBox();
         jLabelPasso = new javax.swing.JLabel();
+        jLabelTimeSlice = new javax.swing.JLabel();
+        jSpinnerTimeSlice = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -136,6 +143,9 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPasso.setText("Passo 2 di 4");
 
+        jLabelTimeSlice.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelTimeSlice.setText("Time Slice");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,12 +155,6 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabelPolitiche, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelSchedulazione))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabelRimpiazzoSegmenti)
@@ -175,8 +179,20 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAvanti)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAnnulla)))
+                        .addComponent(jButtonAnnulla))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelTimeSlice)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSpinnerTimeSlice, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelSchedulazione)
+                .addContainerGap(244, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,9 +213,13 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                     .addComponent(jLabelRimpiazzoSegmenti)
                     .addComponent(jComboBoxRimpiazzoSegmenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabelSchedulazione)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSchedulazione)
+                    .addComponent(jLabelTimeSlice, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerTimeSlice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAvanti)
@@ -217,6 +237,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
 }//GEN-LAST:event_jButtonIndietroActionPerformed
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
+        setTimeSlice(Integer.parseInt(jSpinnerTimeSlice.getValue().toString()));
         this.setVisible(false);
         processi = new ProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, this, view);
         processi.setVisible(true);
@@ -236,6 +257,14 @@ public class PoliticheJDialog extends javax.swing.JDialog {
 
     private void jComboBoxSchedulazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSchedulazioneActionPerformed
         gestioneSchedulazione((String)jComboBoxSchedulazione.getItemAt(jComboBoxSchedulazione.getSelectedIndex()));
+        // visualizzo il time slice in caso di RR
+        if (politicaSchedulazione == 4) {
+            jLabelTimeSlice.setVisible(true);
+            jSpinnerTimeSlice.setVisible(true);
+        } else {
+            jLabelTimeSlice.setVisible(false);
+            jSpinnerTimeSlice.setVisible(false);
+        }
     }//GEN-LAST:event_jComboBoxSchedulazioneActionPerformed
 
     private void jComboBoxSuddivisioneMemoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSuddivisioneMemoriaActionPerformed
@@ -265,6 +294,8 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelRimpiazzoSegmenti;
     private javax.swing.JLabel jLabelSchedulazione;
     private javax.swing.JLabel jLabelTecnicaGestioneMemoria;
+    private javax.swing.JLabel jLabelTimeSlice;
+    private javax.swing.JSpinner jSpinnerTimeSlice;
     // End of variables declaration//GEN-END:variables
 
     public int getGestioneMemoria() {
@@ -346,4 +377,24 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         else if (politica.equalsIgnoreCase("P"))
             setPoliticaSchedulazione(7);
     }
+    
+    private Integer[] impostaJSpinnerTimeSlice() {
+        Integer[] tempiTimeSlice= new Integer[100];
+        for (int i=0; i<100; i++)
+            tempiTimeSlice[i] = i+1;
+        return tempiTimeSlice;
+    }
+   
+    private void initJSpinnerProcessi() {
+        jSpinnerTimeSlice.setModel(new SpinnerListModel(impostaJSpinnerTimeSlice()));
+    }
+
+    public int getTimeSlice() {
+        return timeSlice;
+    }
+
+    public void setTimeSlice(int timeSlice) {
+        this.timeSlice = timeSlice;
+    }
+    
 }

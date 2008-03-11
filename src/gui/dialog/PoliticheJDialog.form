@@ -29,14 +29,6 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jComboBoxSchedulazione" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelSchedulazione" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabelRimpiazzoSegmenti" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jComboBoxRimpiazzoSegmenti" pref="176" max="32767" attributes="0"/>
@@ -65,8 +57,24 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButtonAnnulla" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jLabelTimeSlice" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jComboBoxSchedulazione" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jSpinnerTimeSlice" min="-2" pref="51" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabelSchedulazione" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="244" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -92,9 +100,15 @@
                   <Component id="jComboBoxRimpiazzoSegmenti" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jLabelSchedulazione" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabelSchedulazione" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelTimeSlice" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jComboBoxSchedulazione" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jComboBoxSchedulazione" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jSpinnerTimeSlice" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonAvanti" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -257,6 +271,16 @@
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Passo 2 di 4"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelTimeSlice">
+      <Properties>
+        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="12" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Time Slice"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="jSpinnerTimeSlice">
     </Component>
   </SubComponents>
 </Form>
