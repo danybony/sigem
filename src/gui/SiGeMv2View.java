@@ -11,6 +11,7 @@
  * - v.1.1 (02/03/2008): Create le 3 finestre e inizializzazione grafico processi (dopo wizard)
  * - v.1.0 (01/03/2008): Creato scheletro interfaccia grafica
  * */
+
 package gui;
 
 import net.infonode.docking.*;
@@ -24,21 +25,17 @@ import net.infonode.util.Direction;
 
 import javax.swing.*;
 
-import java.net.URL;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Vector;
 
 import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
-import java.util.concurrent.TimeUnit; 
 
 import gui.view.*;
 import gui.dialog.*;
@@ -114,11 +111,16 @@ public class SiGeMv2View {
 	// Pulsanti Menu Simulazione
 	private JMenuItem jSimulazioneItemPlay, jSimulazioneItemStop, jSimulazioneItemInizio, jSimulazioneItemFine;
         private JMenuItem jSimulazioneItemIndietro, jSimulazioneItemAvanti, jSimulazioneItemPausa;
-
+        private JMenu jSimulazioneItemAvantiSignificativo,jSimulazioneItemIndietroSignificativo;
+        private JMenuItem ItemAvantiFault, ItemAvantiSwitch, ItemAvantiFullRAM;
+        private JMenuItem ItemAvantiFullSwap,ItemAvantiFineProc,ItemAvantiNuovoProc;
+        private JMenuItem ItemIndietroFault, ItemIndietroSwitch, ItemIndietroFullRAM;
+        private JMenuItem ItemIndietroFullSwap,ItemIndietroFineProc,ItemIndietroNuovoProc;
+        
 	// Pulsanti Menu File
 	private JMenuItem jFileItemNuovaConfigurazione, jFileItemApriConfigurazione;
 
-	private JMenuItem jFileItemSalvaConfigurazione, jFileItemEsci;
+	private JMenuItem jFileItemSalvaConfigurazione, jFileItemSalvaConfigurazioneConNome, jFileItemEsci;
 
 	// Pulsanti Menu Finestre
         /*
@@ -148,6 +150,10 @@ public class SiGeMv2View {
         
         /** Processi */
         LinkedList<Processo> processiEseguiti;
+        
+        // thread per aumentare l'interattività del utente durante l'avanzamento automatico
+        private Thread auto;
+        
 	// ----------------------------------
 	// METODI GESTIONE COMPONENTI GRAFICI
 	// ----------------------------------
@@ -159,6 +165,7 @@ public class SiGeMv2View {
 	public SiGeMv2View() throws Exception {
 		// i controlli da fare prima della chiusura dell'applicazione
 		frame.addWindowListener(new WindowAdapter() {
+                        @Override
 			public void windowClosing(WindowEvent e) {
 				// schiacciando il pulsante "x" del frame, la finestra non si
 				// chiude
@@ -191,10 +198,14 @@ public class SiGeMv2View {
 		DockingUtil.addWindow(_view, rootWindow);
 	}
 
+        /*
+         * Crea una nuova configurazione con l'apertura del wizard
+         */
         private void creaConfigurazione() {
             configurazioneAmbiente = new ConfigurazioneAmbienteJDialog(frame, true, this);
             configurazioneAmbiente.setVisible(true);
         }
+        
 	/**
 	 * Crea la root window e aggiunge le view statiche.
 	 */
@@ -258,16 +269,19 @@ public class SiGeMv2View {
 		// Add a listener which shows dialogs when a window is closing or
 		// closed.
 		rootWindow.addListener(new DockingWindowAdapter() {
+                        @Override
 			public void windowAdded(DockingWindow addedToWindow,
 					DockingWindow addedWindow) {
 				updateViews(addedWindow, true);
 			}
 
+                        @Override
 			public void windowRemoved(DockingWindow removedFromWindow,
 					DockingWindow removedWindow) {
 				updateViews(removedWindow, false);
 			}
 
+                        @Override
 			public void windowClosing(DockingWindow window)
 					throws OperationAbortedException {
 				// Confirm close operation
@@ -277,6 +291,7 @@ public class SiGeMv2View {
 							"Window close was aborted!");
 			}
 
+                        @Override
 			public void windowDocking(DockingWindow window)
 					throws OperationAbortedException {
 				// Confirm dock operation
@@ -286,6 +301,7 @@ public class SiGeMv2View {
 							"Window dock was aborted!");
 			}
 
+                        @Override
 			public void windowUndocking(DockingWindow window)
 					throws OperationAbortedException {
 				// Confirm undock operation
@@ -398,7 +414,7 @@ public class SiGeMv2View {
         /**
 	 * Crea il frame MenuBar.
 	 * 
-	 * @return the menu bar
+	 * @return la barra dei menù
 	 */
 	private JMenuBar createMenuBar() {
 		JMenuBar menu = new JMenuBar();
@@ -438,6 +454,7 @@ public class SiGeMv2View {
 		fileMenu.add(jFileItemApriConfigurazione);
 
 		fileMenu.addSeparator();
+                
 		jFileItemSalvaConfigurazione = new JMenuItem("Salva");
                 jFileItemSalvaConfigurazione.setEnabled(false);
 		jFileItemSalvaConfigurazione.addActionListener(new ActionListener() {
@@ -446,9 +463,18 @@ public class SiGeMv2View {
 			}
 		});
 		fileMenu.add(jFileItemSalvaConfigurazione);
-		jFileItemSalvaConfigurazione.setEnabled(false);
-
+                
+                jFileItemSalvaConfigurazioneConNome = new JMenuItem("Salva con nome");
+                jFileItemSalvaConfigurazioneConNome.setEnabled(false);
+		jFileItemSalvaConfigurazioneConNome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//salvaConfigurazione();
+			}
+		});
+		fileMenu.add(jFileItemSalvaConfigurazioneConNome);
+                
 		fileMenu.addSeparator();
+                
 		jFileItemEsci = new JMenuItem("Esci");
 		jFileItemEsci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -467,7 +493,7 @@ public class SiGeMv2View {
 	private JMenu createSimulazioneMenu() {
 		JMenu simulazioneMenu = new JMenu("Simulazione");
 
-		jSimulazioneItemPlay = new JMenuItem(IconStylosoft.getGeneralIcon("play"));
+		jSimulazioneItemPlay = new JMenuItem("Play",IconStylosoft.getGeneralIcon("play"));
 		jSimulazioneItemPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                             simulazioneAvvia();
@@ -475,7 +501,7 @@ public class SiGeMv2View {
 		});
 		simulazioneMenu.add(jSimulazioneItemPlay);
 
-		jSimulazioneItemStop = new JMenuItem(IconStylosoft.getGeneralIcon("stop"));
+		jSimulazioneItemStop = new JMenuItem("Stop",IconStylosoft.getGeneralIcon("stop"));
 		jSimulazioneItemStop.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         simulazioneStop();
@@ -483,7 +509,7 @@ public class SiGeMv2View {
 		});
 		simulazioneMenu.add(jSimulazioneItemStop);
 
-                jSimulazioneItemPausa = new JMenuItem(IconStylosoft.getGeneralIcon("pause"));
+                jSimulazioneItemPausa = new JMenuItem("Pausa",IconStylosoft.getGeneralIcon("pause"));
 		jSimulazioneItemPausa.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
                         simulazionePausa();
@@ -493,15 +519,74 @@ public class SiGeMv2View {
 
 		simulazioneMenu.addSeparator();
 
-		jSimulazioneItemInizio = new JMenuItem(IconStylosoft.getGeneralIcon("prev"));
+		jSimulazioneItemInizio = new JMenuItem("Primo istante",IconStylosoft.getGeneralIcon("prev"));
 		jSimulazioneItemInizio.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
 			simulazioneInizio();
                     }
 		});
 		simulazioneMenu.add(jSimulazioneItemInizio);
+                
+                jSimulazioneItemIndietroSignificativo = new JMenu("Istante significativo precedente");
+		jSimulazioneItemIndietroSignificativo.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        
+                    }
+		});
+		simulazioneMenu.add(jSimulazioneItemIndietroSignificativo);
 
-                jSimulazioneItemIndietro = new JMenuItem(IconStylosoft.getGeneralIcon("rew"));
+                // sotto-menù
+                        ItemIndietroFault = new JMenuItem("Fault in memoria");
+                        ItemIndietroFault.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemIndietroSignificativo.add(ItemIndietroFault);
+                        
+                        ItemIndietroSwitch = new JMenuItem("Context switch");
+                        ItemIndietroSwitch.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemIndietroSignificativo.add(ItemIndietroSwitch);
+                        
+                        ItemIndietroFullRAM = new JMenuItem("Riempimento RAM");
+                        ItemIndietroFullRAM.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemIndietroSignificativo.add(ItemIndietroFullRAM);
+                        
+                        ItemIndietroFullSwap = new JMenuItem("Riempimento Swap");
+                        ItemIndietroFullSwap.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemIndietroSignificativo.add(ItemIndietroFullSwap);
+                        
+                        ItemIndietroFineProc= new JMenuItem("Terminazione di un processo");
+                        ItemIndietroFineProc.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemIndietroSignificativo.add(ItemIndietroFineProc);
+                        
+                        ItemIndietroNuovoProc= new JMenuItem("Arrivo di un nuovo processo");
+                        ItemIndietroNuovoProc.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemIndietroSignificativo.add(ItemIndietroNuovoProc);
+                
+                        
+                
+                jSimulazioneItemIndietro = new JMenuItem("Istante precedente",IconStylosoft.getGeneralIcon("rew"));
                 jSimulazioneItemIndietro.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         simulazioneIndietro();
@@ -509,7 +594,7 @@ public class SiGeMv2View {
 		});
                 simulazioneMenu.add(jSimulazioneItemIndietro);
 
-                jSimulazioneItemAvanti = new JMenuItem(IconStylosoft.getGeneralIcon("ffwd"));
+                jSimulazioneItemAvanti = new JMenuItem("Istante successivo",IconStylosoft.getGeneralIcon("ffwd"));
                 jSimulazioneItemAvanti.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         simulazioneAvanti();
@@ -517,13 +602,73 @@ public class SiGeMv2View {
 		});
                 simulazioneMenu.add(jSimulazioneItemAvanti);
 
-		jSimulazioneItemFine = new JMenuItem(IconStylosoft.getGeneralIcon("next"));
+                jSimulazioneItemAvantiSignificativo = new JMenu("Istante significativo successivo");
+		jSimulazioneItemAvantiSignificativo.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        
+                    }
+		});
+		simulazioneMenu.add(jSimulazioneItemAvantiSignificativo);
+        
+                
+                // sotto-menù
+                        ItemAvantiFault= new JMenuItem("Fault in memoria");
+                        ItemAvantiFault.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemAvantiSignificativo.add(ItemAvantiFault);
+                        
+                        ItemAvantiSwitch = new JMenuItem("Context switch");
+                        ItemAvantiSwitch.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemAvantiSignificativo.add(ItemAvantiSwitch);
+                        
+                        ItemAvantiFullRAM = new JMenuItem("Riempimento RAM");
+                        ItemAvantiFullRAM.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemAvantiSignificativo.add(ItemAvantiFullRAM);
+                        
+                        ItemAvantiFullSwap = new JMenuItem("Riempimento Swap");
+                        ItemAvantiFullSwap.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemAvantiSignificativo.add(ItemAvantiFullSwap);
+                        
+                        ItemAvantiFineProc = new JMenuItem("Terminazione di un processo");
+                        ItemAvantiFineProc.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemAvantiSignificativo.add(ItemAvantiFineProc);
+                        
+                        ItemAvantiNuovoProc = new JMenuItem("Arrivo nuovo processo");
+                        ItemAvantiNuovoProc.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+
+                            }
+                        });
+                        jSimulazioneItemAvantiSignificativo.add(ItemAvantiNuovoProc);                
+                
+                
+		jSimulazioneItemFine = new JMenuItem("Istante finale",IconStylosoft.getGeneralIcon("next"));
 		jSimulazioneItemFine.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         simulazioneFine();
                     }
 		});
 		simulazioneMenu.add(jSimulazioneItemFine);
+                
                 
 		jSimulazioneItemFine.setEnabled(false);
 		jSimulazioneItemInizio.setEnabled(false);
@@ -532,6 +677,8 @@ public class SiGeMv2View {
                 jSimulazioneItemPausa.setEnabled(false);
 		jSimulazioneItemPlay.setEnabled(false);
 		jSimulazioneItemStop.setEnabled(false);
+                jSimulazioneItemAvantiSignificativo.setEnabled(false);
+                jSimulazioneItemIndietroSignificativo.setEnabled(false);
 
 		return simulazioneMenu;
 	}
@@ -544,9 +691,9 @@ public class SiGeMv2View {
 	private JMenu createHelpMenu() {
 		JMenu helpMenu = new JMenu("Help");
 		JMenuItem mniHelp = new JMenuItem("Help");
-		//mniHelp.addActionListener(new CSH.DisplayHelpFromSource(hb));
+                JMenuItem InfoSu = new JMenuItem("Informazioni su...");
 		helpMenu.add(mniHelp);
-
+                helpMenu.add(InfoSu);
 		return helpMenu;
         }
         

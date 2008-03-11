@@ -20,9 +20,6 @@ import java.net.URL;
  * La classe SiGeMv2View utilizza metodi di questa classe per ottenere delle icone personalizzate
  * da applicare a pulsanti e menu.
  * 
- * @author Sarto Carlo
- * @version 1.1
- * @see GuiBlueThoth
  */
 public class IconStylosoft {
 
