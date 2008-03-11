@@ -870,6 +870,9 @@ public class SiGeMv2View {
             jSimulazioneItemIndietro.setEnabled(true);
             jButtonSimulazioneIndietro.setEnabled(true);
             
+            if (istante == null) 
+                simulazioneCarica();
+            
             LinkedList<Istante> istanti = player.ultimoIstante();
             processiEseguiti = new LinkedList<Processo>();
             for (int i=0; i<istanti.size(); i++) {
@@ -918,10 +921,12 @@ public class SiGeMv2View {
             jButtonSimulazionePausa.setEnabled(false);
             jSimulazioneItemPausa.setEnabled(false);
             jButtonSimulazioneAvanti.setEnabled(true);
-            jSimulazioneItemAvanti.setEnabled(true);            
+            jSimulazioneItemAvanti.setEnabled(true);
+            jButtonSimulazioneFine.setEnabled(true);
+            jSimulazioneItemFine.setEnabled(true);
             
             istante = player.istantePrecedente();
-            processiEseguiti.pop();
+            processiEseguiti.removeLast();
             visualizzaOrdProcessi(processiEseguiti);
             visualizzaStatistiche(player, istante);
         }
