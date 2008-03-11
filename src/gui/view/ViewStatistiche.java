@@ -21,6 +21,8 @@ import java.awt.GridLayout;
 //import simulazione.Statistiche;
 //import simulazione.StatisticheProcesso;
 import gui.SiGeMv2View;
+import logic.simulazione.Istante;
+import logic.simulazione.Player;
 
 /**
  * Questa classe implementa un JScrollPane che contiene in forma tabellare, dati relativi
@@ -30,8 +32,6 @@ import gui.SiGeMv2View;
 public class ViewStatistiche extends JScrollPane {
 	/** Necessario per il Serializable. */
 	private static final long serialVersionUID = 1109913847658572644L;
-	/** Il primo pannello della vista */
-	private JPanel p1 = null;
 	/** Il secondo pannello della vista, che contiene le statistiche*/
 	private JPanel p2 = null;
 	/** contiene il pulsante "visualizza statistiche" */
@@ -53,24 +53,10 @@ public class ViewStatistiche extends JScrollPane {
 	public ViewStatistiche(SiGeMv2View gui) {
 		super();
 		this.gui = gui;
-		this.setViewportView(getP1());
-		p1 = getP1();
+		this.setViewportView(getP2());
 		p2 = getP2();
 		this.stato = false;
 		//abilitaVisualizzazione(false);
-	}
-
-	/**
-	 * Crea un JPanel con un pulsante per visualizzare le statistiche.	
-	 * 	
-	 * @return javax.swing.JPanel	
-	 */
-	private JPanel getP1() {
-		if (p1 == null) {
-			p1 = new JPanel();
-			//p1.add(getJButtonVisualizza(), null);
-		}
-		return p1;
 	}
 	
 	/**
@@ -79,13 +65,11 @@ public class ViewStatistiche extends JScrollPane {
 	 * @return javax.swing.JPanel	
 	 */
 	private JPanel getP2() {
-
-			p2 = new JPanel();
-			p2.setLayout(new BorderLayout());
-			//p2.add(jTextArea,BorderLayout.CENTER);
-			//p2.add(getJButtonDisabilita(),BorderLayout.NORTH);
-
-		return p2;
+            p2 = new JPanel();
+            p2.setLayout(new BorderLayout());
+            //p2.add(jTextArea,BorderLayout.CENTER);
+            //p2.add(getJButtonDisabilita(),BorderLayout.NORTH);
+            return p2;
 	}
 	
 	/**
@@ -95,11 +79,11 @@ public class ViewStatistiche extends JScrollPane {
 	 * @return javax.swing.JPanel	
 	 */
         
-        /*
-	public void generaStatistiche(Statistiche statistiche) {
+        
+	public void generaStatistiche(Player player, Istante istante) {
             
 		this.stato = true;
-		// creo un pannello che conterr� i JTextPane che contengono le statistiche 
+		// creo un pannello che conterrà i JTextPane che contengono le statistiche 
 		panelStat = new JPanel();
 		GridLayout gridLayout = new GridLayout(-1,1,10,10);
 		panelStat.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.LIGHT_GRAY,10));
@@ -107,92 +91,39 @@ public class ViewStatistiche extends JScrollPane {
 		panelStat.setLayout(gridLayout);
 		
 		// ottengo i valori delle statistiche
-		String contenuto = "STATISTICHE DELLA SIMULAZIONE:\n";
-		contenuto += "\nThroughput:\t\t\t"
-				+ ((((int) statistiche.getThroughput()) != (-1)) ? String
-						.valueOf((float) statistiche.getThroughput()) : "n.d.");
-		contenuto += "\nTempo medio di attesa:\t\t"
-				+ ((((int) statistiche.getMediaAttesa()) != (-1)) ? String
-						.valueOf((float) statistiche.getMediaAttesa()) : "n.d.");
-		contenuto += "\nTempo medio di risposta:\t\t"
-				+ ((((int) statistiche.getMediaRisposta()) != (-1)) ? String
-						.valueOf((float) statistiche.getMediaRisposta())
+		String contenuto = "";
+		contenuto += "Utilizzo RAM (KB):\t\t"
+				+ ((((int) player.getStatistiche().getUtilizzoRAM()) != (-1)) ? String
+						.valueOf((float) player.getStatistiche().getUtilizzoRAM()) : "n.d.");
+		contenuto += "\nUtlizzo Swap (KB):\t\t"
+				+ ((((int) player.getStatistiche().getUtilizzoSwap()) != (-1)) ? String
+						.valueOf((float) player.getStatistiche().getUtilizzoSwap()) : "n.d.");
+		contenuto += "\nNumero Istanti Rimanenti:\t"
+				+ ((((int) player.getStatistiche().getNumeroIstantiRimanenti()) != (-1)) ? String
+					.valueOf((float) player.getStatistiche().getNumeroIstantiRimanenti())
 						: "n.d.");
-		contenuto += "\nTempo medio di turn around:\t"
-				+ ((((int) statistiche.getMediaTurnAround()) != (-1)) ? String
-						.valueOf((float) statistiche.getMediaTurnAround()) : "n.d.");
+		contenuto += "\nNumero Istanti totali:\t\t"
+				+ ((((int) player.numeroIstanti()) != (-1)) ? String
+						.valueOf((float) player.numeroIstanti()) : "n.d.");
+                contenuto += "\nNumero Fault:\t\t"
+                        + ((((int) player.getStatistiche().getNumeroFault()) != (-1)) ? String
+						.valueOf((float) player.getStatistiche().getNumeroFault()) : "n.d.");
+                
+                contenuto += "\nFull RAM:\t\t\t"
+                        +((istante.getFull_RAM()) ? "Si" : "No");
 
+                contenuto += "\nFull Swap:\t\t\t"
+                        +((istante.getFull_Swap()) ? "Si" : "No");
+                
 		JTextPane jTextPane = new JTextPane();
 		jTextPane.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 12));
 		jTextPane.setEditable(false);
 		jTextPane.setText(contenuto);
 		panelStat.add(jTextPane);
-		// aggiungo le statistiche dei processi
-		for (int i = 0; i < statistiche.getStatisticheProcessi().size(); i++) {
-			if (statistiche.getStatisticheProcessi().get(i) instanceof StatisticheProcesso) {
-				StatisticheProcesso stat = (StatisticheProcesso) statistiche
-						.getStatisticheProcessi().get(i);
-				contenuto = "STATISTICHE PROCESSO "
-						+ stat.getIProcesso().getNome() + ":\n";
-				contenuto += "\nTempo di attesa:\t\t"
-						+ ((((int) stat.getTempoAttesa()) != (-1)) ? String
-								.valueOf((int) stat.getTempoAttesa()) : "n.d.");
-				contenuto += "\nTempo di riposta:\t\t"
-						+ ((((int) stat.getTempoRisposta()) != (-1)) ? String
-								.valueOf((int) stat.getTempoRisposta())
-								: "n.d.");
-				contenuto += "\nTempo di turn around:\t\t"
-						+ ((((int) stat.getTempoTurnAround()) != (-1)) ? String
-								.valueOf((int) stat.getTempoTurnAround())
-								: "n.d.");
-				contenuto += "\nOccupazione CPU:\t\t"
-						+ ((((int) stat.getOccupazioneCPU()) != (-1)) ? String
-								.valueOf((int) stat.getOccupazioneCPU())
-								: "n.d.");
-				contenuto += "\nOccupazione CPU percentuale:\t"
-						+ ((((int) stat.getPercentualeOccCPU()) != (-1)) ? String
-								.valueOf((float) stat.getPercentualeOccCPU())
-								+ "%"
-								: "n.d.");
-				jTextPane = new JTextPane();
-				jTextPane.setFont(new java.awt.Font("Arial",
-						java.awt.Font.PLAIN, 12));
-				jTextPane.setEditable(false);
-				jTextPane.setText(contenuto);
-				panelStat.add(jTextPane);
-			}
-		}
+
 		p2 = getP2();
 		p2.add(panelStat, BorderLayout.CENTER);
 		this.setViewportView(p2);
-             
-
-	}
-        */
-             
-
-             
-
-	/**
-	 * Questo metodo crea un JButton a cui � associato un ActionListener che
-	 * sposta il ViewPort del JScrollPane sul primo JPanel.
-	 * 
-	 * @return javax.swing.JButton
-	 */
-	private JButton getJButtonDisabilita() {
-            /*
-		if (jButton2 == null) {
-			jButton2 = new JButton("disabilita visualizzazione statistiche");
-			jButton2.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					stato = false;
-					setViewportView(getP1());
-				}
-			});
-		}
-             */
-		return jButton2;
-             
 	}
 
 	/**

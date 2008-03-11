@@ -173,13 +173,11 @@ public class SiGeMv2View {
 	}
 
         /** Disegna le statistiche sulla vista ViewStatistiche */
-	public void visualizzaStatistiche() {
-            /*
+	public void visualizzaStatistiche(Player player, Istante istante) {
 		if ((views[2]).getComponent() instanceof ViewStatistiche) {
-			ViewStatistiche currView = (ViewStatistiche) views[3].getComponent();
-			currView.generaStatistiche(statistiche);
+			ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
+			currView.generaStatistiche(player, istante);
 		}
-             */
 	};
         
 	/**
@@ -689,7 +687,7 @@ public class SiGeMv2View {
 	private void setDefaultLayout() {
             rootWindow.setWindow(
                     new SplitWindow(true, 0.6615854f, 
-                    new SplitWindow(false, 0.8f, views[0], views[2]),
+                    new SplitWindow(false, 0.74f, views[0], views[2]),
                     views[1]));
 		WindowBar windowBar = rootWindow.getWindowBar(Direction.DOWN);
 
@@ -904,6 +902,7 @@ public class SiGeMv2View {
             Processo processo = pcbAttuale.getRifProcesso();
             processiEseguiti.add(processo);
             visualizzaOrdProcessi(processiEseguiti);
+            visualizzaStatistiche(player, istante);
         }
         
         /** Porta la simulazione allo stato precedente */
