@@ -7,6 +7,7 @@
  * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche:
+ * - v.1.2 (12/03/2008): Modificato il tipo di ritorno di notificaProcessoTerminato
  * - v.1.1 (02/03/2008): Aggiunta del metodo notificaProcessoTerminato
  * - v.1.0 (29/02/2008): Impostazione base della classe
  */
@@ -31,7 +32,7 @@ public abstract class GestoreMemoria {
      * @param id
      *  Identificativo del processo
      */
-    public abstract void notificaProcessoTerminato(int id);
+    public abstract LinkedList<Azione> notificaProcessoTerminato(int id);
     /**
      * Metodo Principale di esecuzione del GestoreMemoria
      * @param ListaFrame

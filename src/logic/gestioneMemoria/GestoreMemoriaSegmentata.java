@@ -7,6 +7,8 @@
  * Versione: 1.7
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.8 (12/03/2008): Modifica metodo notificaProcessoTerminato, metodo Inserisci
+ *                        e tolto il controllo sul caricamento massimo
  *  - v.1.7 (08/03/2008): Corretta condizione di errore sulla dimensione
  *  - v.1.6 (08/03/2008): Corretta logica di inserimento
  *  - v.1.5 (08/03/2008): Corretto controllo sulla dimensione segmento e possibilità di allocazione
@@ -72,9 +74,12 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
      * @param id
      *  Identificativo del processo terminato
      */
-    public void notificaProcessoTerminato(int id) {
+    public LinkedList<Azione> notificaProcessoTerminato(int id) {
+        LinkedList<Azione> Azioni=new LinkedList();
+        Azioni.add( new Azione(6,null,id) ); /*Creo l'azione con la terminazione del processo*/
         MemoriaRam.liberaMemoria(id);
         MemoriaSwap.liberaMemoria(id);
+        return Azioni;
     }
     /**
      * Metodo privato di utilità interna alla classe che rimuove un segmento 	dalla RAM quando essa è piena per far posto ad un altro segmento.
@@ -105,13 +110,12 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
      *  Frame nel quale ho inserito
      * @throws logic.gestioneMemoria.MemoriaEsaurita
      */
-    private FrameMemoria Inserisci( MemoriaSegmentata M, FrameMemoria F ) throws MemoriaEsaurita {
+    private int Inserisci( MemoriaSegmentata M, FrameMemoria F ) throws MemoriaEsaurita {
         FrameMemoria FrameLibero=null;
         if ( M instanceof RAMSegmentata ) {
             FrameLibero=PoliticaAllocazione.Alloca( F,((RAMSegmentata)M).getFrameLiberi() );
         }
-        M.aggiungi(F, FrameLibero);
-        return FrameLibero;
+        return M.aggiungi(F, FrameLibero );
     }
     /**
      * Metodo privato di utilità interna alla classe che rimuove il segmento F
@@ -151,7 +155,6 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         Iterator<FrameMemoria> I=ListaSegmenti.iterator();
         
         boolean Errore=false;
-        int spazio_a_disposizione=dimensione_ram;
         
         while( I.hasNext() && !Errore ) {
             
@@ -160,27 +163,27 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             
             if ( !MemoriaRam.cerca(F) ) {
                 FrameMemoria Temp=Rimuovi( MemoriaSwap, F );
-                if (Temp!=null) Azioni.add( new AzioneSegmento(4, Temp ) );
-                else {  spazio_a_disposizione-=F.getDimensione(); }
+                if (Temp!=null) Azioni.add( new Azione(4, Temp ) );
                 
-                
-                if ( ((Segmento)F).getDimensione() > dimensione_ram || spazio_a_disposizione<0 ) {
+                /* Segmento più grande della RAM */
+                if ( ((Segmento)F).getDimensione() > dimensione_ram ) {
                     Errore=true;
-                    Azioni.add( new AzioneSegmento(-1,null) );
+                    Azioni.add( new Azione(-1,null) );
                 }
+                
                 else {
                     
                     while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() && !Errore ) {
-                        Azioni.add( new AzioneSegmento(0,null) );
+                        Azioni.add( new Azione(0,null) );
                         FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
-                        Azioni.add( new AzioneSegmento( 3, FrameRimosso ) );
+                        Azioni.add( new Azione( 3, FrameRimosso ) );
                         if ( FrameRimosso.getModifica()==true ) {                                                        
                             try { 
                                   Inserisci( MemoriaSwap, FrameRimosso );
-                                  Azioni.add( new AzioneSegmento( 2, FrameRimosso ) );
+                                  Azioni.add( new Azione( 2, FrameRimosso ) );
                             }
                             catch ( MemoriaEsaurita SwapEsaurita ) {
-                                Azioni.add( new AzioneSegmento(-1,null) );
+                                Azioni.add( new Azione(-1,null) );
                                 Errore=true;
                             }
 
@@ -189,14 +192,14 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                     }
                     if ( Errore==false ) 
                         try { 
-                            Azioni.add( new AzioneSegmento( 1, F, Inserisci( MemoriaRam, F ) ) ); 
+                            Azioni.add( new Azione( 1, F, Inserisci( MemoriaRam, F ) ) ); 
                             
                         }
                         catch ( MemoriaEsaurita Impossibile ) { }
                 }
    
             }
-            else Azioni.add( new AzioneSegmento( 5, F ) );
+            else Azioni.add( new Azione( 5, F ) );
         }
         return Azioni;
     }

@@ -7,6 +7,7 @@
  * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.2 (12/03/2008): Modifica strutturale classe Azione, inserimento azione 6
  *  - v.1.1 (02/03/2008): Definiti nuovi valori per le azioni
  *  - v.1.0 (29/02/2008): Prima Scrittura
  */
@@ -19,7 +20,7 @@ package logic.gestioneMemoria;
  * Classe pubblica, astratta. Questa classe rappresenta un'azione generica 
  * effettuata in memoria
  */
-public abstract class Azione {
+public class Azione {
     /**
     *
     * Contiene il timpo di azione (intero)
@@ -30,13 +31,17 @@ public abstract class Azione {
      *  3    REMOVE RAM
      *  4    REMOVE SWAP
      *  5    LEGGI
+     *  6    TERMINAZIONE PROCESSO ( CAMPO ID )
     */
     private int TipoAzione;
+    /**
+     * Posizione di inserimento in memoria
+     */
+    private int Pos;
     
     /**
      * Riferimento al FrameMemoria 
      */
-    
     private FrameMemoria Frame;
     
     /**
@@ -49,6 +54,20 @@ public abstract class Azione {
     
     public Azione( int T, FrameMemoria F ) {
         TipoAzione=T; Frame=F;
+    }
+    /**
+     * Costruttore
+     * @param T
+     *   Tipo di Azione
+     * @param F
+     *   Frame conivolto nell'azione
+     * @param P
+     *   Posizione di inserimento
+     */
+    
+    public Azione( int T, FrameMemoria F, int P ) {
+        this(T,F); 
+        Pos=P;
     }
     /**
      * 
@@ -66,5 +85,12 @@ public abstract class Azione {
     public FrameMemoria getFrame() {
         return Frame;
     }
-    
+    /**
+     * Ritorna la posizione
+     * @return
+     *   Posizione
+     */
+    public int getPosizione() { 
+        return Pos; 
+    }
 }
