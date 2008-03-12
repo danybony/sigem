@@ -19,8 +19,8 @@ import java.awt.*;
  * Queste utilit� sono usate da istanze di oggetti di tipo ViewGrafAttribuzioneRisorse,
  * ViewGrafEsecuzione.
  * 
- * @author Sarto Carlo
- * @version 1.1
+ * @author Cariani Giordano
+ * @version 1.0
  */
 public class ViewUtility {
 	
