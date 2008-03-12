@@ -68,7 +68,7 @@ public class ModelloAssociazione extends AbstractTableModel {
         public boolean isCellEditable(int row, int col) {
             //Note that the contenutiRighe/cell address is constant,
             //no matter where the cell appears onscreen.
-            if (col<2)
+            if (col<3)
                 return false;
             else
                 return true;
