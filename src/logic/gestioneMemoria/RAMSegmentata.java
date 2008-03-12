@@ -53,7 +53,7 @@ public class RAMSegmentata extends MemoriaSegmentata{
      *      
      */
     @Override
-    public void aggiungi(FrameMemoria seg, FrameMemoria spazio){
+    public int aggiungi(FrameMemoria seg, FrameMemoria spazio){
         /**Calcolo lo spazio che rimarr� libero al termine dell'inserimento*/ 
         int spazioRimasto=spazio.getDimensione()-seg.getDimensione();
         /**Cerco il segmento spazio all'interno di memoria*/
@@ -75,6 +75,8 @@ public class RAMSegmentata extends MemoriaSegmentata{
             memoria.remove(pos+1);
         }
         spazioRimasto-=seg.getDimensione();
+        
+        return pos;
     }
     
     

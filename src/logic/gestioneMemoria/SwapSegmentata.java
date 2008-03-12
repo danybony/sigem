@@ -45,7 +45,7 @@ public class SwapSegmentata extends MemoriaSegmentata{
      *      nella superclasse
      */
     @Override
-    public void aggiungi(FrameMemoria seg, FrameMemoria spazio) throws MemoriaEsaurita{
+    public int aggiungi(FrameMemoria seg, FrameMemoria spazio) throws MemoriaEsaurita{
         if(spazioResiduo>=seg.getDimensione()){
             memoria.add(seg);
             spazioResiduo-=seg.getDimensione();
@@ -53,6 +53,8 @@ public class SwapSegmentata extends MemoriaSegmentata{
         else{
             throw new MemoriaEsaurita(0);
         }
+        
+        return memoria.size()-1;
         
     }
     

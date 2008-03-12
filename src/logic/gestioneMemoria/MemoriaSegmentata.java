@@ -47,6 +47,6 @@ abstract class MemoriaSegmentata extends Memoria{
      * @param spazio
      *      Riferimento allo spazio scelto per inserire il segmento
      */
-    public abstract void aggiungi(FrameMemoria frame, FrameMemoria spazio)throws MemoriaEsaurita;
+    public abstract int aggiungi(FrameMemoria frame, FrameMemoria spazio)throws MemoriaEsaurita;
 
 }
