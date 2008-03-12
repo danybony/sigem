@@ -22,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.table.TableColumn;
 import javax.swing.DefaultCellEditor;
 import javax.swing.table.DefaultTableCellRenderer;
+import logic.parametri.ProcessoConPriorita;
 /**
  *
  * @author  Jordy
@@ -107,20 +108,20 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jButtonIndietro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonOk)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonAnnulla))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPaneAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-                            .addComponent(jLabelAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)))
+                            .addComponent(jScrollPaneAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                            .addComponent(jLabelAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(416, Short.MAX_VALUE)
-                        .addComponent(jLabelPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(510, Short.MAX_VALUE)
+                        .addComponent(jLabelPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(jButtonIndietro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonOk)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonAnnulla)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -143,9 +144,16 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     
     private void initJTable() {
-        jTableAssociazioneProcessi = new javax.swing.JTable(new ModelloAssociazione(processi.getCombinazioneProcessi()));
-        
-        setAssociazioneColonna(jTableAssociazioneProcessi.getColumnModel().getColumn(3));
+       if (politica.getPoliticaSchedulazione() == 6
+        || politica.getPoliticaSchedulazione() == 7
+        || politica.getPoliticaSchedulazione() == 5) {
+           jTableAssociazioneProcessi = new javax.swing.JTable(new ModelloAssociazionePriorita(processi.getCombinazioneProcessi()));
+           setAssociazioneColonna(jTableAssociazioneProcessi.getColumnModel().getColumn(4));
+       }
+       else {
+           jTableAssociazioneProcessi = new javax.swing.JTable(new ModelloAssociazione(processi.getCombinazioneProcessi()));
+           setAssociazioneColonna(jTableAssociazioneProcessi.getColumnModel().getColumn(3));
+       }
         
         jTableAssociazioneProcessi.setName("jTableAssociazioneProcessi"); // NOI18N
         jScrollPaneAssociazioneProcessi.setViewportView(jTableAssociazioneProcessi);
@@ -192,12 +200,26 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
         listaProcessi = new LinkedList<Processo>();
-        for (int row=0; row<jTableAssociazioneProcessi.getRowCount(); row++) {
-            listaProcessi.add( new Processo (
-                                (String) jTableAssociazioneProcessi.getValueAt(row, 0),
-                                ((Integer)jTableAssociazioneProcessi.getValueAt(row, 1)).intValue(),
-                                ((Integer)jTableAssociazioneProcessi.getValueAt(row, 2)).intValue()
-                                ));
+        if (politica.getPoliticaSchedulazione() == 6
+        || politica.getPoliticaSchedulazione() == 7
+        || politica.getPoliticaSchedulazione() == 5) {
+            for (int row=0; row<jTableAssociazioneProcessi.getRowCount(); row++) {
+                listaProcessi.add( new ProcessoConPriorita(
+                                    (String) jTableAssociazioneProcessi.getValueAt(row, 0),
+                                    ((Integer)jTableAssociazioneProcessi.getValueAt(row, 1)).intValue(),
+                                    ((Integer)jTableAssociazioneProcessi.getValueAt(row, 2)).intValue(),
+                                    ((Integer)jTableAssociazioneProcessi.getValueAt(row, 3)).intValue()
+                                    ));
+       
+            }
+        } else {
+            for (int row=0; row<jTableAssociazioneProcessi.getRowCount(); row++) {
+                listaProcessi.add( new Processo (
+                                    (String) jTableAssociazioneProcessi.getValueAt(row, 0),
+                                    ((Integer)jTableAssociazioneProcessi.getValueAt(row, 1)).intValue(),
+                                    ((Integer)jTableAssociazioneProcessi.getValueAt(row, 2)).intValue()
+                                    ));
+            }
         }
         
         try {
@@ -237,7 +259,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                                                   configurazioneAmbiente.getTempoContextSwitch(),
                                                   configurazioneAmbiente.getTempoAccessoDisco(),
                                                   configurazioneAmbiente.getDimensionePagina(),
-                                                  listaProcessi);
+                                                  listaProcessi,
+                                                  politica.getTimeSlice());
         
 
         view.setConfigurazioneIniziale(confIniziale);

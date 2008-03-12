@@ -17,18 +17,19 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Giordano Cariani
  */
-public class ModelloProcessi extends AbstractTableModel {
+public class ModelloProcessiPriorita extends AbstractTableModel {
         private String[] nomiColonna=new String[0];
         
         private Object[][] contenutiRighe=new Object[0][0];
-        
-        public ModelloProcessi(int nRighe) {
-            nomiColonna = new String[] {"Nome", "Tempo di arrivo", "Tempo di esecuzione" };
-            contenutiRighe=new Object[nRighe][3];
+
+        public ModelloProcessiPriorita(int nRighe) {
+            nomiColonna = new String[] {"Nome", "Tempo di arrivo", "Tempo di esecuzione", "Priorita'" };
+            contenutiRighe=new Object[nRighe][4];
             for (int i=0; i<nRighe; i++) {
                 contenutiRighe[i][0]=new String("P"+(i+1));
                 contenutiRighe[i][1]=new Integer(0);
                 contenutiRighe[i][2]=new Integer(1);
+                contenutiRighe[i][3]=new Integer(1);
             }
             fireTableStructureChanged();
         }

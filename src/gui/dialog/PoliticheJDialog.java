@@ -39,6 +39,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         initJSpinnerProcessi();
         jLabelTimeSlice.setVisible(false);
         jSpinnerTimeSlice.setVisible(false);
+        setTimeSlice(0);
         gestionePoliticaPagine((String)jComboBoxRimpiazzoPagine.getItemAt(0));
         gestioneSchedulazione((String) jComboBoxSchedulazione.getItemAt(0));
         jComboBoxRimpiazzoSegmenti.setEnabled(false);
