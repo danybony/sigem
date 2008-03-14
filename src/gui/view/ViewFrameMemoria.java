@@ -365,7 +365,9 @@ public class ViewFrameMemoria extends JPanel {
      * @param sceltaGestioneMemoria
      *      FALSE se si vogliono visualizzare pagine, TRUE per i segmenti
      * @param dimMemoria
-     *      dimensione totale della memoria
+     *      Dimensione totale della memoria
+     * @param numProcessi
+     *      Numero di processi della simulazione
      */
     public void configura(boolean sceltaGestioneMemoria, int dimMemoria, int numProcessi){
         pag_seg=sceltaGestioneMemoria;
