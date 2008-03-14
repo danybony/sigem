@@ -399,6 +399,7 @@ public class Player{
     public LinkedList<Istante> precedenteIstanteSignificativo(Evento e){
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
         Istante nuovo = istantePrecedente();
+        int idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
         boolean trovato = false;
         while(nuovo!=null && !trovato){
             listaIstantiDaRitornare.add(nuovo);
@@ -408,7 +409,8 @@ public class Player{
                         trovato=true;
                     break;
                 case SWITCH:
-                    
+                    if(idProcessoPrecedente!=nuovo.getProcessoInEsecuzione().getRifProcesso().getId())
+                        trovato=true;
                     break;
                 case FULL_RAM:
                     if(nuovo.getFull_RAM())
@@ -427,6 +429,7 @@ public class Player{
                         trovato=true;
                     break;
             }
+            idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
             nuovo = istantePrecedente();
                     
         }
@@ -472,6 +475,7 @@ public class Player{
     public LinkedList<Istante> prossimoIstanteSignificativo(Evento e){
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
         Istante nuovo = istanteSuccessivo();
+        int idProcessoSuccessivo = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
         boolean trovato = false;
         while(nuovo!=null && !trovato){
             listaIstantiDaRitornare.add(nuovo);
@@ -481,7 +485,8 @@ public class Player{
                         trovato=true;
                     break;
                 case SWITCH:
-                    
+                    if(idProcessoSuccessivo!=nuovo.getProcessoInEsecuzione().getRifProcesso().getId())
+                        trovato=true;
                     break;
                 case FULL_RAM:
                     if(nuovo.getFull_RAM())
@@ -500,6 +505,7 @@ public class Player{
                         trovato=true;
                     break;
             }
+            idProcessoSuccessivo = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
             nuovo = istanteSuccessivo();
                     
         }

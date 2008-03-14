@@ -1444,12 +1444,19 @@ public class SiGeMv2View {
     private void simulazioneFine() {
         
         LinkedList<Istante> istantiAllaFine = player.ultimoIstante();
-        
+        PCB pcbAttuale;
+        ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                            .getComponent();
+            
         for(int i = 0; i < istantiAllaFine.size(); i++){
-            //aggiornamento
+            istante = istantiAllaFine.get(i);
+            pcbAttuale = istante.getProcessoInEsecuzione();
+            processiEseguiti.add(pcbAttuale.getRifProcesso());
+            try{
+                currView.aggiorna(istante.getCambiamentiInMemoria());    
+            }catch(Exception e){}
         }
-        
-        istante = istantiAllaFine.getLast();
+        visualizzaOrdProcessi(processiEseguiti);
         
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
@@ -1494,62 +1501,77 @@ public class SiGeMv2View {
         switch(scelta){
             case 0:
                 istantiAllEvento = player.precedenteIstanteSignificativo(Evento.FAULT);
+                break;
             case 1:
                 istantiAllEvento = player.precedenteIstanteSignificativo(Evento.SWITCH);
+                break;
             case 2:
                 istantiAllEvento = player.precedenteIstanteSignificativo(Evento.FULL_RAM);
+                break;
             case 3:
                 istantiAllEvento = player.precedenteIstanteSignificativo(Evento.FULL_SWAP);
+                break;
             case 4:
                 istantiAllEvento = player.precedenteIstanteSignificativo(Evento.END_PROC);
+                break;
             case 5:
                 istantiAllEvento = player.precedenteIstanteSignificativo(Evento.NEW_PROC);
+                break;
             default:
                 istantiAllEvento = null;
         }
         
-        if(istantiAllEvento == null) return;
+        if(istantiAllEvento != null){
         
-        for(int i = 0; i < istantiAllEvento.size(); i++ ){
-            //aggiorna
-        }
-        
-        istante = istantiAllEvento.getLast();
-        
-        jButtonNuovaConfigurazione.setEnabled(true);
-        jButtonApriConfigurazione.setEnabled(true);
-        jButtonSalvaConfigurazione.setEnabled(true);
-        jButtonModificaConfigurazione.setEnabled(true);
-        
-        jButtonSimulazionePlay.setEnabled(true);
-        jButtonSimulazionePausa.setEnabled(false);
-        jButtonSimulazioneStop.setEnabled(true);
-        jButtonSimulazioneInizio.setEnabled(true);
-        jButtonSimulazioneIndietro.setEnabled(true);
-        jButtonSimulazioneAvanti.setEnabled(true);
-        jButtonSimulazioneFine.setEnabled(true);
-        
-        jButtonIndietroSignificativo.setEnabled(true);
-        ComboBoxSignificativo.setEnabled(true);
-        jButtonAvantiSignificativo.setEnabled(true);
+            PCB pcbAttuale;
+            ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                                .getComponent();
 
-                
-        jFileItemNuovaConfigurazione.setEnabled(true);
-        jFileItemApriConfigurazione.setEnabled(true);
-        jFileItemSalvaConfigurazione.setEnabled(true);
-        jFileItemSalvaConfigurazioneConNome.setEnabled(true);
-        jFileItemModificaConfigurazione.setEnabled(true);
-        jFileItemEsci.setEnabled(true);
-                
-        jSimulazioneItemPlay.setEnabled(true);
-        jSimulazioneItemPausa.setEnabled(false);
-        jSimulazioneItemStop.setEnabled(true);
-        jSimulazioneItemInizio.setEnabled(true);
-        jSimulazioneItemIndietro.setEnabled(true);
-        jSimulazioneItemAvantiSignificativo.setEnabled(true);
-        jSimulazioneItemIndietroSignificativo.setEnabled(true);
-        jSimulazioneItemAvanti.setEnabled(true);
-        jSimulazioneItemFine.setEnabled(true);
+            for(int i = 0 ; i < istantiAllEvento.size(); i++){
+                istante = istantiAllEvento.get(i);
+                processiEseguiti.removeLast();
+                try{
+                    currView.aggiorna(istante.getCambiamentiInMemoria());    
+                }catch(Exception e){}
+            }
+
+            visualizzaOrdProcessi(processiEseguiti);
+
+            jButtonNuovaConfigurazione.setEnabled(true);
+            jButtonApriConfigurazione.setEnabled(true);
+            jButtonSalvaConfigurazione.setEnabled(true);
+            jButtonModificaConfigurazione.setEnabled(true);
+
+            jButtonSimulazionePlay.setEnabled(true);
+            jButtonSimulazionePausa.setEnabled(false);
+            jButtonSimulazioneStop.setEnabled(true);
+            jButtonSimulazioneInizio.setEnabled(true);
+            jButtonSimulazioneIndietro.setEnabled(true);
+            jButtonSimulazioneAvanti.setEnabled(true);
+            jButtonSimulazioneFine.setEnabled(true);
+
+            jButtonIndietroSignificativo.setEnabled(true);
+            ComboBoxSignificativo.setEnabled(true);
+            jButtonAvantiSignificativo.setEnabled(true);
+
+
+            jFileItemNuovaConfigurazione.setEnabled(true);
+            jFileItemApriConfigurazione.setEnabled(true);
+            jFileItemSalvaConfigurazione.setEnabled(true);
+            jFileItemSalvaConfigurazioneConNome.setEnabled(true);
+            jFileItemModificaConfigurazione.setEnabled(true);
+            jFileItemEsci.setEnabled(true);
+
+            jSimulazioneItemPlay.setEnabled(true);
+            jSimulazioneItemPausa.setEnabled(false);
+            jSimulazioneItemStop.setEnabled(true);
+            jSimulazioneItemInizio.setEnabled(true);
+            jSimulazioneItemIndietro.setEnabled(true);
+            jSimulazioneItemAvantiSignificativo.setEnabled(true);
+            jSimulazioneItemIndietroSignificativo.setEnabled(true);
+            jSimulazioneItemAvanti.setEnabled(true);
+            jSimulazioneItemFine.setEnabled(true);
+        }
     }
     
     private void simulazioneSignificativoSuccessivo(int scelta) {
@@ -1559,62 +1581,78 @@ public class SiGeMv2View {
         switch(scelta){
             case 0:
                 istantiAllEvento = player.prossimoIstanteSignificativo(Evento.FAULT);
+                break;
             case 1:
                 istantiAllEvento = player.prossimoIstanteSignificativo(Evento.SWITCH);
+                break;
             case 2:
                 istantiAllEvento = player.prossimoIstanteSignificativo(Evento.FULL_RAM);
+                break;
             case 3:
                 istantiAllEvento = player.prossimoIstanteSignificativo(Evento.FULL_SWAP);
+                break;
             case 4:
                 istantiAllEvento = player.prossimoIstanteSignificativo(Evento.END_PROC);
+                break;
             case 5:
                 istantiAllEvento = player.prossimoIstanteSignificativo(Evento.NEW_PROC);
+                break;
             default:
                 istantiAllEvento = null;
         }
         
-        if(istantiAllEvento == null) return;
-        
-        for(int i = 0; i < istantiAllEvento.size(); i++ ){
-            //aggiorna
-        }
-        
-        istante = istantiAllEvento.getLast();
-        
-        jButtonNuovaConfigurazione.setEnabled(true);
-        jButtonApriConfigurazione.setEnabled(true);
-        jButtonSalvaConfigurazione.setEnabled(true);
-        jButtonModificaConfigurazione.setEnabled(true);
-        
-        jButtonSimulazionePlay.setEnabled(true);
-        jButtonSimulazionePausa.setEnabled(false);
-        jButtonSimulazioneStop.setEnabled(true);
-        jButtonSimulazioneInizio.setEnabled(true);
-        jButtonSimulazioneIndietro.setEnabled(true);
-        jButtonSimulazioneAvanti.setEnabled(true);
-        jButtonSimulazioneFine.setEnabled(true);
-        
-        jButtonIndietroSignificativo.setEnabled(true);
-        ComboBoxSignificativo.setEnabled(true);
-        jButtonAvantiSignificativo.setEnabled(true);
+        if(istantiAllEvento != null){
 
-                
-        jFileItemNuovaConfigurazione.setEnabled(true);
-        jFileItemApriConfigurazione.setEnabled(true);
-        jFileItemSalvaConfigurazione.setEnabled(true);
-        jFileItemSalvaConfigurazioneConNome.setEnabled(true);
-        jFileItemModificaConfigurazione.setEnabled(true);
-        jFileItemEsci.setEnabled(true);
-                
-        jSimulazioneItemPlay.setEnabled(true);
-        jSimulazioneItemPausa.setEnabled(false);
-        jSimulazioneItemStop.setEnabled(true);
-        jSimulazioneItemInizio.setEnabled(true);
-        jSimulazioneItemIndietro.setEnabled(true);
-        jSimulazioneItemAvantiSignificativo.setEnabled(true);
-        jSimulazioneItemIndietroSignificativo.setEnabled(true);
-        jSimulazioneItemAvanti.setEnabled(true);
-        jSimulazioneItemFine.setEnabled(true);
+            PCB pcbAttuale;
+            ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                                .getComponent();
+
+            for(int i = 0; i < istantiAllEvento.size(); i++){
+                istante = istantiAllEvento.get(i);
+                pcbAttuale = istante.getProcessoInEsecuzione();
+                processiEseguiti.add(pcbAttuale.getRifProcesso());
+                try{
+                    currView.aggiorna(istante.getCambiamentiInMemoria());    
+                }catch(Exception e){}
+            }
+
+            visualizzaOrdProcessi(processiEseguiti);
+
+            jButtonNuovaConfigurazione.setEnabled(true);
+            jButtonApriConfigurazione.setEnabled(true);
+            jButtonSalvaConfigurazione.setEnabled(true);
+            jButtonModificaConfigurazione.setEnabled(true);
+
+            jButtonSimulazionePlay.setEnabled(true);
+            jButtonSimulazionePausa.setEnabled(false);
+            jButtonSimulazioneStop.setEnabled(true);
+            jButtonSimulazioneInizio.setEnabled(true);
+            jButtonSimulazioneIndietro.setEnabled(true);
+            jButtonSimulazioneAvanti.setEnabled(true);
+            jButtonSimulazioneFine.setEnabled(true);
+
+            jButtonIndietroSignificativo.setEnabled(true);
+            ComboBoxSignificativo.setEnabled(true);
+            jButtonAvantiSignificativo.setEnabled(true);
+
+
+            jFileItemNuovaConfigurazione.setEnabled(true);
+            jFileItemApriConfigurazione.setEnabled(true);
+            jFileItemSalvaConfigurazione.setEnabled(true);
+            jFileItemSalvaConfigurazioneConNome.setEnabled(true);
+            jFileItemModificaConfigurazione.setEnabled(true);
+            jFileItemEsci.setEnabled(true);
+
+            jSimulazioneItemPlay.setEnabled(true);
+            jSimulazioneItemPausa.setEnabled(false);
+            jSimulazioneItemStop.setEnabled(true);
+            jSimulazioneItemInizio.setEnabled(true);
+            jSimulazioneItemIndietro.setEnabled(true);
+            jSimulazioneItemAvantiSignificativo.setEnabled(true);
+            jSimulazioneItemIndietroSignificativo.setEnabled(true);
+            jSimulazioneItemAvanti.setEnabled(true);
+            jSimulazioneItemFine.setEnabled(true);
+        }
     }
     
     
