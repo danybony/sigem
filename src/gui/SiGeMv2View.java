@@ -133,16 +133,7 @@ public class SiGeMv2View {
     private JMenuItem jFileItemSalvaConfigurazione, jFileItemSalvaConfigurazioneConNome;
     private JMenuItem jFileItemModificaConfigurazione, jFileItemEsci;
 
-    // Pulsanti Menu Finestre
-    /*
-    private JMenuItem mniOpenSProcessi, mniOpenSRisorse;
-
-    private JMenuItem mniOpenSPronti, mniOpenSTerminati;
-
-    private JMenuItem mniOpenSStatistiche, mniOpenSGrafRisorse;
-
-    private JMenuItem mniOpenSGrafOrdinamento;
-     */
+    JScrollPane scrollMemoria = new JScrollPane();
 
     /** Contiene finestre e funzioni per selezionare un file sul filesystem */
     private GestioneFile gestioneFile;
@@ -232,6 +223,7 @@ public class SiGeMv2View {
 
             views[1] = new View("Frame Memoria", IconStylosoft.getGeneralIcon("mv"),
                             new ViewFrameMemoria());
+            scrollMemoria.add(views[1]);
             viewMap.addView(1, views[1]);
             views[2] = new View("Statistiche", IconStylosoft
                             .getGeneralIcon("statistiche"), new ViewStatistiche(this));
@@ -1103,8 +1095,9 @@ public class SiGeMv2View {
                         this.sleep(velocita*100);
                     } catch (InterruptedException ie) {}
                       catch (Exception e){}
-                    
-                    istante = player.istanteSuccessivo();
+                    if(statoGui){
+                        istante = player.istanteSuccessivo();
+                    }
                 }
                 
                 // L'esecuzione automatica e' terminata senza interruzioni
