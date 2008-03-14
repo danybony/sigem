@@ -1009,15 +1009,18 @@ public class SiGeMv2View {
                                     .getComponent();
                     
                     if(configurazioneIniziale!=null){
+                        System.out.println(configurazioneIniziale.getModalitaGestioneMemoria() +"A");
                         switch(configurazioneIniziale.getModalitaGestioneMemoria()){
                             case 1: 
                                 currView.configura(false,
                                         configurazioneIniziale.getDimensioneRAM(),
                                         configurazioneIniziale.getListaProcessi().size());
+                                break;
                             case 2:
                                 currView.configura(true,
                                         configurazioneIniziale.getDimensioneRAM(),
                                         configurazioneIniziale.getListaProcessi().size());
+                                break;
                         }
                     }
             }
@@ -1089,10 +1092,15 @@ public class SiGeMv2View {
                     pcbAttuale = istante.getProcessoInEsecuzione();
                     processiEseguiti.add(pcbAttuale.getRifProcesso());
                     visualizzaOrdProcessi(processiEseguiti);
+                    
+                    try {
+                        currView.aggiorna(istante.getCambiamentiInMemoria());
+                        }catch (Exception e){}
+                    
                     try {
                         this.sleep(velocita*100);
-                        currView.aggiorna(istante.getCambiamentiInMemoria());
-                    }catch (Exception e){e.printStackTrace();}
+                    }catch (InterruptedException e){}
+                    
                     if(statoGui){
                         istante = player.istanteSuccessivo();
                     }
@@ -1175,10 +1183,12 @@ public class SiGeMv2View {
                             currView.configura(false,
                                     configurazioneIniziale.getDimensioneRAM(),
                                     configurazioneIniziale.getListaProcessi().size());
+                            break;
                         case 2:
                             currView.configura(true,
                                     configurazioneIniziale.getDimensioneRAM(),
                                     configurazioneIniziale.getListaProcessi().size());
+                            break;
                     }
                 }
             }
@@ -1326,14 +1336,16 @@ public class SiGeMv2View {
         
         istante = player.istantePrecedente();
         
-        ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
-                            .getComponent();
+        if(istante!=null){
+             ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                                .getComponent();
         
-        processiEseguiti.removeLast();
-        visualizzaOrdProcessi(processiEseguiti);
-        try{
-        currView.aggiorna(istante.getCambiamentiInMemoria());    
-        }catch(Exception e){}
+            processiEseguiti.removeLast();
+            visualizzaOrdProcessi(processiEseguiti);
+            try{
+            currView.aggiorna(istante.getCambiamentiInMemoria());    
+            }catch(Exception e){}   
+        }
         
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
