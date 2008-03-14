@@ -518,14 +518,6 @@ public class SiGeMv2View {
             });
             simulazioneMenu.add(jSimulazioneItemPlay);
 
-            jSimulazioneItemStop = new JMenuItem("Stop",IconStylosoft.getGeneralIcon("stop"));
-            jSimulazioneItemStop.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    simulazioneStop();
-                }
-            });
-            simulazioneMenu.add(jSimulazioneItemStop);
-
             jSimulazioneItemPausa = new JMenuItem("Pausa",IconStylosoft.getGeneralIcon("pause"));
             jSimulazioneItemPausa.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -533,6 +525,14 @@ public class SiGeMv2View {
                 }
             });
             simulazioneMenu.add(jSimulazioneItemPausa);
+            
+            jSimulazioneItemStop = new JMenuItem("Stop",IconStylosoft.getGeneralIcon("stop"));
+            jSimulazioneItemStop.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    simulazioneStop();
+                }
+            });
+            simulazioneMenu.add(jSimulazioneItemStop);
 
             simulazioneMenu.addSeparator();
 
@@ -1183,32 +1183,32 @@ public class SiGeMv2View {
             jButtonSimulazionePlay.setEnabled(true);
             jButtonSimulazionePausa.setEnabled(false);
             jButtonSimulazioneStop.setEnabled(false);
-            jButtonSimulazioneInizio.setEnabled(false);
-            jButtonSimulazioneIndietro.setEnabled(false);
-            jButtonSimulazioneAvanti.setEnabled(false);
-            jButtonSimulazioneFine.setEnabled(false);
+            jButtonSimulazioneInizio.setEnabled(true);
+            jButtonSimulazioneIndietro.setEnabled(true);
+            jButtonSimulazioneAvanti.setEnabled(true);
+            jButtonSimulazioneFine.setEnabled(true);
 
-            jButtonIndietroSignificativo.setEnabled(false);
-            ComboBoxSignificativo.setEnabled(false);
-            jButtonAvantiSignificativo.setEnabled(false);
+            jButtonIndietroSignificativo.setEnabled(true);
+            ComboBoxSignificativo.setEnabled(true);
+            jButtonAvantiSignificativo.setEnabled(true);
 
 
-            jFileItemNuovaConfigurazione.setEnabled(false);
-            jFileItemApriConfigurazione.setEnabled(false);
-            jFileItemSalvaConfigurazione.setEnabled(false);
-            jFileItemSalvaConfigurazioneConNome.setEnabled(false);
-            jFileItemModificaConfigurazione.setEnabled(false);
+            jFileItemNuovaConfigurazione.setEnabled(true);
+            jFileItemApriConfigurazione.setEnabled(true);
+            jFileItemSalvaConfigurazione.setEnabled(true);
+            jFileItemSalvaConfigurazioneConNome.setEnabled(true);
+            jFileItemModificaConfigurazione.setEnabled(true);
             jFileItemEsci.setEnabled(true);
 
             jSimulazioneItemPlay.setEnabled(true);
-            jSimulazioneItemPausa.setEnabled(true);
+            jSimulazioneItemPausa.setEnabled(false);
             jSimulazioneItemStop.setEnabled(false);
-            jSimulazioneItemInizio.setEnabled(false);
-            jSimulazioneItemIndietro.setEnabled(false);
-            jSimulazioneItemAvantiSignificativo.setEnabled(false);
-            jSimulazioneItemIndietroSignificativo.setEnabled(false);
-            jSimulazioneItemAvanti.setEnabled(false);
-            jSimulazioneItemFine.setEnabled(false);
+            jSimulazioneItemInizio.setEnabled(true);
+            jSimulazioneItemIndietro.setEnabled(true);
+            jSimulazioneItemAvantiSignificativo.setEnabled(true);
+            jSimulazioneItemIndietroSignificativo.setEnabled(true);
+            jSimulazioneItemAvanti.setEnabled(true);
+            jSimulazioneItemFine.setEnabled(true);
         } catch (InterruptedException ex) {}
     }
 
