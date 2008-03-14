@@ -14,8 +14,6 @@
 
 package gui;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.infonode.docking.*;
 import net.infonode.docking.mouse.DockingWindowActionMouseButtonListener;
 import net.infonode.docking.properties.RootWindowProperties;
@@ -1082,6 +1080,8 @@ public class SiGeMv2View {
         }
         
         auto = new Thread(){
+            @Override
+            @SuppressWarnings("static-access")
             public void run(){
                 PCB pcbAttuale;
                 ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
@@ -1523,7 +1523,6 @@ public class SiGeMv2View {
         
         if(istantiAllEvento != null){
         
-            PCB pcbAttuale;
             ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
                                 .getComponent();
 
