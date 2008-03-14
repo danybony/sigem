@@ -4,7 +4,7 @@
  * Package: logic.gestioneMemoria
  * Autore: Davide Compagnin
  * Data: 29/02/2008
- * Versione: 1.5
+ * Versione: 1.6
  * Licenza: open-source
  * Registro delle modifiche:
  *  - v.1.6 (12/03/2008): Modifica metodo notificaProcessoTerminato
@@ -174,7 +174,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                     try {
                         ListaAzioni.add( new Azione(0,null) );
                         FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
-                        ListaAzioni.add( new Azione(3, Frame_Rimosso ) );
+                        ListaAzioni.add( new Azione(3, Frame_Rimosso, MemoriaRam.indiceDi(Frame_Rimosso) ) );
                         if ( Frame_Rimosso.getModifica()==true ) {
                             ListaAzioni.add( new Azione(2, Frame_Rimosso, 
                                     inserisci(MemoriaSwap,Frame_Rimosso,UT) ) );
