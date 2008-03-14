@@ -45,6 +45,11 @@ public class ViewFrameMemoria extends JPanel {
      */
     private int dimMemoria=0;
     
+    /**
+     * Numero di processi: utile per scegliere il colore per la pagina/segmento
+     */
+    private int numProcessi=0;
+    
     //Int che setta la grandezza dei quadrati rappresentanti le pagine
     private static final int LATO=48;
     
@@ -179,7 +184,7 @@ public class ViewFrameMemoria extends JPanel {
             azione=cambiamentiInMemoria.get(i);
             switch(azione.getAzione()){
                 case 1: 
-                       //Aggiungere pagina/segmento in RAM
+                       //Aggiungere pagina in RAM
                        if(pag_seg==false) {
                            posizione=azione.getPosizione();
                            coordY=((posizione/6)*LATO+5*(posizione/6))+10;
@@ -190,7 +195,7 @@ public class ViewFrameMemoria extends JPanel {
                                                   coordY,
                                                   LATO,
                                                   LATO,
-                                                  ViewUtility.colorFactory(0, azione.getFrame().getIdProcesso()),
+                                                  ViewUtility.colorFactory(numProcessi, azione.getFrame().getIdProcesso()),
                                                   azione.getFrame().getIndirizzo())
                                    );
                            //Rimuovo l'eventuale doppione di pagina creato
@@ -215,7 +220,7 @@ public class ViewFrameMemoria extends JPanel {
                                                       coordY,
                                                       larghezza,
                                                       altezza,
-                                                      ViewUtility.colorFactory(0, azione.getFrame().getIdProcesso()),
+                                                      ViewUtility.colorFactory(numProcessi, azione.getFrame().getIdProcesso()),
                                                       azione.getFrame().getIndirizzo())
                                        );
                            
@@ -298,7 +303,7 @@ public class ViewFrameMemoria extends JPanel {
                        //associati al processo il colore grigio e lo spazio:
                            for(int j=0; j<pagineSquare.size();j++){
                                aux=pagineSquare.get(j);
-                               if(aux.getColor().equals(ViewUtility.colorFactory(0, azione.getFrame().getIdProcesso()))){
+                               if(aux.getColor().equals(ViewUtility.colorFactory(numProcessi, azione.getPosizione()))){
                                    aux.setColor(Color.LIGHT_GRAY);
                                    aux.setText(" ");
                                }
@@ -362,9 +367,10 @@ public class ViewFrameMemoria extends JPanel {
      * @param dimMemoria
      *      dimensione totale della memoria
      */
-    public void configura(boolean sceltaGestioneMemoria, int dimMemoria){
+    public void configura(boolean sceltaGestioneMemoria, int dimMemoria, int numProcessi){
         pag_seg=sceltaGestioneMemoria;
         this.dimMemoria=dimMemoria;
+        this.numProcessi=numProcessi;
         if(sceltaGestioneMemoria==true){
             pagineSquare.add(
                              0,
