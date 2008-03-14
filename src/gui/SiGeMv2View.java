@@ -1080,7 +1080,7 @@ public class SiGeMv2View {
                         processiEseguiti.add(pcbAttuale.getRifProcesso());
                     }
                     else{
-                      processiEseguiti.add(null);
+                        processiEseguiti.add(null);
                     }
                     visualizzaOrdProcessi(processiEseguiti);
                     try {   
@@ -1089,7 +1089,7 @@ public class SiGeMv2View {
                     
                     istante = player.istanteSuccessivo();
                 }
-            
+                statoGui = false;
             }
         };
         auto.start();
@@ -1103,7 +1103,7 @@ public class SiGeMv2View {
         player.caricaSimulazione();
     }
 
-    /** Stoppa la simulazione */
+    /** Stop della simulazione */
     private void simulazioneStop(){
         try {
             
