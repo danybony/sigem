@@ -1318,6 +1318,15 @@ public class SiGeMv2View {
         
         istante = player.istantePrecedente();
         
+        ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                            .getComponent();
+        
+        processiEseguiti.removeLast();
+        visualizzaOrdProcessi(processiEseguiti);
+        try{
+        currView.aggiorna(istante.getCambiamentiInMemoria());    
+        }catch(Exception e){}
+        
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
