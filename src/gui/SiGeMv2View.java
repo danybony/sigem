@@ -860,9 +860,11 @@ public class SiGeMv2View {
                     " all'istante significativo successivo");
             
             scegliVelocita = new JSpinner();
-            Integer[] velocitaConsentite = new Integer[10];
-            for(int i=1;i<=10;i++){
-                velocitaConsentite[i-1]=i;
+            Double[] velocitaConsentite = new Double[20];
+            double t;
+            for(int i=1;i<=20;i++){
+                t = i;
+                velocitaConsentite[i-1]=new Double(t/2);
             }
             scegliVelocita.setModel(new SpinnerListModel(velocitaConsentite));
             scegliVelocita.setToolTipText("Velocita' di avanzamento della simulazione");
@@ -1070,11 +1072,13 @@ public class SiGeMv2View {
         else{
             istante=player.istanteSuccessivo();
         }
-
+        
         auto = new Thread(){
             public void run(){
                 PCB pcbAttuale;
-                while(istante!=null && !this.isInterrupted()){
+                while(istante!=null && statoGui){
+                    Double t =((Double)scegliVelocita.getValue()).doubleValue();
+                    velocita = (int) (t * 10);
                     pcbAttuale = istante.getProcessoInEsecuzione();
                     if (pcbAttuale != null){
                         processiEseguiti.add(pcbAttuale.getRifProcesso());
@@ -1084,12 +1088,18 @@ public class SiGeMv2View {
                     }
                     visualizzaOrdProcessi(processiEseguiti);
                     try {   
-                        this.sleep(velocita);
+                        this.sleep(velocita*100);
                     } catch (InterruptedException ie) {}
                     
                     istante = player.istanteSuccessivo();
                 }
                 statoGui = false;
+                
+                
+                
+                
+                
+                
             }
         };
         auto.start();
@@ -1109,7 +1119,7 @@ public class SiGeMv2View {
             
             // interrompe l'avanzamento automatico e aspetta che il thread
             // venga terminato
-            auto.interrupt();
+            statoGui=false;
             auto.join();
             
             istante = null;
@@ -1157,7 +1167,7 @@ public class SiGeMv2View {
             
             // interrompe l'avanzamento automatico e aspetta che il thread
             // venga terminato
-            auto.interrupt();
+            statoGui=false;
             auto.join();
 
             jButtonNuovaConfigurazione.setEnabled(true);
