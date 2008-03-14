@@ -357,8 +357,8 @@ public class ViewFrameMemoria extends JPanel {
     }*/
     
     /**Metodo per impostare il grafico come visualizzatore di pagine o segmenti<br>
-     * @param scelta
-     *      0 se si vogliono visualizzare pagine, 1 per i segmenti
+     * @param sceltaGestioneMemoria
+     *      FALSE se si vogliono visualizzare pagine, TRUE per i segmenti
      * @param dimMemoria
      *      dimensione totale della memoria
      */
