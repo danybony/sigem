@@ -4,9 +4,11 @@
  * Package: gui.utility
  * Autore: Giordano Cariani
  * Data: 03/03/2008
- * Versione: 1.0
+ * Versione: 1.1
  * Licenza: open-source
- * Registro delle modifiche: *  
+ * Registro delle modifiche: 
+ *  - v.1.1 (14/03/2008): Ultimata modifica della classe per adattarla
+ *                        alle esigenze di visualizzazione
  *  - v.1.0 (02/03/2008): Creazione classe per disegno quadrati
  */
 
@@ -39,6 +41,10 @@ public class SquareDraw {
 
     public Color getColor() {
         return color;
+    }
+
+    public void setAltezza(int altezza) {
+        this.altezza=altezza;
     }
 
     public void setColor(Color color) {
@@ -75,6 +81,10 @@ public class SquareDraw {
     
     public int getAltezza(){
         return altezza;
+    }
+
+    public void setText(String string) {
+        indirizzoFrame=string;
     }
 }
         
