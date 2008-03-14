@@ -960,6 +960,7 @@ public class SiGeMv2View {
     }
 
     public void abilitaTutto(){
+        istante = null;
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
@@ -1093,14 +1094,48 @@ public class SiGeMv2View {
                     
                     istante = player.istanteSuccessivo();
                 }
+                
+                // L'esecuzione automatica e' terminata senza interruzioni
+                if(statoGui){
+                    istante = null;
+                    jButtonNuovaConfigurazione.setEnabled(true);
+                    jButtonApriConfigurazione.setEnabled(true);
+                    jButtonSalvaConfigurazione.setEnabled(true);
+                    jButtonModificaConfigurazione.setEnabled(true);
+
+                    jButtonSimulazionePlay.setEnabled(true);
+                    jButtonSimulazionePausa.setEnabled(false);
+                    jButtonSimulazioneStop.setEnabled(false);
+                    jButtonSimulazioneInizio.setEnabled(true);
+                    jButtonSimulazioneIndietro.setEnabled(true);
+                    jButtonSimulazioneAvanti.setEnabled(true);
+                    jButtonSimulazioneFine.setEnabled(true);
+
+                    jButtonIndietroSignificativo.setEnabled(true);
+                    ComboBoxSignificativo.setEnabled(true);
+                    jButtonAvantiSignificativo.setEnabled(true);
+
+
+                    jFileItemNuovaConfigurazione.setEnabled(true);
+                    jFileItemApriConfigurazione.setEnabled(true);
+                    jFileItemSalvaConfigurazione.setEnabled(true);
+                    jFileItemSalvaConfigurazioneConNome.setEnabled(true);
+                    jFileItemModificaConfigurazione.setEnabled(true);
+                    jFileItemEsci.setEnabled(true);
+
+                    jSimulazioneItemPlay.setEnabled(true);
+                    jSimulazioneItemPausa.setEnabled(false);
+                    jSimulazioneItemStop.setEnabled(false);
+                    jSimulazioneItemInizio.setEnabled(true);
+                    jSimulazioneItemIndietro.setEnabled(true);
+                    jSimulazioneItemAvantiSignificativo.setEnabled(true);
+                    jSimulazioneItemIndietroSignificativo.setEnabled(true);
+                    jSimulazioneItemAvanti.setEnabled(true);
+                    jSimulazioneItemFine.setEnabled(true);
+                }
+                
                 statoGui = false;
-                
-                
-                
-                
-                
-                
-            }
+                }
         };
         auto.start();
         
