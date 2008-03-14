@@ -16,6 +16,8 @@ package gui.dialog;
 
 import gui.SiGeMv2View;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
@@ -23,6 +25,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import logic.gestioneMemoria.FrameMemoria;
+import logic.gestioneMemoria.Pagina;
 import logic.parametri.ConfigurazioneIniziale;
 import logic.parametri.Id;
 import logic.parametri.Processo;
@@ -36,13 +40,21 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
     private PoliticheJDialog politica;
     private ProcessiJDialog processi;
-    private String associazione;
     private SiGeMv2View view;
     private ConfigurazioneIniziale confIniziale;
     private LinkedList<Processo> listaProcessi;
-    private Vector<String> lista = new Vector<String>();
     private Vector<JList> listaList = new Vector<JList>();
-    ArrayListTransferHandler arrayListHandler;
+    private Vector<DefaultListModel> listModels = new Vector<DefaultListModel>();
+            
+    private Vector<FrameMemoria> listaFrame = new Vector<FrameMemoria>();
+    private ArrayListTransferHandler arrayListHandler;
+    
+    /* Modello per la lista delle pagine */
+    DefaultListModel listaFrameModel = new DefaultListModel();
+    
+    /* Contatore dei frameMemoria. Serve per generare un numero sempre nuovo
+     per l'indirizzo del nuovo frame */
+    private int contatoreFrame=0;
     
     /** Creates new form AssociazioneProcessiJDialog */
     public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, ProcessiJDialog proc, SiGeMv2View view) {
@@ -55,9 +67,11 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
         if (politica.getGestioneMemoria() == 1){
             jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI - PAGINE");
+            jButtonNuovoFrame.setText("Nuova Pagina");
         }
         else {
             jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI - SEGMENTI");
+            jButtonNuovoFrame.setText("Nuovo segmento");
         }
         
         int numProcessi = configurazioneAmbiente.getNumProcessi();
@@ -66,17 +80,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
         for(int i=0; i<numProcessi; i++){
             jTabbedPaneProcessi.addTab("Processo "+i, creaPannelloProcesso(i));
-        }        
+        }          
         
-        DefaultListModel list1Model = new DefaultListModel();
-        list1Model.addElement("0 (list 1)");
-        list1Model.addElement("1 (list 1)");
-        list1Model.addElement("2 (list 1)");
-        list1Model.addElement("3 (list 1)");
-        list1Model.addElement("4 (list 1)");
-        list1Model.addElement("5 (list 1)");
-        list1Model.addElement("6 (list 1)");
-        jListFrame.setModel(list1Model);
+        jListFrame.setModel(listaFrameModel);
         jListFrame.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jListFrame.setTransferHandler(arrayListHandler);
         jListFrame.setDragEnabled(true);
@@ -144,25 +150,17 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
 
         jListFrame.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jListFrame.setName("jListFrame"); // NOI18N
-        jListFrame.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jListFrameValueChanged(evt);
-            }
-        });
         jScrollPane1.setViewportView(jListFrame);
 
         javax.swing.GroupLayout jPanelFrameLayout = new javax.swing.GroupLayout(jPanelFrame);
         jPanelFrame.setLayout(jPanelFrameLayout);
         jPanelFrameLayout.setHorizontalGroup(
             jPanelFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFrameLayout.createSequentialGroup()
-                .addGroup(jPanelFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelFrameLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jButtonNuovoFrame))
-                    .addGroup(jPanelFrameLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonNuovoFrame, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelFrameLayout.setVerticalGroup(
@@ -284,12 +282,23 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonAnnullaActionPerformed
 
     private void jButtonNuovoFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuovoFrameActionPerformed
-       
+        
+        if (politica.getGestioneMemoria() == 1){
+            
+            listaFrame.add(new Pagina(new Integer(contatoreFrame).toString(),
+                    configurazioneAmbiente.getDimensionePagina(),0));
+            
+            listaFrameModel.addElement("Pagina "+contatoreFrame);
+            
+        }
+        else {
+            //DA FARE CON I SEGMENTIII
+            //listaFrame.add(new Segmento());
+        
+        }
+        
+        contatoreFrame++;
     }//GEN-LAST:event_jButtonNuovoFrameActionPerformed
-
-    private void jListFrameValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListFrameValueChanged
-      System.out.println(jListFrame.getModel().getSize());
-    }//GEN-LAST:event_jListFrameValueChanged
     
     private void inizializzaConfigurazioneIniziale() throws Exception {
         confIniziale = new ConfigurazioneIniziale(configurazioneAmbiente.getBandaBusDati(),
@@ -314,12 +323,37 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 
         int numIstanti = ((Integer)processi.getCombinazioneProcessi()[IdProcesso][2]).intValue();
                 
+        
+        
         for(int i=0; i< numIstanti; i++){
-            JList list1=new JList(new DefaultListModel());
+            /*creo un modello di default per la lista*/
+            listModels.add(new DefaultListModel());
+            
+            /* e lo associo alla lista da costruire */
+            JList list1=new JList(listModels.get(listModels.size()-1));
+            
             list1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             list1.setTransferHandler(arrayListHandler);
             list1.setDragEnabled(true);
-            listaList.add(list1);
+            list1.setName(Integer.toString(listaList.size()));
+            listaList.add(list1); 
+            
+            /* Per ogni lista creo un mouseListner */
+            list1.addMouseListener(new MouseAdapter() {
+                 public void mouseClicked(MouseEvent e) {                     
+                     if (e.getButton() == MouseEvent.BUTTON1) {
+                         JList lista =((JList)e.getComponent());
+                         int index = lista.getSelectedIndex();
+                         if(index != -1){
+                            int idLista = Integer.parseInt(lista.getName());
+                            listModels.get(idLista).remove(index);
+                         }
+                         
+                      }
+                 }
+             });            
+            
+            
             JScrollPane list1View = new JScrollPane(list1);
             list1View.setPreferredSize(new Dimension(100, 220));
             nuovoPannello.add(list1View);
