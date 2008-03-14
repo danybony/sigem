@@ -313,10 +313,12 @@ public class Processore {
         Istante istante;
         
         if(scheduler.getProcessiTerminati().size() > 0 && 
+                ultimoEseguito != null &&
                 ((Processo)scheduler.getProcessiTerminati().get(0)).
                         equals(ultimoEseguito.getRifProcesso())){
             
-            gestoreMemoria.notificaProcessoTerminato(ultimoEseguito.getRifProcesso().getId());
+            istruzioni.addAll(gestoreMemoria.notificaProcessoTerminato(
+                                ultimoEseguito.getRifProcesso().getId()));
             
             istante = new Istante(corrente, ultimoEseguito, nuovoProcesso, fault, 
                                 istruzioni, RAMPiena, SwapPiena);
