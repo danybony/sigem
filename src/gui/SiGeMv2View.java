@@ -872,26 +872,26 @@ public class SiGeMv2View {
             toolBar.add(jButtonSalvaConfigurazione);
             toolBar.add(jButtonModificaConfigurazione);
 
-            toolBar.addSeparator(new java.awt.Dimension(15, 12));
+            toolBar.addSeparator(new java.awt.Dimension(25, 12));
 
             toolBar.add(jButtonSimulazionePlay);
             toolBar.add(jButtonSimulazionePausa);
             toolBar.add(jButtonSimulazioneStop);
 
-            toolBar.addSeparator(new java.awt.Dimension(10, 12));
+            toolBar.addSeparator(new java.awt.Dimension(15, 12));
 
             toolBar.add(jButtonSimulazioneInizio);
             toolBar.add(jButtonSimulazioneIndietro);
             toolBar.add(jButtonSimulazioneAvanti);
             toolBar.add(jButtonSimulazioneFine);
 
-            toolBar.addSeparator(new java.awt.Dimension(20, 12));
+            toolBar.addSeparator(new java.awt.Dimension(25, 12));
             
             toolBar.add(jButtonIndietroSignificativo);
             toolBar.add(ComboBoxSignificativo);
             toolBar.add(jButtonAvantiSignificativo);
             
-            toolBar.addSeparator(new java.awt.Dimension(10, 12));
+            toolBar.addSeparator(new java.awt.Dimension(20, 12));
             
             toolBar.add(scegliVelocita);
             
@@ -1083,12 +1083,7 @@ public class SiGeMv2View {
                     Double t =((Double)scegliVelocita.getValue()).doubleValue();
                     velocita = (int) (t * 10);
                     pcbAttuale = istante.getProcessoInEsecuzione();
-                    if (pcbAttuale != null){
-                        processiEseguiti.add(pcbAttuale.getRifProcesso());
-                    }
-                    else{
-                        processiEseguiti.add(null);
-                    }
+                    processiEseguiti.add(pcbAttuale.getRifProcesso());
                     visualizzaOrdProcessi(processiEseguiti);
                     try {
                         this.sleep(velocita*100);
@@ -1268,25 +1263,19 @@ public class SiGeMv2View {
         
         istante = player.primoIstante();
         processiEseguiti = new LinkedList<Processo>();
-/*
+        
         PCB pcbAttuale;
         ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
                             .getComponent();
-        while(istante!=null && statoGui){
-            Double t =((Double)scegliVelocita.getValue()).doubleValue();
-            velocita = (int) (t * 10);
-            pcbAttuale = istante.getProcessoInEsecuzione();
-            if (pcbAttuale != null){
-                processiEseguiti.add(pcbAttuale.getRifProcesso());
-            }
-            else{
-                processiEseguiti.add(null);
-            }
-            visualizzaOrdProcessi(processiEseguiti);
-            try {
-                this.sleep(velocita*100);
-                currView.aggiorna(istante.getCambiamentiInMemoria());
-  */      
+        
+        pcbAttuale = istante.getProcessoInEsecuzione();
+        processiEseguiti.add(pcbAttuale.getRifProcesso());
+
+        visualizzaOrdProcessi(processiEseguiti);
+        try {
+            this.sleep(velocita*100);
+            currView.aggiorna(istante.getCambiamentiInMemoria());    
+            
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
