@@ -1554,8 +1554,17 @@ public class SiGeMv2View {
                 ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
                                 .getComponent();
                 int idProcessiEseguiti[] = new int[processiEseguiti.size()];
-                for (int i = 0; i < processiEseguiti.size(); i++)
-                    idProcessiEseguiti[i] = processiEseguiti.get(i).getId();
+                for (int i = 0; i < processiEseguiti.size(); i++){
+                    Processo p = processiEseguiti.get(i);
+                    // Esiste un processo in esecuzione nell'istante i
+                    if(p!=null){
+                        idProcessiEseguiti[i] = p.getId();
+                    }
+                    // Nessun processo nell'istante i
+                    else{
+                        
+                    }
+                }
 
                 currView.disegnaGrafico(idProcessiEseguiti);
         }
