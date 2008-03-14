@@ -310,28 +310,24 @@ public class Processore {
         
         boolean RAMPiena = controllaRAMPiena(istruzioni);
         
-        Istante istante;
-        
-        if(ultimoEseguito != null){
-            
-            if(scheduler.getProcessiTerminati().size() > 0 && 
-                ((Processo)scheduler.getProcessiTerminati().get(0)).
+        Istante istante;        
+      
+        if(scheduler.getProcessiTerminati().size() > 0 && ultimoEseguito != null
+                && ((Processo)scheduler.getProcessiTerminati().get(0)).
                         equals(ultimoEseguito.getRifProcesso())){
                 
-                istruzioni.addAll(gestoreMemoria.notificaProcessoTerminato(
-                                ultimoEseguito.getRifProcesso().getId()));
+                 LinkedList<Azione> nuoveIstruzioni=gestoreMemoria.notificaProcessoTerminato(
+                                ultimoEseguito.getRifProcesso().getId());
+                 
+                 if(nuoveIstruzioni != null && istruzioni != null){
+                     
+                     istruzioni.addAll(nuoveIstruzioni);
+                     
+                 }
             
                  istante = new Istante(corrente, ultimoEseguito, nuovoProcesso,
-                         fault, istruzioni, RAMPiena, SwapPiena);
-                
-            } 
-            else{
-                
-                istante = new Istante(corrente, null, nuovoProcesso, fault, 
-                                istruzioni, RAMPiena, SwapPiena);
-                
-            }
-            
+                         fault, istruzioni, RAMPiena, SwapPiena);  
+                        
         }
         else{
             
