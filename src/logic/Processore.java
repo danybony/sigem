@@ -312,16 +312,25 @@ public class Processore {
         
         Istante istante;
         
-        if(scheduler.getProcessiTerminati().size() > 0 && 
-                ultimoEseguito != null &&
+        if(ultimoEseguito != null){
+            
+            if(scheduler.getProcessiTerminati().size() > 0 && 
                 ((Processo)scheduler.getProcessiTerminati().get(0)).
                         equals(ultimoEseguito.getRifProcesso())){
-            
-            istruzioni.addAll(gestoreMemoria.notificaProcessoTerminato(
+                
+                istruzioni.addAll(gestoreMemoria.notificaProcessoTerminato(
                                 ultimoEseguito.getRifProcesso().getId()));
             
-            istante = new Istante(corrente, ultimoEseguito, nuovoProcesso, fault, 
+                 istante = new Istante(corrente, ultimoEseguito, nuovoProcesso,
+                         fault, istruzioni, RAMPiena, SwapPiena);
+                
+            } 
+            else{
+                
+                istante = new Istante(corrente, null, nuovoProcesso, fault, 
                                 istruzioni, RAMPiena, SwapPiena);
+                
+            }
             
         }
         else{
