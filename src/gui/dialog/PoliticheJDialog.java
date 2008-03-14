@@ -259,7 +259,9 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     private void jComboBoxSchedulazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSchedulazioneActionPerformed
         gestioneSchedulazione((String)jComboBoxSchedulazione.getItemAt(jComboBoxSchedulazione.getSelectedIndex()));
         // visualizzo il time slice in caso di RR
-        if (politicaSchedulazione == 4) {
+        if (politicaSchedulazione == 4
+        ||  politicaSchedulazione == 5
+        ||  politicaSchedulazione == 6) {
             jLabelTimeSlice.setVisible(true);
             jSpinnerTimeSlice.setVisible(true);
         } else {
@@ -380,9 +382,10 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     }
     
     private Integer[] impostaJSpinnerTimeSlice() {
-        Integer[] tempiTimeSlice= new Integer[100];
-        for (int i=0; i<100; i++)
-            tempiTimeSlice[i] = i+1;
+        Integer[] tempiTimeSlice= new Integer[9];
+        tempiTimeSlice[0]=2;
+        for (int i=1; i<9; i++)
+            tempiTimeSlice[i] = i+2;
         return tempiTimeSlice;
     }
    
