@@ -171,6 +171,9 @@ public class ArrayListTransferHandler extends TransferHandler {
     }
 
     public int getSourceActions(JComponent c) {
+        if(c.getName()!=null && c.getName().equals("jListFrame")){
+            return COPY;
+        }       
         return COPY_OR_MOVE;
     }
 

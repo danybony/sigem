@@ -62,11 +62,12 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
         int numProcessi = configurazioneAmbiente.getNumProcessi();
         
+        arrayListHandler = new ArrayListTransferHandler();
+        
         for(int i=0; i<numProcessi; i++){
             jTabbedPaneProcessi.addTab("Processo "+i, creaPannelloProcesso(i));
-        }
+        }        
         
-        arrayListHandler = new ArrayListTransferHandler();
         DefaultListModel list1Model = new DefaultListModel();
         list1Model.addElement("0 (list 1)");
         list1Model.addElement("1 (list 1)");
@@ -133,11 +134,6 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI");
 
         jTabbedPaneProcessi.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        jTabbedPaneProcessi.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jTabbedPaneProcessiStateChanged(evt);
-            }
-        });
 
         jButtonNuovoFrame.setText("Nuova");
         jButtonNuovoFrame.addActionListener(new java.awt.event.ActionListener() {
@@ -147,6 +143,12 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         });
 
         jListFrame.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jListFrame.setName("jListFrame"); // NOI18N
+        jListFrame.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListFrameValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListFrame);
 
         javax.swing.GroupLayout jPanelFrameLayout = new javax.swing.GroupLayout(jPanelFrame);
@@ -281,13 +283,13 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnullaActionPerformed
 
-    private void jTabbedPaneProcessiStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneProcessiStateChanged
-        
-    }//GEN-LAST:event_jTabbedPaneProcessiStateChanged
-
     private void jButtonNuovoFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuovoFrameActionPerformed
        
     }//GEN-LAST:event_jButtonNuovoFrameActionPerformed
+
+    private void jListFrameValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListFrameValueChanged
+      System.out.println(jListFrame.getModel().getSize());
+    }//GEN-LAST:event_jListFrameValueChanged
     
     private void inizializzaConfigurazioneIniziale() throws Exception {
         confIniziale = new ConfigurazioneIniziale(configurazioneAmbiente.getBandaBusDati(),
@@ -309,8 +311,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     
     private JScrollPane creaPannelloProcesso(int IdProcesso){
         JPanel nuovoPannello = new JPanel();
-        
-        
+                
         int numIstanti = ((Integer)processi.getCombinazioneProcessi()[IdProcesso][2]).intValue();
                 
         for(int i=0; i< numIstanti; i++){
