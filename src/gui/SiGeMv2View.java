@@ -1011,9 +1011,13 @@ public class SiGeMv2View {
                     if(configurazioneIniziale!=null){
                         switch(configurazioneIniziale.getModalitaGestioneMemoria()){
                             case 1: 
-                                currView.configura(false, configurazioneIniziale.getDimensioneRAM());
+                                currView.configura(false,
+                                        configurazioneIniziale.getDimensioneRAM(),
+                                        configurazioneIniziale.getListaProcessi().size());
                             case 2:
-                                currView.configura(true, configurazioneIniziale.getDimensioneRAM());
+                                currView.configura(true,
+                                        configurazioneIniziale.getDimensioneRAM(),
+                                        configurazioneIniziale.getListaProcessi().size());
                         }
                     }
             }
@@ -1168,9 +1172,13 @@ public class SiGeMv2View {
                 if(configurazioneIniziale!=null){
                     switch(configurazioneIniziale.getModalitaGestioneMemoria()){
                         case 1: 
-                            currView.configura(false, configurazioneIniziale.getDimensioneRAM());
+                            currView.configura(false,
+                                    configurazioneIniziale.getDimensioneRAM(),
+                                    configurazioneIniziale.getListaProcessi().size());
                         case 2:
-                            currView.configura(true, configurazioneIniziale.getDimensioneRAM());
+                            currView.configura(true,
+                                    configurazioneIniziale.getDimensioneRAM(),
+                                    configurazioneIniziale.getListaProcessi().size());
                     }
                 }
             }
