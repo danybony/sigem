@@ -15,10 +15,16 @@
 package gui.dialog;
 
 import gui.SiGeMv2View;
+import java.awt.Dimension;
 import java.util.LinkedList;
-import javax.swing.JButton;
+import java.util.Vector;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import logic.parametri.ConfigurazioneIniziale;
+import logic.parametri.Id;
 import logic.parametri.Processo;
 import logic.parametri.ProcessoConPriorita;
 
@@ -34,6 +40,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     private SiGeMv2View view;
     private ConfigurazioneIniziale confIniziale;
     private LinkedList<Processo> listaProcessi;
+    private Vector<String> lista = new Vector<String>();
+    private Vector<JList> listaList = new Vector<JList>();
+    ArrayListTransferHandler arrayListHandler;
     
     /** Creates new form AssociazioneProcessiJDialog */
     public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, ProcessiJDialog proc, SiGeMv2View view) {
@@ -56,6 +65,20 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         for(int i=0; i<numProcessi; i++){
             jTabbedPaneProcessi.addTab("Processo "+i, creaPannelloProcesso(i));
         }
+        
+        arrayListHandler = new ArrayListTransferHandler();
+        DefaultListModel list1Model = new DefaultListModel();
+        list1Model.addElement("0 (list 1)");
+        list1Model.addElement("1 (list 1)");
+        list1Model.addElement("2 (list 1)");
+        list1Model.addElement("3 (list 1)");
+        list1Model.addElement("4 (list 1)");
+        list1Model.addElement("5 (list 1)");
+        list1Model.addElement("6 (list 1)");
+        jListFrame.setModel(list1Model);
+        jListFrame.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jListFrame.setTransferHandler(arrayListHandler);
+        jListFrame.setDragEnabled(true);
     }
     
     /** This method is called from within the constructor to
@@ -75,6 +98,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         jTabbedPaneProcessi = new javax.swing.JTabbedPane();
         jPanelFrame = new javax.swing.JPanel();
         jButtonNuovoFrame = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListFrame = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -115,22 +140,37 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         });
 
         jButtonNuovoFrame.setText("Nuova");
+        jButtonNuovoFrame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuovoFrameActionPerformed(evt);
+            }
+        });
+
+        jListFrame.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jScrollPane1.setViewportView(jListFrame);
 
         javax.swing.GroupLayout jPanelFrameLayout = new javax.swing.GroupLayout(jPanelFrame);
         jPanelFrame.setLayout(jPanelFrameLayout);
         jPanelFrameLayout.setHorizontalGroup(
             jPanelFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFrameLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonNuovoFrame)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGroup(jPanelFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelFrameLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jButtonNuovoFrame))
+                    .addGroup(jPanelFrameLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanelFrameLayout.setVerticalGroup(
             jPanelFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFrameLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonNuovoFrame)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -199,6 +239,10 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
+        /* Innanzitutto azzero il contatore del generatore di Id di processo*/
+        Id.resetCounter();
+        
+        /* Creo i processi */
         listaProcessi = new LinkedList<Processo>();
         if (politica.getPoliticaSchedulazione() == 6
                 || politica.getPoliticaSchedulazione() == 7
@@ -238,8 +282,12 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonAnnullaActionPerformed
 
     private void jTabbedPaneProcessiStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneProcessiStateChanged
-        System.out.println(jTabbedPaneProcessi.getSelectedIndex());
+        
     }//GEN-LAST:event_jTabbedPaneProcessiStateChanged
+
+    private void jButtonNuovoFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuovoFrameActionPerformed
+       
+    }//GEN-LAST:event_jButtonNuovoFrameActionPerformed
     
     private void inizializzaConfigurazioneIniziale() throws Exception {
         confIniziale = new ConfigurazioneIniziale(configurazioneAmbiente.getBandaBusDati(),
@@ -259,17 +307,27 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
     }
     
-    private JPanel creaPannelloProcesso(int IdProcesso){
-        
+    private JScrollPane creaPannelloProcesso(int IdProcesso){
         JPanel nuovoPannello = new JPanel();
+        
         
         int numIstanti = ((Integer)processi.getCombinazioneProcessi()[IdProcesso][2]).intValue();
                 
         for(int i=0; i< numIstanti; i++){
-            nuovoPannello.add(new JButton());
+            JList list1=new JList(new DefaultListModel());
+            list1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            list1.setTransferHandler(arrayListHandler);
+            list1.setDragEnabled(true);
+            listaList.add(list1);
+            JScrollPane list1View = new JScrollPane(list1);
+            list1View.setPreferredSize(new Dimension(100, 220));
+            nuovoPannello.add(list1View);
         }
         
-        return nuovoPannello;
+        JScrollPane nuovoScrollPane = new JScrollPane(nuovoPannello);
+        nuovoScrollPane.setPreferredSize(new Dimension(420, 270));
+        
+        return nuovoScrollPane;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -279,8 +337,10 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButtonOk;
     private javax.swing.JLabel jLabelAssociazioneProcessi;
     private javax.swing.JLabel jLabelPasso;
+    private javax.swing.JList jListFrame;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelFrame;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPaneProcessi;
     // End of variables declaration//GEN-END:variables
     
