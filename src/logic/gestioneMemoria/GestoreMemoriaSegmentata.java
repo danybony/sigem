@@ -4,9 +4,10 @@
  * Package: logic.gestioneMemoria
  * Autore: Davide Compagnin
  * Data: 29/02/2008
- * Versione: 1.7
+ * Versione: 1.9
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.9 (14/03/2008): Aggiunta la posizione in rimozione dalla RAM
  *  - v.1.8 (12/03/2008): Modifica metodo notificaProcessoTerminato, metodo Inserisci
  *                        e tolto il controllo sul caricamento massimo
  *  - v.1.7 (08/03/2008): Corretta condizione di errore sulla dimensione
@@ -163,7 +164,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             
             if ( !MemoriaRam.cerca(F) ) {
                 FrameMemoria Temp=Rimuovi( MemoriaSwap, F );
-                if (Temp!=null) Azioni.add( new Azione(4, Temp ) );
+                if (Temp!=null) Azioni.add( new Azione(4, Temp) );
                 
                 /* Segmento più grande della RAM */
                 if ( ((Segmento)F).getDimensione() > dimensione_ram ) {
@@ -176,7 +177,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                     while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() && !Errore ) {
                         Azioni.add( new Azione(0,null) );
                         FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
-                        Azioni.add( new Azione( 3, FrameRimosso ) );
+                        Azioni.add( new Azione( 3, FrameRimosso, MemoriaRam.indiceDi(Temp) ) );
                         if ( FrameRimosso.getModifica()==true ) {                                                        
                             try { 
                                   Inserisci( MemoriaSwap, FrameRimosso );
@@ -199,7 +200,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                 }
    
             }
-            else Azioni.add( new Azione( 5, F ) );
+            else Azioni.add( new Azione( 5, F, MemoriaRam.indiceDi(F) ) );
         }
         return Azioni;
     }
