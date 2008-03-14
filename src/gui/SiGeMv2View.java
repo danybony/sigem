@@ -1158,6 +1158,8 @@ public class SiGeMv2View {
             auto.join();
             
             istante = null;
+            processiEseguiti = new LinkedList<Processo>();
+            visualizzaOrdProcessi(processiEseguiti);
 
             jButtonNuovaConfigurazione.setEnabled(true);
             jButtonApriConfigurazione.setEnabled(true);
