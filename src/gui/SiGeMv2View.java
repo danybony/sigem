@@ -1272,10 +1272,10 @@ public class SiGeMv2View {
         processiEseguiti.add(pcbAttuale.getRifProcesso());
 
         visualizzaOrdProcessi(processiEseguiti);
-        try {
-            this.sleep(velocita*100);
-            currView.aggiorna(istante.getCambiamentiInMemoria());    
-            
+        try{
+        currView.aggiorna(istante.getCambiamentiInMemoria());    
+        }catch(Exception e){}
+        
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
