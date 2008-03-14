@@ -4,9 +4,10 @@
  * Package: logic.gestioneMemoria
  * Autore: Alberto Zatton
  * Data: 29/02/2008
- * Versione: 1.1
+ * Versione: 1.3
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.3 (14/03/2008): Rivisto il codice di rimuovi() e liberaMemoria()
  *  - v.1.2 (03/03/2008): Modificate tutte le occorenze del costruttore di Segmento
  *                        secondo la nuova specifica
  *                        Modificato il metodo rimuovi: ora ritorna un bool
@@ -96,17 +97,34 @@ public class RAMSegmentata extends MemoriaSegmentata{
         memoria.remove(seg);
         spazioResiduo+=seg.getDimensione();
         
+        /**Aggiungo uno spazio grande quanto il segmento tolto*/
+        memoria.add(new Segmento("spazio",seg.getDimensione(),-1));
+        
         /**Sfruttando la posizione del segmento appena tolto, compatto eventuali
          * spazi liberi adiacenti*/
-        if(pos!=0){
-            FrameMemoria frameAux1=memoria.get(pos);
-            FrameMemoria frameAux2=memoria.get(pos-1);
+        FrameMemoria frameAux1;
+        FrameMemoria frameAux2;
+        
+        if(pos+1<memoria.size()){
+            frameAux1=memoria.get(pos+1);
+            frameAux2=memoria.get(pos);
             if(frameAux1.getIdProcesso()==-1 && frameAux2.getIdProcesso()==-1) {
-                memoria.add(new Segmento("spazio",frameAux1.getDimensione()+frameAux2.getDimensione(),-1));
+                memoria.add(pos, new Segmento("spazio",frameAux1.getDimensione()+frameAux2.getDimensione(),-1));
                 memoria.remove(pos+1);
                 memoria.remove(pos+1);
             }
         }
+        if(pos>0){
+            frameAux1=memoria.get(pos-1);
+            frameAux2=memoria.get(pos);
+            if(frameAux1.getIdProcesso()==-1 && frameAux2.getIdProcesso()==-1) {
+                memoria.add(pos, new Segmento("spazio",frameAux1.getDimensione()+frameAux2.getDimensione(),-1));
+                memoria.remove(pos+1);
+                memoria.remove(pos-1);
+            }
+            
+        }
+        
         return true;
         }
         return false;
@@ -125,7 +143,18 @@ public class RAMSegmentata extends MemoriaSegmentata{
         FrameMemoria segAux1;
         FrameMemoria segAux2;
         
+        if(memoria.size()==1 && memoria.get(0).getIdProcesso()==idProcesso){
+            //Caso in cui tutta la memoria è occupata da un segmento
+            //riferito dal processo. Caso MOLTO raro ma non impossibile.
+            segAux1=memoria.get(0);
+            memoria.add(new Segmento("spazio", segAux1.getDimensione(),-1));
+            memoria.remove(segAux1);
+        }
+        
+        else{
+        
         for(int i=0;i<memoria.size()-1;i++) {
+            
             
             segAux1=memoria.get(i);
             segAux2=memoria.get(i+1);
@@ -139,9 +168,13 @@ public class RAMSegmentata extends MemoriaSegmentata{
                     
                     /**Unisco i due segmenti*/
                     memoria.add(i,new Segmento("spazio", segAux1.getDimensione()+segAux2.getDimensione(),-1));
-                    memoria.remove(i+1);
-                    memoria.remove(i+1);
                     
+                    //Se i segmenti modificati occupavano spazio, aggiungo lo spazio al totale;
+                    //in ogni caso poi elimino i segmenti, diventati ridondanti.
+                    if(segAux1.getIdProcesso()==idProcesso) spazioResiduo+=segAux1.getDimensione();
+                    memoria.remove(i+1);
+                    if(segAux2.getIdProcesso()==idProcesso) spazioResiduo+=segAux2.getDimensione();
+                    memoria.remove(i+1);
                     /**L'iterazione deve continuare da questo nuovo segmento*/
                     i=i-1;
                 }
@@ -150,10 +183,12 @@ public class RAMSegmentata extends MemoriaSegmentata{
                      * processo. Converto a spazio il segmento corrente nel caso
                      * in cui non sia piï¿½ referenziato da nessun processo*/
                     if(segAux1.getIdProcesso()==idProcesso){
+                        spazioResiduo+=segAux1.getDimensione();
                         memoria.set(i, new Segmento("spazio",segAux1.getDimensione(),-1));
                     }
                 }
             }
+        }
         }
     }
     
