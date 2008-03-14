@@ -1000,6 +1000,7 @@ public class SiGeMv2View {
     /** inizializza le viste e prepara l'applicazione per l'esecuzione della simulazione */
     public void setIstanteZero() {
             statoGui = false;
+
             if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
                     ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
                                     .getComponent();
