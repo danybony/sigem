@@ -1268,7 +1268,7 @@ public class SiGeMv2View {
         
         istante = player.primoIstante();
         processiEseguiti = new LinkedList<Processo>();
-
+/*
         PCB pcbAttuale;
         ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
                             .getComponent();
@@ -1286,7 +1286,7 @@ public class SiGeMv2View {
             try {
                 this.sleep(velocita*100);
                 currView.aggiorna(istante.getCambiamentiInMemoria());
-        
+  */      
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
