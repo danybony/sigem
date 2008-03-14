@@ -19,10 +19,22 @@ import java.awt.geom.*;
 public class SquareDraw {
 	Shape square;
         Color color;
+        private int xCoordText;
+        private int yCoordText;
+        private int xCoord;
+        private int yCoord;
+        int altezza;
+        private String indirizzoFrame;
 
-    public SquareDraw(int altezza, int lunghezza, int xCoord, int yCoord, Color color) {
-        square = new Rectangle2D.Double(altezza, lunghezza, xCoord, yCoord);
+    public SquareDraw(int xCoord, int yCoord, int lunghezza, int altezza, Color color, String text) {
+        square = new Rectangle2D.Double(xCoord, yCoord, lunghezza, altezza);
         this.color = color;
+        xCoordText=xCoord+(lunghezza/2)-(text.length()*5);
+        yCoordText=yCoord+(altezza/2)+6;
+        this.xCoord=xCoord;
+        this.yCoord=yCoord;
+        indirizzoFrame=text;
+        this.altezza=altezza;
     }
 
     public Color getColor() {
@@ -39,6 +51,30 @@ public class SquareDraw {
 
     public void setSquare(Shape square) {
         this.square = square;
+    }
+    
+    public int getxCoordText(){
+        return xCoordText;
+    }
+    
+    public int getyCoordText(){
+        return yCoordText;
+    }
+    
+    public int getxCoord(){
+        return xCoord;
+    }
+    
+    public int getyCoord(){
+        return yCoord;
+    }
+    
+    public String getText(){
+        return indirizzoFrame;
+    }
+    
+    public int getAltezza(){
+        return altezza;
     }
 }
         
