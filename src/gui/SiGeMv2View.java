@@ -1169,6 +1169,8 @@ public class SiGeMv2View {
             auto.join();
             
             istante = null;
+            player.primoIstante();
+            player.istantePrecedente();
             processiEseguiti = new LinkedList<Processo>();
             visualizzaOrdProcessi(processiEseguiti);
             
@@ -1387,6 +1389,20 @@ public class SiGeMv2View {
     private void simulazioneAvanti() {
         
         istante = player.istanteSuccessivo();
+        
+        if(istante!=null){
+            PCB pcbAttuale;
+            ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                                .getComponent();
+
+            pcbAttuale = istante.getProcessoInEsecuzione();
+            processiEseguiti.add(pcbAttuale.getRifProcesso());
+
+            visualizzaOrdProcessi(processiEseguiti);
+            try{
+            currView.aggiorna(istante.getCambiamentiInMemoria());    
+            }catch(Exception e){}
+        }
         
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
