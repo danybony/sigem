@@ -1015,8 +1015,15 @@ public class SiGeMv2View {
             if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
                     ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
                                     .getComponent();
-                    currView.inizializzaViewFrame((configurazioneIniziale.getDimensioneRAM() / configurazioneIniziale.getDimensionePagina()), 
-                                                    1);
+                    
+                    if(configurazioneIniziale!=null){
+                        switch(configurazioneIniziale.getModalitaGestioneMemoria()){
+                            case 1: 
+                                currView.configura(false, configurazioneIniziale.getDimensioneRAM());
+                            case 2:
+                                currView.configura(true, configurazioneIniziale.getDimensioneRAM());
+                        }
+                    }
             }
 
             creaPlayer();
@@ -1078,6 +1085,8 @@ public class SiGeMv2View {
         auto = new Thread(){
             public void run(){
                 PCB pcbAttuale;
+                ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                                    .getComponent();
                 while(istante!=null && statoGui){
                     Double t =((Double)scegliVelocita.getValue()).doubleValue();
                     velocita = (int) (t * 10);
@@ -1090,8 +1099,10 @@ public class SiGeMv2View {
                     }
                     visualizzaOrdProcessi(processiEseguiti);
                     try {   
+                        currView.aggiorna(istante.getCambiamentiInMemoria());
                         this.sleep(velocita*100);
                     } catch (InterruptedException ie) {}
+                      catch (Exception e){}
                     
                     istante = player.istanteSuccessivo();
                 }
