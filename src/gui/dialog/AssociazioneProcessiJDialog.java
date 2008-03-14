@@ -365,6 +365,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         return nuovoScrollPane;
     }
     
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;
     private javax.swing.JButton jButtonIndietro;
