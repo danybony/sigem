@@ -1090,11 +1090,10 @@ public class SiGeMv2View {
                         processiEseguiti.add(null);
                     }
                     visualizzaOrdProcessi(processiEseguiti);
-                    try {   
-                        currView.aggiorna(istante.getCambiamentiInMemoria());
+                    try {
                         this.sleep(velocita*100);
-                    } catch (InterruptedException ie) {}
-                      catch (Exception e){}
+                        currView.aggiorna(istante.getCambiamentiInMemoria());
+                    }catch (Exception e){e.printStackTrace();}
                     if(statoGui){
                         istante = player.istanteSuccessivo();
                     }
@@ -1165,6 +1164,21 @@ public class SiGeMv2View {
             istante = null;
             processiEseguiti = new LinkedList<Processo>();
             visualizzaOrdProcessi(processiEseguiti);
+            
+            // Svuota l'interfaccia della RAM
+            if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
+                    ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                                    .getComponent();
+                    
+                if(configurazioneIniziale!=null){
+                    switch(configurazioneIniziale.getModalitaGestioneMemoria()){
+                        case 1: 
+                            currView.configura(false, configurazioneIniziale.getDimensioneRAM());
+                        case 2:
+                            currView.configura(true, configurazioneIniziale.getDimensioneRAM());
+                    }
+                }
+            }
 
             jButtonNuovaConfigurazione.setEnabled(true);
             jButtonApriConfigurazione.setEnabled(true);
@@ -1253,6 +1267,25 @@ public class SiGeMv2View {
     private void simulazioneInizio() {
         
         istante = player.primoIstante();
+        processiEseguiti = new LinkedList<Processo>();
+
+        PCB pcbAttuale;
+        ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                            .getComponent();
+        while(istante!=null && statoGui){
+            Double t =((Double)scegliVelocita.getValue()).doubleValue();
+            velocita = (int) (t * 10);
+            pcbAttuale = istante.getProcessoInEsecuzione();
+            if (pcbAttuale != null){
+                processiEseguiti.add(pcbAttuale.getRifProcesso());
+            }
+            else{
+                processiEseguiti.add(null);
+            }
+            visualizzaOrdProcessi(processiEseguiti);
+            try {
+                this.sleep(velocita*100);
+                currView.aggiorna(istante.getCambiamentiInMemoria());
         
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
