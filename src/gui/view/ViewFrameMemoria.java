@@ -370,6 +370,7 @@ public class ViewFrameMemoria extends JPanel {
      *      Numero di processi della simulazione
      */
     public void configura(boolean sceltaGestioneMemoria, int dimMemoria, int numProcessi){
+        pagineSquare.clear();
         pag_seg=sceltaGestioneMemoria;
         this.dimMemoria=dimMemoria;
         this.numProcessi=numProcessi;
@@ -384,6 +385,7 @@ public class ViewFrameMemoria extends JPanel {
                                             " ")
                                        );
         }
+        repaint();
         
     }
 
