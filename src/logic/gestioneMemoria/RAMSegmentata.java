@@ -228,4 +228,19 @@ public class RAMSegmentata extends MemoriaSegmentata{
     public boolean cerca(FrameMemoria seg){
         return memoria.contains(seg);
     }
+    
+    /**
+     * Metodo che, dato un frame memoria, ritorna la sua posizione all'interno
+     * della RAM.
+     * 
+     * @param seg
+     *      Il riferimento al segmento di cui si vuole trovare l'indice
+     * @return
+     *      L'indice del segmento riferito da seg (se è presente in RAM),
+     *      altrimenti ritorna -1
+     * 
+     */
+    public int indiceDi(FrameMemoria seg){
+        return memoria.indexOf(seg);
+    }
 }
