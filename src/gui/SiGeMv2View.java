@@ -1600,7 +1600,7 @@ public class SiGeMv2View {
                 istantiAllEvento = null;
         }
         
-        if(istantiAllEvento != null){
+        if(istantiAllEvento != null){ 
 
             PCB pcbAttuale;
             ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
