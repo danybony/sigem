@@ -17,7 +17,7 @@ import gui.SiGeMv2View;
 import javax.swing.SpinnerListModel;
 /**
  *
- * @author  Jordy
+ * @author  Giordano Cariani
  */
 public class PoliticheJDialog extends javax.swing.JDialog {
     

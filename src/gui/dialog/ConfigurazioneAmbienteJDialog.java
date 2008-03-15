@@ -16,6 +16,8 @@ package gui.dialog;
 
 import javax.swing.SpinnerListModel;
 import gui.SiGeMv2View;
+import gui.utility.PopUpError;
+import java.awt.Color;
 
 /**
  *
@@ -202,6 +204,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
+
        setNumProcessi(Integer.parseInt(jSpinnerProcessi.getValue().toString()));
        setDimensioneRAM(Integer.parseInt(jSpinnerDimensioneRAM.getValue().toString()));
        setBandaBusDati(Integer.parseInt(jSpinnerBandaBusDati.getValue().toString()));
@@ -210,10 +213,14 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
        setTempoAccessoDisco(Integer.parseInt(jSpinnerTempoAccessoDisco.getValue().toString()));
        setTempoContextSwitch(Integer.parseInt(jSpinnerTempoContextSwitch.getValue().toString()));
 
-       this.setVisible(false);
-       
-       PoliticheJDialog politicheJDialog = new PoliticheJDialog(view.getFrame(), true, this, view);
-       politicheJDialog.setVisible(true);
+       if (controlliLogici()) {
+            jSpinnerDimensionePagina.setBackground(Color.WHITE);
+            jSpinnerDimensioneRAM.setBackground(Color.WHITE);
+            jSpinnerDimensioneAreaSWAP.setBackground(Color.WHITE);
+           this.setVisible(false);
+           PoliticheJDialog politicheJDialog = new PoliticheJDialog(view.getFrame(), true, this, view);
+           politicheJDialog.setVisible(true);
+       }
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
     private void jButtonAnnullaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnullaActionPerformed
@@ -379,5 +386,27 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     public void setTempoContextSwitch(int tempoContextSwitch) {
         this.tempoContextSwitch = tempoContextSwitch;
     }
-  
+    
+    private boolean controlliLogici() {
+        PopUpError popUp;
+        if (getDimensionePagina() > getDimensioneRAM()) {
+            popUp = new PopUpError(view.getFrame(), true,"Dimensione pagina maggiore di dimensione RAM");
+            popUp.setVisible(true);
+            jSpinnerDimensionePagina.setBackground(Color.RED);
+            jSpinnerDimensioneRAM.setBackground(Color.RED);
+            jSpinnerDimensioneAreaSWAP.setBackground(Color.WHITE);
+            return false;
+        }
+        
+        if (getDimensioneAreaSWAP() < getDimensionePagina()) {
+            popUp = new PopUpError(view.getFrame(), true,"Dimensione area Swap minore di dimensione pagina");
+            popUp.setVisible(true);
+            jSpinnerDimensionePagina.setBackground(Color.RED);
+            jSpinnerDimensioneAreaSWAP.setBackground(Color.RED);
+            jSpinnerDimensioneRAM.setBackground(Color.WHITE);
+            return false;
+        }
+        
+        return true;
+    }
 }
