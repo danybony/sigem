@@ -27,6 +27,7 @@ import java.awt.Font;
 import java.util.LinkedList;
 import java.util.Vector;
 import logic.gestioneMemoria.Azione;
+import logic.gestioneMemoria.FrameMemoria;
 
 public class ViewFrameMemoria extends JPanel {
     /** Necessario per il Serializable. */
@@ -77,68 +78,7 @@ public class ViewFrameMemoria extends JPanel {
         disegnaPagine(g);
     }
     
-    /**
-     * Inizializza il JPanel e crea eventualemnte le pagine
-     * 
-     * @param totale numero totale di pagine da costruire
-     * 
-     * @param dim  dimensione della pagina impostata dall'utente
-     */
-    /**public void inizializzaViewFrame(int nPagine, int dimPagine) {
-        
-        pagineSquare.clear();
-        
-        creaPagine(100, dimPagine);
-        
-        repaint();
-        
-    }*/
     
-    /**
-     * Costruisce le pagine. 
-     * Le pagine pari sono colorate di blue mentre quelle dispari cyan
-     * 
-     * @param totale numero totale di pagine da costruire
-     * 
-     * @param dim  dimensione della pagina impostata dall'utente
-     */
-    /*private void creaPagine(int totale, int dim) {
-            int fisso = 48;
-            int spostamento=5;
-            int coordX=0, coordY=10, indice=0;
-            /*
-            for (int i=0; i<totale; i++) {
-                int dimensione = dim*fisso;
-                if (i==0)
-                    pagineSquare.add(new SquareDraw(0, coordY, dimensione, dimensione, Color.lightGray));
-                else {
-                    if (i%5==0) {
-                        indice =0;
-                        coordX=0;
-                        coordY+= fisso+spostamento;
-                    }           
-                    coordX = (indice*fisso)+(indice*spostamento);
-                    if (i%2==0)
-                        pagineSquare.add(new SquareDraw(coordX, coordY, dimensione, dimensione, Color.lightGray));
-                    else
-                        pagineSquare.add(new SquareDraw(coordX, coordY, dimensione, dimensione, Color.GRAY));
-                }
-                indice++;
-             */
-            /*for (int i=0; i<totale; i++) {
-                int dimensione = dim*fisso;
-                if (i==0)
-                    pagineSquare.add(new SquareDraw(coordX, coordY, dimensione, dimensione, Color.lightGray));
-                else if (i%6==0) {
-                        indice=0;
-                        coordX=0;
-                        coordY+= fisso+spostamento;
-                }           
-                coordX = (indice*fisso)+(indice*spostamento);
-                pagineSquare.add(new SquareDraw(coordX, coordY, dimensione, dimensione, Color.lightGray));
-                indice++;
-            }*/
-     
     
     /**
      * Disegna tutte le pagine. 
@@ -174,7 +114,7 @@ public class ViewFrameMemoria extends JPanel {
      *      Lancia un'eccezione nel caso in cui la memoria non sia ancora stata configurata
      */
     public void aggiorna(LinkedList<Azione> cambiamentiInMemoria) throws Exception{
-        if(dimMemoria==0) throw new Exception();
+        /*if(dimMemoria==0) throw new Exception();
         
         Azione azione=null;
         SquareDraw aux=null;
@@ -329,37 +269,65 @@ public class ViewFrameMemoria extends JPanel {
                 
                        
             }
+        }*/
+        int coordX=10;
+        int larghezza=LATO*6;
+        int coordY=10;
+        int altezza=0;
+        Color color;
+        String text;
+        FrameMemoria frame;
+        Azione azione=cambiamentiInMemoria.getLast();
+        Vector<FrameMemoria> memoria=azione.getMemoriaRAM();
+        pagineSquare.clear();
+        for(int i=0; i<memoria.size(); i++){
+            frame=memoria.get(i);
+            if (pag_seg==false){
+                coordY=((i/6)*LATO+5*(i/6))+10;
+                coordX=(i%6)*LATO+5*(i%6);
+                if(frame.getInRAM()==false){
+                    color=Color.LIGHT_GRAY;
+                    text=" ";
+                }
+                else{
+                    color=ViewUtility.colorFactory(numProcessi, frame.getIdProcesso());
+                    text=frame.getIndirizzo();
+                }
+                pagineSquare.add(new SquareDraw(coordX,
+                                                  coordY,
+                                                  LATO,
+                                                  LATO,
+                                                  color,
+                                                  text)
+                                );
+            
+            }
+            else{
+                altezza=altezza=(ALTEZZA*frame.getDimensione())/dimMemoria;
+                if(frame.getIdProcesso()==-1){
+                    color=Color.LIGHT_GRAY;
+                    text=" ";
+                }
+                else{
+                    color=ViewUtility.colorFactory(numProcessi, frame.getIdProcesso());
+                    text=frame.getIndirizzo();
+                }
+                pagineSquare.add(new SquareDraw(coordX,
+                                                  coordY,
+                                                  larghezza,
+                                                  altezza,
+                                                  color,
+                                                  text)
+            
+                                                  );
+                coordY+=altezza;
+            }
         }
         
         repaint();
     }
     
-    /*private Color assegnaColore(int processo) {
-        switch(processo){
-            case 0: return Color.BLUE;
-            case 1:return Color.CYAN;
-            case 2:return Color.GREEN;
-            case 3:return Color.MAGENTA;
-            case 4:return Color.ORANGE;
-            case 5:return Color.PINK;
-            case 6:return Color.RED;
-            case 7:return Color.YELLOW;
-            case 8:return Color.CYAN.brighter();
-            case 9:return Color.BLUE.brighter();
-            case 10:return Color.GREEN.brighter();
-            case 11:return Color.MAGENTA.brighter();
-            case 12:return Color.ORANGE.brighter();
-            case 13:return Color.PINK.brighter();
-            case 14:return Color.RED.brighter();
-            case 15:return Color.YELLOW.brighter();
-            case 16:return Color.BLUE;
-            case 17:return Color.BLUE;
-            case 18:return Color.BLUE;
-            case 19:return Color.BLUE;
-            case 20:return Color.BLUE;
-            default: return Color.WHITE;
-        }
-    }*/
+
     
     /**Metodo per impostare il grafico come visualizzatore di pagine o segmenti<br>
      * @param sceltaGestioneMemoria
@@ -374,7 +342,7 @@ public class ViewFrameMemoria extends JPanel {
         pag_seg=sceltaGestioneMemoria;
         this.dimMemoria=dimMemoria;
         this.numProcessi=numProcessi;
-        if(sceltaGestioneMemoria==true){
+        /*if(sceltaGestioneMemoria==true){
             pagineSquare.add(
                              0,
                              new SquareDraw(5,
@@ -385,7 +353,7 @@ public class ViewFrameMemoria extends JPanel {
                                             " ")
                                        );
         }
-        repaint();
+        repaint*/
         
     }
 
