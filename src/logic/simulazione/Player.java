@@ -398,9 +398,10 @@ public class Player{
      */
     public LinkedList<Istante> precedenteIstanteSignificativo(Evento e){
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
+        istanteSuccessivo();
+        Istante attuale = istantePrecedente();
         Istante nuovo = istantePrecedente();
-        //Istante attuale = 
-        
+
         int idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
         boolean trovato = false;
         while(nuovo!=null && !trovato){
@@ -439,8 +440,13 @@ public class Player{
             stat.AggiornaStatistiche(listaIstantiDaRitornare, false);
             return listaIstantiDaRitornare;
         }
-        else
+        else{
+            //ripristino l'istante attuale
+            while(attuale!=nuovo){
+                nuovo = istanteSuccessivo();
+            }
             return null;
+        }
     }
     
     /**
@@ -476,6 +482,8 @@ public class Player{
      */
     public LinkedList<Istante> prossimoIstanteSignificativo(Evento e){
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
+        istantePrecedente();
+        Istante attuale = istanteSuccessivo();
         Istante nuovo = istanteSuccessivo();
         int idProcessoSuccessivo = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
         boolean trovato = false;
@@ -515,8 +523,13 @@ public class Player{
             stat.AggiornaStatistiche(listaIstantiDaRitornare, true);
             return listaIstantiDaRitornare;
         }
-        else
+        else{
+            //ripristino l'istante attuale
+            while(attuale!=nuovo){
+                nuovo = istantePrecedente();
+            }
             return null;
+        }
     }
     
     /**
