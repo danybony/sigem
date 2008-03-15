@@ -375,7 +375,7 @@ public class Player{
      * <table border="1">
      *  <tr align="center"><td><b>Parametro</b></td><td><b>Descrizione</b></td></tr>
      *  <tr align="center"><td>FAULT</td><td colspan="2">Fault in RAM</td></tr>
-     *  <tr align="center"><td>SWITCH</td><td>Context-switch</td></tr>
+     *  <tr align="center"><td>SWITCH</td><td>Context-switch (non implementato)</td></tr>
      *  <tr align="center"><td>FULL_RAM</td><td>Memoria centrale esaurita</td></tr>
      *  <tr align="center"><td>FULL_SWAP (non ancora implementato)</td><td>Area di swap piena</td></tr>
      *  <tr align="center"><td>END_PROC</td><td>Processo terminato</td></tr>
@@ -399,16 +399,10 @@ public class Player{
     public LinkedList<Istante> precedenteIstanteSignificativo(Evento e){
         System.out.println("_H");
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
-        istanteSuccessivo();
-        Istante attuale = istantePrecedente();
+        //istanteSuccessivo();
+        //Istante attuale = istantePrecedente();
+        //System.out.print(" T " + attuale.getProcessoInEsecuzione().getRifProcesso().getId()  + " T ");
         Istante nuovo = istantePrecedente();
-        int idProcessoPrecedente = -1;
-                
-       
-        if(nuovo!=null){
-            idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
-        }
-        System.out.print(idProcessoPrecedente + " _ ");
         
         boolean trovato = false;
         while(nuovo!=null && !trovato){
@@ -420,8 +414,9 @@ public class Player{
                         trovato=true;
                     break;
                 case SWITCH:
-                    if(idProcessoPrecedente!=nuovo.getProcessoInEsecuzione().getRifProcesso().getId())
-                        trovato=true;
+                    System.out.println("Funzione non ancora implementata");
+                    //if(idProcessoPrecedente!=nuovo.getProcessoInEsecuzione().getRifProcesso().getId())
+                      //  trovato=true;
                     break;
                 case FULL_RAM:
                     if(nuovo.getFull_RAM())
@@ -442,7 +437,6 @@ public class Player{
             }
             if(!trovato){
                 System.out.print(" y");
-                idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
                 nuovo = istantePrecedente();
             }
         }
@@ -453,9 +447,9 @@ public class Player{
         }
         else{
             //ripristino l'istante attuale
-            while(attuale!=nuovo){
-                nuovo = istanteSuccessivo();
-            }
+           // while(attuale!=nuovo){
+             //   nuovo = istanteSuccessivo();
+            //}
             System.out.println("_Z2");
             return null;
         }
@@ -472,7 +466,7 @@ public class Player{
      * <table border="1">
      *  <tr align="center"><td><b>Parametro</b></td><td><b>Descrizione</b></td></tr>
      *  <tr align="center"><td>FAULT</td><td colspan="2">Fault in RAM</td></tr>
-     *  <tr align="center"><td>SWITCH</td><td>Context-switch</td></tr>
+     *  <tr align="center"><td>SWITCH</td><td>Context-switch (non implementato)</td></tr>
      *  <tr align="center"><td>FULL_RAM</td><td>Memoria centrale esaurita</td></tr>
      *  <tr align="center"><td>FULL_SWAP</td><td>Area di swap piena</td></tr>
      *  <tr align="center"><td>END_PROC</td><td>Processo terminato</td></tr>
@@ -495,14 +489,9 @@ public class Player{
      */
     public LinkedList<Istante> prossimoIstanteSignificativo(Evento e){
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
-        istantePrecedente();
-        Istante attuale = istanteSuccessivo();
+        //istantePrecedente();
+        //Istante attuale = istanteSuccessivo();
         Istante nuovo = istanteSuccessivo();
-        int idProcessoSuccessivo = -1;
-        
-        if(nuovo!=null){
-            idProcessoSuccessivo = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
-        }
         
         boolean trovato = false;
         while(nuovo!=null && !trovato){
@@ -513,8 +502,9 @@ public class Player{
                         trovato=true;
                     break;
                 case SWITCH:
-                    if(idProcessoSuccessivo!=nuovo.getProcessoInEsecuzione().getRifProcesso().getId())
-                        trovato=true;
+                    System.out.println("Funzione non ancora implementata");
+                    //if(idProcessoSuccessivo!=nuovo.getProcessoInEsecuzione().getRifProcesso().getId())
+                        //trovato=true;
                     break;
                 case FULL_RAM:
                     if(nuovo.getFull_RAM())
@@ -534,7 +524,6 @@ public class Player{
                     break;
             }
             if(!trovato){
-                idProcessoSuccessivo = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
                 nuovo = istanteSuccessivo();
             }
         }
@@ -544,9 +533,9 @@ public class Player{
         }
         else{
             //ripristino l'istante attuale
-            while(attuale!=nuovo){
-                nuovo = istantePrecedente();
-            }
+           // while(attuale!=nuovo){
+             //   nuovo = istantePrecedente();
+            //}
             return null;
         }
     }
