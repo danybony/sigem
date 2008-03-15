@@ -4,16 +4,17 @@
  * Package: logic.gestioneMemoria
  * Autore: Davide Compagnin
  * Data: 29/02/2008
- * Versione: 1.1
+ * Versione: 1.3
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.3 (15/03/2008): Aggiunto riferimento alla RAM
  *  - v.1.2 (12/03/2008): Modifica strutturale classe Azione, inserimento azione 6
  *  - v.1.1 (02/03/2008): Definiti nuovi valori per le azioni
  *  - v.1.0 (29/02/2008): Prima Scrittura
  */
 
 package logic.gestioneMemoria;
-
+import java.util.Vector;
 /**
  *
  * @author Davide Compagnin
@@ -44,6 +45,9 @@ public class Azione {
      */
     private FrameMemoria Frame;
     
+    
+    private Vector<FrameMemoria> MemoriaRAM;
+    
     /**
      * Costruttore
      * @param T
@@ -52,8 +56,8 @@ public class Azione {
      *   Frame conivolto nell'azione
      */
     
-    public Azione( int T, FrameMemoria F ) {
-        TipoAzione=T; Frame=F;
+    public Azione( Vector<FrameMemoria> MemoriaRAM, int T, FrameMemoria F ) {
+        TipoAzione=T; Frame=F; this.MemoriaRAM=MemoriaRAM;
     }
     /**
      * Costruttore
@@ -65,8 +69,8 @@ public class Azione {
      *   Posizione di inserimento
      */
     
-    public Azione( int T, FrameMemoria F, int P ) {
-        this(T,F); 
+    public Azione( Vector<FrameMemoria> MemoriaRAM, int T, FrameMemoria F, int P ) {
+        this(MemoriaRAM,T,F); 
         Pos=P;
     }
     /**
@@ -92,5 +96,13 @@ public class Azione {
      */
     public int getPosizione() { 
         return Pos; 
+    }
+    /**
+     * Ritorna un riferimento alla memoria RAM
+     * @return
+     *   Posizione
+     */
+    public Vector<FrameMemoria> getMemoriaRAM() {
+        return MemoriaRAM;
     }
 }

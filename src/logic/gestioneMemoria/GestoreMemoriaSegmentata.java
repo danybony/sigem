@@ -77,7 +77,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
      */
     public LinkedList<Azione> notificaProcessoTerminato(int id) {
         LinkedList<Azione> Azioni=new LinkedList();
-        Azioni.add( new Azione(6,null,id) ); /*Creo l'azione con la terminazione del processo*/
+        Azioni.add( new Azione(MemoriaRam.getSituazione(),6,null,id) ); /*Creo l'azione con la terminazione del processo*/
         MemoriaRam.liberaMemoria(id);
         MemoriaSwap.liberaMemoria(id);
         return Azioni;
@@ -172,27 +172,27 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             
             if ( !MemoriaRam.cerca(F) ) {
                 FrameMemoria Temp=Rimuovi( MemoriaSwap, F );
-                if (Temp!=null) Azioni.add( new Azione(4, Temp) );
+                if (Temp!=null) Azioni.add( new Azione(MemoriaRam.getSituazione(),4, Temp) );
                 
                 /* Segmento più grande della RAM */
                 if ( ((Segmento)F).getDimensione() > dimensione_ram ) {
                     Errore=true;
-                    Azioni.add( new Azione(-1,null) );
+                    Azioni.add( new Azione(MemoriaRam.getSituazione(),-1,null) );
                 }
                 
                 else {
                     
                     while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() && !Errore ) {
-                        Azioni.add( new Azione(0,null) );
+                        Azioni.add( new Azione(MemoriaRam.getSituazione(),0,null) );
                         FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
-                        Azioni.add( new Azione( 3, FrameRimosso, MemoriaRam.indiceDi(Temp) ) );
+                        Azioni.add( new Azione(MemoriaRam.getSituazione(),3, FrameRimosso, MemoriaRam.indiceDi(Temp) ) );
                         if ( FrameRimosso.getModifica()==true ) {                                                        
                             try { 
                                   Inserisci( MemoriaSwap, FrameRimosso );
-                                  Azioni.add( new Azione( 2, FrameRimosso ) );
+                                  Azioni.add( new Azione(MemoriaRam.getSituazione(),2, FrameRimosso ) );
                             }
                             catch ( MemoriaEsaurita SwapEsaurita ) {
-                                Azioni.add( new Azione(-1,null) );
+                                Azioni.add( new Azione(MemoriaRam.getSituazione(),-1,null) );
                                 Errore=true;
                             }
 
@@ -201,14 +201,14 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                     }
                     if ( Errore==false ) 
                         try { 
-                            Azioni.add( new Azione( 1, F, Inserisci( MemoriaRam, F ) ) ); 
+                            Azioni.add( new Azione(MemoriaRam.getSituazione(),1, F, Inserisci( MemoriaRam, F ) ) ); 
                             
                         }
                         catch ( MemoriaEsaurita Impossibile ) { }
                 }
    
             }
-            else Azioni.add( new Azione( 5, F, MemoriaRam.indiceDi(F) ) );
+            else Azioni.add( new Azione(MemoriaRam.getSituazione(),5, F, MemoriaRam.indiceDi(F) ) );
         }
         return Azioni;
     }

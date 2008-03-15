@@ -92,7 +92,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
      */
     public LinkedList<Azione> notificaProcessoTerminato(int id) {
         LinkedList<Azione> Azioni=new LinkedList();
-        Azioni.add( new Azione(6,null,id) );
+        Azioni.add( new Azione(MemoriaRam.getSituazione(),6,null,id) );
         MemoriaRam.liberaMemoria(id);
         MemoriaSwap.liberaMemoria(id);
         return Azioni;
@@ -149,7 +149,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         /* Controllo se la dimensione della pagina è nulla, 
          * in qual caso ritorno l'azione di errore */
         if ( PaginaNulla==true ) { 
-            ListaAzioni.add( new Azione(-1,null) );
+            ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),-1,null) );
             return ListaAzioni;
         }
         
@@ -167,23 +167,23 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
             if ( !MemoriaRam.cerca(F) ) { // Pagina non in ram
                 try {
                     FrameMemoria Temp=rimuovi( MemoriaSwap, F );
-                    if (Temp!=null) ListaAzioni.add( new Azione(4, Temp ) );
-                    ListaAzioni.add( new Azione(1, F, inserisci(MemoriaRam,F,UT) ) );
+                    if (Temp!=null) ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),4, Temp ) );
+                    ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),1, F, inserisci(MemoriaRam,F,UT) ) );
                 }
                 catch ( MemoriaEsaurita RamEsaurita ) {
                     try {
-                        ListaAzioni.add( new Azione(0,null) );
+                        ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),0,null) );
                         FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
-                        ListaAzioni.add( new Azione(3, Frame_Rimosso, MemoriaRam.indiceDi(Frame_Rimosso) ) );
+                        ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),3, Frame_Rimosso, MemoriaRam.indiceDi(Frame_Rimosso) ) );
                         if ( Frame_Rimosso.getModifica()==true ) {
-                            ListaAzioni.add( new Azione(2, Frame_Rimosso, 
+                            ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),2, Frame_Rimosso, 
                                     inserisci(MemoriaSwap,Frame_Rimosso,UT) ) );
                         }
-                        ListaAzioni.add( new Azione(1, F, inserisci(MemoriaRam,F,UT) ) );
+                        ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),1, F, inserisci(MemoriaRam,F,UT) ) );
                     }
                     catch ( MemoriaEsaurita SwapEsaurita ) {
                         // EXIT() situazione grave (memoria finita)
-                        ListaAzioni.add( new Azione(-1,null) );
+                        ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),-1,null) );
                         Errore=true;
                     }
                 }
@@ -191,7 +191,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
             else { // gia in ram
                 int Posizione=MemoriaRam.indiceDi(F);
                 PoliticaRimpiazzo.AggiornaEntry(Posizione, F.getModifica() );
-                ListaAzioni.add( new Azione(5,F,Posizione) );
+                ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),5,F,Posizione) );
             }
         }
         return ListaAzioni;
