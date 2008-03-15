@@ -54,6 +54,15 @@ abstract class Memoria{
      *      Identificativo univoco del processo che ha finito di eseguire
      */
     public abstract void liberaMemoria(int idProcesso);
+    
+    /**
+     * Metodo che ritorna la configurazione della memoria
+     * @return
+     *      Una lista di riferimenti FrameMemoria i cui oggetti formano la memoria
+     */
+    public Vector<FrameMemoria> getSituazione(){
+        return memoria;
+    }
 
 
 }
