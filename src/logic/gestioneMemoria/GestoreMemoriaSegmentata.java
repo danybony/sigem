@@ -114,7 +114,15 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
     private int Inserisci( MemoriaSegmentata M, FrameMemoria F ) throws MemoriaEsaurita {
         FrameMemoria FrameLibero=null;
         if ( M instanceof RAMSegmentata ) {
-            FrameLibero=PoliticaAllocazione.Alloca( F,((RAMSegmentata)M).getFrameLiberi() );
+            //Aggiungere il vector di posizioni
+            Vector<FrameMemoria> Liberi=((RAMSegmentata)M).getFrameLiberi();
+            int Pos[]=new int[Liberi.size()];
+            if (PoliticaAllocazione instanceof NextFit) {                
+                for (int i=0; i<Liberi.size(); i++)
+                Pos[i]=((RAMSegmentata)M).indiceDi( Liberi.elementAt(i) );
+            }
+            else
+            FrameLibero=PoliticaAllocazione.Alloca( F, Liberi, Pos );
         }
         return M.aggiungi(F, FrameLibero );
     }

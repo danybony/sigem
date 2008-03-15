@@ -29,8 +29,10 @@ public interface IAllocazione {
      *  Frame da allocare
      * @param Liberi
      *  Lista dei Frame liberi
+     * @param Posizioni
+     *  Array delle posizione dei segmenti liberi (per next-fit)
      * @return
      *  Frame sul quale si è inserito
      */
-    public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi );
+    public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi, int Posizioni[] );
 }

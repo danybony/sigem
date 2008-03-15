@@ -24,6 +24,7 @@ import java.util.Vector;
  * @author Davide Compagnin
  */
 public class NextFit implements IAllocazione {
+    private int P=-1;
     /**
      * Alloca un frame secondo la politica NextFit
      * @param F
@@ -33,14 +34,21 @@ public class NextFit implements IAllocazione {
      * @return
      *   Ritorna il frame sul quale è avvenuto l'inserimento.
      */
-    public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi ) {
-        boolean trovato=false; int i=0;
-        while ( i<Liberi.size() && trovato==false ) {
-            if ( Liberi.elementAt(i).getDimensione() >= F.getDimensione() )
+    public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi, int Posizioni[] ) {
+        int i=0,dim=Liberi.size();
+        while( P<=Posizioni[i] && i<dim ) i++;
+        boolean trovato=false;
+        int j=i%dim; 
+        while( j<dim && !trovato )
+            if ( Liberi.elementAt(j).getDimensione() >= F.getDimensione() )
                 trovato=true;
-            else i++;
-        }
-        if ( trovato ) return Liberi.elementAt(i);
-        else return null;
+            else j++;
+        if ( !trovato )
+            for( j=0; j<dim && !trovato; j++ )
+                if ( Liberi.elementAt(j).getDimensione() >= F.getDimensione() )
+                trovato=true;
+            
+        P=j%dim;
+        return Liberi.elementAt(P);
     }
 }

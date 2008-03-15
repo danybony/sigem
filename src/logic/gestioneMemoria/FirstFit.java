@@ -28,7 +28,7 @@ public class FirstFit implements IAllocazione {
      * @return
      *   Ritorna il frame sul quale è avvenuto l'inserimento.
      */
-    public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi ) {
+    public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi, int Posizioni[] ) {
         boolean trovato=false; int i=0;
         while ( i<Liberi.size() && trovato==false ) {
             if ( Liberi.elementAt(i).getDimensione() >= F.getDimensione() )
