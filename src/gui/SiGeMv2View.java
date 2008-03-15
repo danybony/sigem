@@ -1297,7 +1297,12 @@ public class SiGeMv2View {
                             .getComponent();
         
         pcbAttuale = istante.getProcessoInEsecuzione();
-        processiEseguiti.add(pcbAttuale.getRifProcesso());
+        if(pcbAttuale==null){
+            processiEseguiti.add(PROC_VUOTO);
+        }    
+        else{
+            processiEseguiti.add(pcbAttuale.getRifProcesso());
+        }
 
         visualizzaOrdProcessi(processiEseguiti);
         try{
@@ -1404,7 +1409,12 @@ public class SiGeMv2View {
                                 .getComponent();
 
             pcbAttuale = istante.getProcessoInEsecuzione();
-            processiEseguiti.add(pcbAttuale.getRifProcesso());
+            if(pcbAttuale==null){
+                processiEseguiti.add(PROC_VUOTO);
+            }    
+            else{
+                processiEseguiti.add(pcbAttuale.getRifProcesso());
+            }
 
             visualizzaOrdProcessi(processiEseguiti);
             try{
@@ -1459,7 +1469,12 @@ public class SiGeMv2View {
         for(int i = 0; i < istantiAllaFine.size(); i++){
             istante = istantiAllaFine.get(i);
             pcbAttuale = istante.getProcessoInEsecuzione();
-            processiEseguiti.add(pcbAttuale.getRifProcesso());
+            if(pcbAttuale==null){
+                processiEseguiti.add(PROC_VUOTO);
+            }    
+            else{
+                processiEseguiti.add(pcbAttuale.getRifProcesso());
+            }
             try{
                 currView.aggiorna(istante.getCambiamentiInMemoria());    
             }catch(Exception e){}
@@ -1617,7 +1632,12 @@ public class SiGeMv2View {
             for(int i = 0; i < istantiAllEvento.size(); i++){
                 istante = istantiAllEvento.get(i);
                 pcbAttuale = istante.getProcessoInEsecuzione();
-                processiEseguiti.add(pcbAttuale.getRifProcesso());
+                if(pcbAttuale==null){
+                    processiEseguiti.add(PROC_VUOTO);
+                }    
+                else{
+                    processiEseguiti.add(pcbAttuale.getRifProcesso());
+                }
                 try{
                     currView.aggiorna(istante.getCambiamentiInMemoria());    
                 }catch(Exception e){}
