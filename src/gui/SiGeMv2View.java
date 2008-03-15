@@ -485,7 +485,7 @@ public class SiGeMv2View {
             jFileItemModificaConfigurazione.setEnabled(false);
             jFileItemModificaConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-
+                        modificaConfigurazione();
                     }
             });
             fileMenu.add(jFileItemModificaConfigurazione);
@@ -749,10 +749,10 @@ public class SiGeMv2View {
             });
             jButtonSalvaConfigurazione.setToolTipText("Salva una simulazione su disco");
 
-            jButtonModificaConfigurazione = new JButton(IconStylosoft.getGeneralIcon("save")); // modificare icona
+            jButtonModificaConfigurazione = new JButton(IconStylosoft.getGeneralIcon("mod")); // modificare icona
             jButtonModificaConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-
+                        modificaConfigurazione();
                     }
             });
             jButtonModificaConfigurazione.setToolTipText("Modifica la" +
@@ -820,7 +820,7 @@ public class SiGeMv2View {
             jButtonSimulazioneFine.setToolTipText("Porta la simulazione all'istante finale");
 
             
-            jButtonIndietroSignificativo = new JButton(IconStylosoft.getGeneralIcon("rew"));
+            jButtonIndietroSignificativo = new JButton(IconStylosoft.getGeneralIcon("prevSign"));
             jButtonIndietroSignificativo.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     simulazioneSignificativoPrecedente(
@@ -841,7 +841,7 @@ public class SiGeMv2View {
                                    "Arrivo di un nuovo processo"}));
             ComboBoxSignificativo.setToolTipText("Evento significativo");
 
-            jButtonAvantiSignificativo = new JButton(IconStylosoft.getGeneralIcon("ffwd"));
+            jButtonAvantiSignificativo = new JButton(IconStylosoft.getGeneralIcon("nextSign"));
             jButtonAvantiSignificativo.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     simulazioneSignificativoSuccessivo(
@@ -862,9 +862,9 @@ public class SiGeMv2View {
             scegliVelocita.setToolTipText("Velocita' di avanzamento della simulazione");
             
 
-            jButtonHelp = new JButton(IconStylosoft.getGeneralIcon("help"));
+            //jButtonHelp = new JButton(IconStylosoft.getGeneralIcon("help"));
             //jButtonHelp.addActionListener(new CSH.DisplayHelpFromSource(hb));
-            jButtonHelp.setToolTipText("Apre la finestra di aiuto");
+            //jButtonHelp.setToolTipText("Apre la finestra di aiuto");
 
             toolBar.setRollover(true);
             toolBar.add(jButtonNuovaConfigurazione);
@@ -897,7 +897,7 @@ public class SiGeMv2View {
             
             toolBar.addSeparator(new java.awt.Dimension(30, 12));
 
-            toolBar.add(jButtonHelp);
+            //toolBar.add(jButtonHelp);
 
             // Stato iniziale dei pulsanti
             jButtonSalvaConfigurazione.setEnabled(false);
@@ -1555,8 +1555,7 @@ public class SiGeMv2View {
             ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
                                 .getComponent();
 
-            for(int i = 0 ; i < istantiAllEvento.size(); i++){
-                System.out.print(istantiAllEvento.get(i).getProcessoInEsecuzione().getRifProcesso().getId() + " - ");
+            for(int i = 0 ; i < istantiAllEvento.size()-1; i++){
                 istante = istantiAllEvento.get(i);
                 processiEseguiti.removeLast();
                 try{
@@ -1725,6 +1724,11 @@ public class SiGeMv2View {
 
     public void setConfigurazioneIniziale(ConfigurazioneIniziale configurazioneIniziale) {
         this.configurazioneIniziale = configurazioneIniziale;
+    }
+    
+    public void modificaConfigurazione(){
+        configurazioneAmbiente = new ConfigurazioneAmbienteJDialog(frame, true, this, this.configurazioneIniziale);
+        configurazioneAmbiente.setVisible(true);
     }
 
         
