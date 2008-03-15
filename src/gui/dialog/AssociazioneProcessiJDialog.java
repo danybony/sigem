@@ -338,15 +338,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                                                   politica.getTimeSlice());
         
 
-        view.setConfigurazioneIniziale(confIniziale);
-        
-        for(int i=0;i<listaProcessi.size();i++){
-            for(int j=0;j<listaProcessi.get(i).getAccessi().size();j++){
-                Processo.Accesso temp = (Processo.Accesso) listaProcessi.get(i).getAccessi().get(j);
-                System.out.print(listaProcessi.get(i).getNome()+" - "+ temp.getRisorsa().getIndirizzo() +" - "+temp.getIstanteRichiesta());
-            }
-                
-        }
+        view.setConfigurazioneIniziale(confIniziale);        
         
     }
     
