@@ -49,12 +49,20 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     private Vector<FrameMemoria> listaFrame = new Vector<FrameMemoria>();
     private ArrayListTransferHandler arrayListHandler;
     
-    /* Modello per la lista delle pagine */
+    /**
+     * Modello per la lista delle pagine
+     */
     DefaultListModel listaFrameModel = new DefaultListModel();
     
-    /* Contatore dei frameMemoria. Serve per generare un numero sempre nuovo
+    /** 
+     * Contatore dei frameMemoria. Serve per generare un numero sempre nuovo
      per l'indirizzo del nuovo frame */
     private int contatoreFrame=0;
+    
+    /**
+     * Rappresenta 
+     */
+    private int ultimoProcessoSelezionato = 0;
     
     /** Creates new form AssociazioneProcessiJDialog */
     public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, ProcessiJDialog proc, SiGeMv2View view) {
@@ -140,6 +148,11 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI");
 
         jTabbedPaneProcessi.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jTabbedPaneProcessi.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPaneProcessiStateChanged(evt);
+            }
+        });
 
         jButtonNuovoFrame.setText("Nuova");
         jButtonNuovoFrame.addActionListener(new java.awt.event.ActionListener() {
@@ -299,6 +312,10 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
         contatoreFrame++;
     }//GEN-LAST:event_jButtonNuovoFrameActionPerformed
+
+    private void jTabbedPaneProcessiStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneProcessiStateChanged
+        aggiornaListaFrame();
+    }//GEN-LAST:event_jTabbedPaneProcessiStateChanged
     
     private void inizializzaConfigurazioneIniziale() throws Exception {
         confIniziale = new ConfigurazioneIniziale(configurazioneAmbiente.getBandaBusDati(),
@@ -365,7 +382,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         return nuovoScrollPane;
     }
     
-    
+    private void aggiornaListaFrame(){
+        
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;
