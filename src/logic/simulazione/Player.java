@@ -401,8 +401,12 @@ public class Player{
         istanteSuccessivo();
         Istante attuale = istantePrecedente();
         Istante nuovo = istantePrecedente();
-
-        int idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
+        int idProcessoPrecedente = -1;
+                
+        if(nuovo!=null){
+            idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
+        }
+        
         boolean trovato = false;
         while(nuovo!=null && !trovato){
             listaIstantiDaRitornare.add(nuovo);
@@ -432,9 +436,10 @@ public class Player{
                         trovato=true;
                     break;
             }
-            idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
-            nuovo = istantePrecedente();
-                    
+            if(!trovato){
+                idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
+                nuovo = istantePrecedente();
+            }
         }
         if(trovato){
             stat.AggiornaStatistiche(listaIstantiDaRitornare, false);
@@ -485,7 +490,12 @@ public class Player{
         istantePrecedente();
         Istante attuale = istanteSuccessivo();
         Istante nuovo = istanteSuccessivo();
-        int idProcessoSuccessivo = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
+        int idProcessoSuccessivo = -1;
+        
+        if(nuovo!=null){
+            idProcessoSuccessivo = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
+        }
+        
         boolean trovato = false;
         while(nuovo!=null && !trovato){
             listaIstantiDaRitornare.add(nuovo);
@@ -515,9 +525,10 @@ public class Player{
                         trovato=true;
                     break;
             }
-            idProcessoSuccessivo = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
-            nuovo = istanteSuccessivo();
-                    
+            if(!trovato){
+                idProcessoSuccessivo = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
+                nuovo = istanteSuccessivo();
+            }
         }
         if(trovato){
             stat.AggiornaStatistiche(listaIstantiDaRitornare, true);
