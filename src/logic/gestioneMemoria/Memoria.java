@@ -61,7 +61,7 @@ abstract class Memoria{
      *      Una lista di riferimenti FrameMemoria i cui oggetti formano la memoria
      */
     public Vector<FrameMemoria> getSituazione(){
-        return memoria;
+        return new Vector<FrameMemoria>(memoria);
     }
 
 
