@@ -7,6 +7,7 @@
  * Versione: 1.9
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.2.0 (14/03/2008): Corretto bug in rimuovi frame
  *  - v.1.9 (14/03/2008): Aggiunta la posizione in rimozione dalla RAM
  *  - v.1.8 (12/03/2008): Modifica metodo notificaProcessoTerminato, metodo Inserisci
  *                        e tolto il controllo sul caricamento massimo
@@ -91,8 +92,8 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
      *   Segmento da rimuovere
      */
     private FrameMemoria RimuoviFrame( Vector<FrameMemoria> Frames ) {
-        FrameMemoria F=null; 
-        for(int i=0;i<Frames.size();i++) {
+        FrameMemoria F=Frames.elementAt(0); 
+        for(int i=1;i<Frames.size();i++) {
             if( ((Segmento)Frames.elementAt(i)).getTempoInRam() < ((Segmento)F).getTempoInRam() )
                 F=Frames.elementAt(i);
         }
