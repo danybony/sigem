@@ -33,6 +33,17 @@ public class ModelloProcessi extends AbstractTableModel {
             fireTableStructureChanged();
         }
         
+        public ModelloProcessi(Object table[][]) {
+            nomiColonna = new String[] {"Nome", "Tempo di arrivo", "Tempo di esecuzione" };
+            contenutiRighe=new Object[table.length][3];
+            for (int i=0; i<table.length; i++) {
+                contenutiRighe[i][0]=new String((String) table[i][0]);
+                contenutiRighe[i][1]=new Integer((Integer) table[i][1]);
+                contenutiRighe[i][2]=new Integer((Integer) table[i][2]);
+            }
+            fireTableStructureChanged();
+        }
+
         public int getColumnCount() {
             return nomiColonna.length;
         }

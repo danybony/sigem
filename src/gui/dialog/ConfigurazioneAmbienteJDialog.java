@@ -38,6 +38,12 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     private int tempoAccessoDisco;
     private int bandaBusDati;
     private SiGeMv2View view;
+    private PoliticheJDialog politicheJDialog;
+    private ProcessiJDialog processi;
+    private PoliticheJDialog politiche;
+    private AssociazioneProcessiJDialog associazione;
+    
+    private boolean modifica = false;
     
 
     /** Creates new form ConfigurazioneAmbienteJDialog */
@@ -53,6 +59,36 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         initSpinnerBandaBusDati();
     }
     
+    public ConfigurazioneAmbienteJDialog(java.awt.Frame parent, boolean modal, SiGeMv2View view,
+            ConfigurazioneAmbienteJDialog conf, PoliticheJDialog politiche, ProcessiJDialog processi,
+            AssociazioneProcessiJDialog associazione) {
+        super(parent, modal);
+        this.view = view;
+        initComponents();
+        setNumProcessi(conf.getNumProcessi());
+        setDimensioneAreaSWAP(conf.getDimensioneAreaSWAP());
+        setDimensionePagina(conf.getDimensionePagina());
+        setDimensioneRAM(conf.getDimensioneRAM());
+        setTempoAccessoDisco(conf.getTempoAccessoDisco());
+        setTempoContextSwitch(conf.getTempoContextSwitch());
+        setBandaBusDati(conf.getBandaBusDati());
+        initJSpinnerProcessi();
+        initSpinnerDimensioneRAM();
+        initSpinnerDimensioneSWAP();
+        initSpinnerPagine();
+        initSpinnerTempi();
+        initSpinnerBandaBusDati();
+        impostaJSpinnerProcessi();
+        impostaSpinnerDimensioneRAM();
+        impostaSpinnerDimensioneSWAP();
+        impostaSpinnerPagine();
+        impostaSpinnerTempi();
+        impostaSpinnerBandaBusDati();
+        this.processi=processi;
+        this.politiche=politiche;
+        this.associazione=associazione;
+        modifica=true;
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -214,11 +250,14 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
        setTempoContextSwitch(Integer.parseInt(jSpinnerTempoContextSwitch.getValue().toString()));
 
        if (controlliLogici()) {
-            jSpinnerDimensionePagina.setBackground(Color.WHITE);
-            jSpinnerDimensioneRAM.setBackground(Color.WHITE);
-            jSpinnerDimensioneAreaSWAP.setBackground(Color.WHITE);
+           jSpinnerDimensionePagina.setBackground(Color.WHITE);
+           jSpinnerDimensioneRAM.setBackground(Color.WHITE);
+           jSpinnerDimensioneAreaSWAP.setBackground(Color.WHITE);
            this.setVisible(false);
-           PoliticheJDialog politicheJDialog = new PoliticheJDialog(view.getFrame(), true, this, view);
+           if (modifica)
+               politicheJDialog = new PoliticheJDialog(view.getFrame(), true, this, view, politiche, processi, associazione);
+           else
+               politicheJDialog = new PoliticheJDialog(view.getFrame(), true, this, view);
            politicheJDialog.setVisible(true);
        }
     }//GEN-LAST:event_jButtonAvantiActionPerformed
@@ -329,6 +368,31 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     
     private void initSpinnerBandaBusDati() {
         jSpinnerBandaBusDati.setModel(new SpinnerListModel(impostaBUS()));
+    }
+    
+    private void impostaJSpinnerProcessi() {
+        jSpinnerProcessi.setValue(getNumProcessi());
+    }
+    
+    private void impostaSpinnerDimensioneRAM() {
+        jSpinnerDimensioneRAM.setValue(getDimensioneRAM());
+    }
+    
+    private void impostaSpinnerDimensioneSWAP() {
+        jSpinnerDimensioneAreaSWAP.setValue(getDimensioneAreaSWAP());
+    }
+    
+    private void impostaSpinnerPagine() {
+        jSpinnerDimensionePagina.setValue(getDimensionePagina());
+    }
+    
+    private void impostaSpinnerTempi() {
+        jSpinnerTempoContextSwitch.setValue(getTempoContextSwitch());
+        jSpinnerTempoAccessoDisco.setValue(getTempoAccessoDisco());
+    }
+    
+    private void impostaSpinnerBandaBusDati() {
+        
     }
     
     public int getNumProcessi() {

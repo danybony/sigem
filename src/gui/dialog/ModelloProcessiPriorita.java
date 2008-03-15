@@ -34,6 +34,18 @@ public class ModelloProcessiPriorita extends AbstractTableModel {
             fireTableStructureChanged();
         }
         
+       public ModelloProcessiPriorita(Object table[][]) {
+            nomiColonna = new String[] {"Nome", "Tempo di arrivo", "Tempo di esecuzione", "Priorita'" };
+            contenutiRighe=new Object[table.length][4];
+            for (int i=0; i<table.length; i++) {
+                contenutiRighe[i][0]=new String((String) table[i][0]);
+                contenutiRighe[i][1]=new Integer((Integer) table[i][1]);
+                contenutiRighe[i][2]=new Integer((Integer) table[i][2]);
+                contenutiRighe[i][3]=new Integer((Integer) table[i][3]);
+            }
+            fireTableStructureChanged();
+        }
+        
         public int getColumnCount() {
             return nomiColonna.length;
         }

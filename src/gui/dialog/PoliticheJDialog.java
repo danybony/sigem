@@ -23,6 +23,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     
     private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
     private ProcessiJDialog processi;
+    private AssociazioneProcessiJDialog associazione;
     private SiGeMv2View view;
     
     private int gestioneMemoria;
@@ -30,13 +31,15 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     private int politicaSchedulazione;
     private int timeSlice;
     
+    boolean modifica = false;
+    
     /** Creates new form PoliticheJDialog */
     public PoliticheJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, SiGeMv2View view) {
         super(parent, modal);
         configurazioneAmbiente = conf;
         this.view = view;
         initComponents();
-        initJSpinnerProcessi();
+        initJSpinnerTimeSlice();
         jLabelTimeSlice.setVisible(false);
         jSpinnerTimeSlice.setVisible(false);
         setTimeSlice(0);
@@ -45,6 +48,46 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         jComboBoxRimpiazzoSegmenti.setEnabled(false);
     }
     
+   public PoliticheJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, SiGeMv2View view,
+           PoliticheJDialog politiche, ProcessiJDialog processi, AssociazioneProcessiJDialog associazione) {
+        super(parent, modal);
+        configurazioneAmbiente = conf;
+        this.view = view;
+        setGestioneMemoria(politiche.getGestioneMemoria());
+        setPolitica(politiche.getPolitica());
+        setPoliticaSchedulazione(politiche.getPoliticaSchedulazione());
+        setTimeSlice(politiche.getTimeSlice());
+        initComponents();
+        initJSpinnerTimeSlice();
+        impostaSpinnerTimeSlice();
+        if (politicaSchedulazione == 4
+        ||  politicaSchedulazione == 5
+        ||  politicaSchedulazione == 6) {
+            jLabelTimeSlice.setVisible(true);
+            jSpinnerTimeSlice.setVisible(true);
+        } else {
+            jLabelTimeSlice.setVisible(false);
+            jSpinnerTimeSlice.setVisible(false);
+        }
+
+        if (getGestioneMemoria() == 1) {
+           jComboBoxRimpiazzoSegmenti.setEnabled(false);
+           jComboBoxRimpiazzoPagine.setEnabled(true);
+           jComboBoxRimpiazzoPagine.setSelectedIndex(0);
+           gestionePoliticaPagineMod();
+        } else if (getGestioneMemoria() == 2){
+           jComboBoxRimpiazzoPagine.setEnabled(false);
+           jComboBoxRimpiazzoSegmenti.setEnabled(true);
+           jComboBoxRimpiazzoSegmenti.setSelectedIndex(1);
+           gestionePoliticaSegmentiMod();
+        }
+
+        gestionePoliticaSchedulazioneMod();
+        this.processi=processi;
+        this.associazione=associazione;
+        modifica=true;
+    }
+   
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -101,7 +144,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         jLabelSchedulazione.setText("Politica di schedulazione");
 
         jComboBoxSchedulazione.setFont(new java.awt.Font("Tahoma", 0, 12));
-        jComboBoxSchedulazione.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "First-Come-First-Served (FCFS)", "Priorità (P)", "Round Robin (RR)", "Round Robin con priorità (RRP)", "Round Robin con priorità e prerilascio (RRPP)", "Shortest Job First (SJF)", "Shortest Remaining Time Next (SRTN)" }));
+        jComboBoxSchedulazione.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "First-Come-First-Served (FCFS)", "Shortest Job First (SJF)", "Shortest Remaining Time Next (SRTN)", "Round Robin (RR)", "Round Robin con priorità (RRP)", "Round Robin con priorità e prerilascio (RRPP)", "Priorità (P)" }));
         jComboBoxSchedulazione.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxSchedulazioneActionPerformed(evt);
@@ -144,7 +187,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPasso.setText("Passo 2 di 4");
 
-        jLabelTimeSlice.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelTimeSlice.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelTimeSlice.setText("Time Slice");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -188,12 +231,11 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jSpinnerTimeSlice, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jSpinnerTimeSlice, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelSchedulazione)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelSchedulazione)
-                .addContainerGap(244, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +282,10 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
         setTimeSlice(Integer.parseInt(jSpinnerTimeSlice.getValue().toString()));
         this.setVisible(false);
-        processi = new ProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, this, view);
+        if (modifica)
+            processi = new ProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, this, view, processi, associazione);
+        else
+            processi = new ProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, this, view);
         processi.setVisible(true);
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
@@ -389,10 +434,26 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         return tempiTimeSlice;
     }
    
-    private void initJSpinnerProcessi() {
+    private void initJSpinnerTimeSlice() {
         jSpinnerTimeSlice.setModel(new SpinnerListModel(impostaJSpinnerTimeSlice()));
     }
+    
+    private void impostaSpinnerTimeSlice() {
+        jSpinnerTimeSlice.setValue(getTimeSlice());
+    }
+    
+    private void gestionePoliticaPagineMod() {
+        jComboBoxRimpiazzoPagine.setSelectedIndex(getPolitica()-1);
+    }
 
+    private void gestionePoliticaSegmentiMod() {
+        jComboBoxRimpiazzoSegmenti.setSelectedIndex(getPolitica()-1);
+    }
+    
+    private void gestionePoliticaSchedulazioneMod() {
+        jComboBoxSchedulazione.setSelectedIndex(getPoliticaSchedulazione()  -1);
+    }
+    
     public int getTimeSlice() {
         return timeSlice;
     }

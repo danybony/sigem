@@ -29,6 +29,8 @@ public class ProcessiJDialog extends javax.swing.JDialog {
     private SiGeMv2View view;
     
     private Object[][] combinazioneProcessi;
+    
+    boolean modifica = false;
    
     /** Creates new form ProcessiJDialog */
     public ProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, PoliticheJDialog pol, SiGeMv2View view) {
@@ -40,6 +42,18 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         initTable(); 
     }
     
+    public ProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, PoliticheJDialog pol, SiGeMv2View view,
+            ProcessiJDialog processi, AssociazioneProcessiJDialog associazione) {
+        super(parent, modal);
+        configurazioneAmbiente = conf;
+        politiche = pol;
+        this.view = view;
+        initComponents();
+        initTable(); 
+        this.setCombinazioneProcessi(processi.getCombinazioneProcessi());
+        this.associazioneProcessi = associazione;
+        modifica = true;
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -132,12 +146,18 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         if (politiche.getPoliticaSchedulazione() == 6
         ||  politiche.getPoliticaSchedulazione() == 7
         ||  politiche.getPoliticaSchedulazione() == 5) {
-            jTableProcessi = new javax.swing.JTable(new ModelloProcessiPriorita(configurazioneAmbiente.getNumProcessi()));
+            if (modifica)
+                jTableProcessi = new javax.swing.JTable(new ModelloProcessiPriorita(combinazioneProcessi));
+            else
+                jTableProcessi = new javax.swing.JTable(new ModelloProcessiPriorita(configurazioneAmbiente.getNumProcessi()));
             setPrioritaColonna(jTableProcessi.getColumnModel().getColumn(3));
         }
-        else
-            jTableProcessi = new javax.swing.JTable(new ModelloProcessi(configurazioneAmbiente.getNumProcessi()));
-        
+        else {
+            if (modifica)
+                jTableProcessi = new javax.swing.JTable(new ModelloProcessi(combinazioneProcessi));
+            else
+                jTableProcessi = new javax.swing.JTable(new ModelloProcessi(configurazioneAmbiente.getNumProcessi()));
+        }
         jTableProcessi.setName("jTableProcessi"); // NOI18N
         jScrollPaneProcessi.setViewportView(jTableProcessi);
 
