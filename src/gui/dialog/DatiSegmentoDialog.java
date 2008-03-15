@@ -29,6 +29,14 @@ public class DatiSegmentoDialog extends javax.swing.JDialog {
         jSliderDimensione.setMaximum(massimaDimensione);
     }
     
+    public DatiSegmentoDialog(java.awt.Frame parent, boolean modal, int massimaDimensione, 
+            int dimensioneAttuale) {
+        super(parent, modal);
+        initComponents();
+        jSliderDimensione.setMaximum(massimaDimensione);
+        jSliderDimensione.setValue(dimensioneAttuale);
+    }
+    
     /** @return the return status of this dialog - one of RET_OK or RET_CANCEL */
     public int getReturnStatus() {
         return returnStatus;

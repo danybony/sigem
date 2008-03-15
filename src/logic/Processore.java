@@ -161,6 +161,8 @@ public class Processore {
                 
                 SwapPiena = controllaSwapPiena(istruzioni);
                 
+              //  Vector<FrameMemoria> MemoriaRAM = gestoreMemoria.getMemoria();
+                
                 simulazione.add(creaIstante(corrente,istruzioni,nuovoProcesso,SwapPiena));
                 //da aggiungere il PCB dell'ultimo terminato
         

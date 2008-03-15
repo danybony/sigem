@@ -18,7 +18,6 @@ import gui.SiGeMv2View;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
@@ -126,6 +125,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         jButtonNuovoFrame = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListFrame = new javax.swing.JList();
+        jButtonElimina = new javax.swing.JButton();
+        jButtonModifica = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -176,15 +177,31 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         jListFrame.setName("jListFrame"); // NOI18N
         jScrollPane1.setViewportView(jListFrame);
 
+        jButtonElimina.setText("Elimina");
+        jButtonElimina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminaActionPerformed(evt);
+            }
+        });
+
+        jButtonModifica.setText("Modifica Dimensione");
+        jButtonModifica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelFrameLayout = new javax.swing.GroupLayout(jPanelFrame);
         jPanelFrame.setLayout(jPanelFrameLayout);
         jPanelFrameLayout.setHorizontalGroup(
             jPanelFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFrameLayout.createSequentialGroup()
+            .addGroup(jPanelFrameLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonNuovoFrame, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+                .addGroup(jPanelFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(jButtonNuovoFrame, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(jButtonElimina, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(jButtonModifica, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelFrameLayout.setVerticalGroup(
@@ -193,8 +210,12 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jButtonNuovoFrame)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonElimina)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonModifica)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -217,7 +238,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(233, Short.MAX_VALUE)
+                .addContainerGap(244, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabelPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,7 +252,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                         .addGap(164, 164, 164))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jLabelAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                .addComponent(jLabelAssociazioneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -345,6 +366,37 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     private void jTabbedPaneProcessiStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneProcessiStateChanged
         aggiornaListaFrame();
     }//GEN-LAST:event_jTabbedPaneProcessiStateChanged
+
+    private void jButtonEliminaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminaActionPerformed
+        int[] indici = jListFrame.getSelectedIndices();
+        for(int i = indici.length-1; i>-1 ; i--){
+            listaFrameModel.removeElementAt(indici[i]);
+        }
+}//GEN-LAST:event_jButtonEliminaActionPerformed
+
+    private void jButtonModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificaActionPerformed
+        int indiceSelezione = jListFrame.getSelectedIndex();
+        
+        Segmento segmentoSelezionato = (Segmento)estraiFrame((String)listaFrameModel.get(indiceSelezione));
+        
+        int dimensioneAttuale = segmentoSelezionato.getDimensione();
+        
+        DatiSegmentoDialog datiSegmentoDialog = new DatiSegmentoDialog(view.getFrame(), true, 
+                                                        configurazioneAmbiente.getDimensioneRAM(),
+                                                        dimensioneAttuale);
+            datiSegmentoDialog.setVisible(true);
+            
+            int risultato = datiSegmentoDialog.getReturnStatus();
+            
+            if(risultato == DatiSegmentoDialog.RET_OK){                
+                
+                segmentoSelezionato.setDimensione(datiSegmentoDialog.getDimensione());         
+            
+            }
+            Segmento segmentoSelezionato2 = (Segmento)estraiFrame((String)listaFrameModel.get(indiceSelezione));
+        
+        System.out.print(segmentoSelezionato2.getDimensione());
+}//GEN-LAST:event_jButtonModificaActionPerformed
     
     private void inizializzaConfigurazioneIniziale() throws Exception {
         confIniziale = new ConfigurazioneIniziale(configurazioneAmbiente.getBandaBusDati(),
@@ -472,7 +524,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         }
         
     }
-    
+       
     /**
      * Metodo che restituisce iil FrameMemoria rappresentato da una stringa passata
      * per parametro, all'interno di una JList.
@@ -516,7 +568,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;
+    private javax.swing.JButton jButtonElimina;
     private javax.swing.JButton jButtonIndietro;
+    private javax.swing.JButton jButtonModifica;
     private javax.swing.JButton jButtonNuovoFrame;
     private javax.swing.JButton jButtonOk;
     private javax.swing.JLabel jLabelAssociazioneProcessi;
