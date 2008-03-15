@@ -399,7 +399,7 @@ public class Player{
     public LinkedList<Istante> precedenteIstanteSignificativo(Evento e){
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
         Istante nuovo = istantePrecedente();
-        Istante attuale = 
+        //Istante attuale = 
         
         int idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
         boolean trovato = false;
