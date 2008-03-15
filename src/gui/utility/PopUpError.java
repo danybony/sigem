@@ -3,7 +3,7 @@
  * Nome file: PopUpError.java
  * Package: gui.utility
  * Autore: Giordano Cariani
- * Data: 15w/03/2008
+ * Data: 15/03/2008
  * Versione: 1.0
  * Licenza: open-source
  * Registro delle modifiche: *  
