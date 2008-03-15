@@ -1,12 +1,13 @@
 /*
  * Azienda: Stylosoft
  * Nome file: PoliticheJDialog.java
- * Package: gui.dialog.java
+ * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 02/03/2008
- * Versione: 1.0
+ * Data: 15/03/2008
+ * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche: *  
+ *  - v.1.2 (15/03/2008): Inserita gestione modifica configurazione
  *  - v.1.1 (02/03/2008): migliorata la gestione delle variabili private
  *                        inserita label "passo 2 di 4"
  *  - v.1.0 (01/03/2008): Creazione JDialog e impostazione grafica

@@ -3,10 +3,12 @@
  * Nome file: ProcessiJDialog.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 02/03/2008
- * Versione: 1.0
+ * Data: 15/03/2008
+ * Versione: 1.3
  * Licenza: open-source
- * Registro delle modifiche: *  
+ * Registro delle modifiche: * 
+ *  - v.1.3 (15/03/2008): Inserita gestione modifica configurazione
+ *  - v.1.2 (05/03/2008): Inserita gestione processi con priorita' 
  *  - v.1.1 (02/03/2008): inserita label "passo 3 di 4"
  *  - v.1.0 (01/03/2008): Creazione JDialog e impostazione grafica
  */

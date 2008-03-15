@@ -3,10 +3,11 @@
  * Nome file: ModelloProcessi.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 24/02/2008
- * Versione: 1.0
+ * Data: 15/03/2008
+ * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche: *  
+ *  - v.1.1 (15/03/2008): Inserita gestione modifica configurazione
  *  - v.1.0 (24/02/2008): Creazione modello di tabella
  */
 
