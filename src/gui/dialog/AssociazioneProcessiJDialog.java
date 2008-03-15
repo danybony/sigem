@@ -27,6 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import logic.gestioneMemoria.FrameMemoria;
 import logic.gestioneMemoria.Pagina;
+import logic.gestioneMemoria.Segmento;
 import logic.parametri.ConfigurazioneIniziale;
 import logic.parametri.Id;
 import logic.parametri.Processo;
@@ -312,9 +313,25 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             
         }
         else {
-            //DA FARE CON I SEGMENTIII
-            //listaFrame.add(new Segmento());
-        
+            
+            DatiSegmentoDialog datiSegmentoDialog = new DatiSegmentoDialog(view.getFrame(), true, 
+                                                        configurazioneAmbiente.getDimensioneRAM());
+            datiSegmentoDialog.setVisible(true);
+            
+            int risultato = datiSegmentoDialog.getReturnStatus();
+            
+            if(risultato == DatiSegmentoDialog.RET_OK){
+                
+                 listaFrame.add(new Segmento(new Integer(contatoreFrame).toString(),
+                    datiSegmentoDialog.getDimensione(),0));
+            
+                 listaFrameModel.addElement("Segmento "+contatoreFrame);
+            
+            }
+            else{
+                return;
+            }
+            
         }
         
         contatoreFrame++;
