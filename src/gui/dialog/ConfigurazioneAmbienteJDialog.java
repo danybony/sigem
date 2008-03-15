@@ -18,6 +18,7 @@ import javax.swing.SpinnerListModel;
 import gui.SiGeMv2View;
 import gui.utility.PopUpError;
 import java.awt.Color;
+import logic.parametri.ConfigurazioneIniziale;
 
 /**
  *
@@ -39,9 +40,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     private int bandaBusDati;
     private SiGeMv2View view;
     private PoliticheJDialog politicheJDialog;
-    private ProcessiJDialog processi;
-    private PoliticheJDialog politiche;
-    private AssociazioneProcessiJDialog associazione;
+    private ConfigurazioneIniziale confIniziale;
     
     private boolean modifica = false;
     
@@ -60,18 +59,17 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     }
     
     public ConfigurazioneAmbienteJDialog(java.awt.Frame parent, boolean modal, SiGeMv2View view,
-            ConfigurazioneAmbienteJDialog conf, PoliticheJDialog politiche, ProcessiJDialog processi,
-            AssociazioneProcessiJDialog associazione) {
+            ConfigurazioneIniziale confIniziale) {
         super(parent, modal);
         this.view = view;
         initComponents();
-        setNumProcessi(conf.getNumProcessi());
-        setDimensioneAreaSWAP(conf.getDimensioneAreaSWAP());
-        setDimensionePagina(conf.getDimensionePagina());
-        setDimensioneRAM(conf.getDimensioneRAM());
-        setTempoAccessoDisco(conf.getTempoAccessoDisco());
-        setTempoContextSwitch(conf.getTempoContextSwitch());
-        setBandaBusDati(conf.getBandaBusDati());
+        setNumProcessi(confIniziale.getListaProcessi().size());
+        setDimensioneAreaSWAP(confIniziale.getDimensioneSwap());
+        setDimensionePagina(confIniziale.getDimensionePagina());
+        setDimensioneRAM(confIniziale.getDimensioneRAM());
+        setTempoAccessoDisco(confIniziale.getTempoAccessoDisco());
+        setTempoContextSwitch(confIniziale.getTempoContextSwitch());
+        setBandaBusDati(confIniziale.getBandaBusDati());
         initJSpinnerProcessi();
         initSpinnerDimensioneRAM();
         initSpinnerDimensioneSWAP();
@@ -84,9 +82,8 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         impostaSpinnerPagine();
         impostaSpinnerTempi();
         impostaSpinnerBandaBusDati();
-        this.processi=processi;
-        this.politiche=politiche;
-        this.associazione=associazione;
+        this.confIniziale=confIniziale;
+
         modifica=true;
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -255,7 +252,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
            jSpinnerDimensioneAreaSWAP.setBackground(Color.WHITE);
            this.setVisible(false);
            if (modifica)
-               politicheJDialog = new PoliticheJDialog(view.getFrame(), true, this, view, politiche, processi, associazione);
+               politicheJDialog = new PoliticheJDialog(view.getFrame(), true, this, view, confIniziale);
            else
                politicheJDialog = new PoliticheJDialog(view.getFrame(), true, this, view);
            politicheJDialog.setVisible(true);

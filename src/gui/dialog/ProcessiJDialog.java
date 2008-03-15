@@ -18,6 +18,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+import logic.parametri.ConfigurazioneIniziale;
 /**
  *
  * @author  Jordy
@@ -25,6 +26,7 @@ import javax.swing.table.TableColumn;
 public class ProcessiJDialog extends javax.swing.JDialog {
     private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
     private PoliticheJDialog politiche;
+    private ConfigurazioneIniziale confIniziale;
     private AssociazioneProcessiJDialog associazioneProcessi;
     private SiGeMv2View view;
     
@@ -43,15 +45,14 @@ public class ProcessiJDialog extends javax.swing.JDialog {
     }
     
     public ProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, PoliticheJDialog pol, SiGeMv2View view,
-            ProcessiJDialog processi, AssociazioneProcessiJDialog associazione) {
+            ConfigurazioneIniziale confIniziale) {
         super(parent, modal);
         configurazioneAmbiente = conf;
         politiche = pol;
         this.view = view;
         initComponents();
         initTable(); 
-        this.setCombinazioneProcessi(processi.getCombinazioneProcessi());
-        this.associazioneProcessi = associazione;
+        this.confIniziale=confIniziale;
         modifica = true;
     }
     /** This method is called from within the constructor to
@@ -147,14 +148,14 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         ||  politiche.getPoliticaSchedulazione() == 7
         ||  politiche.getPoliticaSchedulazione() == 5) {
             if (modifica)
-                jTableProcessi = new javax.swing.JTable(new ModelloProcessiPriorita(combinazioneProcessi));
+                jTableProcessi = new javax.swing.JTable(new ModelloProcessiPriorita(confIniziale.getListaProcessi()));
             else
                 jTableProcessi = new javax.swing.JTable(new ModelloProcessiPriorita(configurazioneAmbiente.getNumProcessi()));
             setPrioritaColonna(jTableProcessi.getColumnModel().getColumn(3));
         }
         else {
             if (modifica)
-                jTableProcessi = new javax.swing.JTable(new ModelloProcessi(combinazioneProcessi));
+                jTableProcessi = new javax.swing.JTable(new ModelloProcessi(confIniziale.getListaProcessi()));
             else
                 jTableProcessi = new javax.swing.JTable(new ModelloProcessi(configurazioneAmbiente.getNumProcessi()));
         }

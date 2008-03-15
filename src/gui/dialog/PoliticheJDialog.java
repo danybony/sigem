@@ -15,6 +15,7 @@
 package gui.dialog;
 import gui.SiGeMv2View;
 import javax.swing.SpinnerListModel;
+import logic.parametri.ConfigurazioneIniziale;
 /**
  *
  * @author  Giordano Cariani
@@ -23,7 +24,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     
     private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
     private ProcessiJDialog processi;
-    private AssociazioneProcessiJDialog associazione;
+    private ConfigurazioneIniziale confIniziale;
     private SiGeMv2View view;
     
     private int gestioneMemoria;
@@ -49,14 +50,14 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     }
     
    public PoliticheJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, SiGeMv2View view,
-           PoliticheJDialog politiche, ProcessiJDialog processi, AssociazioneProcessiJDialog associazione) {
+           ConfigurazioneIniziale confIniziale) {
         super(parent, modal);
         configurazioneAmbiente = conf;
         this.view = view;
-        setGestioneMemoria(politiche.getGestioneMemoria());
-        setPolitica(politiche.getPolitica());
-        setPoliticaSchedulazione(politiche.getPoliticaSchedulazione());
-        setTimeSlice(politiche.getTimeSlice());
+        setGestioneMemoria(confIniziale.getModalitaGestioneMemoria());
+        setPolitica(confIniziale.getPoliticaGestioneMemoria());
+        setPoliticaSchedulazione(confIniziale.getPoliticaSchedulazioneProcessi());
+        setTimeSlice(confIniziale.getTimeSlice());
         initComponents();
         initJSpinnerTimeSlice();
         impostaSpinnerTimeSlice();
@@ -83,8 +84,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         }
 
         gestionePoliticaSchedulazioneMod();
-        this.processi=processi;
-        this.associazione=associazione;
+        this.confIniziale = confIniziale;
         modifica=true;
     }
    
@@ -283,7 +283,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         setTimeSlice(Integer.parseInt(jSpinnerTimeSlice.getValue().toString()));
         this.setVisible(false);
         if (modifica)
-            processi = new ProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, this, view, processi, associazione);
+            processi = new ProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, this, view, confIniziale);
         else
             processi = new ProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, this, view);
         processi.setVisible(true);

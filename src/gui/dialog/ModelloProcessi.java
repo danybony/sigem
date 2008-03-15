@@ -11,7 +11,9 @@
  */
 
 package gui.dialog;
+import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
+import logic.parametri.Processo;
 
 /**
  *
@@ -33,13 +35,13 @@ public class ModelloProcessi extends AbstractTableModel {
             fireTableStructureChanged();
         }
         
-        public ModelloProcessi(Object table[][]) {
+        public ModelloProcessi(LinkedList<Processo> processi) {
             nomiColonna = new String[] {"Nome", "Tempo di arrivo", "Tempo di esecuzione" };
-            contenutiRighe=new Object[table.length][3];
-            for (int i=0; i<table.length; i++) {
-                contenutiRighe[i][0]=new String((String) table[i][0]);
-                contenutiRighe[i][1]=new Integer((Integer) table[i][1]);
-                contenutiRighe[i][2]=new Integer((Integer) table[i][2]);
+            contenutiRighe=new Object[processi.size()][3];
+            for (int i=0; i<processi.size(); i++) {
+                contenutiRighe[i][0]=new String((String) processi.get(i).getNome());
+                contenutiRighe[i][1]=new Integer((Integer) processi.get(i).getTempoArrivo());
+                contenutiRighe[i][2]=new Integer((Integer) processi.get(i).getTempoEsecuzione());
             }
             fireTableStructureChanged();
         }

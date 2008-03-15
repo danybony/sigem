@@ -11,7 +11,10 @@
  */
 
 package gui.dialog;
+import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
+import logic.parametri.Processo;
+import logic.parametri.ProcessoConPriorita;
 
 /**
  *
@@ -34,14 +37,16 @@ public class ModelloProcessiPriorita extends AbstractTableModel {
             fireTableStructureChanged();
         }
         
-       public ModelloProcessiPriorita(Object table[][]) {
+       public ModelloProcessiPriorita(LinkedList<Processo> processi) {
             nomiColonna = new String[] {"Nome", "Tempo di arrivo", "Tempo di esecuzione", "Priorita'" };
-            contenutiRighe=new Object[table.length][4];
-            for (int i=0; i<table.length; i++) {
-                contenutiRighe[i][0]=new String((String) table[i][0]);
-                contenutiRighe[i][1]=new Integer((Integer) table[i][1]);
-                contenutiRighe[i][2]=new Integer((Integer) table[i][2]);
-                contenutiRighe[i][3]=new Integer((Integer) table[i][3]);
+            contenutiRighe=new Object[processi.size()][4];
+            ProcessoConPriorita processoConPriorita;
+            for (int i=0; i<processi.size(); i++) {
+                processoConPriorita = (ProcessoConPriorita) processi.get(i);
+                contenutiRighe[i][0]=new String((String)   processoConPriorita.getNome());
+                contenutiRighe[i][1]=new Integer((Integer) processoConPriorita.getTempoArrivo());
+                contenutiRighe[i][2]=new Integer((Integer) processoConPriorita.getTempoEsecuzione());
+                contenutiRighe[i][3]=new Integer((Integer) processoConPriorita.getPriorita());
             }
             fireTableStructureChanged();
         }
