@@ -397,18 +397,22 @@ public class Player{
      * @return  lista di istanti che portano all'evento significativo
      */
     public LinkedList<Istante> precedenteIstanteSignificativo(Evento e){
+        System.out.println("_H");
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
         istanteSuccessivo();
         Istante attuale = istantePrecedente();
         Istante nuovo = istantePrecedente();
         int idProcessoPrecedente = -1;
                 
+       
         if(nuovo!=null){
             idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
         }
+        System.out.print(idProcessoPrecedente + " _ ");
         
         boolean trovato = false;
         while(nuovo!=null && !trovato){
+            System.out.print(" x");
             listaIstantiDaRitornare.add(nuovo);
             switch(e){
                 case FAULT:
@@ -437,12 +441,14 @@ public class Player{
                     break;
             }
             if(!trovato){
+                System.out.print(" y");
                 idProcessoPrecedente = nuovo.getProcessoInEsecuzione().getRifProcesso().getId();
                 nuovo = istantePrecedente();
             }
         }
         if(trovato){
             stat.AggiornaStatistiche(listaIstantiDaRitornare, false);
+            System.out.println("_Z1");
             return listaIstantiDaRitornare;
         }
         else{
@@ -450,8 +456,10 @@ public class Player{
             while(attuale!=nuovo){
                 nuovo = istanteSuccessivo();
             }
+            System.out.println("_Z2");
             return null;
         }
+        
     }
     
     /**
