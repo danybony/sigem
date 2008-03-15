@@ -71,9 +71,9 @@ public class Processore {
             case 1:politica = new FCFS(); break;
             case 2:politica = new SJF(); break;
             case 3:politica = new SRTN(); break;
-            case 4:politica = new RR(); break;
-            case 5:politica = new RRConPriorita(); break;
-            case 6:politica = new RRConPrioritaConPrerilascio(); break;
+            case 4:politica = new RR(conf.getTimeSlice()); break;
+            case 5:politica = new RRConPriorita(conf.getTimeSlice()); break;
+            case 6:politica = new RRConPrioritaConPrerilascio(conf.getTimeSlice()); break;
             case 7:politica = new Priorita(); break;
             default:politica = new FCFS();
         }

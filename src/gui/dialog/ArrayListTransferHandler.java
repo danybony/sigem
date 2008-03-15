@@ -174,7 +174,7 @@ public class ArrayListTransferHandler extends TransferHandler {
         if(c.getName()!=null && c.getName().equals("jListFrame")){
             return COPY;
         }       
-        return COPY_OR_MOVE;
+        return NONE;
     }
 
     public class ArrayListTransferable implements Transferable {

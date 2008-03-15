@@ -52,26 +52,30 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     /**
      * Modello per la lista delle pagine
      */
-    DefaultListModel listaFrameModel = new DefaultListModel();
+    DefaultListModel listaFrameModel;
+    
+    private Vector<DefaultListModel> modelliListaFrame = new Vector<DefaultListModel>();
     
     /** 
      * Contatore dei frameMemoria. Serve per generare un numero sempre nuovo
      per l'indirizzo del nuovo frame */
     private int contatoreFrame=0;
     
-    /**
-     * Rappresenta l'indice dell'ultimo processo selezionato.
-     * Serve per la gestione dei frameMemoria di ogni processo.
-     */
-    private int ultimoProcessoSelezionato = 0;
     
-    /** Creates new form AssociazioneProcessiJDialog */
+     /** Creates new form AssociazioneProcessiJDialog */
     public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, ProcessiJDialog proc, SiGeMv2View view) {
         super(parent, modal);
         configurazioneAmbiente = configurazione;
         politica = pol;
         processi = proc;
         this.view = view;
+        
+        int numProcessi = configurazioneAmbiente.getNumProcessi();
+        
+        for(int i=0; i<numProcessi; i++){           
+            modelliListaFrame.add(new DefaultListModel());
+        } 
+        
         initComponents();
         
         if (politica.getGestioneMemoria() == 1){
@@ -83,14 +87,14 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             jButtonNuovoFrame.setText("Nuovo segmento");
         }
         
-        int numProcessi = configurazioneAmbiente.getNumProcessi();
-        
         arrayListHandler = new ArrayListTransferHandler();
         
         for(int i=0; i<numProcessi; i++){
             jTabbedPaneProcessi.addTab("Processo "+i, creaPannelloProcesso(i));
+            modelliListaFrame.add(new DefaultListModel());
         }          
         
+        listaFrameModel = modelliListaFrame.get(0);
         jListFrame.setModel(listaFrameModel);
         jListFrame.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jListFrame.setTransferHandler(arrayListHandler);
@@ -280,6 +284,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             }
         }
         
+        creaAccessi();
+        
         try {
             inizializzaConfigurazioneIniziale();
         }catch (Exception e) {
@@ -334,14 +340,31 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
 
         view.setConfigurazioneIniziale(confIniziale);
         
+        for(int i=0;i<listaProcessi.size();i++){
+            for(int j=0;j<listaProcessi.get(i).getAccessi().size();j++){
+                Processo.Accesso temp = (Processo.Accesso) listaProcessi.get(i).getAccessi().get(j);
+                System.out.print(listaProcessi.get(i).getNome()+" - "+ temp.getRisorsa().getIndirizzo() +" - "+temp.getIstanteRichiesta());
+            }
+                
+        }
+        
     }
     
+    /**
+     * Metodo che crea un JScrollPane contenente tutte le liste rappresentanti 
+     * gli istanti di esecuzione del processo passato per parametro.
+     * Ogni lista e' contenuta in un JScrollPane indipendente in modo da poter 
+     * effettuare lo scrolling se ci sono troppi FrameMemoria.
+     * 
+     * @param IdProcesso
+     *      Intero che rappresenta l'Id del processo di cui creare il pannello.
+     * @return Ritorna un JScrollPane contenente tutte le liste degli istanti del
+     *         processo passato.
+     */
     private JScrollPane creaPannelloProcesso(int IdProcesso){
         JPanel nuovoPannello = new JPanel();
                 
         int numIstanti = ((Integer)processi.getCombinazioneProcessi()[IdProcesso][2]).intValue();
-                
-        
         
         for(int i=0; i< numIstanti; i++){
             /*creo un modello di default per la lista*/
@@ -369,8 +392,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                          
                       }
                  }
-             });            
-            
+             });   
             
             JScrollPane list1View = new JScrollPane(list1);
             list1View.setPreferredSize(new Dimension(100, 220));
@@ -383,7 +405,94 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         return nuovoScrollPane;
     }
     
-    private void aggiornaListaFrame(){
+    /**
+     * Metodo che aggiorna il modello per la lista dei FrameMemoria di un processo.
+     * E' necessario perchè ogni processo ha i propri FrameMemoria.
+     */
+    private void aggiornaListaFrame(){        
+        
+        int indiceProcesso = jTabbedPaneProcessi.getSelectedIndex();  
+        
+        listaFrameModel = modelliListaFrame.get(indiceProcesso);
+        
+        jListFrame.setModel(listaFrameModel);
+        
+    }
+    
+    /**
+     * Metodo che crea ed associa gli Accessi ai vari FrameMemoria ai processi
+     */
+    private void creaAccessi() {
+        
+        int indiceModello = 0;
+        
+        for(int indiceProcesso = 0; indiceProcesso<listaProcessi.size(); indiceProcesso++){
+            
+            Processo processoAttuale = listaProcessi.get(indiceProcesso);
+          
+            for(int istante = 0; istante < processoAttuale.getTempoEsecuzione(); istante++){
+                
+                /* Per ogni FrameMemoria dell'istante crea l'Accesso */
+                for (int frame = 0; frame < listModels.get(indiceModello).size(); frame++){
+                    
+                    FrameMemoria frameAttuale = estraiFrame((String)listModels.
+                                                get(indiceModello).get(frame));
+                    if(frameAttuale != null){
+                        
+                        frameAttuale.setIdProcesso(processoAttuale.getId());
+                        
+                        processoAttuale.richiestaFrameMemoria(frameAttuale, istante);
+                        
+                    }
+                    
+                }
+                
+                indiceModello++;
+                
+            }
+            
+        }
+        
+    }
+    
+    /**
+     * Metodo che restituisce iil FrameMemoria rappresentato da una stringa passata
+     * per parametro, all'interno di una JList.
+     * 
+     * @param nome
+     *        La stringa visualizzata nella JList e che rappresenta il FrameMemoria.
+     * @return Il FrameMemoria desiderato, che può essere null se non esistente.
+     */
+    private FrameMemoria estraiFrame(String nome){
+        
+        if(politica.getGestioneMemoria() == 1){
+            /* Paginazione */
+            for(int indiceFrame = 0; indiceFrame < listaFrame.size(); indiceFrame++){
+                
+                if(nome.equals("Pagina "+listaFrame.get(indiceFrame).getIndirizzo())){
+                    
+                    return listaFrame.get(indiceFrame);
+                    
+                }
+                        
+            }
+            
+        }
+        else{
+            /* Segmentazione */
+            for(int indiceFrame = 0; indiceFrame < listaFrame.size(); indiceFrame++){
+                
+                if(nome.equals("Segmento "+listaFrame.get(indiceFrame).getIndirizzo())){
+                    
+                    return listaFrame.get(indiceFrame);
+                    
+                }
+                        
+            }
+            
+        }
+        
+        return null;
         
     }
     
