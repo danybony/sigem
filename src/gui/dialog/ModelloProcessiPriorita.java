@@ -21,12 +21,11 @@ import logic.parametri.ProcessoConPriorita;
  * @author Giordano Cariani
  */
 public class ModelloProcessiPriorita extends AbstractTableModel {
-        private String[] nomiColonna=new String[0];
+        private String[] nomiColonna=new String[] {"Nome", "Tempo di arrivo", "Tempo di esecuzione", "Priorita'" };
         
         private Object[][] contenutiRighe=new Object[0][0];
 
         public ModelloProcessiPriorita(int nRighe) {
-            nomiColonna = new String[] {"Nome", "Tempo di arrivo", "Tempo di esecuzione", "Priorita'" };
             contenutiRighe=new Object[nRighe][4];
             for (int i=0; i<nRighe; i++) {
                 contenutiRighe[i][0]=new String("P"+(i+1));
@@ -38,15 +37,23 @@ public class ModelloProcessiPriorita extends AbstractTableModel {
         }
         
        public ModelloProcessiPriorita(LinkedList<Processo> processi) {
-            nomiColonna = new String[] {"Nome", "Tempo di arrivo", "Tempo di esecuzione", "Priorita'" };
             contenutiRighe=new Object[processi.size()][4];
-            ProcessoConPriorita processoConPriorita;
-            for (int i=0; i<processi.size(); i++) {
-                processoConPriorita = (ProcessoConPriorita) processi.get(i);
-                contenutiRighe[i][0]=new String((String)   processoConPriorita.getNome());
-                contenutiRighe[i][1]=new Integer((Integer) processoConPriorita.getTempoArrivo());
-                contenutiRighe[i][2]=new Integer((Integer) processoConPriorita.getTempoEsecuzione());
-                contenutiRighe[i][3]=new Integer((Integer) processoConPriorita.getPriorita());
+            if (processi.get(0) instanceof ProcessoConPriorita) {
+                ProcessoConPriorita processoConPriorita;
+                for (int i=0; i<processi.size(); i++) {
+                    processoConPriorita = (ProcessoConPriorita) processi.get(i);
+                    contenutiRighe[i][0]=new String((String)   processoConPriorita.getNome());
+                    contenutiRighe[i][1]=new Integer((Integer) processoConPriorita.getTempoArrivo());
+                    contenutiRighe[i][2]=new Integer((Integer) processoConPriorita.getTempoEsecuzione());
+                    contenutiRighe[i][3]=new Integer((Integer) processoConPriorita.getPriorita());
+                }
+            } else {
+                for (int i=0; i<processi.size(); i++) {
+                    contenutiRighe[i][0]=new String((String)   processi.get(i).getNome());
+                    contenutiRighe[i][1]=new Integer((Integer) processi.get(i).getTempoArrivo());
+                    contenutiRighe[i][2]=new Integer((Integer) processi.get(i).getTempoEsecuzione());
+                    contenutiRighe[i][3]=new Integer(1);
+                }
             }
             fireTableStructureChanged();
         }
