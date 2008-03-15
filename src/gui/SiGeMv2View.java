@@ -1009,7 +1009,6 @@ public class SiGeMv2View {
                                     .getComponent();
                     
                     if(configurazioneIniziale!=null){
-                        System.out.println(configurazioneIniziale.getModalitaGestioneMemoria() +"A");
                         switch(configurazioneIniziale.getModalitaGestioneMemoria()){
                             case 1: 
                                 currView.configura(false,
@@ -1103,7 +1102,7 @@ public class SiGeMv2View {
                     
                     try {
                         currView.aggiorna(istante.getCambiamentiInMemoria());
-                        }catch (Exception e){}
+                    }catch (Exception e){}
                     
                     try {
                         this.sleep(velocita*100);
@@ -1544,12 +1543,20 @@ public class SiGeMv2View {
                 istantiAllEvento = null;
         }
         
+        System.out.println("A");
+        for(int i=0; i<processiEseguiti.size();i++){
+            System.out.print(processiEseguiti.get(i).getId() + " - ");
+            
+        }
+        System.out.println("B");
+        
         if(istantiAllEvento != null){
         
             ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
                                 .getComponent();
 
             for(int i = 0 ; i < istantiAllEvento.size(); i++){
+                System.out.print(istantiAllEvento.get(i).getProcessoInEsecuzione().getRifProcesso().getId() + " - ");
                 istante = istantiAllEvento.get(i);
                 processiEseguiti.removeLast();
                 try{
@@ -1557,6 +1564,11 @@ public class SiGeMv2View {
                 }catch(Exception e){}
             }
 
+            System.out.println("C");
+            for(int i=0; i<processiEseguiti.size();i++){
+                System.out.print(processiEseguiti.get(i).getId() + " - ");
+            }
+            System.out.println("D");
             visualizzaOrdProcessi(processiEseguiti);
 
             jButtonNuovaConfigurazione.setEnabled(true);
