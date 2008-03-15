@@ -305,7 +305,7 @@ public class ViewStatoAvanzamentoProcessi extends JPanel {
 	        // Ridisegno gli istanti
 	        for (int i = 0; i < instants.size(); i++) {
 	            int procIdx = ((Integer) instants.get(i)).intValue();
-	            if (procIdx == 0)
+	            if (procIdx == -1)
 	                continue;
 	            int y = 1 + currHeight - yOffset - gridY * procIdx;
 	            int x = 2 + xOffset + gridX * i;

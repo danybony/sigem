@@ -156,6 +156,8 @@ public class SiGeMv2View {
     
     // velocità di avanzamento nella modalità automatica
     private int velocita;
+    
+    private static final Processo PROC_VUOTO = new Processo("",0,0);
 
     // ----------------------------------
     // METODI GESTIONE COMPONENTI GRAFICI
@@ -1090,7 +1092,13 @@ public class SiGeMv2View {
                     Double t =((Double)scegliVelocita.getValue()).doubleValue();
                     velocita = (int) (t * 10);
                     pcbAttuale = istante.getProcessoInEsecuzione();
-                    processiEseguiti.add(pcbAttuale.getRifProcesso());
+                    if(pcbAttuale==null){
+                        processiEseguiti.add(PROC_VUOTO);
+                    }    
+                    else{
+                        processiEseguiti.add(pcbAttuale.getRifProcesso());
+                    }
+                    
                     visualizzaOrdProcessi(processiEseguiti);
                     
                     try {
@@ -1666,12 +1674,12 @@ public class SiGeMv2View {
                 for (int i = 0; i < processiEseguiti.size(); i++){
                     Processo p = processiEseguiti.get(i);
                     // Esiste un processo in esecuzione nell'istante i
-                    if(p!=null){
+                    if(p!=PROC_VUOTO){
                         idProcessiEseguiti[i] = p.getId();
                     }
                     // Nessun processo nell'istante i
                     else{
-                        
+                        idProcessiEseguiti[i]=-1;
                     }
                 }
 
