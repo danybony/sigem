@@ -43,6 +43,7 @@ public class ArrayListTransferHandler extends TransferHandler {
         }
         try {
             target = (JList)c;
+            
             if (hasLocalArrayListFlavor(t.getTransferDataFlavors())) {
                 alist = (ArrayList)t.getTransferData(localArrayListFlavor);
             } else if (hasSerialArrayListFlavor(t.getTransferDataFlavors())) {
@@ -90,8 +91,18 @@ public class ArrayListTransferHandler extends TransferHandler {
         }
         addIndex = index;
         addCount = alist.size();
+        
+        boolean hit;
         for (int i=0; i < alist.size(); i++) {
-            listModel.add(index++, alist.get(i));
+            hit=false;
+            for(int j = 0; j< listModel.getSize(); j++){
+                if((listModel.getElementAt(j)).equals(alist.get(i))){
+                    hit = true;
+                }                    
+            }
+            if(!hit){
+                listModel.add(index++, alist.get(i));
+            }
         }
         return true;
     }
@@ -145,6 +156,9 @@ public class ArrayListTransferHandler extends TransferHandler {
     }
 
     public boolean canImport(JComponent c, DataFlavor[] flavors) {
+        if(c.getName()!=null && c.getName().equals("jListFrame")){
+            return false;
+        } 
         if (hasLocalArrayListFlavor(flavors))  { return true; }
         if (hasSerialArrayListFlavor(flavors)) { return true; }
         return false;

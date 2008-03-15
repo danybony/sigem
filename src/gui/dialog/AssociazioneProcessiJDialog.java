@@ -15,12 +15,16 @@
 package gui.dialog;
 
 import gui.SiGeMv2View;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -73,6 +77,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
         int numProcessi = configurazioneAmbiente.getNumProcessi();
         
+        /* Crea i modelli per la lista dei frame */
         for(int i=0; i<numProcessi; i++){           
             modelliListaFrame.add(new DefaultListModel());
         } 
@@ -371,7 +376,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
      *         processo passato.
      */
     private JScrollPane creaPannelloProcesso(int IdProcesso){
-        JPanel nuovoPannello = new JPanel();
+        JPanel nuovoPannelloGlobale = new JPanel();
                 
         int numIstanti = ((Integer)processi.getCombinazioneProcessi()[IdProcesso][2]).intValue();
         
@@ -381,7 +386,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             
             /* e lo associo alla lista da costruire */
             JList list1=new JList(listModels.get(listModels.size()-1));
-            
+            list1.setBackground(new Color(200,200,200));
             list1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             list1.setTransferHandler(arrayListHandler);
             list1.setDragEnabled(true);
@@ -404,11 +409,15 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
              });   
             
             JScrollPane list1View = new JScrollPane(list1);
-            list1View.setPreferredSize(new Dimension(100, 220));
-            nuovoPannello.add(list1View);
+            list1View.setPreferredSize(new Dimension(100, 200));
+            JPanel pannelloPiccolo = new JPanel();
+            pannelloPiccolo.setLayout(new BorderLayout());
+            pannelloPiccolo.add(new JLabel("Istante "+i),BorderLayout.NORTH);
+            pannelloPiccolo.add(list1View,BorderLayout.SOUTH);
+            nuovoPannelloGlobale.add(pannelloPiccolo);
         }
         
-        JScrollPane nuovoScrollPane = new JScrollPane(nuovoPannello);
+        JScrollPane nuovoScrollPane = new JScrollPane(nuovoPannelloGlobale);
         nuovoScrollPane.setPreferredSize(new Dimension(420, 270));
         
         return nuovoScrollPane;
