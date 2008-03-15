@@ -60,7 +60,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     private int contatoreFrame=0;
     
     /**
-     * Rappresenta 
+     * Rappresenta l'indice dell'ultimo processo selezionato.
+     * Serve per la gestione dei frameMemoria di ogni processo.
      */
     private int ultimoProcessoSelezionato = 0;
     
@@ -319,8 +320,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     
     private void inizializzaConfigurazioneIniziale() throws Exception {
         confIniziale = new ConfigurazioneIniziale(configurazioneAmbiente.getBandaBusDati(),
-                                                  politica.getGestioneMemoria(),
                                                   politica.getPolitica(),
+                                                  politica.getGestioneMemoria(),                                                  
                                                   politica.getPoliticaSchedulazione(),
                                                   configurazioneAmbiente.getDimensioneRAM(),
                                                   configurazioneAmbiente.getDimensioneAreaSWAP(),
