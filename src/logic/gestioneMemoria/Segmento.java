@@ -103,6 +103,16 @@ public class Segmento implements FrameMemoria{
     }
     
     /**
+     * Specifica una nuova dimensione per il segmento
+     * 
+     * @param nuovaDimensione
+     *          la nuova dimensione del segmento
+     */
+    public void setDimensione(int nuovaDimensione){
+        this.dimensione = nuovaDimensione;
+    }
+    
+    /**
      * Ritorna l'indirizzo del segmento.
      */
     public String getIndirizzo(){
