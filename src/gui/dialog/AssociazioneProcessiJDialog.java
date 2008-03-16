@@ -3,10 +3,14 @@
  * Nome file: AssociazioneProcessiJDialog.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 01/03/2008
- * Versione: 1.0
+ * Data: 16/03/2008
+ * Versione: 1.5
  * Licenza: open-source
  * Registro delle modifiche: *  
+ *  - v.1.5 (16/03/2008): Corretta la cancellazione
+ *  - v.1.4 (15/03/2008): Inseriti controlli sull'inserimento e la modifica
+ *  - v.1.3 (15/03/2008): Inserita nuova modifica per la dimensione dei segmenti
+ *  - v.1.2 (14/03/2008): Ridefinizione con nuova modalita' Drag&Drop
  *  - v.1.1 (02/03/2008): inserita label "passo 4 di 4"
  *                        inserita inizializzazione grafico processi
  *  - v.1.0 (01/03/2008): Creazione JDialog e impostazione grafica
@@ -31,10 +35,7 @@ import javax.swing.ListSelectionModel;
 import logic.gestioneMemoria.FrameMemoria;
 import logic.gestioneMemoria.Pagina;
 import logic.gestioneMemoria.Segmento;
-import logic.parametri.ConfigurazioneIniziale;
-import logic.parametri.Id;
-import logic.parametri.Processo;
-import logic.parametri.ProcessoConPriorita;
+import logic.parametri.*;
 
 /**
  *
@@ -370,9 +371,41 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
 
     private void jButtonEliminaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminaActionPerformed
         int[] indici = jListFrame.getSelectedIndices();
-        for(int i = indici.length-1; i>-1 ; i--){
-            listaFrameModel.removeElementAt(indici[i]);
+        
+        /* Trovo il primo modello del processo proprietario del segmento */
+        int primaLista = 0 ;
+
+        for(int processo = 0; processo < jTabbedPaneProcessi.getSelectedIndex(); processo++){
+            primaLista += ((Integer)processi.getCombinazioneProcessi()[processo][2]).intValue();
         }
+
+        int numeroIstanti = ((Integer)processi.getCombinazioneProcessi()
+                        [jTabbedPaneProcessi.getSelectedIndex()][2]).intValue();
+        
+        for(int i = indici.length-1; i>-1 ; i--){
+            String indirizzo = ((FrameMemoria)listaFrameModel.get(indici[i])).getIndirizzo();
+            
+            //lo elimina in tutti gli istanti del processo corrente
+            for(int istante = 0; istante < numeroIstanti; istante++){
+                
+                DefaultListModel modello = listModels.get(istante+primaLista);
+            
+                for(int elemento = 0; elemento < modello.size(); elemento++){
+
+                    if(((FrameMemoria)modello.get(elemento)).getIndirizzo().
+                            equals(indirizzo)){
+                        modello.removeElementAt(elemento);
+                    }
+                
+                }
+                
+            }
+            
+            //lo elimina dalla lista dei frame a destra
+            listaFrameModel.removeElementAt(indici[i]);
+            
+        }
+       
 }//GEN-LAST:event_jButtonEliminaActionPerformed
 
     private void jButtonModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificaActionPerformed
