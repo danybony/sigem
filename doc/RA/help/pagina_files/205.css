@@ -9,7 +9,7 @@ body {
 	font-family: Verdana,Arial,Helvetica,sans-serif; 	 	
 }
 
-p { 	
+p {
 	font-size: .8em;
 	line-height: 2em;
 }
@@ -23,24 +23,9 @@ h3 {
 
 acronym, 
 abbr {
-	background: transparent url(abbr.gif) bottom left repeat-x;
 	border: 0 none;
 	cursor: help;
 	font-style: italic;
-}
-
-a:link, 
-a:visited {
-	background: #EBF3CE;
-	color: #5D7403;
-	text-decoration: none;
-}
-
-a:hover, 
-a:active, 
-a:focus  {
-	background: #B2CF42;
-	color: #FFF;
 }
 
 
@@ -52,33 +37,27 @@ a:focus  {
 #intro, 
 #supportingText {
 	padding: 0 69px 0 86px;
-	width: 545px;	
+	width: 570px;
 }
 
 #intro {	
 	background: transparent url(logo.jpg) top left no-repeat;
 	padding-top: 230px;	
 }
-
+
+
 #supportingText h3,
 #supportingText p {
 	padding-left: 10px;
 	padding-right: 40px;
 }
 
-
-#explanation,{
-	border-bottom: 1px solid #E4E1DB;
-	padding-bottom: 20pt;	
+.p1{
+	text-align:justify;
+	white-space: normal;
 }
 
-#pageHeader, 
-#pageHeader h1,
-#pageHeader h2,
-#quickSummary .p1,
-#linkList2 h3 span {
-	display: none;
-}
+.p1 ul { list-style-position:inside; }
 
 #quickSummary .p2 {
 	background: transparent url(nav_dl.gif) top left no-repeat;
@@ -92,13 +71,6 @@ a:focus  {
 	top: 160px;	
 	width: 141px;
 	z-index: 20;
-}
-
-#quickSummary .p2 a:link,
-#quickSummary .p2 a:visited {	
-	background: transparent;
-	color: #E6E3DE;
-	text-decoration: none; 
 }
 
 #linkList {	
@@ -144,45 +116,27 @@ a:focus  {
 	padding: 6px 10px;	
 }
 
-#linkList2 a:link,
-#linkList2 a:visited {
-	background: transparent;
-	color: #4C4C4C;
-	font-weight: bold;
-}
-
-#linkList2 a.c:link,
-#linkList2 a.c:visited {
-	color: #E6E3DE;
-	font-weight: normal;
-}
-
-#quickSummary .p2 a:hover,
-#quickSummary .p2 a:active,
-#quickSummary .p2 a:focus, 
-#linkList2 a:hover, 
-#linkList2 a:active, 
-#linkList2 a:focus,
-#linkList2 a.c:hover, 
-#linkList2 a.c:active, 
-#linkList2 a.c:focus {
-	color: #FFF;
-	text-decoration: underline; 
-}
-
-
 #lselect li {	
 	background: transparent url(navico.gif) 3pt 5pt no-repeat;
 	border-bottom: 1px solid #CFCCC4;	
 	padding: 7px 10px 7px 25px;
 }
 
-#footer { 	
-	font-size: .7em;
-	line-height: 1.5em;
-	padding-top: 10px;
-	padding-bottom: 40px;
-	text-align: center;
+a:link,
+a:visited {
+	color: #4C4C4C ;
+	font-weight: bold;
 }
+
+a:hover,
+a:active, 
+a:focus  {
+
+	color: #FF6600 ;
+	font-weight: bold;
+}
+
+.image { display block; clear: both; padding : 0px;  margin 0px;}
+.image img { background-color:#DFDBD3; border: dotted 1px #4C4C4C; padding : 2px; }
 
 }
