@@ -62,12 +62,19 @@ public class Player{
      */
     private int indiceElementoCorrente = 0;
     
+    /**
+     * L'istanza della classe Statistiche.
+     */
+    public static Statistiche stat;
+    
+    
     private boolean hasPrev(){
         if(this.indiceElementoCorrente > 0){
             return  true;
         }
         return false;
     }
+    
     
     private boolean hasNext(){
         if(this.indiceElementoCorrente < (this.listaIstanti.size() - 1)){
@@ -305,7 +312,7 @@ public class Player{
         listaIstanti = simulazioneEseguita.crea();
         //Metto l'iteratore prima del primo elemento
         indiceElementoCorrente = 0;
-        //stat = new Statistiche();
+        stat = new Statistiche();
         return true;
     }
     
@@ -319,8 +326,9 @@ public class Player{
     public Istante istantePrecedente(){
         if(hasPrev()){
             this.indiceElementoCorrente--;
-            //stat.AggiornaStatistiche(next, true);
-            return this.listaIstanti.get(indiceElementoCorrente);
+            Istante prev = this.listaIstanti.get(indiceElementoCorrente);
+            stat.AggiornaStatistiche(prev, true);
+            return prev;
         }
         return null;
     }
@@ -335,8 +343,9 @@ public class Player{
     public Istante istanteSuccessivo(){
         if(hasNext()){
             this.indiceElementoCorrente++;
-            //stat.AggiornaStatistiche(next, true);
-            return this.listaIstanti.get(indiceElementoCorrente);
+            Istante next = this.listaIstanti.get(indiceElementoCorrente);
+            stat.AggiornaStatistiche(next, true);
+            return next;
         }
         return null;
     }
@@ -411,7 +420,7 @@ public class Player{
         }
         
         if(trovato){
-            //stat.AggiornaStatistiche(listaIstantiDaRitornare, true);
+            stat.AggiornaStatistiche(listaIstantiDaRitornare, true);
             return listaIstantiDaRitornare;
         }
         else{
@@ -492,7 +501,7 @@ public class Player{
         }
         
         if(trovato){
-            //stat.AggiornaStatistiche(listaIstantiDaRitornare, true);
+            stat.AggiornaStatistiche(listaIstantiDaRitornare, true);
             return listaIstantiDaRitornare;
         }
         else{
@@ -512,8 +521,8 @@ public class Player{
         if(this.listaIstanti==null) return null;
         this.indiceElementoCorrente = 0;
         Istante primo = this.listaIstanti.getFirst();
-        //stat.AzzeraStatistiche();
-        //stat.AggiornaStatistiche(primo, true);
+        stat.AzzeraStatistiche();
+        stat.AggiornaStatistiche(primo, true);
         return primo;
     }
     
@@ -530,7 +539,7 @@ public class Player{
             this.indiceElementoCorrente++;
             listaAllaFine.add(this.listaIstanti.get(indiceElementoCorrente));
         }
-        //stat.AggiornaStatistiche(listaAllaFine, true);
+        stat.AggiornaStatistiche(listaAllaFine, true);
         return listaAllaFine;
     }
     
@@ -553,7 +562,7 @@ public class Player{
     /**
      * Ritorna un riferimento all'oggetto interno Statistiche
      */
-    //public Statistiche getStatistiche(){
-      //  return this.stat;
-    //}
+    public Statistiche getStatistiche(){
+        return this.stat;
+    }
 }
