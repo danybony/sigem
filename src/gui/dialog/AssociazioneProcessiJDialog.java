@@ -396,18 +396,26 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             
             if(risultato == DatiSegmentoDialog.RET_OK){                
                 
-                segmentoSelezionato.setDimensione(datiSegmentoDialog.getDimensione());   
+                segmentoSelezionato.setDimensione(datiSegmentoDialog.getDimensione());  
                 
-                listaFrameModel.setElementAt(segmentoSelezionato, indiceSelezione);
+                jListFrame.repaint();
                 
                 /* Lo modifica anche in tutti gli istanti in cui è presente */
                 /* Trovo il primo modello del processo proprietario del segmento */
-                int primoModello = 0 ;
+                int primaLista = 0 ;
                 
                 for(int processo = 0; processo < jTabbedPaneProcessi.getSelectedIndex(); processo++){
-                    primoModello += ((Integer)processi.getCombinazioneProcessi()[processo][2]).intValue();
+                    primaLista += ((Integer)processi.getCombinazioneProcessi()[processo][2]).intValue();
                 }
                 
+                int numeroIstanti = ((Integer)processi.getCombinazioneProcessi()[jTabbedPaneProcessi.getSelectedIndex()][2]).intValue();
+                
+                /* Per tutti gli istanti aggiorno la lista */
+                for(int istante = 0; istante < numeroIstanti; istante++){
+                    
+                    listaList.get(istante + primaLista).repaint();
+                    
+                }
                 
             }
             
