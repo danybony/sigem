@@ -270,6 +270,13 @@ public class ViewFrameMemoria extends JPanel {
                        
             }
         }*/
+        //Cerco se un processo ha finito di eseguire in questo istante
+        int processoTerminato=-2;
+        for(int i=0;i<cambiamentiInMemoria.size();i++){
+            if(cambiamentiInMemoria.get(i).getAzione()==6){
+                processoTerminato=cambiamentiInMemoria.get(i).getPosizione();
+            }
+        }
         int coordX=10;
         int larghezza=LATO*6;
         int coordY=10;
@@ -285,7 +292,7 @@ public class ViewFrameMemoria extends JPanel {
             if (pag_seg==false){
                 coordY=((i/6)*LATO+5*(i/6))+10;
                 coordX=(i%6)*LATO+5*(i%6);
-                if(frame.getInRAM()==false){
+                if(frame.getIdProcesso()==processoTerminato){
                     color=Color.LIGHT_GRAY;
                     text=" ";
                 }
@@ -304,7 +311,7 @@ public class ViewFrameMemoria extends JPanel {
             }
             else{
                 altezza=altezza=(ALTEZZA*frame.getDimensione())/dimMemoria;
-                if(frame.getIdProcesso()==-1){
+                if(frame.getIdProcesso()==processoTerminato){
                     color=Color.LIGHT_GRAY;
                     text=" ";
                 }
@@ -352,8 +359,8 @@ public class ViewFrameMemoria extends JPanel {
                                             Color.LIGHT_GRAY,
                                             " ")
                                        );
-        }
-        repaint*/
+        }*/
+        repaint();
         
     }
 
