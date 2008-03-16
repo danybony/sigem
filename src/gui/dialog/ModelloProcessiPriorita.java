@@ -172,12 +172,13 @@ public class ModelloProcessiPriorita extends AbstractTableModel {
                             value = new Integer(1);
                     }
                 }
+            contenutiRighe[row][col] = value;
+            fireTableCellUpdated(row, col);
             } catch (NullPointerException errore) {
                 if (col == 1)
                     value = new Integer(0);
 		if (col == 2)
                     value = new Integer(1);
             }
-            fireTableCellUpdated(row, col);
         }
     }
