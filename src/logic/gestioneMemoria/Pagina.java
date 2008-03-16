@@ -174,4 +174,13 @@ public class Pagina implements FrameMemoria{
         return true;
     }
     
+    /**
+     * Metodo che converte a stringa una pagina ritornandone l'indirizzo.
+     * 
+     * @return Ritorna l'indirizzo della pagina.
+     */
+    public String toString() {
+            return this.INDIRIZZO;
+    }
+    
 }

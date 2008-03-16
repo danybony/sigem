@@ -71,6 +71,11 @@ public interface FrameMemoria {
      * Imposta lo stato di modificato o meno su un elemento che modella la memoria.
      */
     public boolean setModifica(boolean nuovoStato);
+    
+    /**
+     * Metodo che converte a stringa un FrameMemoria ritornandone l'indirizzo.
+     */
+    public String toString();
 
 }
 

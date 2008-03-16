@@ -198,4 +198,13 @@ public class Segmento implements FrameMemoria{
         }
         else return false;
     }
+    
+    /**
+     * Metodo che converte a stringa un segmento ritornandone l'indirizzo.
+     * 
+     * @return Ritorna l'indirizzo del segmento.
+     */
+    public String toString() {
+            return this.INDIRIZZO + " (" + this.dimensione + "KB)";
+    }
 }

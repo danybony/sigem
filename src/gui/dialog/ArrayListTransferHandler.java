@@ -14,6 +14,7 @@ import java.awt.event.*;
 import java.awt.datatransfer.*;
 import java.awt.dnd.*;
 import javax.swing.*;
+import logic.gestioneMemoria.FrameMemoria;
 
 public class ArrayListTransferHandler extends TransferHandler {
     DataFlavor localArrayListFlavor, serialArrayListFlavor;
@@ -175,9 +176,9 @@ public class ArrayListTransferHandler extends TransferHandler {
             ArrayList alist = new ArrayList(values.length);
             for (int i = 0; i < values.length; i++) {
                 Object o = values[i];
-                String str = o.toString();
-                if (str == null) str = "";
-                alist.add(str);
+               // String str = o.toString();
+               // if (str == null) str = "";
+                alist.add(o);
             }
             return new ArrayListTransferable(alist);
         }
