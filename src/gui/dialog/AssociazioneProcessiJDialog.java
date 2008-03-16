@@ -50,7 +50,6 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     private Vector<JList> listaList = new Vector<JList>();
     private Vector<DefaultListModel> listModels = new Vector<DefaultListModel>();
             
-    private Vector<FrameMemoria> listaFrame = new Vector<FrameMemoria>();
     private ArrayListTransferHandler arrayListHandler;
     
     /**
@@ -334,10 +333,10 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
         if (politica.getGestioneMemoria() == 1){
             
-            listaFrame.add(new Pagina(new Integer(contatoreFrame).toString(),
-                    configurazioneAmbiente.getDimensionePagina(),0));
+           // listaFrame.add(new Pagina(new Integer(contatoreFrame).toString(),configurazioneAmbiente.getDimensionePagina(),0));
             
-            listaFrameModel.addElement("Pagina "+contatoreFrame);
+            listaFrameModel.addElement(new Pagina(new Integer(contatoreFrame).toString(),
+                    configurazioneAmbiente.getDimensionePagina(),0));
             
         }
         else {
@@ -350,10 +349,10 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             
             if(risultato == DatiSegmentoDialog.RET_OK){
                 
-                 listaFrame.add(new Segmento(new Integer(contatoreFrame).toString(),
-                    datiSegmentoDialog.getDimensione(),0));
+                // listaFrame.add(new Segmento(new Integer(contatoreFrame).toString(),   datiSegmentoDialog.getDimensione(),0));
             
-                 listaFrameModel.addElement("Segmento "+contatoreFrame);
+                 listaFrameModel.addElement(new Segmento(new Integer(contatoreFrame).toString(),
+                    datiSegmentoDialog.getDimensione(),0));
             
             }
             else{
@@ -377,9 +376,14 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
 }//GEN-LAST:event_jButtonEliminaActionPerformed
 
     private void jButtonModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificaActionPerformed
+     
         int indiceSelezione = jListFrame.getSelectedIndex();
         
-        Segmento segmentoSelezionato = (Segmento)estraiFrame((String)listaFrameModel.get(indiceSelezione));
+        if(indiceSelezione == -1){
+            return;
+        }
+        
+        Segmento segmentoSelezionato = (Segmento)listaFrameModel.get(indiceSelezione);
         
         int dimensioneAttuale = segmentoSelezionato.getDimensione();
         
@@ -392,12 +396,21 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             
             if(risultato == DatiSegmentoDialog.RET_OK){                
                 
-                segmentoSelezionato.setDimensione(datiSegmentoDialog.getDimensione());         
-            
+                segmentoSelezionato.setDimensione(datiSegmentoDialog.getDimensione());   
+                
+                listaFrameModel.setElementAt(segmentoSelezionato, indiceSelezione);
+                
+                /* Lo modifica anche in tutti gli istanti in cui è presente */
+                /* Trovo il primo modello del processo proprietario del segmento */
+                int primoModello = 0 ;
+                
+                for(int processo = 0; processo < jTabbedPaneProcessi.getSelectedIndex(); processo++){
+                    primoModello += ((Integer)processi.getCombinazioneProcessi()[processo][2]).intValue();
+                }
+                
+                
             }
-            Segmento segmentoSelezionato2 = (Segmento)estraiFrame((String)listaFrameModel.get(indiceSelezione));
-        
-        System.out.print(segmentoSelezionato2.getDimensione());
+            
 }//GEN-LAST:event_jButtonModificaActionPerformed
     
     private void inizializzaConfigurazioneIniziale() throws Exception {
@@ -507,13 +520,17 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 /* Per ogni FrameMemoria dell'istante crea l'Accesso */
                 for (int frame = 0; frame < listModels.get(indiceModello).size(); frame++){
                     
-                    FrameMemoria frameAttuale = estraiFrame((String)listModels.
-                                                get(indiceModello).get(frame));
+                   // FrameMemoria frameAttuale = estraiFrame((String)listModels.get(indiceModello).get(frame),indiceProcesso);                    
+                    
+                    FrameMemoria frameAttuale = (FrameMemoria) listModels.get(indiceModello).get(frame);
+                    
                     if(frameAttuale != null){
                         
                         frameAttuale.setIdProcesso(processoAttuale.getId());
                         
                         processoAttuale.richiestaFrameMemoria(frameAttuale, istante);
+                        
+                        System.out.println(frameAttuale.getIndirizzo()+" - "+frameAttuale.getDimensione()+ " - "+ frameAttuale.getIdProcesso()+" - "+ istante);
                         
                     }
                     
@@ -535,33 +552,18 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
      *        La stringa visualizzata nella JList e che rappresenta il FrameMemoria.
      * @return Il FrameMemoria desiderato, che può essere null se non esistente.
      */
-    private FrameMemoria estraiFrame(String nome){
+    private FrameMemoria estraiFrame(String indirizzo, int indiceProcesso){
         
-        if(politica.getGestioneMemoria() == 1){
-            /* Paginazione */
-            for(int indiceFrame = 0; indiceFrame < listaFrame.size(); indiceFrame++){
-                
-                if(nome.equals("Pagina "+listaFrame.get(indiceFrame).getIndirizzo())){
-                    
-                    return listaFrame.get(indiceFrame);
-                    
-                }
-                        
+        DefaultListModel listaFrame = modelliListaFrame.get(indiceProcesso);
+           
+        for(int indiceFrame = 0; indiceFrame < listaFrame.size(); indiceFrame++){
+
+            if(indirizzo.equals(((FrameMemoria)listaFrame.get(indiceFrame)).getIndirizzo())){
+
+                return (FrameMemoria) listaFrame.get(indiceFrame);
+
             }
-            
-        }
-        else{
-            /* Segmentazione */
-            for(int indiceFrame = 0; indiceFrame < listaFrame.size(); indiceFrame++){
-                
-                if(nome.equals("Segmento "+listaFrame.get(indiceFrame).getIndirizzo())){
-                    
-                    return listaFrame.get(indiceFrame);
-                    
-                }
-                        
-            }
-            
+
         }
         
         return null;
