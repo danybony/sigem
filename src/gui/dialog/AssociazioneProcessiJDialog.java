@@ -93,7 +93,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             jButtonModifica.setVisible(true);
         }
         
-        arrayListHandler = new ArrayListTransferHandler();
+        arrayListHandler = new ArrayListTransferHandler(configurazioneAmbiente.getDimensioneRAM());
         
         for(int i=0; i<numProcessi; i++){
             jTabbedPaneProcessi.addTab("Processo "+i, creaPannelloProcesso(i));
@@ -387,9 +387,48 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
         int dimensioneAttuale = segmentoSelezionato.getDimensione();
         
+        /* Trovo il primo modello del processo proprietario del segmento */
+        int primaLista = 0 ;
+
+        for(int processo = 0; processo < jTabbedPaneProcessi.getSelectedIndex(); processo++){
+            primaLista += ((Integer)processi.getCombinazioneProcessi()[processo][2]).intValue();
+        }
+
+        int numeroIstanti = ((Integer)processi.getCombinazioneProcessi()
+                        [jTabbedPaneProcessi.getSelectedIndex()][2]).intValue();
+        
+        int massimaDimensione = configurazioneAmbiente.getDimensioneRAM();
+        
+        /* Controllo in tutti gli istanti del processo in cui e' presente il segmento
+         quanto e' lo spazio disponibile, e lo matto come massima dimensione */
+        for(int istante = 0; istante < numeroIstanti; istante++){
+             
+            int spazioLibero = configurazioneAmbiente.getDimensioneRAM();
+            boolean presente = false;
+            DefaultListModel modello = listModels.get(istante+primaLista);
+            
+            for(int elemento = 0; elemento < modello.size(); elemento++){
+                
+                if(((Segmento)modello.get(elemento)).getIndirizzo().equals(segmentoSelezionato.getIndirizzo())){
+                    presente = true;
+                }
+                else{
+                    spazioLibero -= ((Segmento)modello.get(elemento)).getDimensione();
+                }
+                
+            }
+            
+            if(presente && spazioLibero < massimaDimensione){
+                massimaDimensione = spazioLibero;
+            }
+                    
+         }
+        
+        
         DatiSegmentoDialog datiSegmentoDialog = new DatiSegmentoDialog(view.getFrame(), true, 
-                                                        configurazioneAmbiente.getDimensioneRAM(),
+                                                        massimaDimensione,
                                                         dimensioneAttuale);
+        
             datiSegmentoDialog.setVisible(true);
             
             int risultato = datiSegmentoDialog.getReturnStatus();
@@ -400,16 +439,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 
                 jListFrame.repaint();
                 
-                /* Lo modifica anche in tutti gli istanti in cui è presente */
-                /* Trovo il primo modello del processo proprietario del segmento */
-                int primaLista = 0 ;
-                
-                for(int processo = 0; processo < jTabbedPaneProcessi.getSelectedIndex(); processo++){
-                    primaLista += ((Integer)processi.getCombinazioneProcessi()[processo][2]).intValue();
-                }
-                
-                int numeroIstanti = ((Integer)processi.getCombinazioneProcessi()[jTabbedPaneProcessi.getSelectedIndex()][2]).intValue();
-                
+                /* Lo modifica anche in tutti gli istanti in cui e' presente */
                 /* Per tutti gli istanti aggiorno la lista */
                 for(int istante = 0; istante < numeroIstanti; istante++){
                     
@@ -538,9 +568,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                         
                         processoAttuale.richiestaFrameMemoria(frameAttuale, istante);
                         
-                        System.out.println(frameAttuale.getIndirizzo()+" - "+frameAttuale.getDimensione()+ " - "+ frameAttuale.getIdProcesso()+" - "+ istante);
-                        
-                    }
+                     }
                     
                 }
                 

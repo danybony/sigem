@@ -1,6 +1,18 @@
+/*
+ * Azienda: Stylosoft
+ * Nome file: ArrayListTransferHandler.java
+ * Package: gui.dialog
+ * Autore: Bonaldo Daniele
+ * Data: 16/03/2008
+ * Versione: 1.2
+ * Licenza: open-source
+ * Registro delle modifiche: *  
+ *  - v.1.1 (15/03/2008): inserito controllo sulle copie e sulla dimensione massima
+ *  - v.1.1 (15/03/2008): inserito spostamento per il riferimento e non solo epr la stringa
+ *  - v.1.0 (14/03/2008): Creazione a partire da esempio preso dal tutorial di java.sun.com
+ */
+
 package gui.dialog;
-
-
 
 /*
  * ArrayListTransferHandler.java is used by the 1.4
@@ -24,8 +36,9 @@ public class ArrayListTransferHandler extends TransferHandler {
     int[] indices = null;
     int addIndex = -1; //Location where items were added
     int addCount = 0;  //Number of items added
+    int dimensioneRAM;
 
-    public ArrayListTransferHandler() {
+    public ArrayListTransferHandler(int dimensioneRAM) {
         try {
             localArrayListFlavor = new DataFlavor(localArrayListType);
         } catch (ClassNotFoundException e) {
@@ -34,6 +47,7 @@ public class ArrayListTransferHandler extends TransferHandler {
         }
         serialArrayListFlavor = new DataFlavor(ArrayList.class,
                                               "ArrayList");
+        this.dimensioneRAM = dimensioneRAM;
     }
 
     public boolean importData(JComponent c, Transferable t) {
@@ -94,15 +108,22 @@ public class ArrayListTransferHandler extends TransferHandler {
         addCount = alist.size();
         
         boolean hit;
+        
         for (int i=0; i < alist.size(); i++) {
+            int spazioOccupato = 0;
             hit=false;
             for(int j = 0; j< listModel.getSize(); j++){
+                spazioOccupato += ((FrameMemoria)listModel.getElementAt(j)).getDimensione();
                 if((listModel.getElementAt(j)).equals(alist.get(i))){
                     hit = true;
                 }                    
             }
             if(!hit){
-                listModel.add(index++, alist.get(i));
+                if(spazioOccupato+((FrameMemoria)alist.get(i)).getDimensione() <= dimensioneRAM){
+                    listModel.add(index++, alist.get(i));
+                    spazioOccupato += ((FrameMemoria)alist.get(i)).getDimensione();
+                }
+                
             }
         }
         return true;
@@ -176,8 +197,6 @@ public class ArrayListTransferHandler extends TransferHandler {
             ArrayList alist = new ArrayList(values.length);
             for (int i = 0; i < values.length; i++) {
                 Object o = values[i];
-               // String str = o.toString();
-               // if (str == null) str = "";
                 alist.add(o);
             }
             return new ArrayListTransferable(alist);
