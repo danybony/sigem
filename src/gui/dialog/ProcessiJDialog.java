@@ -37,7 +37,7 @@ public class ProcessiJDialog extends javax.swing.JDialog {
     
     boolean modifica = false;
    
-    /** Creates new form ProcessiJDialog */
+    /** Crea il nuovo form ProcessiJDialog */
     public ProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, PoliticheJDialog pol, SiGeMv2View view) {
         super(parent, modal);
         configurazioneAmbiente = conf;
@@ -47,16 +47,17 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         initTable(); 
     }
     
+    /** Crea il form ProcessiJDialog per la modifica */
     public ProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, PoliticheJDialog pol, SiGeMv2View view,
             ConfigurazioneIniziale confIniziale) {
         super(parent, modal);
         configurazioneAmbiente = conf;
         politiche = pol;
         this.view = view;
-        initComponents();
-        initTable(); 
         this.confIniziale=confIniziale;
         modifica = true;
+        initComponents();
+        initTable(); 
     }
     /** This method is called from within the constructor to
      * initialize the form.

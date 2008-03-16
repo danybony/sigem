@@ -35,7 +35,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     
     boolean modifica = false;
     
-    /** Creates new form PoliticheJDialog */
+    /** Crea il form PoliticheJDialog */
     public PoliticheJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog conf, SiGeMv2View view) {
         super(parent, modal);
         configurazioneAmbiente = conf;

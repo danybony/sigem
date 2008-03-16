@@ -46,7 +46,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     private boolean modifica = false;
     
 
-    /** Creates new form ConfigurazioneAmbienteJDialog */
+    /** Crea il form ConfigurazioneAmbienteJDialog */
     public ConfigurazioneAmbienteJDialog(java.awt.Frame parent, boolean modal, SiGeMv2View view) {
         super(parent, modal);
         this.view = view;
@@ -59,6 +59,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         initSpinnerBandaBusDati();
     }
     
+    /** Crea il form ConfigurazioneAmbienteJDialog per la modifica */
     public ConfigurazioneAmbienteJDialog(java.awt.Frame parent, boolean modal, SiGeMv2View view,
             ConfigurazioneIniziale confIniziale) {
         super(parent, modal);
