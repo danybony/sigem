@@ -1,6 +1,8 @@
 
 package logic.gestioneMemoria;
 
+import java.io.Serializable;
+
 /*
  * Azienda: Stylosoft
  * Nome file: Segmento.java
@@ -20,7 +22,7 @@ package logic.gestioneMemoria;
 /**
  * Classe per la modellazione della memoria come segmenti.
  */
-public class Segmento implements FrameMemoria{
+public class Segmento implements FrameMemoria, Serializable{
     
     /**
      * Indica se il segmento e' di sola lettura (esempio: segmento per le

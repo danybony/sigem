@@ -1,6 +1,8 @@
 
 package logic.gestioneMemoria;
 
+import java.io.Serializable;
+
 /*
  * Azienda: Stylosoft
  * Nome file: Pagina.java
@@ -19,7 +21,7 @@ package logic.gestioneMemoria;
 /**
  * Classe per la modellazione della memoria come pagine.
  */
-public class Pagina implements FrameMemoria{
+public class Pagina implements FrameMemoria, Serializable{
     
     /**
      * Indica se la pagina e' di sola lettura.
