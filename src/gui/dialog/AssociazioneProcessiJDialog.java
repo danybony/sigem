@@ -86,10 +86,12 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         if (politica.getGestioneMemoria() == 1){
             jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI - PAGINE");
             jButtonNuovoFrame.setText("Nuova Pagina");
+            jButtonModifica.setVisible(false);
         }
         else {
             jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI - SEGMENTI");
             jButtonNuovoFrame.setText("Nuovo segmento");
+            jButtonModifica.setVisible(true);
         }
         
         arrayListHandler = new ArrayListTransferHandler();
