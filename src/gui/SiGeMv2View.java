@@ -997,42 +997,53 @@ public class SiGeMv2View {
 
     /** inizializza le viste e prepara l'applicazione per l'esecuzione della simulazione */
     public void setIstanteZero() {
-            statoGui = false;
+            
+        statoGui = false;
+        creaPlayer();
+        simulazioneCarica();
+        abilitaTutto();
+        istante = null;
+        player.primoIstante();
+        player.istantePrecedente();
 
-            if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
-                    ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
-                                    .getComponent();
-                    Vector procName = new Vector();
+        if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
+                ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
+                                .getComponent();
+                Vector procName = new Vector();
+                if(configurazioneIniziale!=null){
                     LinkedList<Processo> processi = configurazioneIniziale.getListaProcessi();
                     for (int i = 0; i < processi.size(); i++) {
                             procName.add(processi.get(i).getNome());
                     }
                     currView.initializeViewStatoAvanzamentoProcessi(procName);
-            }
+                }
+        }
 
-            if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
-                    ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
-                                    .getComponent();
-                    
-                    if(configurazioneIniziale!=null){
-                        switch(configurazioneIniziale.getModalitaGestioneMemoria()){
-                            case 1: 
-                                currView.configura(false,
-                                        configurazioneIniziale.getDimensioneRAM(),
-                                        configurazioneIniziale.getListaProcessi().size());
-                                break;
-                            case 2:
-                                currView.configura(true,
-                                        configurazioneIniziale.getDimensioneRAM(),
-                                        configurazioneIniziale.getListaProcessi().size());
-                                break;
-                        }
+        if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
+                ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                                .getComponent();
+
+                if(configurazioneIniziale!=null){
+
+                    switch(configurazioneIniziale.getModalitaGestioneMemoria()){
+                        case 1: 
+                            System.out.println("A");
+                            currView.configura(false,
+                                    configurazioneIniziale.getDimensioneRAM(),
+                                    configurazioneIniziale.getListaProcessi().size());
+                            break;
+                        case 2:
+                            System.out.println("B");
+                            currView.configura(true,
+                                    configurazioneIniziale.getDimensioneRAM(),
+                                    configurazioneIniziale.getListaProcessi().size());
+                            break;
                     }
-            }
+                }
+        }
 
-            creaPlayer();
-            simulazioneCarica();
-            abilitaTutto();
+        processiEseguiti = new LinkedList<Processo>();
+        visualizzaOrdProcessi(processiEseguiti);
     };
         
     /** Istanzia una nuova simulazione */
@@ -1754,7 +1765,7 @@ public class SiGeMv2View {
                 JOptionPane.showMessageDialog(rootWindow, "File di configurazione non valido","Errore",JOptionPane.ERROR_MESSAGE);
             }
         }
-        
+        System.out.println("SSS");
         this.setIstanteZero();
     }
     
