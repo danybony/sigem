@@ -297,7 +297,9 @@ public class ViewFrameMemoria extends JPanel {
         Color color;
         String text;
         FrameMemoria frame;
-        Azione azione=cambiamentiInMemoria.getLast();
+        try{
+            Azione azione=cambiamentiInMemoria.getLast();
+        
         Vector<FrameMemoria> memoria=azione.getMemoriaRAM();
         pagineSquare.clear();
         for(int i=0; i<memoria.size(); i++){
@@ -336,7 +338,7 @@ public class ViewFrameMemoria extends JPanel {
                         trovato=true;
                     }
                 }
-                if(trovato){
+                if(trovato || frame.getIdProcesso()==-1){
                     color=Color.LIGHT_GRAY;
                     text=" ";
                 }
@@ -357,6 +359,8 @@ public class ViewFrameMemoria extends JPanel {
         }
         
         repaint();
+        }
+        catch(Exception e){}
     }
     
 
