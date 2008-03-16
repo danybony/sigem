@@ -60,6 +60,12 @@ public class ViewFrameMemoria extends JPanel {
     /** Vector che contiene le pagine/segmenti da visualizzare */
     private Vector<SquareDraw> pagineSquare = new Vector<SquareDraw>();
     
+    /**
+     * Vector che mantiene una lista di prcessi che hanno finito di eseguire
+     * una per ogni istante
+     */
+    Vector<Vector<Integer>> processiUltimati=null;
+    
     
     
     public ViewFrameMemoria() {
@@ -113,7 +119,7 @@ public class ViewFrameMemoria extends JPanel {
      * @throws Exception
      *      Lancia un'eccezione nel caso in cui la memoria non sia ancora stata configurata
      */
-    public void aggiorna(LinkedList<Azione> cambiamentiInMemoria) throws Exception{
+    public void aggiorna(LinkedList<Azione> cambiamentiInMemoria, int istante) throws Exception{
         /*if(dimMemoria==0) throw new Exception();
         
         Azione azione=null;
@@ -270,11 +276,18 @@ public class ViewFrameMemoria extends JPanel {
                        
             }
         }*/
-        //Cerco se un processo ha finito di eseguire in questo istante
-        int processoTerminato=-2;
-        for(int i=0;i<cambiamentiInMemoria.size();i++){
-            if(cambiamentiInMemoria.get(i).getAzione()==6){
-                processoTerminato=cambiamentiInMemoria.get(i).getPosizione();
+        
+        //Aggiorno, se necessario, lo storico dei processi ultimati
+        if(istante>=processiUltimati.size()){
+            processiUltimati.add(new Vector(processiUltimati.get(istante-1)));
+            int processoUltimato=-2;
+            for(int i=0;i<cambiamentiInMemoria.size();i++){
+                if (cambiamentiInMemoria.get(i).getAzione()==6){
+                    processoUltimato=cambiamentiInMemoria.get(i).getPosizione();
+                }
+            }
+            if(processoUltimato!=-2){
+                processiUltimati.get(istante).add(new Integer(processoUltimato));
             }
         }
         int coordX=10;
@@ -292,13 +305,19 @@ public class ViewFrameMemoria extends JPanel {
             if (pag_seg==false){
                 coordY=((i/6)*LATO+5*(i/6))+10;
                 coordX=(i%6)*LATO+5*(i%6);
-                if(frame.getIdProcesso()==processoTerminato){
-                    color=Color.LIGHT_GRAY;
-                    text=" ";
+                boolean trovato=false;
+                for(int j=0;j<processiUltimati.get(istante).size()&&!trovato;j++){
+                    if(processiUltimati.get(istante).get(j).equals(new Integer(frame.getIdProcesso()))){
+                        trovato=true;
+                    }
+                }
+                if(trovato){
+                        color=Color.LIGHT_GRAY;
+                        text=" ";
                 }
                 else{
-                    color=ViewUtility.colorFactory(numProcessi, frame.getIdProcesso());
-                    text=frame.getIndirizzo();
+                        color=ViewUtility.colorFactory(numProcessi, frame.getIdProcesso());
+                        text=frame.getIndirizzo();
                 }
                 pagineSquare.add(new SquareDraw(coordX,
                                                   coordY,
@@ -311,7 +330,13 @@ public class ViewFrameMemoria extends JPanel {
             }
             else{
                 altezza=altezza=(ALTEZZA*frame.getDimensione())/dimMemoria;
-                if(frame.getIdProcesso()==processoTerminato){
+                boolean trovato=false;
+                for(int j=0;j<processiUltimati.get(istante).size()&&!trovato;j++){
+                    if(processiUltimati.get(istante).get(j).equals(new Integer(frame.getIdProcesso()))){
+                        trovato=true;
+                    }
+                }
+                if(trovato){
                     color=Color.LIGHT_GRAY;
                     text=" ";
                 }
@@ -349,6 +374,8 @@ public class ViewFrameMemoria extends JPanel {
         pag_seg=sceltaGestioneMemoria;
         this.dimMemoria=dimMemoria;
         this.numProcessi=numProcessi;
+        processiUltimati=new Vector<Vector<Integer>>();
+        processiUltimati.add(0, new Vector<Integer>());
         /*if(sceltaGestioneMemoria==true){
             pagineSquare.add(
                              0,
