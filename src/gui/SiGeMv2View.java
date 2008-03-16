@@ -92,6 +92,8 @@ public class SiGeMv2View {
     /** Rappresenta lo stato dela Gui, vale true se la simulazione e' in avanzamento automatico,
      * false, se e' interrotta.*/
     private boolean statoGui = false;
+    
+    private boolean statoStop = true;
 
     //private HelpSet hs;
 
@@ -1050,6 +1052,7 @@ public class SiGeMv2View {
     /** Parte la simulazione */
     private synchronized void simulazionePlay() {
         statoGui = true;
+        statoStop = true;
         jButtonNuovaConfigurazione.setEnabled(false);
         jButtonApriConfigurazione.setEnabled(false);
         jButtonSalvaConfigurazione.setEnabled(false);
@@ -1115,7 +1118,7 @@ public class SiGeMv2View {
                     
                     try {
                         currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());
-                    }catch (Exception e){}
+                    }catch (Exception e){e.printStackTrace();}
                     
                     try {
                         this.sleep(velocita*100);
@@ -1136,7 +1139,7 @@ public class SiGeMv2View {
 
                     jButtonSimulazionePlay.setEnabled(true);
                     jButtonSimulazionePausa.setEnabled(false);
-                    jButtonSimulazioneStop.setEnabled(false);
+                    jButtonSimulazioneStop.setEnabled(true);
                     jButtonSimulazioneInizio.setEnabled(true);
                     jButtonSimulazioneIndietro.setEnabled(true);
                     jButtonSimulazioneAvanti.setEnabled(true);
@@ -1156,7 +1159,7 @@ public class SiGeMv2View {
 
                     jSimulazioneItemPlay.setEnabled(true);
                     jSimulazioneItemPausa.setEnabled(false);
-                    jSimulazioneItemStop.setEnabled(false);
+                    jSimulazioneItemStop.setEnabled(true);
                     jSimulazioneItemInizio.setEnabled(true);
                     jSimulazioneItemIndietro.setEnabled(true);
                     jSimulazioneItemAvantiSignificativo.setEnabled(true);
@@ -1186,7 +1189,9 @@ public class SiGeMv2View {
             // interrompe l'avanzamento automatico e aspetta che il thread
             // venga terminato
             statoGui=false;
-            auto.join();
+            statoStop = true;
+            if(auto!=null)
+                auto.join();
             
             istante = null;
             player.primoIstante();
@@ -1359,7 +1364,7 @@ public class SiGeMv2View {
     
     /** Porta la simulazione allo stato precedente */
     private void simulazioneIndietro() {
-        
+
         istante = player.istantePrecedente();
         
         if(istante!=null){
@@ -1411,8 +1416,12 @@ public class SiGeMv2View {
 
     /** Porta la simulazione allo stato successivo */
     private void simulazioneAvanti() {
-        
+
         istante = player.istanteSuccessivo();
+
+            
+            
+        
         
         if(istante!=null){
             PCB pcbAttuale;
