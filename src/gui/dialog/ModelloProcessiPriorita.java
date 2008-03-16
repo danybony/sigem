@@ -1,13 +1,14 @@
 /*
  * Azienda: Stylosoft
- * Nome file: ModelloProcessi.java
+ * Nome file: ModelloProcessiPriorita.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
  * Data: 16/03/2008
  * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche: *  
- *  - v.1.2 (16/03/2008): Corretta gestione modifica configurazione
+ *  - v.1.2 (16/03/2008): Corretta gestione modifica configurazione e corretta gestione
+ *                          celle in caso di campi vuoti
  *  - v.1.1 (15/03/2008): Inserita gestione modifica configurazione
  *  - v.1.0 (24/02/2008): Creazione modello di tabella
  */
@@ -27,6 +28,12 @@ public class ModelloProcessiPriorita extends AbstractTableModel {
         
         private Object[][] contenutiRighe=new Object[0][0];
 
+        /**
+	 * Campo dati contatore utilizzato per la generazione dei nomi di default
+	 * dei processi.
+	 */
+	private int numero = 1;
+        
         public ModelloProcessiPriorita(int nRighe) {
             contenutiRighe=new Object[nRighe][4];
             for (int i=0; i<nRighe; i++) {
@@ -132,7 +139,45 @@ public class ModelloProcessiPriorita extends AbstractTableModel {
          * contenutiRighe can change.
          */
         public void setValueAt(Object value, int row, int col) {
-            contenutiRighe[row][col] = value;
+            if (col == 0) {
+                // controlliamo che il nome già esiste
+		for (int i = 0; i < getRowCount(); i++) {
+                    String tmp = (String) contenutiRighe[i][0];
+                    // se esiste...
+                    if (tmp.equals((String) value)
+                    && !(tmp.equals(getValueAt(row, col)))) {
+                    // Inseriamo un nome generato automaticamente
+                        value = new String("P" + numero);
+                        numero++;
+                    }
+                }
+                // se la cella è vuota...
+		if (contenutiRighe[row][0].equals(new String(""))) {
+                    // Inseriamo un nome generato automaticamente
+                    value = new String("P" + numero);
+                    numero++;
+		}
+            }
+            try {
+                //contenutiRighe[row][col] = value;
+                if (col != 0) {
+                    if (((Integer) value).intValue() < 0) {
+                        if (col == 2)
+                            value = new Integer(1);
+                        else
+                            value = new Integer(0);
+                        }
+                    if (((Integer) value).intValue() == 0) {
+                        if (col == 2)
+                            value = new Integer(1);
+                    }
+                }
+            } catch (NullPointerException errore) {
+                if (col == 1)
+                    value = new Integer(0);
+		if (col == 2)
+                    value = new Integer(1);
+            }
             fireTableCellUpdated(row, col);
         }
     }
