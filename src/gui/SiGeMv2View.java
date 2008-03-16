@@ -1114,7 +1114,7 @@ public class SiGeMv2View {
                     visualizzaOrdProcessi(processiEseguiti);
                     
                     try {
-                        currView.aggiorna(istante.getCambiamentiInMemoria());
+                        currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());
                     }catch (Exception e){}
                     
                     try {
@@ -1317,7 +1317,7 @@ public class SiGeMv2View {
 
         visualizzaOrdProcessi(processiEseguiti);
         try{
-        currView.aggiorna(istante.getCambiamentiInMemoria());    
+        currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());    
         }catch(Exception e){}
         
         jButtonNuovaConfigurazione.setEnabled(true);
@@ -1369,7 +1369,7 @@ public class SiGeMv2View {
             processiEseguiti.removeLast();
             visualizzaOrdProcessi(processiEseguiti);
             try{
-            currView.aggiorna(istante.getCambiamentiInMemoria());    
+            currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());    
             }catch(Exception e){}   
         }
         
@@ -1429,7 +1429,7 @@ public class SiGeMv2View {
 
             visualizzaOrdProcessi(processiEseguiti);
             try{
-            currView.aggiorna(istante.getCambiamentiInMemoria());    
+            currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());    
             }catch(Exception e){}
         }
         
@@ -1487,7 +1487,7 @@ public class SiGeMv2View {
                 processiEseguiti.add(pcbAttuale.getRifProcesso());
             }
             try{
-                currView.aggiorna(istante.getCambiamentiInMemoria());    
+                currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());    
             }catch(Exception e){}
         }
         visualizzaOrdProcessi(processiEseguiti);
@@ -1569,7 +1569,7 @@ public class SiGeMv2View {
                 istante = istantiAllEvento.get(i);
                 processiEseguiti.removeLast();
                 try{
-                    currView.aggiorna(istante.getCambiamentiInMemoria());    
+                    currView.aggiorna(istante.getCambiamentiInMemoria(),1);    
                 }catch(Exception e){}
             }
 
@@ -1658,7 +1658,7 @@ public class SiGeMv2View {
                     processiEseguiti.add(pcbAttuale.getRifProcesso());
                 }
                 try{
-                    currView.aggiorna(istante.getCambiamentiInMemoria());    
+                    currView.aggiorna(istante.getCambiamentiInMemoria(),1);    
                 }catch(Exception e){}
             }
 
