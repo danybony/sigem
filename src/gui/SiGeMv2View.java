@@ -449,7 +449,7 @@ public class SiGeMv2View {
     private JMenu createFileMenu() {
             JMenu fileMenu = new JMenu("File");
 
-            jFileItemNuovaConfigurazione = new JMenuItem("Nuova Configurazione");
+            jFileItemNuovaConfigurazione = new JMenuItem("Nuova Configurazione",IconStylosoft.getGeneralIcon("newConf"));
             jFileItemNuovaConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                             creaConfigurazione();
@@ -457,7 +457,7 @@ public class SiGeMv2View {
             });
             fileMenu.add(jFileItemNuovaConfigurazione);
 
-            jFileItemApriConfigurazione = new JMenuItem("Apri Configurazione");
+            jFileItemApriConfigurazione = new JMenuItem("Apri Configurazione",IconStylosoft.getGeneralIcon("openFile"));
             jFileItemApriConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                             apriFileConfigurazione();
@@ -467,7 +467,7 @@ public class SiGeMv2View {
 
             fileMenu.addSeparator();
 
-            jFileItemSalvaConfigurazione = new JMenuItem("Salva");
+            jFileItemSalvaConfigurazione = new JMenuItem("Salva",IconStylosoft.getGeneralIcon("save"));
             jFileItemSalvaConfigurazione.setEnabled(false);
             jFileItemSalvaConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -476,7 +476,7 @@ public class SiGeMv2View {
             });
             fileMenu.add(jFileItemSalvaConfigurazione);
 
-            jFileItemSalvaConfigurazioneConNome = new JMenuItem("Salva con nome");
+            jFileItemSalvaConfigurazioneConNome = new JMenuItem("Salva con nome",IconStylosoft.getGeneralIcon("save"));
             jFileItemSalvaConfigurazioneConNome.setEnabled(false);
             jFileItemSalvaConfigurazioneConNome.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -487,7 +487,7 @@ public class SiGeMv2View {
 
             fileMenu.addSeparator();
 
-            jFileItemModificaConfigurazione = new JMenuItem("Modifica configurazione caricata");
+            jFileItemModificaConfigurazione = new JMenuItem("Modifica configurazione caricata",IconStylosoft.getGeneralIcon("mod"));
             jFileItemModificaConfigurazione.setEnabled(false);
             jFileItemModificaConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -498,7 +498,7 @@ public class SiGeMv2View {
 
             fileMenu.addSeparator();
 
-            jFileItemEsci = new JMenuItem("Esci");
+            jFileItemEsci = new JMenuItem("Esci",IconStylosoft.getGeneralIcon("exit"));
             jFileItemEsci.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         System.exit(0);
@@ -713,9 +713,10 @@ public class SiGeMv2View {
      */
     private JMenu createHelpMenu() {
             JMenu helpMenu = new JMenu("Help");
-            JMenuItem mniHelp = new JMenuItem("Help");
-            JMenuItem InfoSu = new JMenuItem("Informazioni su...");
+            JMenuItem mniHelp = new JMenuItem("Help",IconStylosoft.getGeneralIcon("help"));
+            JMenuItem InfoSu = new JMenuItem("Informazioni su...",IconStylosoft.getGeneralIcon("info"));
             helpMenu.add(mniHelp);
+            helpMenu.addSeparator();
             helpMenu.add(InfoSu);
             return helpMenu;
     }
@@ -968,11 +969,11 @@ public class SiGeMv2View {
         jButtonSimulazionePausa.setEnabled(false);
         jButtonSimulazioneStop.setEnabled(false);
         jButtonSimulazioneInizio.setEnabled(true);
-        jButtonSimulazioneIndietro.setEnabled(true);
+        jButtonSimulazioneIndietro.setEnabled(false);
         jButtonSimulazioneAvanti.setEnabled(true);
         jButtonSimulazioneFine.setEnabled(true);
         
-        jButtonIndietroSignificativo.setEnabled(true);
+        jButtonIndietroSignificativo.setEnabled(false);
         ComboBoxSignificativo.setEnabled(true);
         jButtonAvantiSignificativo.setEnabled(true);
 
@@ -988,11 +989,100 @@ public class SiGeMv2View {
         jSimulazioneItemPausa.setEnabled(false);
         jSimulazioneItemStop.setEnabled(false);
         jSimulazioneItemInizio.setEnabled(true);
-        jSimulazioneItemIndietro.setEnabled(true);
+        jSimulazioneItemIndietro.setEnabled(false);
         jSimulazioneItemAvantiSignificativo.setEnabled(true);
-        jSimulazioneItemIndietroSignificativo.setEnabled(true);
+        jSimulazioneItemIndietroSignificativo.setEnabled(false);
         jSimulazioneItemAvanti.setEnabled(true);
         jSimulazioneItemFine.setEnabled(true);
+    }
+    
+    public void aggiornaComandi(){
+        jButtonNuovaConfigurazione.setEnabled(true);
+        jButtonApriConfigurazione.setEnabled(true);
+        jButtonSalvaConfigurazione.setEnabled(true);
+        jButtonModificaConfigurazione.setEnabled(true);
+        
+        jButtonSimulazionePlay.setEnabled(true);
+        jButtonSimulazionePausa.setEnabled(true);
+        jButtonSimulazioneStop.setEnabled(true);
+        
+        if(player.hasPrev())
+            jButtonSimulazioneInizio.setEnabled(true);
+        else
+            jButtonSimulazioneInizio.setEnabled(false);
+        
+        if(player.hasPrev())
+            jButtonSimulazioneIndietro.setEnabled(true);
+        else
+            jButtonSimulazioneIndietro.setEnabled(false);
+        
+        if(player.hasNext())
+            jButtonSimulazioneAvanti.setEnabled(true);
+        else
+            jButtonSimulazioneAvanti.setEnabled(false);
+
+        if(player.hasNext())
+            jButtonSimulazioneFine.setEnabled(true);
+        else
+            jButtonSimulazioneFine.setEnabled(false);
+
+        if(player.hasPrev())
+            jButtonIndietroSignificativo.setEnabled(true);
+        else
+            jButtonIndietroSignificativo.setEnabled(false);
+
+        if(player.hasPrev() || player.hasNext())
+            ComboBoxSignificativo.setEnabled(true);
+        else
+            ComboBoxSignificativo.setEnabled(false);
+        
+        if(player.hasNext())
+            jButtonAvantiSignificativo.setEnabled(true);
+        else
+            jButtonAvantiSignificativo.setEnabled(false);
+
+                
+        jFileItemNuovaConfigurazione.setEnabled(true);
+        jFileItemApriConfigurazione.setEnabled(true);
+        jFileItemSalvaConfigurazione.setEnabled(true);
+        jFileItemSalvaConfigurazioneConNome.setEnabled(true);
+        jFileItemModificaConfigurazione.setEnabled(true);
+        jFileItemEsci.setEnabled(true);
+                
+        jSimulazioneItemPlay.setEnabled(true);
+        jSimulazioneItemPausa.setEnabled(true);
+        jSimulazioneItemStop.setEnabled(true);
+        
+        
+        if(player.hasPrev())
+            jSimulazioneItemInizio.setEnabled(true);
+        else
+            jSimulazioneItemInizio.setEnabled(false);
+        
+        if(player.hasPrev())
+            jSimulazioneItemIndietro.setEnabled(true);
+        else
+            jSimulazioneItemIndietro.setEnabled(false);
+
+        if(player.hasPrev())
+            jSimulazioneItemIndietroSignificativo.setEnabled(true);
+        else
+            jSimulazioneItemIndietroSignificativo.setEnabled(false);
+
+        if(player.hasNext())
+            jSimulazioneItemAvantiSignificativo.setEnabled(true);
+        else
+            jSimulazioneItemAvantiSignificativo.setEnabled(false);
+
+        if(player.hasNext())
+            jSimulazioneItemAvanti.setEnabled(true);
+        else
+            jSimulazioneItemAvanti.setEnabled(false);
+        
+        if(player.hasNext())
+            jSimulazioneItemFine.setEnabled(true);
+        else
+            jSimulazioneItemFine.setEnabled(false);
     }
 
     /** inizializza le viste e prepara l'applicazione per l'esecuzione della simulazione */
@@ -1001,10 +1091,9 @@ public class SiGeMv2View {
         statoGui = false;
         creaPlayer();
         simulazioneCarica();
-        abilitaTutto();
         istante = null;
         player.primoIstante();
-        
+        abilitaTutto();
 
         if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
                 ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
@@ -1052,7 +1141,8 @@ public class SiGeMv2View {
     /** Parte la simulazione */
     private synchronized void simulazionePlay() {
         statoGui = true;
-        statoStop = true;
+        statoStop = false;
+        
         jButtonNuovaConfigurazione.setEnabled(false);
         jButtonApriConfigurazione.setEnabled(false);
         jButtonSalvaConfigurazione.setEnabled(false);
@@ -1070,13 +1160,12 @@ public class SiGeMv2View {
         ComboBoxSignificativo.setEnabled(false);
         jButtonAvantiSignificativo.setEnabled(false);
 
-                
         jFileItemNuovaConfigurazione.setEnabled(false);
         jFileItemApriConfigurazione.setEnabled(false);
         jFileItemSalvaConfigurazione.setEnabled(false);
         jFileItemSalvaConfigurazioneConNome.setEnabled(false);
         jFileItemModificaConfigurazione.setEnabled(false);
-        jFileItemEsci.setEnabled(true);
+        jFileItemEsci.setEnabled(false);
                 
         jSimulazioneItemPlay.setEnabled(false);
         jSimulazioneItemPausa.setEnabled(true);
@@ -1132,6 +1221,7 @@ public class SiGeMv2View {
                 // L'esecuzione automatica e' terminata senza interruzioni
                 if(statoGui){
                     istante = null;
+                    aggiornaComandi();
                     jButtonNuovaConfigurazione.setEnabled(true);
                     jButtonApriConfigurazione.setEnabled(true);
                     jButtonSalvaConfigurazione.setEnabled(true);
@@ -1140,16 +1230,7 @@ public class SiGeMv2View {
                     jButtonSimulazionePlay.setEnabled(true);
                     jButtonSimulazionePausa.setEnabled(false);
                     jButtonSimulazioneStop.setEnabled(true);
-                    jButtonSimulazioneInizio.setEnabled(true);
-                    jButtonSimulazioneIndietro.setEnabled(true);
-                    jButtonSimulazioneAvanti.setEnabled(true);
-                    jButtonSimulazioneFine.setEnabled(true);
-
-                    jButtonIndietroSignificativo.setEnabled(true);
-                    ComboBoxSignificativo.setEnabled(true);
-                    jButtonAvantiSignificativo.setEnabled(true);
-
-
+                    
                     jFileItemNuovaConfigurazione.setEnabled(true);
                     jFileItemApriConfigurazione.setEnabled(true);
                     jFileItemSalvaConfigurazione.setEnabled(true);
@@ -1160,12 +1241,6 @@ public class SiGeMv2View {
                     jSimulazioneItemPlay.setEnabled(true);
                     jSimulazioneItemPausa.setEnabled(false);
                     jSimulazioneItemStop.setEnabled(true);
-                    jSimulazioneItemInizio.setEnabled(true);
-                    jSimulazioneItemIndietro.setEnabled(true);
-                    jSimulazioneItemAvantiSignificativo.setEnabled(true);
-                    jSimulazioneItemIndietroSignificativo.setEnabled(true);
-                    jSimulazioneItemAvanti.setEnabled(true);
-                    jSimulazioneItemFine.setEnabled(true);
                 }
                 
                 statoGui = false;
@@ -1219,6 +1294,7 @@ public class SiGeMv2View {
                 }
             }
 
+            aggiornaComandi();
             jButtonNuovaConfigurazione.setEnabled(true);
             jButtonApriConfigurazione.setEnabled(true);
             jButtonSalvaConfigurazione.setEnabled(true);
@@ -1228,15 +1304,7 @@ public class SiGeMv2View {
             jButtonSimulazionePausa.setEnabled(false);
             jButtonSimulazioneStop.setEnabled(false);
             jButtonSimulazioneInizio.setEnabled(true);
-            jButtonSimulazioneIndietro.setEnabled(true);
-            jButtonSimulazioneAvanti.setEnabled(true);
-            jButtonSimulazioneFine.setEnabled(true);
-
-            jButtonIndietroSignificativo.setEnabled(true);
-            ComboBoxSignificativo.setEnabled(true);
-            jButtonAvantiSignificativo.setEnabled(true);
-
-
+            
             jFileItemNuovaConfigurazione.setEnabled(true);
             jFileItemApriConfigurazione.setEnabled(true);
             jFileItemSalvaConfigurazione.setEnabled(true);
@@ -1248,11 +1316,7 @@ public class SiGeMv2View {
             jSimulazioneItemPausa.setEnabled(false);
             jSimulazioneItemStop.setEnabled(false);
             jSimulazioneItemInizio.setEnabled(true);
-            jSimulazioneItemIndietro.setEnabled(true);
-            jSimulazioneItemAvantiSignificativo.setEnabled(true);
-            jSimulazioneItemIndietroSignificativo.setEnabled(true);
-            jSimulazioneItemAvanti.setEnabled(true);
-            jSimulazioneItemFine.setEnabled(true);
+            
         } catch (InterruptedException ex) {}
     }
 
@@ -1263,8 +1327,10 @@ public class SiGeMv2View {
             // interrompe l'avanzamento automatico e aspetta che il thread
             // venga terminato
             statoGui=false;
+            statoStop = false;
             auto.join();
 
+            aggiornaComandi();
             jButtonNuovaConfigurazione.setEnabled(true);
             jButtonApriConfigurazione.setEnabled(true);
             jButtonSalvaConfigurazione.setEnabled(true);
@@ -1273,16 +1339,7 @@ public class SiGeMv2View {
             jButtonSimulazionePlay.setEnabled(true);
             jButtonSimulazionePausa.setEnabled(false);
             jButtonSimulazioneStop.setEnabled(true);
-            jButtonSimulazioneInizio.setEnabled(true);
-            jButtonSimulazioneIndietro.setEnabled(true);
-            jButtonSimulazioneAvanti.setEnabled(true);
-            jButtonSimulazioneFine.setEnabled(true);
-
-            jButtonIndietroSignificativo.setEnabled(true);
-            ComboBoxSignificativo.setEnabled(true);
-            jButtonAvantiSignificativo.setEnabled(true);
-
-
+            
             jFileItemNuovaConfigurazione.setEnabled(true);
             jFileItemApriConfigurazione.setEnabled(true);
             jFileItemSalvaConfigurazione.setEnabled(true);
@@ -1293,17 +1350,13 @@ public class SiGeMv2View {
             jSimulazioneItemPlay.setEnabled(true);
             jSimulazioneItemPausa.setEnabled(false);
             jSimulazioneItemStop.setEnabled(true);
-            jSimulazioneItemInizio.setEnabled(true);
-            jSimulazioneItemIndietro.setEnabled(true);
-            jSimulazioneItemAvantiSignificativo.setEnabled(true);
-            jSimulazioneItemIndietroSignificativo.setEnabled(true);
-            jSimulazioneItemAvanti.setEnabled(true);
-            jSimulazioneItemFine.setEnabled(true);
+            
         } catch (InterruptedException ex) {}
     }
 
     /** Porta la simulazione allo stato iniziale */
     private void simulazioneInizio() {
+        statoStop = false;
         
         istante = player.primoIstante();
         processiEseguiti = new LinkedList<Processo>();
@@ -1325,6 +1378,7 @@ public class SiGeMv2View {
         currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());    
         }catch(Exception e){}
         
+        aggiornaComandi();
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
@@ -1333,16 +1387,7 @@ public class SiGeMv2View {
         jButtonSimulazionePlay.setEnabled(true);
         jButtonSimulazionePausa.setEnabled(false);
         jButtonSimulazioneStop.setEnabled(true);
-        jButtonSimulazioneInizio.setEnabled(true);
-        jButtonSimulazioneIndietro.setEnabled(true);
-        jButtonSimulazioneAvanti.setEnabled(true);
-        jButtonSimulazioneFine.setEnabled(true);
         
-        jButtonIndietroSignificativo.setEnabled(true);
-        ComboBoxSignificativo.setEnabled(true);
-        jButtonAvantiSignificativo.setEnabled(true);
-
-                
         jFileItemNuovaConfigurazione.setEnabled(true);
         jFileItemApriConfigurazione.setEnabled(true);
         jFileItemSalvaConfigurazione.setEnabled(true);
@@ -1353,12 +1398,6 @@ public class SiGeMv2View {
         jSimulazioneItemPlay.setEnabled(true);
         jSimulazioneItemPausa.setEnabled(false);
         jSimulazioneItemStop.setEnabled(true);
-        jSimulazioneItemInizio.setEnabled(true);
-        jSimulazioneItemIndietro.setEnabled(true);
-        jSimulazioneItemAvantiSignificativo.setEnabled(true);
-        jSimulazioneItemIndietroSignificativo.setEnabled(true);
-        jSimulazioneItemAvanti.setEnabled(true);
-        jSimulazioneItemFine.setEnabled(true);
 
     }
     
@@ -1366,6 +1405,8 @@ public class SiGeMv2View {
     private void simulazioneIndietro() {
 
         istante = player.istantePrecedente();
+        
+        statoStop = false;
         
         if(istante!=null){
              ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
@@ -1378,6 +1419,7 @@ public class SiGeMv2View {
             }catch(Exception e){}   
         }
         
+        aggiornaComandi();
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
@@ -1386,15 +1428,6 @@ public class SiGeMv2View {
         jButtonSimulazionePlay.setEnabled(true);
         jButtonSimulazionePausa.setEnabled(false);
         jButtonSimulazioneStop.setEnabled(true);
-        jButtonSimulazioneInizio.setEnabled(true);
-        jButtonSimulazioneIndietro.setEnabled(true);
-        jButtonSimulazioneAvanti.setEnabled(true);
-        jButtonSimulazioneFine.setEnabled(true);
-        
-        jButtonIndietroSignificativo.setEnabled(true);
-        ComboBoxSignificativo.setEnabled(true);
-        jButtonAvantiSignificativo.setEnabled(true);
-
                 
         jFileItemNuovaConfigurazione.setEnabled(true);
         jFileItemApriConfigurazione.setEnabled(true);
@@ -1406,20 +1439,18 @@ public class SiGeMv2View {
         jSimulazioneItemPlay.setEnabled(true);
         jSimulazioneItemPausa.setEnabled(false);
         jSimulazioneItemStop.setEnabled(true);
-        jSimulazioneItemInizio.setEnabled(true);
-        jSimulazioneItemIndietro.setEnabled(true);
-        jSimulazioneItemAvantiSignificativo.setEnabled(true);
-        jSimulazioneItemIndietroSignificativo.setEnabled(true);
-        jSimulazioneItemAvanti.setEnabled(true);
-        jSimulazioneItemFine.setEnabled(true);
+        
     }
 
     /** Porta la simulazione allo stato successivo */
     private void simulazioneAvanti() {
+        
+        if(statoStop)
+            istante = player.primoIstante();
+        else
+            istante = player.istanteSuccessivo();
 
-        istante = player.istanteSuccessivo();
-
-            
+        statoStop = false;    
             
         
         
@@ -1442,6 +1473,7 @@ public class SiGeMv2View {
             }catch(Exception e){}
         }
         
+        aggiornaComandi();
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
@@ -1450,15 +1482,6 @@ public class SiGeMv2View {
         jButtonSimulazionePlay.setEnabled(true);
         jButtonSimulazionePausa.setEnabled(false);
         jButtonSimulazioneStop.setEnabled(true);
-        jButtonSimulazioneInizio.setEnabled(true);
-        jButtonSimulazioneIndietro.setEnabled(true);
-        jButtonSimulazioneAvanti.setEnabled(true);
-        jButtonSimulazioneFine.setEnabled(true);
-        
-        jButtonIndietroSignificativo.setEnabled(true);
-        ComboBoxSignificativo.setEnabled(true);
-        jButtonAvantiSignificativo.setEnabled(true);
-
                 
         jFileItemNuovaConfigurazione.setEnabled(true);
         jFileItemApriConfigurazione.setEnabled(true);
@@ -1470,18 +1493,18 @@ public class SiGeMv2View {
         jSimulazioneItemPlay.setEnabled(true);
         jSimulazioneItemPausa.setEnabled(false);
         jSimulazioneItemStop.setEnabled(true);
-        jSimulazioneItemInizio.setEnabled(true);
-        jSimulazioneItemIndietro.setEnabled(true);
-        jSimulazioneItemAvantiSignificativo.setEnabled(true);
-        jSimulazioneItemIndietroSignificativo.setEnabled(true);
-        jSimulazioneItemAvanti.setEnabled(true);
-        jSimulazioneItemFine.setEnabled(true);
+        
     }
     
     /** Porta la simulazione allo stato finale */
     private void simulazioneFine() {
         
         LinkedList<Istante> istantiAllaFine = player.ultimoIstante();
+        
+        if(statoStop)
+            istantiAllaFine.addFirst(player.primoIstante());
+        
+        statoStop = false;
         PCB pcbAttuale;
         ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
                             .getComponent();
@@ -1501,6 +1524,7 @@ public class SiGeMv2View {
         }
         visualizzaOrdProcessi(processiEseguiti);
         
+        aggiornaComandi();
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
@@ -1509,16 +1533,7 @@ public class SiGeMv2View {
         jButtonSimulazionePlay.setEnabled(true);
         jButtonSimulazionePausa.setEnabled(false);
         jButtonSimulazioneStop.setEnabled(true);
-        jButtonSimulazioneInizio.setEnabled(true);
-        jButtonSimulazioneIndietro.setEnabled(true);
-        jButtonSimulazioneAvanti.setEnabled(true);
-        jButtonSimulazioneFine.setEnabled(true);
         
-        jButtonIndietroSignificativo.setEnabled(true);
-        ComboBoxSignificativo.setEnabled(true);
-        jButtonAvantiSignificativo.setEnabled(true);
-
-                
         jFileItemNuovaConfigurazione.setEnabled(true);
         jFileItemApriConfigurazione.setEnabled(true);
         jFileItemSalvaConfigurazione.setEnabled(true);
@@ -1529,15 +1544,10 @@ public class SiGeMv2View {
         jSimulazioneItemPlay.setEnabled(true);
         jSimulazioneItemPausa.setEnabled(false);
         jSimulazioneItemStop.setEnabled(true);
-        jSimulazioneItemInizio.setEnabled(true);
-        jSimulazioneItemIndietro.setEnabled(true);
-        jSimulazioneItemAvantiSignificativo.setEnabled(true);
-        jSimulazioneItemIndietroSignificativo.setEnabled(true);
-        jSimulazioneItemAvanti.setEnabled(true);
-        jSimulazioneItemFine.setEnabled(true);
     }
         
     private void simulazioneSignificativoPrecedente(int scelta) {
+        statoStop = false;
         
         LinkedList<Istante> istantiAllEvento;
         
@@ -1587,6 +1597,7 @@ public class SiGeMv2View {
             }
             visualizzaOrdProcessi(processiEseguiti);
 
+            aggiornaComandi();
             jButtonNuovaConfigurazione.setEnabled(true);
             jButtonApriConfigurazione.setEnabled(true);
             jButtonSalvaConfigurazione.setEnabled(true);
@@ -1595,15 +1606,6 @@ public class SiGeMv2View {
             jButtonSimulazionePlay.setEnabled(true);
             jButtonSimulazionePausa.setEnabled(false);
             jButtonSimulazioneStop.setEnabled(true);
-            jButtonSimulazioneInizio.setEnabled(true);
-            jButtonSimulazioneIndietro.setEnabled(true);
-            jButtonSimulazioneAvanti.setEnabled(true);
-            jButtonSimulazioneFine.setEnabled(true);
-
-            jButtonIndietroSignificativo.setEnabled(true);
-            ComboBoxSignificativo.setEnabled(true);
-            jButtonAvantiSignificativo.setEnabled(true);
-
 
             jFileItemNuovaConfigurazione.setEnabled(true);
             jFileItemApriConfigurazione.setEnabled(true);
@@ -1615,16 +1617,11 @@ public class SiGeMv2View {
             jSimulazioneItemPlay.setEnabled(true);
             jSimulazioneItemPausa.setEnabled(false);
             jSimulazioneItemStop.setEnabled(true);
-            jSimulazioneItemInizio.setEnabled(true);
-            jSimulazioneItemIndietro.setEnabled(true);
-            jSimulazioneItemAvantiSignificativo.setEnabled(true);
-            jSimulazioneItemIndietroSignificativo.setEnabled(true);
-            jSimulazioneItemAvanti.setEnabled(true);
-            jSimulazioneItemFine.setEnabled(true);
         }
     }
     
     private void simulazioneSignificativoSuccessivo(int scelta) {
+        statoStop = false;
         
         LinkedList<Istante> istantiAllEvento;
         
@@ -1673,6 +1670,7 @@ public class SiGeMv2View {
 
             visualizzaOrdProcessi(processiEseguiti);
 
+            aggiornaComandi();
             jButtonNuovaConfigurazione.setEnabled(true);
             jButtonApriConfigurazione.setEnabled(true);
             jButtonSalvaConfigurazione.setEnabled(true);
@@ -1681,15 +1679,6 @@ public class SiGeMv2View {
             jButtonSimulazionePlay.setEnabled(true);
             jButtonSimulazionePausa.setEnabled(false);
             jButtonSimulazioneStop.setEnabled(true);
-            jButtonSimulazioneInizio.setEnabled(true);
-            jButtonSimulazioneIndietro.setEnabled(true);
-            jButtonSimulazioneAvanti.setEnabled(true);
-            jButtonSimulazioneFine.setEnabled(true);
-
-            jButtonIndietroSignificativo.setEnabled(true);
-            ComboBoxSignificativo.setEnabled(true);
-            jButtonAvantiSignificativo.setEnabled(true);
-
 
             jFileItemNuovaConfigurazione.setEnabled(true);
             jFileItemApriConfigurazione.setEnabled(true);
@@ -1702,11 +1691,6 @@ public class SiGeMv2View {
             jSimulazioneItemPausa.setEnabled(false);
             jSimulazioneItemStop.setEnabled(true);
             jSimulazioneItemInizio.setEnabled(true);
-            jSimulazioneItemIndietro.setEnabled(true);
-            jSimulazioneItemAvantiSignificativo.setEnabled(true);
-            jSimulazioneItemIndietroSignificativo.setEnabled(true);
-            jSimulazioneItemAvanti.setEnabled(true);
-            jSimulazioneItemFine.setEnabled(true);
         }
     }
     
@@ -1756,8 +1740,6 @@ public class SiGeMv2View {
                 gestione = new GestioneFile(file.getAbsolutePath(), null);
                 ConfigurazioneIniziale conf = gestione.caricaFileConfigurazione();
                 setConfigurazioneIniziale(conf);
-                
-                abilitaTutto();
                 
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(rootWindow, "Errore di lettura nel file","Errore",JOptionPane.ERROR_MESSAGE);
