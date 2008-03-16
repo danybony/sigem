@@ -76,12 +76,10 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         if (getGestioneMemoria() == 1) {
            jComboBoxRimpiazzoSegmenti.setEnabled(false);
            jComboBoxRimpiazzoPagine.setEnabled(true);
-           jComboBoxRimpiazzoPagine.setSelectedIndex(0);
            gestionePoliticaPagineMod();
         } else if (getGestioneMemoria() == 2){
            jComboBoxRimpiazzoPagine.setEnabled(false);
            jComboBoxRimpiazzoSegmenti.setEnabled(true);
-           jComboBoxRimpiazzoSegmenti.setSelectedIndex(1);
            gestionePoliticaSegmentiMod();
         }
 
