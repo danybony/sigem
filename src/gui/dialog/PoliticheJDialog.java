@@ -72,6 +72,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
             jSpinnerTimeSlice.setVisible(false);
         }
 
+        jComboBoxSuddivisioneMemoria.setSelectedIndex(getGestioneMemoria()-1);
         if (getGestioneMemoria() == 1) {
            jComboBoxRimpiazzoSegmenti.setEnabled(false);
            jComboBoxRimpiazzoPagine.setEnabled(true);
@@ -406,7 +407,6 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         int inizio = politica.lastIndexOf("(");
         int fine = politica.lastIndexOf(")");
         politica = politica.substring(inizio+1, fine);
-        setGestioneMemoria(1);
         if (politica.equalsIgnoreCase("FCFS"))
             setPoliticaSchedulazione(1);
         else if (politica.equalsIgnoreCase("SJF"))
