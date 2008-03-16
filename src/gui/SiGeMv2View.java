@@ -15,8 +15,6 @@
 package gui;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.infonode.docking.*;
 import net.infonode.docking.mouse.DockingWindowActionMouseButtonListener;
 import net.infonode.docking.properties.RootWindowProperties;
@@ -1027,13 +1025,11 @@ public class SiGeMv2View {
 
                     switch(configurazioneIniziale.getModalitaGestioneMemoria()){
                         case 1: 
-                            System.out.println("A");
                             currView.configura(false,
                                     configurazioneIniziale.getDimensioneRAM(),
                                     configurazioneIniziale.getListaProcessi().size());
                             break;
                         case 2:
-                            System.out.println("B");
                             currView.configura(true,
                                     configurazioneIniziale.getDimensioneRAM(),
                                     configurazioneIniziale.getListaProcessi().size());
