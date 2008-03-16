@@ -1775,6 +1775,7 @@ public class SiGeMv2View {
                 }
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(rootWindow, "Impossibile salvare. \nErrore nella scrittura del file","Errore",JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
             }
         }
     }
@@ -1800,6 +1801,7 @@ public class SiGeMv2View {
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(rootWindow, "Impossibile salvare. \nErrore nella scrittura del file","Errore",JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
     
