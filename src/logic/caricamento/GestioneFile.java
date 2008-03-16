@@ -78,6 +78,7 @@ public class GestioneFile {
      */
     public boolean salvaFileConfigurazione (ConfigurazioneIniziale conf) 
                                                             throws IOException {
+        if(this.percosoFileConfigurazione==null) return false;
         ObjectOutputStream out = new ObjectOutputStream(
                                     new FileOutputStream(
                                     this.percosoFileConfigurazione)
@@ -99,7 +100,8 @@ public class GestioneFile {
      */
     public ConfigurazioneIniziale caricaFileConfigurazione () 
                                     throws IOException, ClassNotFoundException {
-         
+       
+        if(this.percosoFileConfigurazione==null) return null;
         ObjectInputStream in = new ObjectInputStream(
                                 new FileInputStream(
                                 this.percosoFileConfigurazione)

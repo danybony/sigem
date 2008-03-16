@@ -14,6 +14,9 @@
 
 package gui;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.infonode.docking.*;
 import net.infonode.docking.mouse.DockingWindowActionMouseButtonListener;
 import net.infonode.docking.properties.RootWindowProperties;
@@ -41,6 +44,8 @@ import gui.view.*;
 import gui.dialog.*;
 import gui.utility.IconStylosoft;
 
+import gui.utility.ImageFilter;
+import java.io.File;
 import logic.caricamento.GestioneFile;
 import logic.parametri.ConfigurazioneIniziale;
 import logic.parametri.Processo;
@@ -157,8 +162,10 @@ public class SiGeMv2View {
     // velocità di avanzamento nella modalità automatica
     private int velocita;
     
+    GestioneFile gestione;
+    
     private static final Processo PROC_VUOTO = new Processo("",0,0);
-
+    
     // ----------------------------------
     // METODI GESTIONE COMPONENTI GRAFICI
     // ----------------------------------
@@ -453,8 +460,7 @@ public class SiGeMv2View {
             jFileItemApriConfigurazione = new JMenuItem("Apri Configurazione");
             jFileItemApriConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                            // Apre finestra apri file
-                            //apriFileConfigurazione();
+                            apriFileConfigurazione();
                     }
             });
             fileMenu.add(jFileItemApriConfigurazione);
@@ -465,7 +471,7 @@ public class SiGeMv2View {
             jFileItemSalvaConfigurazione.setEnabled(false);
             jFileItemSalvaConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                            //salvaConfigurazione();
+                            salvaConfigurazione();
                     }
             });
             fileMenu.add(jFileItemSalvaConfigurazione);
@@ -474,7 +480,7 @@ public class SiGeMv2View {
             jFileItemSalvaConfigurazioneConNome.setEnabled(false);
             jFileItemSalvaConfigurazioneConNome.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                            //salvaConfigurazione();
+                            salvaConfigurazioneConNome();
                     }
             });
             fileMenu.add(jFileItemSalvaConfigurazioneConNome);
@@ -735,7 +741,7 @@ public class SiGeMv2View {
             jButtonApriConfigurazione = new JButton(IconStylosoft.getGeneralIcon("openFile"));
             jButtonApriConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                            //apriFileConfigurazione();
+                            apriFileConfigurazione();
                     }
             });
             jButtonApriConfigurazione.setToolTipText("Carica una configurazione precedentemente "
@@ -744,7 +750,7 @@ public class SiGeMv2View {
             jButtonSalvaConfigurazione = new JButton(IconStylosoft.getGeneralIcon("save"));
             jButtonSalvaConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                            //salvaConfigurazione();
+                            salvaConfigurazione();
                     }
             });
             jButtonSalvaConfigurazione.setToolTipText("Salva una simulazione su disco");
@@ -1724,6 +1730,77 @@ public class SiGeMv2View {
 
     public void setConfigurazioneIniziale(ConfigurazioneIniziale configurazioneIniziale) {
         this.configurazioneIniziale = configurazioneIniziale;
+    }
+    
+    public void apriFileConfigurazione(){
+        //Handle open button action.
+        JFileChooser fc = new JFileChooser();
+        fc.addChoosableFileFilter(new ImageFilter());
+        fc.setAcceptAllFileFilterUsed(false);
+
+        int returnVal = fc.showOpenDialog(rootWindow);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                File file = fc.getSelectedFile();
+                gestione = new GestioneFile(file.getAbsolutePath(), null);
+                ConfigurazioneIniziale conf = gestione.caricaFileConfigurazione();
+                setConfigurazioneIniziale(conf);
+                
+                abilitaTutto();
+                
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(rootWindow, "Errore di lettura nel file","Errore",JOptionPane.ERROR_MESSAGE);
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(rootWindow, "File di configurazione non valido","Errore",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+        this.setIstanteZero();
+    }
+    
+    public void salvaConfigurazione(){
+        if(gestione==null){
+            gestione = new GestioneFile(null,null);
+        }
+        if(gestione.getPercorsoFileConfigurazione()==null){
+            salvaConfigurazioneConNome();
+        }
+        else{
+            try {
+                if(gestione.salvaFileConfigurazione(this.getConfigurazioneIniziale())){
+                    JOptionPane.showMessageDialog(rootWindow, "Configurazione salvata!","Salvata",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    JOptionPane.showMessageDialog(rootWindow, "Configurazione non salvata!","Errore",JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(rootWindow, "Impossibile salvare. \nErrore nella scrittura del file","Errore",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    public void salvaConfigurazioneConNome(){
+        final JFileChooser fc = new JFileChooser();
+        File file;
+        fc.addChoosableFileFilter(new ImageFilter());
+        fc.setAcceptAllFileFilterUsed(false);
+
+        int returnVal = fc.showSaveDialog(rootWindow);
+        file = fc.getSelectedFile();
+        String nomeFile = file.getAbsolutePath().concat(".sigem");
+
+        gestione = new GestioneFile(nomeFile,SiGeMv2View.this.getConfigurazioneIniziale());
+
+        try {
+            if(gestione.salvaFileConfigurazione(SiGeMv2View.this.getConfigurazioneIniziale())){
+                JOptionPane.showMessageDialog(rootWindow, "Configurazione salvata!","Salvata",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                JOptionPane.showMessageDialog(rootWindow, "Configurazione non salvata!","Errore",JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(rootWindow, "Impossibile salvare. \nErrore nella scrittura del file","Errore",JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void modificaConfigurazione(){
