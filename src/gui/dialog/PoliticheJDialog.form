@@ -25,25 +25,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelPolitiche" pref="382" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelRimpiazzoSegmenti" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jComboBoxRimpiazzoSegmenti" pref="176" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelRimpiazzoPagine" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jComboBoxRimpiazzoPagine" min="-2" pref="175" max="-2" attributes="1"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelTecnicaGestioneMemoria" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="35" max="32767" attributes="0"/>
-                      <Component id="jComboBoxSuddivisioneMemoria" min="-2" pref="175" max="-2" attributes="1"/>
+                      <Component id="jLabelPolitiche" pref="397" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -72,6 +54,20 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabelSchedulazione" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabelRimpiazzoSegmenti" alignment="0" max="32767" attributes="1"/>
+                          <Component id="jLabelRimpiazzoPagine" alignment="0" max="32767" attributes="1"/>
+                          <Component id="jLabelTecnicaGestioneMemoria" alignment="0" max="32767" attributes="1"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jComboBoxSuddivisioneMemoria" pref="180" max="32767" attributes="1"/>
+                          <Component id="jComboBoxRimpiazzoPagine" alignment="1" pref="180" max="32767" attributes="1"/>
+                          <Component id="jComboBoxRimpiazzoSegmenti" alignment="0" pref="180" max="32767" attributes="1"/>
+                      </Group>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -85,18 +81,18 @@
               <Component id="jLabelPolitiche" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelTecnicaGestioneMemoria" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxSuddivisioneMemoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelTecnicaGestioneMemoria" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelRimpiazzoPagine" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxRimpiazzoPagine" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelRimpiazzoPagine" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelRimpiazzoSegmenti" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxRimpiazzoSegmenti" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelRimpiazzoSegmenti" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -163,7 +159,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Politica di rimpiazzo dei segmenti"/>
+        <Property name="text" type="java.lang.String" value="Politica di allocazione dei segmenti"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxRimpiazzoSegmenti">
