@@ -3,10 +3,11 @@
  * Nome file: ModelloProcessi.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 15/03/2008
- * Versione: 1.1
+ * Data: 16/03/2008
+ * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche: *  
+ *  - v.1.2 (16/03/2008): Corretta gestione modifica configurazione
  *  - v.1.1 (15/03/2008): Inserita gestione modifica configurazione
  *  - v.1.0 (24/02/2008): Creazione modello di tabella
  */
@@ -35,12 +36,25 @@ public class ModelloProcessi extends AbstractTableModel {
             fireTableStructureChanged();
         }
         
-        public ModelloProcessi(LinkedList<Processo> processi) {
-            contenutiRighe=new Object[processi.size()][3];
-            for (int i=0; i<processi.size(); i++) {
-                contenutiRighe[i][0]=new String((String) processi.get(i).getNome());
-                contenutiRighe[i][1]=new Integer((Integer) processi.get(i).getTempoArrivo());
-                contenutiRighe[i][2]=new Integer((Integer) processi.get(i).getTempoEsecuzione());
+        public ModelloProcessi(LinkedList<Processo> processi, int nRighe) {
+            contenutiRighe=new Object[nRighe][3];
+            if (nRighe > processi.size()) {
+                for (int i=0; i<processi.size(); i++) {
+                    contenutiRighe[i][0]=new String((String) processi.get(i).getNome());
+                    contenutiRighe[i][1]=new Integer((Integer) processi.get(i).getTempoArrivo());
+                    contenutiRighe[i][2]=new Integer((Integer) processi.get(i).getTempoEsecuzione());
+                }
+                for (int i=processi.size(); i<nRighe; i++) {
+                    contenutiRighe[i][0]=new String("P"+(i+1));
+                    contenutiRighe[i][1]=new Integer(0);
+                    contenutiRighe[i][2]=new Integer(1);
+                }
+            } else { 
+                for (int i=0; i<nRighe; i++) {
+                    contenutiRighe[i][0]=new String((String) processi.get(i).getNome());
+                    contenutiRighe[i][1]=new Integer((Integer) processi.get(i).getTempoArrivo());
+                    contenutiRighe[i][2]=new Integer((Integer) processi.get(i).getTempoEsecuzione());
+                }
             }
             fireTableStructureChanged();
         }

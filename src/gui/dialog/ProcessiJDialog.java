@@ -3,10 +3,11 @@
  * Nome file: ProcessiJDialog.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 15/03/2008
- * Versione: 1.3
+ * Data: 16/03/2008
+ * Versione: 1.4
  * Licenza: open-source
  * Registro delle modifiche: * 
+ *  - v.1.4 (16/03/2008): Corretta gestione modifica configurazione
  *  - v.1.3 (15/03/2008): Inserita gestione modifica configurazione
  *  - v.1.2 (05/03/2008): Inserita gestione processi con priorita' 
  *  - v.1.1 (02/03/2008): inserita label "passo 3 di 4"
@@ -150,14 +151,14 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         ||  politiche.getPoliticaSchedulazione() == 7
         ||  politiche.getPoliticaSchedulazione() == 5) {
             if (modifica)
-                jTableProcessi = new javax.swing.JTable(new ModelloProcessiPriorita(confIniziale.getListaProcessi()));
+                jTableProcessi = new javax.swing.JTable(new ModelloProcessiPriorita(confIniziale.getListaProcessi(),configurazioneAmbiente.getNumProcessi()));
             else
                 jTableProcessi = new javax.swing.JTable(new ModelloProcessiPriorita(configurazioneAmbiente.getNumProcessi()));
             setPrioritaColonna(jTableProcessi.getColumnModel().getColumn(3));
         }
         else {
             if (modifica)
-                jTableProcessi = new javax.swing.JTable(new ModelloProcessi(confIniziale.getListaProcessi()));
+                jTableProcessi = new javax.swing.JTable(new ModelloProcessi(confIniziale.getListaProcessi(),configurazioneAmbiente.getNumProcessi()));
             else
                 jTableProcessi = new javax.swing.JTable(new ModelloProcessi(configurazioneAmbiente.getNumProcessi()));
         }

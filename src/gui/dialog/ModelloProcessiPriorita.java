@@ -3,10 +3,11 @@
  * Nome file: ModelloProcessi.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 15/03/2008
- * Versione: 1.1
+ * Data: 16/03/2008
+ * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche: *  
+ *  - v.1.2 (16/03/2008): Corretta gestione modifica configurazione
  *  - v.1.1 (15/03/2008): Inserita gestione modifica configurazione
  *  - v.1.0 (24/02/2008): Creazione modello di tabella
  */
@@ -37,23 +38,54 @@ public class ModelloProcessiPriorita extends AbstractTableModel {
             fireTableStructureChanged();
         }
         
-       public ModelloProcessiPriorita(LinkedList<Processo> processi) {
-            contenutiRighe=new Object[processi.size()][4];
+       public ModelloProcessiPriorita(LinkedList<Processo> processi, int nRighe) {
+            contenutiRighe=new Object[nRighe][4];
             if (processi.get(0) instanceof ProcessoConPriorita) {
                 ProcessoConPriorita processoConPriorita;
-                for (int i=0; i<processi.size(); i++) {
-                    processoConPriorita = (ProcessoConPriorita) processi.get(i);
-                    contenutiRighe[i][0]=new String((String)   processoConPriorita.getNome());
-                    contenutiRighe[i][1]=new Integer((Integer) processoConPriorita.getTempoArrivo());
-                    contenutiRighe[i][2]=new Integer((Integer) processoConPriorita.getTempoEsecuzione());
-                    contenutiRighe[i][3]=new Integer((Integer) processoConPriorita.getPriorita());
+                if (nRighe > processi.size()) {
+                    for (int i=0; i<processi.size(); i++) {
+                        processoConPriorita = (ProcessoConPriorita) processi.get(i);
+                        contenutiRighe[i][0]=new String((String)   processoConPriorita.getNome());
+                        contenutiRighe[i][1]=new Integer((Integer) processoConPriorita.getTempoArrivo());
+                        contenutiRighe[i][2]=new Integer((Integer) processoConPriorita.getTempoEsecuzione());
+                        contenutiRighe[i][3]=new Integer((Integer) processoConPriorita.getPriorita());
+                    }
+                    for (int i=processi.size(); i<nRighe; i++) {                
+                        contenutiRighe[i][0]=new String("P"+(i+1));
+                        contenutiRighe[i][1]=new Integer(0);
+                        contenutiRighe[i][2]=new Integer(1);
+                        contenutiRighe[i][3]=new Integer(1);
+                    }
+                } else {
+                    for (int i=0; i<nRighe; i++) {
+                        processoConPriorita = (ProcessoConPriorita) processi.get(i);
+                        contenutiRighe[i][0]=new String((String)   processoConPriorita.getNome());
+                        contenutiRighe[i][1]=new Integer((Integer) processoConPriorita.getTempoArrivo());
+                        contenutiRighe[i][2]=new Integer((Integer) processoConPriorita.getTempoEsecuzione());
+                        contenutiRighe[i][3]=new Integer((Integer) processoConPriorita.getPriorita());
+                    }
                 }
             } else {
-                for (int i=0; i<processi.size(); i++) {
-                    contenutiRighe[i][0]=new String((String)   processi.get(i).getNome());
-                    contenutiRighe[i][1]=new Integer((Integer) processi.get(i).getTempoArrivo());
-                    contenutiRighe[i][2]=new Integer((Integer) processi.get(i).getTempoEsecuzione());
-                    contenutiRighe[i][3]=new Integer(1);
+                if (nRighe > processi.size()) {
+                    for (int i=0; i<processi.size(); i++) {
+                        contenutiRighe[i][0]=new String((String)   processi.get(i).getNome());
+                        contenutiRighe[i][1]=new Integer((Integer) processi.get(i).getTempoArrivo());
+                        contenutiRighe[i][2]=new Integer((Integer) processi.get(i).getTempoEsecuzione());
+                        contenutiRighe[i][3]=new Integer(1);
+                    }
+                    for (int i=processi.size(); i<nRighe; i++) {
+                        contenutiRighe[i][0]=new String("P"+(i+1));
+                        contenutiRighe[i][1]=new Integer(0);
+                        contenutiRighe[i][2]=new Integer(1);
+                        contenutiRighe[i][3]=new Integer(1);
+                    }
+                } else {
+                     for (int i=0; i<nRighe; i++) {
+                        contenutiRighe[i][0]=new String((String)   processi.get(i).getNome());
+                        contenutiRighe[i][1]=new Integer((Integer) processi.get(i).getTempoArrivo());
+                        contenutiRighe[i][2]=new Integer((Integer) processi.get(i).getTempoEsecuzione());
+                        contenutiRighe[i][3]=new Integer(1);
+                    }
                 }
             }
             fireTableStructureChanged();
