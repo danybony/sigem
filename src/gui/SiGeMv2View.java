@@ -1002,7 +1002,7 @@ public class SiGeMv2View {
         abilitaTutto();
         istante = null;
         player.primoIstante();
-        player.istantePrecedente();
+        
 
         if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
                 ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
@@ -1190,7 +1190,6 @@ public class SiGeMv2View {
             
             istante = null;
             player.primoIstante();
-            player.istantePrecedente();
             processiEseguiti = new LinkedList<Processo>();
             visualizzaOrdProcessi(processiEseguiti);
             
@@ -1556,12 +1555,10 @@ public class SiGeMv2View {
                 istantiAllEvento = null;
         }
         
-        System.out.println("A");
         for(int i=0; i<processiEseguiti.size();i++){
             System.out.print(processiEseguiti.get(i).getId() + " - ");
             
         }
-        System.out.println("B");
         
         if(istantiAllEvento != null){
         
@@ -1576,11 +1573,9 @@ public class SiGeMv2View {
                 }catch(Exception e){}
             }
 
-            System.out.println("C");
             for(int i=0; i<processiEseguiti.size();i++){
                 System.out.print(processiEseguiti.get(i).getId() + " - ");
             }
-            System.out.println("D");
             visualizzaOrdProcessi(processiEseguiti);
 
             jButtonNuovaConfigurazione.setEnabled(true);

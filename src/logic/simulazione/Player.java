@@ -67,23 +67,6 @@ public class Player{
      */
     public static Statistiche stat;
     
-    
-    private boolean hasPrev(){
-        if(this.indiceElementoCorrente > 0){
-            return  true;
-        }
-        return false;
-    }
-    
-    
-    private boolean hasNext(){
-        if(this.indiceElementoCorrente < (this.listaIstanti.size() - 1)){
-            return true;
-        }
-        return false;
-    }
-    
-    
     /**
      * Possibili eventi da ricercare nella simulazione
      */
@@ -421,6 +404,7 @@ public class Player{
         
         if(trovato){
             stat.AggiornaStatistiche(listaIstantiDaRitornare, true);
+            listaIstantiDaRitornare.removeLast();
             return listaIstantiDaRitornare;
         }
         else{
@@ -565,4 +549,21 @@ public class Player{
     public Statistiche getStatistiche(){
         return this.stat;
     }
+    
+    
+    public boolean hasPrev(){
+        if(this.indiceElementoCorrente > 0){
+            return  true;
+        }
+        return false;
+    }
+    
+    
+    public boolean hasNext(){
+        if(this.indiceElementoCorrente < (this.listaIstanti.size() - 1)){
+            return true;
+        }
+        return false;
+    }
+    
 }
