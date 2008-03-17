@@ -38,7 +38,7 @@ public class NextFit implements IAllocazione {
      * @return
      *   Ritorna il frame sul quale è avvenuto l'inserimento.
      */
-    public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi, int Posizioni[] ) {
+    public FrameMemoria alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi, int Posizioni[] ) {
         int i=0,dim=Liberi.size();
         while( P<=Posizioni[i] && i<dim ) i++;
         boolean trovato=false;

@@ -62,7 +62,7 @@ public class LRU implements IRimpiazzo {
      * @param M
      *  Bit di Modifica
      */
-    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
+    public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).UltimoAccesso=Contatore;
         Tabella.elementAt(Posizione).F=F;
         Contatore=Contatore+1;
@@ -72,7 +72,7 @@ public class LRU implements IRimpiazzo {
      * @param Posizione
      *  Posizione da resettare
      */
-    public void LiberaEntry( int Posizione ) {
+    public void liberaEntry( int Posizione ) {
         Tabella.elementAt(Posizione).UltimoAccesso=0;
         Tabella.elementAt(Posizione).F=null;
     }
@@ -82,7 +82,7 @@ public class LRU implements IRimpiazzo {
      * @return
      *  Ritorna il Frame da rimpiazzare
      */
-    public FrameMemoria SelezionaEntry() {
+    public FrameMemoria selezionaEntry() {
         int pos=0; int T=Tabella.firstElement().UltimoAccesso;
         for (int i=0; i<Tabella.size(); i++ ) {
             if ( Tabella.elementAt(i).UltimoAccesso<T ) {
@@ -99,13 +99,13 @@ public class LRU implements IRimpiazzo {
      * @param M
      *   Bit di modifica
      */
-    public void AggiornaEntry( int Posizione, boolean M ) {
+    public void aggiornaEntry( int Posizione, boolean M ) {
         Tabella.elementAt(Posizione).UltimoAccesso=Contatore;
         Contatore=Contatore+1;
     }
     /**
      * NULLA
      */
-    public void AggiornaEntries( ) { }
+    public void aggiornaEntries( ) { }
     
 }

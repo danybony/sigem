@@ -33,19 +33,19 @@ public interface IRimpiazzo {
      * @param M
      *  Bit di Modifica
      */
-    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M );
+    public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M );
     /**
      * Resetta i dati relativi alla pagina in posizione specificata 
      * @param Posizione
      *  Posizione di reset
      */
-    public void LiberaEntry( int Posizione );
+    public void liberaEntry( int Posizione );
     /**
      * Implementerà l'algritmo di rimpiazzo
      * @return
      *  Ritorna il riferimento alla pagina da rimpiazzare
      */
-    public FrameMemoria SelezionaEntry();
+    public FrameMemoria selezionaEntry();
     /**
      * Aggiorna le informazioni relative alla pagina nella posizione desiderata
      * @param Posizione
@@ -53,10 +53,10 @@ public interface IRimpiazzo {
      * @param M
      *  Bit di Modifica
      */
-    public void AggiornaEntry( int Posizione, boolean M );
+    public void aggiornaEntry( int Posizione, boolean M );
     /**
      * Aggiorna i dati relativi a tutte le pagine in memoria
      */
-    public void AggiornaEntries( );
+    public void aggiornaEntries( );
     
 }

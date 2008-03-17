@@ -61,7 +61,7 @@ public class SC implements IRimpiazzo {
      * @param M
      *  Bit di Modifica
      */
-    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) {
+    public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) {
         Tabella.elementAt(Posizione).TArrivo=UT;
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).F=F;
@@ -72,7 +72,7 @@ public class SC implements IRimpiazzo {
      * @param Posizione
      *  Posizione di reset
      */
-    public void LiberaEntry( int Posizione ) {
+    public void liberaEntry( int Posizione ) {
         Tabella.elementAt(Posizione).TArrivo=0;
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).F=null;
@@ -83,7 +83,7 @@ public class SC implements IRimpiazzo {
      * @return
      *  Frame da rimuovere
      */
-    public FrameMemoria SelezionaEntry() {
+    public FrameMemoria selezionaEntry() {
         
         int i=0,pos=0; Dati DMinore=Tabella.firstElement();       
         boolean primo=false;
@@ -132,10 +132,10 @@ public class SC implements IRimpiazzo {
      * @param Posizione
      * @param M
      */
-    public void AggiornaEntry( int Posizione, boolean M ) {}
+    public void aggiornaEntry( int Posizione, boolean M ) {}
     /**
      * NULLA
      */
-    public void AggiornaEntries( ) {}
+    public void aggiornaEntries( ) {}
     
 }

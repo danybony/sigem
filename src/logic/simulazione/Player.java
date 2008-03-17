@@ -27,7 +27,6 @@ package logic.simulazione;
  */
 
 import java.util.LinkedList;
-import java.util.ListIterator;
 import logic.gestioneMemoria.Azione;
 import logic.parametri.ConfigurazioneIniziale;
 

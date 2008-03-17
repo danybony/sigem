@@ -120,7 +120,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                 for (int i=0; i<Liberi.size(); i++)
                 Pos[i]=((RAMSegmentata)M).indiceDi( Liberi.elementAt(i) );
             }
-            FrameLibero=PoliticaAllocazione.Alloca( F, Liberi, Pos );
+            FrameLibero=PoliticaAllocazione.alloca( F, Liberi, Pos );
         }
         return M.aggiungi(F, FrameLibero );
     }

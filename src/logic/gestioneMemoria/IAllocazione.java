@@ -34,5 +34,5 @@ public interface IAllocazione {
      * @return
      *  Frame sul quale si è inserito
      */
-    public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi, int Posizioni[] );
+    public FrameMemoria alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi, int Posizioni[] );
 }

@@ -60,7 +60,7 @@ public class NFU implements IRimpiazzo {
      * @param M
      *  Bit di Modifica
      */
-    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) {
+    public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) {
         Tabella.elementAt(Posizione).Contatore=0;
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).F=F;
@@ -71,7 +71,7 @@ public class NFU implements IRimpiazzo {
      * @param Posizione
      *  Posizione di reset dei campi
      */
-    public void LiberaEntry( int Posizione ) {
+    public void liberaEntry( int Posizione ) {
         Tabella.elementAt(Posizione).Contatore=0;
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).F=null;
@@ -83,7 +83,7 @@ public class NFU implements IRimpiazzo {
      * @return
      *  Ritorna la pagina ottimale da togliere
      */
-    public FrameMemoria SelezionaEntry() {
+    public FrameMemoria selezionaEntry() {
         int pos=0; int C=Tabella.firstElement().Contatore;
         for (int i=0; i<Tabella.size(); i++ ) {
             if ( Tabella.elementAt(i).Contatore<C ) {
@@ -100,14 +100,14 @@ public class NFU implements IRimpiazzo {
     * @param M
     *   Bit di modifica
     */ 
-   public void AggiornaEntry( int Posizione, boolean M ) { 
+   public void aggiornaEntry( int Posizione, boolean M ) { 
        Tabella.elementAt(Posizione).R=true;
    }
    /**
     * Per ogni pagina controllo se essa è stata riferita, cioè R è true, incremento il
     * Contatore e resetto R.
     */
-   public void AggiornaEntries( ) { 
+   public void aggiornaEntries( ) { 
        for( int i=0; i<Tabella.size(); i++ ) 
            if ( Tabella.elementAt(i).R==true ) {
                Tabella.elementAt(i).Contatore+=1;

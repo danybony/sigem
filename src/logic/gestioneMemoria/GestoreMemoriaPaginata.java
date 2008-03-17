@@ -112,7 +112,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
     private int inserisci( MemoriaPaginata M, FrameMemoria F, int UT ) throws MemoriaEsaurita {
         int Posizione_Inserimento=M.aggiungi(F);
         if ( M instanceof RAMPaginata ) {
-            PoliticaRimpiazzo.InserisciEntry( F, Posizione_Inserimento, UT, F.getModifica() );
+            PoliticaRimpiazzo.inserisciEntry( F, Posizione_Inserimento, UT, F.getModifica() );
         }
         return Posizione_Inserimento;
     }
@@ -128,7 +128,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
     private FrameMemoria rimuovi( Memoria M, FrameMemoria F ) {
         FrameMemoria Da_Rimuovere=F;
         if ( M instanceof RAMPaginata ) {
-            Da_Rimuovere=PoliticaRimpiazzo.SelezionaEntry();
+            Da_Rimuovere=PoliticaRimpiazzo.selezionaEntry();
         }
         if ( !M.rimuovi(Da_Rimuovere) ) return null;
         return Da_Rimuovere;
@@ -155,7 +155,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         
         /* Eseguo il refresh delle pagine */
         if ( UT%tempo_page_deamon == 0 ) {
-            PoliticaRimpiazzo.AggiornaEntries();
+            PoliticaRimpiazzo.aggiornaEntries();
         }
         
         Iterator<FrameMemoria> I=ListaPagine.iterator();
@@ -190,7 +190,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
             }
             else { // gia in ram
                 int Posizione=MemoriaRam.indiceDi(F);
-                PoliticaRimpiazzo.AggiornaEntry(Posizione, F.getModifica() );
+                PoliticaRimpiazzo.aggiornaEntry(Posizione, F.getModifica() );
                 ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),5,F,Posizione) );
             }
         }

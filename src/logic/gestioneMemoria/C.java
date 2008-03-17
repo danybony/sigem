@@ -55,7 +55,7 @@ public class C implements IRimpiazzo {
      * @param F
      *  Frame da Inserire
      */
-    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
+    public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).F=F;
     }
@@ -65,7 +65,7 @@ public class C implements IRimpiazzo {
      * @param Posizione
      *  Posizione da rimuovere
      */
-    public void LiberaEntry( int Posizione ) { 
+    public void liberaEntry( int Posizione ) { 
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).F=null;
     }
@@ -77,7 +77,7 @@ public class C implements IRimpiazzo {
      * @return
      *   Ritorna il Frame da rimpiazzare
      */
-    public FrameMemoria SelezionaEntry() {
+    public FrameMemoria selezionaEntry() {
         boolean trovata=false;
         int dim=Tabella.size();        
         while( !trovata ) {
@@ -96,9 +96,9 @@ public class C implements IRimpiazzo {
      * @param Posizione
      * @param M
      */
-    public void AggiornaEntry( int Posizione, boolean M ) {}
+    public void aggiornaEntry( int Posizione, boolean M ) {}
     /**
      * NULLA
      */
-    public void AggiornaEntries( ) {}
+    public void aggiornaEntries( ) {}
 }

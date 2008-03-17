@@ -27,7 +27,7 @@ public class WorstFit implements IAllocazione {
      * @return
      *   Ritorna il frame sul quale è avvenuto l'inserimento.
      */
-    public FrameMemoria Alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi, int Posizioni[] ) {
+    public FrameMemoria alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi, int Posizioni[] ) {
         int Pos=0,MaxDim=Liberi.elementAt(Pos).getDimensione();
         for( int i=1; i<Liberi.size(); i++ ) 
             if ( Liberi.elementAt(i).getDimensione() > MaxDim ) { 

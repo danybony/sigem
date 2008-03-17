@@ -54,7 +54,7 @@ public class A implements IRimpiazzo {
      * @param F 
      *   FrameMemoria da inserire
      */
-    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
+    public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).Contatore=0;
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).F=F;
@@ -65,7 +65,7 @@ public class A implements IRimpiazzo {
      * @param Posizione 
      *   Posizione da liberare
      */
-    public void LiberaEntry( int Posizione ) { 
+    public void liberaEntry( int Posizione ) { 
         Tabella.elementAt(Posizione).Contatore=0;
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).F=null;
@@ -78,7 +78,7 @@ public class A implements IRimpiazzo {
      * Ritorna il riferimento alla Pagina da rimuovere
      */
     
-    public FrameMemoria SelezionaEntry() {
+    public FrameMemoria selezionaEntry() {
         int pos=0; int C=Tabella.firstElement().Contatore;
         for (int i=0; i<Tabella.size(); i++ ) {
             if ( Tabella.elementAt(i).Contatore<C ) {
@@ -94,7 +94,7 @@ public class A implements IRimpiazzo {
      * @param Posizione 
      *   Posizione da liberare
      */
-    public void AggiornaEntry( int Posizione, boolean M ) {
+    public void aggiornaEntry( int Posizione, boolean M ) {
         Tabella.elementAt(Posizione).R=true;
     }
     /**
@@ -102,7 +102,7 @@ public class A implements IRimpiazzo {
      * se la pagina era recentemente riferita altrimenti lo decrementa.
      * 
      */
-    public void AggiornaEntries( ) {
+    public void aggiornaEntries( ) {
         for( int i=0; i<Tabella.size(); i++ )
             if ( Tabella.elementAt(i).R==true ) {
                 Tabella.elementAt(i).R=false;

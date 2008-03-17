@@ -64,7 +64,7 @@ public class FIFO implements IRimpiazzo {
      *  Istante di inserimento
      * @param M
      */
-    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
+    public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).TArrivo=UT;
         Tabella.elementAt(Posizione).F=F;
     }
@@ -74,7 +74,7 @@ public class FIFO implements IRimpiazzo {
      * @param Posizione
      *   Posizione di reset
      */
-    public void LiberaEntry( int Posizione ) { 
+    public void liberaEntry( int Posizione ) { 
         Tabella.elementAt(Posizione).TArrivo=0;
         Tabella.elementAt(Posizione).F=null;
     }
@@ -84,7 +84,7 @@ public class FIFO implements IRimpiazzo {
      * @return
      *  FrameMemoria con tempo di arrivo minore
      */
-    public FrameMemoria SelezionaEntry() {
+    public FrameMemoria selezionaEntry() {
         int pos=0; Dati D=Tabella.firstElement();
         for(int i=1; i<Tabella.size(); i++ )
             if ( Tabella.elementAt(i).Minore(D) ) { 
@@ -96,10 +96,10 @@ public class FIFO implements IRimpiazzo {
      * @param Posizione
      * @param M
      */
-    public void AggiornaEntry( int Posizione, boolean M ) {}
+    public void aggiornaEntry( int Posizione, boolean M ) {}
     /**
      * NULLA
      */
-    public void AggiornaEntries( ) {}
+    public void aggiornaEntries( ) {}
     
 }

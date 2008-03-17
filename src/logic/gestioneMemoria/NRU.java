@@ -74,7 +74,7 @@ public class NRU implements IRimpiazzo {
      * @param M
      *  Bit di modifica
      */
-    public void InserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
+    public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).M=M;
         Tabella.elementAt(Posizione).F=F;
@@ -85,7 +85,7 @@ public class NRU implements IRimpiazzo {
      * @param Posizione
      *  Posizione di reset
      */
-    public void LiberaEntry( int Posizione ) { 
+    public void liberaEntry( int Posizione ) { 
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).M=false;
         Tabella.elementAt(Posizione).F=null;
@@ -95,7 +95,7 @@ public class NRU implements IRimpiazzo {
      * @return
      *  Riferimento alla pagina di classe minore
      */
-    public FrameMemoria SelezionaEntry() { 
+    public FrameMemoria selezionaEntry() { 
       int classe=0,pos=0;
       for (int i=0; i<Tabella.size(); i++ ) {
         if ( Tabella.elementAt(i).Classe()==0 ) return Tabella.elementAt(i).F;
@@ -110,14 +110,14 @@ public class NRU implements IRimpiazzo {
      * @param M
      *  Bit di modifica
      */
-    public void AggiornaEntry( int Posizione, boolean M ) {
+    public void aggiornaEntry( int Posizione, boolean M ) {
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).M=M;
     }
     /**
      * Per ogni pagina resetta R a false
      */
-    public void AggiornaEntries( ) { 
+    public void aggiornaEntries( ) { 
         for(int i=0; i<Tabella.size(); i++)
             Tabella.elementAt(i).R=false;
     }
