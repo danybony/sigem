@@ -113,7 +113,7 @@ public class ViewFrameMemoria extends JPanel {
      * istante.
      * 
      * @param cambiamentiInMemoria
-     *      LinkedList di Azioni che rappresentano tutto ciò che è stato modificato
+     *      LinkedList di Azioni che rappresentano tutto ciï¿½ che ï¿½ stato modificato
      *      in RAM
      * 
      * @throws Exception
@@ -208,7 +208,7 @@ public class ViewFrameMemoria extends JPanel {
                                aux=pagineSquare.elementAt(posizione);
                                if(aux.getText().equals(" ")){
                                    
-                                   //Il segmento successivo è uno spazio; lo connetto al segmento corrente
+                                   //Il segmento successivo ï¿½ uno spazio; lo connetto al segmento corrente
                                    altezza+=aux.getAltezza();
                                    pagineSquare.remove(posizione);
                                    
@@ -219,7 +219,7 @@ public class ViewFrameMemoria extends JPanel {
                                aux=pagineSquare.elementAt(posizione-1);
                                if(aux.getText().equals(" ")){
                                    
-                                   //Il segmento precedente è uno spazio; lo connetto al segmento corrente
+                                   //Il segmento precedente ï¿½ uno spazio; lo connetto al segmento corrente
                                    altezza+=aux.getAltezza();
                                    coordX=aux.getxCoord();
                                    coordY=aux.getyCoord();
@@ -254,7 +254,7 @@ public class ViewFrameMemoria extends JPanel {
                                    aux.setText(" ");
                                }
                            }
-                       //Dopodichè, se la memoria è composta da segmenti, compatto i segmenti
+                       //Dopodichï¿½, se la memoria ï¿½ composta da segmenti, compatto i segmenti
                        //spazio contigui:
                        if(pag_seg==true){
                            SquareDraw aux2=null;
@@ -271,7 +271,7 @@ public class ViewFrameMemoria extends JPanel {
                        
                        break;
                 default:
-                       //Non faccio nulla, non è un'azione rilevante
+                       //Non faccio nulla, non ï¿½ un'azione rilevante
                 
                        
             }
@@ -331,7 +331,7 @@ public class ViewFrameMemoria extends JPanel {
             
             }
             else{
-                altezza=altezza=(ALTEZZA*frame.getDimensione())/dimMemoria;
+                altezza=(ALTEZZA*frame.getDimensione())/dimMemoria;
                 boolean trovato=false;
                 for(int j=0;j<processiUltimati.get(istante).size()&&!trovato;j++){
                     if(processiUltimati.get(istante).get(j).equals(new Integer(frame.getIdProcesso()))){
