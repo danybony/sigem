@@ -21,6 +21,7 @@ import java.awt.GridLayout;
 //import simulazione.Statistiche;
 //import simulazione.StatisticheProcesso;
 import gui.SiGeMv2View;
+import logic.parametri.ConfigurazioneIniziale;
 import logic.simulazione.Istante;
 import logic.simulazione.Player;
 
@@ -30,8 +31,6 @@ import logic.simulazione.Player;
  * @see SiGeMv2View
  */
 public class ViewStatistiche extends JScrollPane {
-	/** Necessario per il Serializable. */
-	private static final long serialVersionUID = 1109913847658572644L;
 	/** Il secondo pannello della vista, che contiene le statistiche*/
 	private JPanel panel = null;
 	
@@ -73,40 +72,58 @@ public class ViewStatistiche extends JScrollPane {
 	 */
         
         
-	public void generaStatistiche(Player player, Istante istante) {
+	public void generaStatistiche(Player player, Istante istante, ConfigurazioneIniziale conf) {
             
 		this.stato = true;
 		// creo un pannello che conterrà i JTextPane che contengono le statistiche 
 		panelStat = new JPanel();
 		GridLayout gridLayout = new GridLayout(-1,1,10,10);
-		panelStat.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.LIGHT_GRAY,10));
+		panelStat.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.LIGHT_GRAY,6));
 		panelStat.setBackground(java.awt.Color.LIGHT_GRAY);
 		panelStat.setLayout(gridLayout);
-		
-		// ottengo i valori delle statistiche
 		String contenuto = "";
-		contenuto += "Utilizzo RAM (KB):\t\t"
-				+ ((((int) player.getStatistiche().getUtilizzoRAM()) != (-1)) ? String
-						.valueOf((float) player.getStatistiche().getUtilizzoRAM()) : "n.d.");
-		contenuto += "\nUtlizzo Swap (KB):\t\t"
-				+ ((((int) player.getStatistiche().getUtilizzoSwap()) != (-1)) ? String
-						.valueOf((float) player.getStatistiche().getUtilizzoSwap()) : "n.d.");
-		contenuto += "\nNumero Istanti Rimanenti:\t"
-				+ ((((int) player.getStatistiche().getNumeroIstantiRimanenti()) != (-1)) ? String
-					.valueOf((float) player.getStatistiche().getNumeroIstantiRimanenti())
-						: "n.d.");
-		contenuto += "\nNumero Istanti totali:\t\t"
-				+ ((((int) player.numeroIstanti()) != (-1)) ? String
-						.valueOf((float) player.numeroIstanti()) : "n.d.");
-                contenuto += "\nNumero Fault:\t\t"
-                        + ((((int) player.getStatistiche().getNumeroFault()) != (-1)) ? String
-						.valueOf((float) player.getStatistiche().getNumeroFault()) : "n.d.");
-                
-                contenuto += "\nFull RAM:\t\t\t"
-                        +((istante.getFull_RAM()) ? "Si" : "No");
+                if(istante!=null){
+                    // ottengo i valori delle statistiche
 
-                contenuto += "\nFull Swap:\t\t\t"
-                        +((istante.getFull_Swap()) ? "Si" : "No");
+                    contenuto += "Utilizzo RAM (KB): \t\t"
+                                    + (player.getStatistiche().getUtilizzoRAM())
+                                    + " di "
+                                    + conf.getDimensioneRAM();
+
+
+                    contenuto += "\nUtlizzo Swap (KB): \t\t"
+                                    + ( player.getStatistiche().getUtilizzoSwap())
+                                    + " di "
+                                    + conf.getDimensioneSwap();
+
+
+                    contenuto += "\nIstante: \t\t\t"
+                                    + ( player.getIndiceIstanteCorrente()+1)
+                                    + " di "
+                                    + player.numeroIstanti();
+
+                    contenuto += "\nNumero Fault in memoria: \t"
+                            + ( player.getStatistiche().getNumeroFault());
+
+                    contenuto += "\nMemoria RAM riempita completamente:"
+                            +((istante.getFull_RAM()) ? "Si" : "No");
+
+                    contenuto += "\nArea di Swap riempita completamente: \t"
+                            +((istante.getFull_Swap()) ? "Si" : "No");
+                }
+                else{
+                    contenuto += "Utilizzo RAM (KB): \t\tn.d.";
+
+                    contenuto += "\nUtlizzo Swap (KB): \t\tn.d.";
+
+                    contenuto += "\nIstante: \t\t\tn.d.";
+
+                    contenuto += "\nNumero Fault in memoria: \tn.d.";
+
+                    contenuto += "\nMemoria RAM riempita completamente: n.d.";
+
+                    contenuto += "\nArea di Swap riempita completamente: \tn.d.";
+                }
                 
 		JTextPane jTextPane = new JTextPane();
 		jTextPane.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 12));

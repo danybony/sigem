@@ -195,7 +195,7 @@ public class SiGeMv2View {
     public void visualizzaStatistiche(Player player, Istante istante) {
             if ((views[2]).getComponent() instanceof ViewStatistiche) {
                     ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
-                    currView.generaStatistiche(player, istante);
+                    currView.generaStatistiche(player, istante,configurazioneIniziale);
             }
     };
 
@@ -1089,6 +1089,7 @@ public class SiGeMv2View {
     public void setIstanteZero() {
             
         statoGui = false;
+        statoStop = true;
         creaPlayer();
         simulazioneCarica();
         istante = null;
@@ -1204,7 +1205,7 @@ public class SiGeMv2View {
                     }
                     
                     visualizzaOrdProcessi(processiEseguiti);
-                    
+                    visualizzaStatistiche(player,istante);
                     try {
                         currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());
                     }catch (Exception e){e.printStackTrace();}
@@ -1272,6 +1273,7 @@ public class SiGeMv2View {
             player.primoIstante();
             processiEseguiti = new LinkedList<Processo>();
             visualizzaOrdProcessi(processiEseguiti);
+            visualizzaStatistiche(player,null);
             
             // Svuota l'interfaccia della RAM
             if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
@@ -1374,6 +1376,7 @@ public class SiGeMv2View {
         }
 
         visualizzaOrdProcessi(processiEseguiti);
+        visualizzaStatistiche(player,istante);
         try{
         currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());    
         }catch(Exception e){}
@@ -1414,6 +1417,7 @@ public class SiGeMv2View {
         
             processiEseguiti.removeLast();
             visualizzaOrdProcessi(processiEseguiti);
+            visualizzaStatistiche(player,istante);
             try{
             currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());    
             }catch(Exception e){}   
@@ -1468,6 +1472,7 @@ public class SiGeMv2View {
             }
 
             visualizzaOrdProcessi(processiEseguiti);
+            visualizzaStatistiche(player,istante);
             try{
             currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());    
             }catch(Exception e){}
@@ -1523,6 +1528,7 @@ public class SiGeMv2View {
             }catch(Exception e){}
         }
         visualizzaOrdProcessi(processiEseguiti);
+        visualizzaStatistiche(player,istante);
         
         aggiornaComandi();
         jButtonNuovaConfigurazione.setEnabled(true);
@@ -1574,11 +1580,6 @@ public class SiGeMv2View {
                 istantiAllEvento = null;
         }
         
-        for(int i=0; i<processiEseguiti.size();i++){
-            System.out.print(processiEseguiti.get(i).getId() + " - ");
-            
-        }
-        
         if(istantiAllEvento != null){
         
             ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
@@ -1596,6 +1597,7 @@ public class SiGeMv2View {
                 System.out.print(processiEseguiti.get(i).getId() + " - ");
             }
             visualizzaOrdProcessi(processiEseguiti);
+            visualizzaStatistiche(player,istante);
 
             aggiornaComandi();
             jButtonNuovaConfigurazione.setEnabled(true);
@@ -1621,8 +1623,7 @@ public class SiGeMv2View {
     }
     
     private void simulazioneSignificativoSuccessivo(int scelta) {
-        statoStop = false;
-        
+
         LinkedList<Istante> istantiAllEvento;
         
         switch(scelta){
@@ -1648,6 +1649,11 @@ public class SiGeMv2View {
                 istantiAllEvento = null;
         }
         
+        if(statoStop){
+            istantiAllEvento.addFirst(player.primoIstante());
+        }
+        statoStop = false;
+        
         if(istantiAllEvento != null){ 
 
             PCB pcbAttuale;
@@ -1669,6 +1675,7 @@ public class SiGeMv2View {
             }
 
             visualizzaOrdProcessi(processiEseguiti);
+            visualizzaStatistiche(player,istante);
 
             aggiornaComandi();
             jButtonNuovaConfigurazione.setEnabled(true);
