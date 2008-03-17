@@ -24,7 +24,11 @@ import java.util.Vector;
  * @author Davide Compagnin
  */
 public class NextFit implements IAllocazione {
+    /**
+     * Memorizza la posizione ultima di allocazione
+     */
     private int P=-1;
+    
     /**
      * Alloca un frame secondo la politica NextFit
      * @param F
@@ -39,10 +43,11 @@ public class NextFit implements IAllocazione {
         while( P<=Posizioni[i] && i<dim ) i++;
         boolean trovato=false;
         int j=i%dim; 
-        while( j<dim && !trovato )
+        while( j<dim && !trovato ) {
             if ( Liberi.elementAt(j).getDimensione() >= F.getDimensione() )
                 trovato=true;
             else j++;
+        }
         if ( !trovato )
             for( j=0; j<dim && !trovato; j++ )
                 if ( Liberi.elementAt(j).getDimensione() >= F.getDimensione() )
