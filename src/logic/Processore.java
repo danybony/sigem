@@ -67,8 +67,7 @@ public class Processore {
         
         PoliticaOrdinamentoProcessi politica = null;
         
-        switch (conf.getPoliticaSchedulazioneProcessi()){            
-            case 1:politica = new FCFS(); break;
+        switch (conf.getPoliticaSchedulazioneProcessi()){ 
             case 2:politica = new SJF(); break;
             case 3:politica = new SRTN(); break;
             case 4:politica = new RR(conf.getTimeSlice()); break;

@@ -336,7 +336,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             
            // listaFrame.add(new Pagina(new Integer(contatoreFrame).toString(),configurazioneAmbiente.getDimensionePagina(),0));
             
-            listaFrameModel.addElement(new Pagina(new Integer(contatoreFrame).toString(),
+            listaFrameModel.addElement(new Pagina(Integer.toString(contatoreFrame),
                     configurazioneAmbiente.getDimensionePagina(),0));
             
         }
@@ -352,7 +352,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 
                 // listaFrame.add(new Segmento(new Integer(contatoreFrame).toString(),   datiSegmentoDialog.getDimensione(),0));
             
-                 listaFrameModel.addElement(new Segmento(new Integer(contatoreFrame).toString(),
+                 listaFrameModel.addElement(new Segmento(Integer.toString(contatoreFrame),
                     datiSegmentoDialog.getDimensione(),0));
             
             }
@@ -590,9 +590,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 
                 /* Per ogni FrameMemoria dell'istante crea l'Accesso */
                 for (int frame = 0; frame < listModels.get(indiceModello).size(); frame++){
-                    
-                   // FrameMemoria frameAttuale = estraiFrame((String)listModels.get(indiceModello).get(frame),indiceProcesso);                    
-                    
+                     
                     FrameMemoria frameAttuale = (FrameMemoria) listModels.get(indiceModello).get(frame);
                     
                     if(frameAttuale != null){
@@ -613,31 +611,6 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
     }
        
-    /**
-     * Metodo che restituisce iil FrameMemoria rappresentato da una stringa passata
-     * per parametro, all'interno di una JList.
-     * 
-     * @param nome
-     *        La stringa visualizzata nella JList e che rappresenta il FrameMemoria.
-     * @return Il FrameMemoria desiderato, che può essere null se non esistente.
-     */
-    private FrameMemoria estraiFrame(String indirizzo, int indiceProcesso){
-        
-        DefaultListModel listaFrame = modelliListaFrame.get(indiceProcesso);
-           
-        for(int indiceFrame = 0; indiceFrame < listaFrame.size(); indiceFrame++){
-
-            if(indirizzo.equals(((FrameMemoria)listaFrame.get(indiceFrame)).getIndirizzo())){
-
-                return (FrameMemoria) listaFrame.get(indiceFrame);
-
-            }
-
-        }
-        
-        return null;
-        
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;

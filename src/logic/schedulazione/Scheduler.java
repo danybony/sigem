@@ -100,13 +100,7 @@ public class Scheduler {
 	/** Tempo rimanente di esecuzione del PCBCorrente. */
 	static final int PCB_TERMINATO = 1;        
         
-	/**
-	 * Salva il valore ritornato dal metodo tempoProssimoEvento() per
-	 * stabilire la correttezza del parametro tempo nel metodo
-	 * incrementaTempoScheduler().
-	 */
-	int tempoProssimoEvento = 0;
-
+	
 	/**
 	 * Il solo costruttore della classe. Un'istanza della classe Scheduler
 	 * richiede al momento della sua inizializzazione, i parametri
@@ -323,7 +317,7 @@ public class Scheduler {
 
                 /* Il PCBCorrente esiste e puo' eseguire */
                 
-                tempoProssimoEvento = tempoProssimoEvento();
+                tempoProssimoEvento();
 
                 politicaOrdinamento.esegui();
 
