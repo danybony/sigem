@@ -57,7 +57,7 @@ abbr {
 	white-space: normal;
 }
 
-.p1 ul { list-style-position:inside; }
+.p1 ul,ol { list-style-position:inside; font-size: .8em; font-weight: bold; }
 
 #quickSummary .p2 {
 	background: transparent url(nav_dl.gif) top left no-repeat;
