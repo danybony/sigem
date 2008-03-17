@@ -76,7 +76,7 @@
                         <h3><span><a name="Creazione">Creazione di una nuova simulazione</a></span></h3>
 			<p class="p1"><span>
                         Per iniziare premi il pulsante 1 evidenziato
-                        nella figura, oppure selezionare Nuova Configurazione dal menu File.
+                        nella figura, oppure seleziona Nuova Configurazione dal menu File.
                         <div class="image"><img src="pagina_files/img/crea1.jpg" alt="Figura 3.1" ></img>
                         <img src="pagina_files/img/crea2.jpg" alt="Figura 3.1" ></img></div></span></p>
                         
@@ -98,11 +98,11 @@
                         <h3><span><a name="Passo2">Passo 2</a></span></h3>
 			<p class="p1"><span>
                         In questa finestra dovrai dapprima impostare la tecnica di gestione della memoria,
-                        successivamente la politica di rimpiazzo delle pagine se hai sgelto paginazione, altrimenti
+                        successivamente la politica di rimpiazzo delle pagine se hai scelto paginazione, altrimenti
                         la politica di allocazione dei segmenti. Infine dovrai scegliere con che politica i processi
                         saranno schedulati.
                         Dopo aver completato prosegui premendo Avanti.
-                        Oppure torna indietro con Indietro.
+                        Oppure torna al passo precedente premendo Indietro.
                         <div class="image"><img src="pagina_files/img/passo2.jpg"></img></div></span></p>
                         
                         <h3><span><a name="Passo3">Passo 3</a></span></h3>
@@ -112,20 +112,20 @@
                         istante di arrivo e tempo di esecuzione. Il numero di processi è corrispondente
                         a quello impostato al Passo 1.
                         Dopo aver completato prosegui premendo Avanti.
-                        Oppure torna indietro con Indietro.
+                        Oppure torna al passo precedente premendo Indietro.
                         <div class="image"><img src="pagina_files/img/passo3.jpg"></img></div></span></p>
 
                         <h3><span><a name="Passo4">Passo 4</a></span></h3>
 			<p class="p1"><span>
                         In questa ultima fase dovrai associare le pagine o segmenti ad ogni processo per ogni suo istante.
-                        A avrai a disposizione a sinistra un pannello a schede, dove ogni scheda identifica
+                        Avrai a disposizione a sinistra un pannello a schede, dove ogni scheda identifica
                         il processo in questione. Dentro ogni scheda ci saranno tante caselle rettangolari quante saranno le unità di 
                         tempo di esecuzione del processo, nelle quali dovrai trascinare con il mouse le pagine o segmenti che creerai 
                         con il menu a destra. Per rimuovere una pagina o segmento associato ad un certo istante, è necessario cliccarci sopra.
                         Il menu a destra appunto ti permette di creare e eliminare le pagine o segmenti affinchè tu
                         le possa associare ai processi.
                         Dopo aver completato prosegui premendo OK.
-                        Oppure torna indietro con Indietro.
+                        Oppure torna al passo precedente premendo Indietro.
                         <div class="image"><img src="pagina_files/img/passo4.jpg"></img></div>
                         </span></p>
 
@@ -167,6 +167,28 @@
                         <ul>
                          <li><acronym title="Java Virtual Machine">JVM</acronym> versione 6 o superiore dal sito di riferimento <a href="http://www.java.com/">java.com</a></li>
                          <li>Browser Web preferibilmente con supporto XHTML 1.0 e <acronym title="Cascading Style Sheets versione 2">CSS2</acronym></li>
+                        </ul>
+                        </span></p>
+				
+				<h3><span><a name="Errori">Messaggi di errore e loro significato</a></span></h3>
+			<p class="p1"><span>
+                        E' possibile il manifestarsi di errori, soprattutto nella fase di avvio del programma. 
+                        Questi sono principalmente dovuti all'assenza della Java Virtual Machine,
+                        contenuta nel pacchetto Sun Java Runtime Environment, o di una Java Virtual Machine.
+                        Benché la procedura di inserimento dei dati per la creazione di una nuova configurazione 
+                        sia realizzata in modo da minimizzare la possibilità di errori da parte dell'utente,
+                        possono comunque sorgere problemi, qui elencati con la relativa spiegazione.
+                        <ol>
+                         <li>Al caricamento di una configurazione esistente viene segnalato “File non compatibile”.</li>
+                         <li>Al Passo 3 del wizard di configurazione viene segnalato “Valore inserito non valido”.</li>
+                         <li>Al Passo 3 del wizard di configurazione viene segnalato “Nome di processo duplicato”.</li>
+                        </ol>
+                        Soluzioni:
+                        <ol>
+                         <li>Il file selezionato non contiene una configurazione valida per il programma SiGem da noi realizzato</li>
+                         <li>Si è cercato di immettere un valore non valido in un campo relativo al tempo di arrivo o al tempo di esecuzione di un processo. Si ricorda che sono possibili solo valori interi positivi</li>
+                         <li>Si è cercato di impostare lo stesso nome per due processi distinti. E' necessario che ogni processo abbia un nome univoco</li>
+                        </ol>
                         </span></p>
 		</div>
 	</div>
@@ -187,6 +209,7 @@
 					<li><a href="#Caricamento" accesskey="i">Caricamento</a></li>
 					<li><a href="#Visualizzazione" accesskey="l">Visualizzazione</a></li>
 					<li><a href="#Requisiti" accesskey="m">Requisiti</a></li>
+                                        <li><a href="#Errori" accesskey="n">Errori</a></li>
 				</ul>
 			</div>
 
