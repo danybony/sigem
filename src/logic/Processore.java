@@ -116,13 +116,15 @@ public class Processore {
         
         LinkedList<Istante> simulazione = new LinkedList<Istante>();  
         
-        boolean stop, nuovoProcesso, SwapPiena = false;
+        boolean stop, nuovoProcesso,terminato, SwapPiena = false;
         
         while(!scheduler.fineSimulazione() && !SwapPiena){
             
             stop = false;
             
             nuovoProcesso = false;
+            
+            terminato = false;
             
             /* Memorizza il numero di processi in arrivo prima dell'attivazione */
             int numInArrivo = scheduler.getProcessiInArrivo().size();
@@ -141,6 +143,21 @@ public class Processore {
                 nuovoProcesso = true;
                 
             }
+            
+            LinkedList<Azione> istruzioni = null;
+            
+            /* Controllo se un processo e' terminato */
+            if(scheduler.getProcessiTerminati().size() > 0 && ultimoEseguito != null
+                && ((Processo)scheduler.getProcessiTerminati().get(0)).
+                        equals(ultimoEseguito.getRifProcesso())){
+                
+                      istruzioni=gestoreMemoria.notificaProcessoTerminato(
+                                    ultimoEseguito.getRifProcesso().getId());
+                      
+                      terminato = true;
+
+            }
+            
             /* Ottiene dallo scheduler il PCB del processo correntemente in 
              esecuzione */
             PCB corrente = scheduler.getPCBCorrente();
@@ -156,18 +173,26 @@ public class Processore {
                  FrameMemoria necessari al processo in esecuzione e riceve la 
                  lista delle istruzioni effettuate dal gestore della memoria per
                  portare in RAM quei FrameMemoria */
-                LinkedList<Azione> istruzioni = gestoreMemoria.esegui(frameNecessari,
+                LinkedList<Azione> nuoveIstruzioni = gestoreMemoria.esegui(frameNecessari,
                                                              tempoCorrente);
+                
+                if(istruzioni == null){
+                    
+                    istruzioni = nuoveIstruzioni;
+                
+                }
+                else{
+                    
+                    istruzioni.addAll(nuoveIstruzioni);
+                
+                }
                 
                 SwapPiena = controllaSwapPiena(istruzioni);             
                 
-                simulazione.add(creaIstante(corrente,istruzioni,nuovoProcesso,SwapPiena));
-                //da aggiungere il PCB dell'ultimo terminato
-        
-            } else {
-                /* Non c'e' un processo in esecuzione */
-                simulazione.add(creaIstante(corrente,null,nuovoProcesso,SwapPiena));
-            }
+            } 
+            
+            simulazione.add(creaIstante(corrente,terminato,istruzioni,nuovoProcesso,SwapPiena));
+            
             
             /* Se c'e' un processo in esecuzione esegue nuovamente il metodo 
              principale dello scheduler incrementandone il contatore interno */
@@ -303,31 +328,20 @@ public class Processore {
      * 
      * @return Ritorna l'istante corrente.
      */   
-     private Istante creaIstante(PCB corrente, LinkedList<Azione> istruzioni,
+     private Istante creaIstante(PCB corrente,boolean terminato, LinkedList<Azione> istruzioni,
                                 boolean nuovoProcesso, boolean SwapPiena){
         
         int fault = calcolaFault(istruzioni);
         
         boolean RAMPiena = controllaRAMPiena(istruzioni);
         
-        Istante istante;        
-      
-        if(scheduler.getProcessiTerminati().size() > 0 && ultimoEseguito != null
-                && ((Processo)scheduler.getProcessiTerminati().get(0)).
-                        equals(ultimoEseguito.getRifProcesso())){
-                
-                 LinkedList<Azione> nuoveIstruzioni=gestoreMemoria.notificaProcessoTerminato(
-                                ultimoEseguito.getRifProcesso().getId());
-                 
-                 if(nuoveIstruzioni != null && istruzioni != null){
-                     
-                     istruzioni.addAll(nuoveIstruzioni);
-                     
-                 }
+        Istante istante;              
+        
+        if(terminato){
             
-                 istante = new Istante(corrente, ultimoEseguito, nuovoProcesso,
-                         fault, istruzioni, RAMPiena, SwapPiena);  
-                        
+            istante = new Istante(corrente, ultimoEseguito, nuovoProcesso,
+                             fault, istruzioni, RAMPiena, SwapPiena);
+       
         }
         else{
             
@@ -371,9 +385,11 @@ public class Processore {
          Da notare che la lista e' ordinata in ordine crescente di richiesta */
         for(int i=0; i < frameTotali.size(); i++)
             
-            if((frameTotali.get(i)).getIstanteRichiesta() == istanteCorrente)
+            if((frameTotali.get(i)).getIstanteRichiesta() == istanteCorrente){
                 
                 frameNecessari.add((frameTotali.get(i)).getRisorsa());
+            
+            }                
         
         return frameNecessari;
     }
