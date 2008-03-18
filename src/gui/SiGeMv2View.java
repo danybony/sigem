@@ -580,7 +580,7 @@ public class SiGeMv2View {
                     ItemIndietroFault = new JMenuItem("Fault in memoria");
                     ItemIndietroFault.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                            simulazione
+                            //simulazione
                         }
                     });
                     jSimulazioneItemIndietroSignificativo.add(ItemIndietroFault);
