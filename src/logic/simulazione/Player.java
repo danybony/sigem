@@ -173,8 +173,8 @@ public class Player{
         private void AggiornaOccupazioni(Istante nuovoIstante, boolean avanti){
             LinkedList<Azione> listaAzioni = nuovoIstante.getCambiamentiInMemoria();
             int numeroAzioniMemoria = 0;
-            if(listaAzioni!=null)
-                listaAzioni.size();
+            //if(listaAzioni!=null)
+               // numeroAzioniMemoria = listaAzioni.size();
             int i=0;
             Azione azioneCorrente = null;
             if(avanti){ // Istante successivo al corrente
