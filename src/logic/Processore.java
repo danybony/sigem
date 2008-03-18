@@ -137,7 +137,7 @@ public class Processore {
             }
             
             /* Controlla se il numero di processi in arrivo e' dimunuito */
-            if (numInArrivo < scheduler.getProcessiInArrivo().size()){
+            if (numInArrivo > scheduler.getProcessiInArrivo().size()){
                 
                 nuovoProcesso = true;
                 
@@ -147,7 +147,8 @@ public class Processore {
             
             /* Controllo se un processo e' terminato */
             if(scheduler.getProcessiTerminati().size() > 0 && ultimoEseguito != null
-                && ((Processo)scheduler.getProcessiTerminati().get(0)).
+                && ((Processo)scheduler.getProcessiTerminati().
+                        get(scheduler.getProcessiTerminati().size()-1)).
                         equals(ultimoEseguito.getRifProcesso())){
                 
                       istruzioni=gestoreMemoria.notificaProcessoTerminato(
