@@ -290,6 +290,7 @@ public class ViewFrameMemoria extends JPanel {
                 processiUltimati.get(istante).add(new Integer(processoUltimato));
             }
         }
+        
         int coordX=10;
         int larghezza=LATO*6;
         int coordY=10;
