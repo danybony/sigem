@@ -168,7 +168,8 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                 try {
                     FrameMemoria Temp=rimuovi( MemoriaSwap, F );
                     if (Temp!=null) ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),4, Temp ) );
-                    ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),1, F, inserisci(MemoriaRam,F,UT) ) );
+                    int posizione=inserisci(MemoriaRam,F,UT);
+                    ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),1, F, posizione ) );
                 }
                 catch ( MemoriaEsaurita RamEsaurita ) {
                     try {
@@ -176,10 +177,12 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                         FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
                         ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),3, Frame_Rimosso, MemoriaRam.indiceDi(Frame_Rimosso) ) );
                         if ( Frame_Rimosso.getModifica()==true ) {
+                            int posizione=inserisci(MemoriaSwap,Frame_Rimosso,UT);
                             ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),2, Frame_Rimosso, 
-                                    inserisci(MemoriaSwap,Frame_Rimosso,UT) ) );
+                                    posizione ) );
                         }
-                        ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),1, F, inserisci(MemoriaRam,F,UT) ) );
+                        int posizione=inserisci(MemoriaRam,F,UT);
+                        ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),1, F, posizione ) );
                     }
                     catch ( MemoriaEsaurita SwapEsaurita ) {
                         // EXIT() situazione grave (memoria finita)

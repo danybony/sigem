@@ -190,8 +190,9 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
 
                 }
                 if ( Errore==false ) 
-                    try { 
-                        Azioni.add( new Azione(MemoriaRam.getSituazione(),1, F, Inserisci( MemoriaRam, F ) ) ); 
+                    try {
+                        int posizione=Inserisci( MemoriaRam, F );
+                        Azioni.add( new Azione(MemoriaRam.getSituazione(),1, F, posizione ) ); 
 
                     }
                     catch ( MemoriaEsaurita Impossibile ) { }
