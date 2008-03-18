@@ -65,7 +65,7 @@ public class SiGeMv2View {
     private RootWindow rootWindow;
 
     /** Array delle viste statiche */
-    private View[] views = new View[3];
+    private View[] views = new View[6];
 
     /** Contiene le viste statiche */
     private ViewMap viewMap = new ViewMap();
@@ -87,7 +87,7 @@ public class SiGeMv2View {
     private ActionListener lnrWindow;
 
     /** Il frame dell'applicazione */
-    private JFrame frame = new JFrame("SiGeM");
+    private JFrame frame = new JFrame("SiGeM - StyloSoft");
 
     /** Rappresenta lo stato dela Gui, vale true se la simulazione e' in avanzamento automatico,
      * false, se e' interrotta.*/
@@ -192,7 +192,22 @@ public class SiGeMv2View {
     }
 
     /** Disegna le statistiche sulla vista ViewStatistiche */
-    public void visualizzaStatistiche(Player player, Istante istante) {
+    public void visualizzaStatisticheProcessi(Player player, Istante istante) {
+            if ((views[3]).getComponent() instanceof ViewStatistiche) {
+                    ViewStatistiche currView = (ViewStatistiche) views[3].getComponent();
+                    currView.generaStatistiche(player, istante,configurazioneIniziale);
+            }
+    };
+    
+    /** Disegna le statistiche sulla vista ViewStatistiche */
+    public void visualizzaStatisticheSimulazione(Player player, Istante istante) {
+            if ((views[2]).getComponent() instanceof ViewStatistiche) {
+                    ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
+                    currView.generaStatistiche(player, istante,configurazioneIniziale);
+            }
+    };
+    
+    public void visualizzaSimulazioneTestuale() {
             if ((views[2]).getComponent() instanceof ViewStatistiche) {
                     ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
                     currView.generaStatistiche(player, istante,configurazioneIniziale);
@@ -230,12 +245,19 @@ public class SiGeMv2View {
 
             views[1] = new View("Frame Memoria", IconStylosoft.getGeneralIcon("mv"),
                             new ViewFrameMemoria());
-            scrollMemoria.add(views[1]);
             viewMap.addView(1, views[1]);
-            views[2] = new View("Statistiche", IconStylosoft
+            views[2] = new View("Statistiche simulazione", IconStylosoft
                             .getGeneralIcon("statistiche"), new ViewStatistiche(this));
             viewMap.addView(2, views[2]);
-
+            views[3] = new View("Statistiche Processi", IconStylosoft
+                            .getGeneralIcon("statistiche"), new ViewStatistiche(this));
+            viewMap.addView(3, views[3]);
+            views[4] = new View("Modalità testuale", IconStylosoft
+                            .getGeneralIcon("proc"), new ViewStatistiche(this));
+            viewMap.addView(4, views[4]);
+            views[5] = new View("Riepilogo configurazione", IconStylosoft
+                            .getGeneralIcon(""), new ViewStatistiche(this));
+            viewMap.addView(5, views[5]);
 
             // Aggiungo i pulsanti help alle viste
             JButton button = new JButton(IconStylosoft.getGeneralIcon("help"));
@@ -931,10 +953,17 @@ public class SiGeMv2View {
      * Imposta il layout di default delle viste
      */
     private void setDefaultLayout() {
-        rootWindow.setWindow(
-                new SplitWindow(true, 0.6615854f, 
-                new SplitWindow(false, 0.74f, views[0], views[2]),
-                views[1]));
+        rootWindow.setWindow(new TabWindow(new DockingWindow[] {
+                 views[5],
+                 views[4],
+                 new SplitWindow(true,
+                                 0.6615854f, 
+                                 new SplitWindow(false,
+                                                 0.68f, 
+                                                 views[0],
+                                                 new TabWindow(new DockingWindow[] {views[3],views[2]})),
+                                 views[1])
+                  }));
             WindowBar windowBar = rootWindow.getWindowBar(Direction.DOWN);
 
             while (windowBar.getChildWindowCount() > 0)
@@ -967,7 +996,7 @@ public class SiGeMv2View {
         jButtonSimulazionePlay.setEnabled(true);
         jButtonSimulazionePausa.setEnabled(false);
         jButtonSimulazioneStop.setEnabled(false);
-        jButtonSimulazioneInizio.setEnabled(true);
+        jButtonSimulazioneInizio.setEnabled(false);
         jButtonSimulazioneIndietro.setEnabled(false);
         jButtonSimulazioneAvanti.setEnabled(true);
         jButtonSimulazioneFine.setEnabled(true);
@@ -987,7 +1016,7 @@ public class SiGeMv2View {
         jSimulazioneItemPlay.setEnabled(true);
         jSimulazioneItemPausa.setEnabled(false);
         jSimulazioneItemStop.setEnabled(false);
-        jSimulazioneItemInizio.setEnabled(true);
+        jSimulazioneItemInizio.setEnabled(false);
         jSimulazioneItemIndietro.setEnabled(false);
         jSimulazioneItemAvantiSignificativo.setEnabled(true);
         jSimulazioneItemIndietroSignificativo.setEnabled(false);
@@ -1133,7 +1162,7 @@ public class SiGeMv2View {
 
         processiEseguiti = new LinkedList<Processo>();
         visualizzaOrdProcessi(processiEseguiti);
-        visualizzaStatistiche(player,istante);
+        visualizzaStatisticheSimulazione(player,istante);
     };
         
     /** Istanzia una nuova simulazione */
@@ -1201,7 +1230,7 @@ public class SiGeMv2View {
                     }
                     
                     visualizzaOrdProcessi(processiEseguiti);
-                    visualizzaStatistiche(player,istante);
+                    visualizzaStatisticheSimulazione(player,istante);
                     try {
                         currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());
                     }catch (Exception e){e.printStackTrace();}
@@ -1264,7 +1293,7 @@ public class SiGeMv2View {
             istante = player.primoIstante();
             processiEseguiti = new LinkedList<Processo>();
             visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatistiche(player,istante);
+            visualizzaStatisticheSimulazione(player,istante);
             
             // Svuota l'interfaccia della RAM
             if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
@@ -1296,7 +1325,6 @@ public class SiGeMv2View {
             jButtonSimulazionePlay.setEnabled(true);
             jButtonSimulazionePausa.setEnabled(false);
             jButtonSimulazioneStop.setEnabled(false);
-            jButtonSimulazioneInizio.setEnabled(true);
             
             jFileItemNuovaConfigurazione.setEnabled(true);
             jFileItemApriConfigurazione.setEnabled(true);
@@ -1308,7 +1336,6 @@ public class SiGeMv2View {
             jSimulazioneItemPlay.setEnabled(true);
             jSimulazioneItemPausa.setEnabled(false);
             jSimulazioneItemStop.setEnabled(false);
-            jSimulazioneItemInizio.setEnabled(true);
             
         } catch (InterruptedException ex) {}
     }
@@ -1359,7 +1386,7 @@ public class SiGeMv2View {
         pcbAttuale = istante.getProcessoInEsecuzione();
 
         visualizzaOrdProcessi(processiEseguiti);
-        visualizzaStatistiche(player,istante);
+        visualizzaStatisticheSimulazione(player,istante);
         // Svuota l'interfaccia della RAM
         if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
                 ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
@@ -1423,7 +1450,7 @@ public class SiGeMv2View {
         
             processiEseguiti.removeLast();
             visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatistiche(player,istante);
+            visualizzaStatisticheSimulazione(player,istante);
             try{
                 currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());    
             }catch(Exception e){}   
@@ -1471,7 +1498,7 @@ public class SiGeMv2View {
             }
 
             visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatistiche(player,istante);
+            visualizzaStatisticheSimulazione(player,istante);
             try{
                 currView.aggiorna(istante.getCambiamentiInMemoria(),player.getIndiceIstanteCorrente());    
             }catch(Exception e){}
@@ -1527,7 +1554,7 @@ public class SiGeMv2View {
             }catch(Exception e){}
         }
         visualizzaOrdProcessi(processiEseguiti);
-        visualizzaStatistiche(player,istante);
+        visualizzaStatisticheSimulazione(player,istante);
         
         aggiornaComandi();
         jButtonNuovaConfigurazione.setEnabled(true);
@@ -1596,7 +1623,7 @@ public class SiGeMv2View {
             }
             
             visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatistiche(player,istante);
+            visualizzaStatisticheSimulazione(player,istante);
 
             aggiornaComandi();
             jButtonNuovaConfigurazione.setEnabled(true);
@@ -1674,7 +1701,7 @@ public class SiGeMv2View {
             }
 
             visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatistiche(player,istante);
+            visualizzaStatisticheSimulazione(player,istante);
 
             aggiornaComandi();
             jButtonNuovaConfigurazione.setEnabled(true);
@@ -1746,15 +1773,14 @@ public class SiGeMv2View {
                 gestione = new GestioneFile(file.getAbsolutePath(), null);
                 ConfigurazioneIniziale conf = gestione.caricaFileConfigurazione();
                 setConfigurazioneIniziale(conf);
-                
+                this.setIstanteZero();
+                frame.setTitle(file.getName() + " - SiGeM StyloSoft");
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(rootWindow, "Errore di lettura nel file","Errore",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(rootWindow, "File di configurazione non valido","Errore",JOptionPane.ERROR_MESSAGE);
             } catch (ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(rootWindow, "File di configurazione non valido","Errore",JOptionPane.ERROR_MESSAGE);
             }
         }
-        System.out.println("SSS");
-        this.setIstanteZero();
     }
     
     public void salvaConfigurazione(){
@@ -1768,6 +1794,13 @@ public class SiGeMv2View {
             try {
                 if(gestione.salvaFileConfigurazione(this.getConfigurazioneIniziale())){
                     JOptionPane.showMessageDialog(rootWindow, "Configurazione salvata!","Salvata",JOptionPane.INFORMATION_MESSAGE);
+                    String nomeFile = gestione.getPercorsoFileConfigurazione();
+                    char[] c = nomeFile.toCharArray();
+                    int i = c.length-1;
+                    while(c[i]!='\\' && c[i]!='/'){
+                        i--;
+                    }
+                    frame.setTitle(nomeFile.substring(i+1) + " - SiGeM StyloSoft");
                 }
                 else{
                     JOptionPane.showMessageDialog(rootWindow, "Configurazione non salvata!","Errore",JOptionPane.ERROR_MESSAGE);
@@ -1794,6 +1827,7 @@ public class SiGeMv2View {
         try {
             if(gestione.salvaFileConfigurazione(SiGeMv2View.this.getConfigurazioneIniziale())){
                 JOptionPane.showMessageDialog(rootWindow, "Configurazione salvata!","Salvata",JOptionPane.INFORMATION_MESSAGE);
+                frame.setTitle(file.getName() + ".sigem" + " - SiGeM StyloSoft");
             }
             else{
                 JOptionPane.showMessageDialog(rootWindow, "Configurazione non salvata!","Errore",JOptionPane.ERROR_MESSAGE);
