@@ -13,7 +13,6 @@ package gui.view;
 
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
-import javax.swing.JButton;
 import javax.swing.JTextPane;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;

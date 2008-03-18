@@ -252,7 +252,7 @@ public class SiGeMv2View {
             views[3] = new View("Statistiche Processi", IconStylosoft
                             .getGeneralIcon("statistiche"), new ViewStatistiche(this));
             viewMap.addView(3, views[3]);
-            views[4] = new View("Modalità testuale", IconStylosoft
+            views[4] = new View("Modalita' testuale", IconStylosoft
                             .getGeneralIcon("proc"), new ViewStatistiche(this));
             viewMap.addView(4, views[4]);
             views[5] = new View("Riepilogo configurazione", IconStylosoft
@@ -573,18 +573,14 @@ public class SiGeMv2View {
             simulazioneMenu.add(jSimulazioneItemInizio);
 
             jSimulazioneItemIndietroSignificativo = new JMenu("Istante significativo precedente");
-            jSimulazioneItemIndietroSignificativo.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
 
-                }
-            });
             simulazioneMenu.add(jSimulazioneItemIndietroSignificativo);
 
             // sotto-menù
                     ItemIndietroFault = new JMenuItem("Fault in memoria");
                     ItemIndietroFault.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazione
                         }
                     });
                     jSimulazioneItemIndietroSignificativo.add(ItemIndietroFault);
@@ -961,7 +957,8 @@ public class SiGeMv2View {
                                  new SplitWindow(false,
                                                  0.68f, 
                                                  views[0],
-                                                 new TabWindow(new DockingWindow[] {views[3],views[2]})),
+                                                 views[2]),
+                                                 //new TabWindow(new DockingWindow[] {views[3],views[2]})),
                                  views[1])
                   }));
             WindowBar windowBar = rootWindow.getWindowBar(Direction.DOWN);
