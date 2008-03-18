@@ -277,11 +277,11 @@ public class ViewFrameMemoria extends JPanel {
             }
         }*/
         
-        if(cambiamentiInMemoria==null) return;
+        
         //Aggiorno, se necessario, lo storico dei processi ultimati
         if(istante>=processiUltimati.size()){
             processiUltimati.add(new Vector(processiUltimati.get(istante-1)));
-            
+            if(cambiamentiInMemoria==null) return;
             int processoUltimato=-2;
             for(int i=0;i<cambiamentiInMemoria.size();i++){
                 if (cambiamentiInMemoria.get(i).getAzione()==6){
