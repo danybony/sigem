@@ -56,6 +56,11 @@ public class Player{
     private Simulazione simulazioneEseguita;
     
     /**
+     * La configuazione iniziale con cui viene creata la simulazione
+     */
+    private ConfigurazioneIniziale config;
+    
+    /**
      * Lista degli istanti generati dalla simulazione.
      */
     private LinkedList<Istante> listaIstanti;
@@ -174,13 +179,17 @@ public class Player{
             LinkedList<Azione> listaAzioni = nuovoIstante.getCambiamentiInMemoria();
             int numeroAzioniMemoria = 0;
             //if(listaAzioni!=null)
-               // numeroAzioniMemoria = listaAzioni.size();
+              //  numeroAzioniMemoria = listaAzioni.size();
             int i=0;
             Azione azioneCorrente = null;
             if(avanti){ // Istante successivo al corrente
                 while(i<numeroAzioniMemoria){
                     azioneCorrente = listaAzioni.get(i);
-                    switch(azioneCorrente.getAzione()){
+                    if(Player.this.config.getModalitaGestioneMemoria()==1)
+                        utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
+                    else if(Player.this.config.getModalitaGestioneMemoria()==2)
+                        utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
+                    /*switch(azioneCorrente.getAzione()){
                         case 1: // INSERT RAM
                                 utilizzoRAM += azioneCorrente.getFrame().getDimensione();
                                 break;
@@ -194,14 +203,18 @@ public class Player{
                                 utilizzoSwap -= azioneCorrente.getFrame().getDimensione();
                                 break;
                     
-                    }
+                    }*/
                     i++;
                 }
             }
             else{ // Istante precedente al corrente
                 while(i<numeroAzioniMemoria){
                     azioneCorrente = listaAzioni.get(i);
-                    switch(azioneCorrente.getAzione()){
+                    if(Player.this.config.getModalitaGestioneMemoria()==1)
+                        utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
+                    else if(Player.this.config.getModalitaGestioneMemoria()==2)
+                        utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
+                    /*switch(azioneCorrente.getAzione()){
                         case 1: // INSERT RAM
                                 utilizzoRAM -= azioneCorrente.getFrame().getDimensione();
                                 break;
@@ -215,7 +228,7 @@ public class Player{
                                 utilizzoSwap += azioneCorrente.getFrame().getDimensione();
                                 break;
                     
-                    }
+                    }*/
                     i++;
                 }
             }
@@ -322,6 +335,7 @@ public class Player{
      *              configurazione iniziale per il sistema di simulazione
      */
     public Player(ConfigurazioneIniziale conf){
+        config = conf;
         simulazioneEseguita = new Simulazione(conf);
         listaIstanti = null;
         indiceElementoCorrente = 0;
