@@ -27,8 +27,12 @@ package logic.simulazione;
  */
 
 import java.util.LinkedList;
+import java.util.Vector;
 import logic.gestioneMemoria.Azione;
+import logic.gestioneMemoria.FrameMemoria;
 import logic.parametri.ConfigurazioneIniziale;
+import logic.parametri.Processo;
+import logic.schedulazione.PCB;
 
 /**
  * Classe per lo scorrimento di una simulazione.<br>
@@ -99,6 +103,28 @@ public class Player{
         private int numeroIstantiRimanenti;
         
         /**
+         * Numero di KB utilizzati della RAM.
+         */
+        private int utilizzoRAMBack;
+        
+        /**
+         * Numero di KB utilizzati nell'area di Swap.
+         */
+        private int utilizzoSwapBack;
+        
+        /**
+         * Numero di fault in memoria.
+         */
+        private int numeroFaultBack;
+        
+        /**
+         * Numero di istanti rimanenti alla fine della simulazione.
+         */
+        private int numeroIstantiRimanentiBack;
+        
+        
+        
+        /**
          * Costruttore della classe. Inizializza a zero i campi dato.
          */
         Statistiche(){
@@ -106,6 +132,10 @@ public class Player{
             this.utilizzoRAM = 0;
             this.utilizzoSwap = 0;
             this.numeroIstantiRimanenti = Player.this.numeroIstanti();
+            this.numeroFaultBack = 0;
+            this.utilizzoRAMBack = 0;
+            this.utilizzoSwapBack = 0;
+            this.numeroIstantiRimanentiBack = 0;
         }
         
         /**
@@ -265,6 +295,20 @@ public class Player{
             this.utilizzoSwap = 0;
             this.numeroIstantiRimanenti = 0;
         }
+        
+        void SalvaStatistiche(){
+            this.numeroFaultBack = this.numeroFault;
+            this.utilizzoRAMBack = this.utilizzoRAM;
+            this.utilizzoSwapBack = this.utilizzoSwap;
+            this.numeroIstantiRimanentiBack = this.numeroIstantiRimanenti;
+        }
+        
+        void RipristinaStatistiche(){
+            this.numeroFault = this.numeroFaultBack;
+            this.utilizzoRAM = this.utilizzoRAMBack;
+            this.utilizzoSwap = this.utilizzoSwapBack;
+            this.numeroIstantiRimanenti = this.numeroIstantiRimanentiBack;
+        }
     }
     
     
@@ -292,6 +336,31 @@ public class Player{
      */
     public boolean caricaSimulazione(){
         listaIstanti = simulazioneEseguita.crea();
+        if(listaIstanti == null)
+            return false;
+        listaIstanti.addFirst(new Istante(null,null,false,0,null,false,false));
+        /*for(int i =0;i<listaIstanti.size();i++){
+            System.out.println("Istante: " + i);
+            LinkedList<Azione> azioni = listaIstanti.get(i).getCambiamentiInMemoria();
+            if(azioni!=null){
+                for(int j=0 ; j<azioni.size();j++){
+                    System.out.print("Azione " + j + ":\t");
+                    Vector<FrameMemoria> mem = azioni.get(j).getMemoriaRAM();
+                    for(int k=0;k<mem.size();k++){
+                        System.out.print(mem.get(k).getIndirizzo() + " - ");
+                    }
+                    System.out.println();
+                }
+            }
+            else{
+                System.out.println("NO Azioni ");
+            }
+        }
+        for(int i =0;i<listaIstanti.size();i++){
+            System.out.print("Istante: " + i + " arrivo? : ");
+            System.out.print(listaIstanti.get(i).getProcessoPrecedenteTerminato()!=null);
+            System.out.println();
+        }*/
         //Metto l'iteratore prima del primo elemento
         indiceElementoCorrente = 0;
         stat = new Statistiche();
@@ -306,7 +375,9 @@ public class Player{
      * Vengono automaticamente aggiornate le statistiche.
      */
     public Istante istantePrecedente(){
-        if(hasPrev()){
+        if(this.listaIstanti==null)
+            return null;
+        if(this.indiceElementoCorrente > 1){
             this.indiceElementoCorrente--;
             Istante prev = this.listaIstanti.get(indiceElementoCorrente);
             stat.AggiornaStatistiche(prev, false);
@@ -323,6 +394,8 @@ public class Player{
      * Vengono automaticamente aggiornate le statistiche.
      */
     public Istante istanteSuccessivo(){
+        if(this.listaIstanti==null)
+            return null;
         if(hasNext()){
             this.indiceElementoCorrente++;
             Istante next = this.listaIstanti.get(indiceElementoCorrente);
@@ -364,17 +437,40 @@ public class Player{
      */
     public LinkedList<Istante> precedenteIstanteSignificativo(Evento e){
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
+        if(this.listaIstanti==null)
+            return null;
         boolean trovato = false;
         Istante nuovo;
-        int processoCorrente = this.listaIstanti
-                                                .get(this.indiceElementoCorrente)
+        // Sono all'istante zero o all'istante uno
+        // in entrambi i casi non posso avere istanti significativi precedenti
+        if(this.indiceElementoCorrente==0 || this.indiceElementoCorrente==1)
+            return null;
+
+        // Sono ad un istante > 1
+
+        // Il processo correntemente in esecuzione; utile per verificare 
+        // l'evento context-switch
+        int processoCorrente;
+        // Potrebbe non esserci un processo in esecuzione
+        try{
+            processoCorrente = this.listaIstanti.get(this.indiceElementoCorrente)
                                                 .getProcessoInEsecuzione()
                                                 .getRifProcesso()
                                                 .getId();
+        }catch(NullPointerException ex){processoCorrente = -1;}
         
+        
+        // Istante prima di effettuare la ricerca; utile per ripristinare
+        // lo stato attuale in caso di evento non trovato
+        // e salvo le statistiche per permetterne il ripristino
         int istantePrimaDellaRicerca = this.indiceElementoCorrente;
+        stat.SalvaStatistiche();
         
-        while(hasPrev() && !trovato){
+        // Eseguo la ricerca finchè ho elementi che mi precedono arrivando al
+        // massimo a confrontare con l'istante 1
+        while(!trovato && this.indiceElementoCorrente > 1){
+            // Prendo l'istante precedente
+            // Attenzione! Le statistiche vengono aggiornate
             nuovo = this.istantePrecedente();
             switch(e){
                 case FAULT:
@@ -382,8 +478,11 @@ public class Player{
                         trovato=true;
                     break;
                 case SWITCH:
-                    if(processoCorrente!=nuovo.getProcessoInEsecuzione().getRifProcesso().getId())
-                        trovato=true;
+                    // Potrebbe non esserci un processo in esecuzione
+                    try{
+                        if(processoCorrente!=nuovo.getProcessoInEsecuzione().getRifProcesso().getId())
+                            trovato=true;
+                    }catch(NullPointerException ex){}
                     break;
                 case FULL_RAM:
                     if(nuovo.getFull_RAM())
@@ -406,12 +505,12 @@ public class Player{
         }
         
         if(trovato){
-            stat.AggiornaStatistiche(listaIstantiDaRitornare, false);
-            listaIstantiDaRitornare.removeLast();
+            // Le statistiche sono già aggiornate
             return listaIstantiDaRitornare;
         }
         else{
             this.indiceElementoCorrente = istantePrimaDellaRicerca;
+            stat.RipristinaStatistiche();
             return null;
         }
     }
@@ -449,17 +548,43 @@ public class Player{
      */
     public LinkedList<Istante> prossimoIstanteSignificativo(Evento e){
         LinkedList<Istante> listaIstantiDaRitornare = new LinkedList();
+        if(this.listaIstanti==null)
+            return null;
         boolean trovato = false;
         Istante nuovo;
-        int processoCorrente = this.listaIstanti
-                                                .get(this.indiceElementoCorrente)
-                                                .getProcessoInEsecuzione()
-                                                .getRifProcesso()
-                                                .getId();
+
+        // Se sono all'ultimo istante non ci possono essere eventi significativi
+        // successivi
+        if(this.indiceElementoCorrente == this.numeroIstanti())
+            return null;
         
+        // Sono ad un istante < ultimo
+
+        // Il processo correntemente in esecuzione; utile per verificare 
+        // l'evento context-switch
+        int processoCorrente = -1;
+        // Se sono all'istante 0 imposto un valore fittizio
+        if(this.indiceElementoCorrente!=0){
+            // Potrebbe non esserci un processo in esecuzione
+            try{
+                processoCorrente = this.listaIstanti.get(this.indiceElementoCorrente)
+                                                    .getProcessoInEsecuzione()
+                                                    .getRifProcesso()
+                                                    .getId();
+            }catch(NullPointerException ex){processoCorrente = -1;}
+        }
+        
+        // Istante prima di effettuare la ricerca; utile per ripristinare
+        // lo stato attuale in caso di evento non trovato
+        // e salvo le statistiche per permetterne il ripristino
         int istantePrimaDellaRicerca = this.indiceElementoCorrente;
-        
+        stat.SalvaStatistiche();
+ 
+        // Eseguo la ricerca finchè ho istanti successivi e finchè non ho
+        // trovato l'evento
         while(hasNext() && !trovato){
+            // Ottengo l'istante successivo
+            // Attenzione: le statistiche vengono aggiornate continuamente
             nuovo = this.istanteSuccessivo();
             switch(e){
                 case FAULT:
@@ -467,8 +592,11 @@ public class Player{
                         trovato=true;
                     break;
                 case SWITCH:
-                    if(processoCorrente!=nuovo.getProcessoInEsecuzione().getRifProcesso().getId())
-                        trovato=true;
+                    // Potrebbe non esserci un processo in esecuzione
+                    try{
+                        if(processoCorrente!=nuovo.getProcessoInEsecuzione().getRifProcesso().getId())
+                            trovato=true;
+                    }catch(NullPointerException ex){}
                     break;
                 case FULL_RAM:
                     if(nuovo.getFull_RAM())
@@ -492,11 +620,12 @@ public class Player{
         }
         
         if(trovato){
-            stat.AggiornaStatistiche(listaIstantiDaRitornare, true);
+            // Le statistiche sono già aggiornate
             return listaIstantiDaRitornare;
         }
         else{
             this.indiceElementoCorrente = istantePrimaDellaRicerca;
+            stat.RipristinaStatistiche();
             return null;
         }
     }
@@ -513,7 +642,7 @@ public class Player{
         this.indiceElementoCorrente = 0;
         Istante primo = this.listaIstanti.getFirst();
         stat.AzzeraStatistiche();
-        stat.AggiornaStatistiche(primo, true);
+        //stat.AggiornaStatistiche(primo, true);
         return primo;
     }
     
@@ -524,6 +653,7 @@ public class Player{
      * Vengono automaticamente aggiornate le statistiche.
      */
     public LinkedList<Istante> ultimoIstante(){
+        if(listaIstanti==null) return null;
         LinkedList<Istante> listaAllaFine = new LinkedList<Istante>();
         if(!hasNext()) return listaAllaFine;
         while(hasNext()){
@@ -540,7 +670,7 @@ public class Player{
     public int numeroIstanti(){
         if(listaIstanti==null)
             return 0;
-        return this.listaIstanti.size();
+        return this.listaIstanti.size()-1;
     }
     
     /**

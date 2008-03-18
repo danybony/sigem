@@ -82,7 +82,7 @@ public class ViewStatistiche extends JScrollPane {
 		panelStat.setBackground(java.awt.Color.LIGHT_GRAY);
 		panelStat.setLayout(gridLayout);
 		String contenuto = "";
-                if(istante!=null){
+                if(player.getIndiceIstanteCorrente() > 0){
                     // ottengo i valori delle statistiche
 
                     contenuto += "Utilizzo RAM (KB): \t\t"
@@ -98,7 +98,7 @@ public class ViewStatistiche extends JScrollPane {
 
 
                     contenuto += "\nIstante: \t\t\t"
-                                    + ( player.getIndiceIstanteCorrente()+1)
+                                    + ( player.getIndiceIstanteCorrente())
                                     + " di "
                                     + player.numeroIstanti();
 
