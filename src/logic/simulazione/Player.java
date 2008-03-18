@@ -235,12 +235,12 @@ public class Player{
         void AggiornaStatistiche(Istante nuovoIstante, boolean avanti ){
             if(avanti){ // istante successivo a quello corrente
                 AggiornaOccupazioni(nuovoIstante, avanti);
-                numeroFault += nuovoIstante.getFault();
+                numeroFault = numeroFault + nuovoIstante.getFault();
                 numeroIstantiRimanenti--;
             }
             else{ // istante precedente a quello corrente
                 AggiornaOccupazioni(nuovoIstante, avanti);
-                numeroFault -= nuovoIstante.getFault();
+                numeroFault = numeroFault - nuovoIstante.getFault();
                 numeroIstantiRimanenti++;
             }
         }
@@ -378,9 +378,9 @@ public class Player{
         if(this.listaIstanti==null)
             return null;
         if(this.indiceElementoCorrente > 1){
+            stat.AggiornaStatistiche(listaIstanti.get(indiceElementoCorrente), false);
             this.indiceElementoCorrente--;
             Istante prev = this.listaIstanti.get(indiceElementoCorrente);
-            stat.AggiornaStatistiche(prev, false);
             return prev;
         }
         return null;

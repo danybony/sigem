@@ -580,7 +580,7 @@ public class SiGeMv2View {
                     ItemIndietroFault = new JMenuItem("Fault in memoria");
                     ItemIndietroFault.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                            simulazioneSignificativoSuccessivo(0);
+                            simulazioneSignificativoPrecedente(0);
                         }
                     });
                     jSimulazioneItemIndietroSignificativo.add(ItemIndietroFault);
@@ -588,7 +588,7 @@ public class SiGeMv2View {
                     ItemIndietroSwitch = new JMenuItem("Context switch");
                     ItemIndietroSwitch.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoPrecedente(1);
                         }
                     });
                     jSimulazioneItemIndietroSignificativo.add(ItemIndietroSwitch);
@@ -596,7 +596,7 @@ public class SiGeMv2View {
                     ItemIndietroFullRAM = new JMenuItem("Riempimento RAM");
                     ItemIndietroFullRAM.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoPrecedente(2);
                         }
                     });
                     jSimulazioneItemIndietroSignificativo.add(ItemIndietroFullRAM);
@@ -604,7 +604,7 @@ public class SiGeMv2View {
                     ItemIndietroFullSwap = new JMenuItem("Riempimento Swap");
                     ItemIndietroFullSwap.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoPrecedente(3);
                         }
                     });
                     jSimulazioneItemIndietroSignificativo.add(ItemIndietroFullSwap);
@@ -612,7 +612,7 @@ public class SiGeMv2View {
                     ItemIndietroFineProc= new JMenuItem("Terminazione di un processo");
                     ItemIndietroFineProc.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoPrecedente(4);
                         }
                     });
                     jSimulazioneItemIndietroSignificativo.add(ItemIndietroFineProc);
@@ -620,7 +620,7 @@ public class SiGeMv2View {
                     ItemIndietroNuovoProc= new JMenuItem("Arrivo di un nuovo processo");
                     ItemIndietroNuovoProc.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoPrecedente(5);
                         }
                     });
                     jSimulazioneItemIndietroSignificativo.add(ItemIndietroNuovoProc);
@@ -656,7 +656,7 @@ public class SiGeMv2View {
                     ItemAvantiFault= new JMenuItem("Fault in memoria");
                     ItemAvantiFault.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoSuccessivo(0);
                         }
                     });
                     jSimulazioneItemAvantiSignificativo.add(ItemAvantiFault);
@@ -664,7 +664,7 @@ public class SiGeMv2View {
                     ItemAvantiSwitch = new JMenuItem("Context switch");
                     ItemAvantiSwitch.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoSuccessivo(1);
                         }
                     });
                     jSimulazioneItemAvantiSignificativo.add(ItemAvantiSwitch);
@@ -672,7 +672,7 @@ public class SiGeMv2View {
                     ItemAvantiFullRAM = new JMenuItem("Riempimento RAM");
                     ItemAvantiFullRAM.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoSuccessivo(2);
                         }
                     });
                     jSimulazioneItemAvantiSignificativo.add(ItemAvantiFullRAM);
@@ -680,7 +680,7 @@ public class SiGeMv2View {
                     ItemAvantiFullSwap = new JMenuItem("Riempimento Swap");
                     ItemAvantiFullSwap.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoSuccessivo(3);
                         }
                     });
                     jSimulazioneItemAvantiSignificativo.add(ItemAvantiFullSwap);
@@ -688,7 +688,7 @@ public class SiGeMv2View {
                     ItemAvantiFineProc = new JMenuItem("Terminazione di un processo");
                     ItemAvantiFineProc.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoSuccessivo(4);
                         }
                     });
                     jSimulazioneItemAvantiSignificativo.add(ItemAvantiFineProc);
@@ -696,7 +696,7 @@ public class SiGeMv2View {
                     ItemAvantiNuovoProc = new JMenuItem("Arrivo nuovo processo");
                     ItemAvantiNuovoProc.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-
+                            simulazioneSignificativoSuccessivo(5);
                         }
                     });
                     jSimulazioneItemAvantiSignificativo.add(ItemAvantiNuovoProc);                
@@ -955,7 +955,7 @@ public class SiGeMv2View {
                  new SplitWindow(true,
                                  0.6615854f, 
                                  new SplitWindow(false,
-                                                 0.68f, 
+                                                 0.70f, 
                                                  views[0],
                                                  views[2]),
                                                  //new TabWindow(new DockingWindow[] {views[3],views[2]})),
