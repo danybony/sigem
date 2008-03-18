@@ -4,9 +4,11 @@
  * Package: logic.gestioneMemoria
  * Autore: Davide Compagnin
  * Data: 29/02/2008
- * Versione: 1.9
+ * Versione: 2.1
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.2.1 (14/03/2008): Corretto problema durante creazione memoria con riferimento prima
+ *                        della modifica e problema di nome variabile linea 177
  *  - v.2.0 (14/03/2008): Corretto bug in rimuovi frame
  *  - v.1.9 (14/03/2008): Aggiunta la posizione in rimozione dalla RAM
  *  - v.1.8 (12/03/2008): Modifica metodo notificaProcessoTerminato, metodo Inserisci
@@ -175,7 +177,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                 while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() && !Errore ) {
                     Azioni.add( new Azione(MemoriaRam.getSituazione(),0,null) );
                     FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
-                    Azioni.add( new Azione(MemoriaRam.getSituazione(),3, FrameRimosso, MemoriaRam.indiceDi(Temp) ) );
+                    Azioni.add( new Azione(MemoriaRam.getSituazione(),3, FrameRimosso, MemoriaRam.indiceDi(FrameRimosso) ) );
                     if ( FrameRimosso.getModifica()==true ) {                                                        
                         try { 
                               Inserisci( MemoriaSwap, FrameRimosso );

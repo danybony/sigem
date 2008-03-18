@@ -4,9 +4,11 @@
  * Package: logic.gestioneMemoria
  * Autore: Davide Compagnin
  * Data: 29/02/2008
- * Versione: 1.6
+ * Versione: 1.7
  * Licenza: open-source
  * Registro delle modifiche:
+ *  - v.1.7 (12/03/2008): Corretto problema creazione azione con riferimanto ram prima
+ *                        della modifica
  *  - v.1.6 (12/03/2008): Modifica metodo notificaProcessoTerminato
  *                        e tolto il controllo caricamento numero massimo di pagine
  *  - v.1.5 (05/03/2008): Aggiunto controllo inserimento numero maggiore di pagine 
