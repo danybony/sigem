@@ -174,7 +174,8 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                 FrameMemoria Temp=Rimuovi( MemoriaSwap, F );
                 if (Temp!=null) Azioni.add( new Azione(MemoriaRam.getSituazione(),4, Temp) );
                 /* non devo rimuovere un segmento che mi serve in ram */    
-                while ( MemoriaRam.getSpazioMaggiore().getDimensione() < F.getDimensione() && !Errore ) {
+                while ( MemoriaRam.getSpazioMaggiore().getDimensione() /*errore senza compattamento dei buchi*/
+                         < F.getDimensione() && !Errore ) {
                     Azioni.add( new Azione(MemoriaRam.getSituazione(),0,null) );
                     FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
                     Azioni.add( new Azione(MemoriaRam.getSituazione(),3, FrameRimosso, MemoriaRam.indiceDi(FrameRimosso) ) );
@@ -197,7 +198,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                         Azioni.add( new Azione(MemoriaRam.getSituazione(),1, F, posizione ) ); 
 
                     }
-                    catch ( MemoriaEsaurita Impossibile ) { }
+                    catch ( MemoriaEsaurita Impossibile ) { Errore=true; }
                 
    
             }
