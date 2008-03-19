@@ -30,10 +30,12 @@ import logic.simulazione.Player;
  * @see SiGeMv2View
  */
 public class ViewStatistiche extends JScrollPane {
-	/** Il secondo pannello della vista, che contiene le statistiche*/
+	/** Il pannello che contiene il pannello che contiene le statistiche*/
 	private JPanel panel = null;
-	
-	JPanel panelStat = null; 
+	/**Il pannello che contiene le statistiche*/
+	private JPanel panelStat = null; 
+        /**La JTextPane dove vengono scritte le statistiche*/
+        private JTextPane jTextPane=null;
 	/** Il possessore di questo JScrollPane.*/
 	private SiGeMv2View gui= null;
 	/** Vale true solo se il ViewPort del JScrollPane � impostato sul secondo pannello */
@@ -47,9 +49,20 @@ public class ViewStatistiche extends JScrollPane {
 	public ViewStatistiche(SiGeMv2View gui) {
 		super();
 		this.gui = gui;
-		this.setViewportView(getpanel());
-		panel = getpanel();
+                panelStat=getpanel();
+                GridLayout gridLayout = new GridLayout(-1,1,10,10);
+		panelStat.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.LIGHT_GRAY,6));
+		panelStat.setBackground(java.awt.Color.LIGHT_GRAY);
+		panelStat.setLayout(gridLayout);
+		this.setViewportView(panel);
 		this.stato = false;
+                jTextPane = new JTextPane();
+		jTextPane.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 12));
+		jTextPane.setEditable(false);
+                panelStat.add(jTextPane);
+                panel = getpanel();
+                panel.add(panelStat, BorderLayout.CENTER);
+                
 	}
 	
 	/**
@@ -74,12 +87,6 @@ public class ViewStatistiche extends JScrollPane {
 	public void generaStatistiche(Player player, Istante istante, ConfigurazioneIniziale conf) {
             
 		this.stato = true;
-		// creo un pannello che conterrà i JTextPane che contengono le statistiche 
-		panelStat = new JPanel();
-		GridLayout gridLayout = new GridLayout(-1,1,10,10);
-		panelStat.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.LIGHT_GRAY,6));
-		panelStat.setBackground(java.awt.Color.LIGHT_GRAY);
-		panelStat.setLayout(gridLayout);
 		String contenuto = "";
                 if(player.getIndiceIstanteCorrente() > 0){
                     // ottengo i valori delle statistiche
@@ -124,14 +131,7 @@ public class ViewStatistiche extends JScrollPane {
                     contenuto += "\nArea di Swap riempita completamente: \tn.d.";
                 }
                 
-		JTextPane jTextPane = new JTextPane();
-		jTextPane.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 12));
-		jTextPane.setEditable(false);
 		jTextPane.setText(contenuto);
-		panelStat.add(jTextPane);
-
-		panel = getpanel();
-		panel.add(panelStat, BorderLayout.CENTER);
 		this.setViewportView(panel);
 	}
 
