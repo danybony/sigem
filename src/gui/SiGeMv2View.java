@@ -1146,12 +1146,14 @@ public class SiGeMv2View {
                         case 1: 
                             currView.configura(false,
                                     configurazioneIniziale.getDimensioneRAM(),
-                                    configurazioneIniziale.getListaProcessi().size());
+                                    configurazioneIniziale.getListaProcessi().size(),
+                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                             break;
                         case 2:
                             currView.configura(true,
                                     configurazioneIniziale.getDimensioneRAM(),
-                                    configurazioneIniziale.getListaProcessi().size());
+                                    configurazioneIniziale.getListaProcessi().size(),
+                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                             break;
                     }
                 }
@@ -1302,12 +1304,14 @@ public class SiGeMv2View {
                         case 1: 
                             currView.configura(false,
                                     configurazioneIniziale.getDimensioneRAM(),
-                                    configurazioneIniziale.getListaProcessi().size());
+                                    configurazioneIniziale.getListaProcessi().size(),
+                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                             break;
                         case 2:
                             currView.configura(true,
                                     configurazioneIniziale.getDimensioneRAM(),
-                                    configurazioneIniziale.getListaProcessi().size());
+                                    configurazioneIniziale.getListaProcessi().size(),
+                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                             break;
                     }
                 }
@@ -1394,12 +1398,14 @@ public class SiGeMv2View {
                     case 1: 
                         currView.configura(false,
                                 configurazioneIniziale.getDimensioneRAM(),
-                                configurazioneIniziale.getListaProcessi().size());
+                                configurazioneIniziale.getListaProcessi().size(),
+                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                         break;
                     case 2:
                         currView.configura(true,
                                 configurazioneIniziale.getDimensioneRAM(),
-                                configurazioneIniziale.getListaProcessi().size());
+                                configurazioneIniziale.getListaProcessi().size(),
+                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                         break;
                 }
             }
