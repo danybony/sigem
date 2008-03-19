@@ -74,7 +74,7 @@ public class ViewFrameMemoria extends JScrollPane {
     /**
      * Int che imposta l'altezza totale della RAM in caso di segmentazione
      */
-    private static final int ALTEZZA=600;
+    private static final int ALTEZZA=550;
         
     /**
      * Vector che contiene le pagine/segmenti da visualizzare
@@ -102,7 +102,6 @@ public class ViewFrameMemoria extends JScrollPane {
     public ViewFrameMemoria() {
         super();
         pannello=new PannelloFrame();
-        pannello.setPreferredSize(new Dimension(320,600));
         setViewportView(pannello);
     }
     
@@ -152,7 +151,7 @@ public class ViewFrameMemoria extends JScrollPane {
         Graphics2D ga = (Graphics2D)g;
         for (int i=0; i<pagineSquare.size(); i++) {
             
-            SquareDraw pag = (SquareDraw) pagineSquare.get(i);
+            SquareDraw pag = pagineSquare.get(i);
             //Disegno il quadrato (solo il contorno) con il colore nero
             ga.setColor(Color.BLACK);
             ga.draw(pag.getSquare());
@@ -170,6 +169,7 @@ public class ViewFrameMemoria extends JScrollPane {
         //Se il disegno dei frame ha superato l'altezza del JPanel, ridimensiono
         //lo stesso e notifico il cambiamento al JScrollPane
         if (!pag_seg)setPreferredSize(new Dimension(320, (pagineSquare.size()/6)*55));
+        else setPreferredSize(new Dimension(320, pagineSquare.get(pagineSquare.size()-1).getyCoord()+pagineSquare.get(pagineSquare.size()-1).getAltezza()+5));
         revalidate();
     }
     }
@@ -275,7 +275,7 @@ public class ViewFrameMemoria extends JScrollPane {
                                                   text)
             
                                                   );
-                coordY+=altezza;
+                coordY+=altezza+2;
             }
         }
         
@@ -297,24 +297,40 @@ public class ViewFrameMemoria extends JScrollPane {
      * @param numProcessi
      *      Numero di processi della simulazione
      */
-    public void configura(boolean sceltaGestioneMemoria, int dimMemoria, int numProcessi){
+    public void configura(boolean sceltaGestioneMemoria, int dimMemoria, int numProcessi, int numPagine){
         pagineSquare.clear();
         pag_seg=sceltaGestioneMemoria;
         this.dimMemoria=dimMemoria;
         this.numProcessi=numProcessi;
         processiUltimati=new Vector<Vector<Integer>>();
         processiUltimati.add(0, new Vector<Integer>());
-        /*if(sceltaGestioneMemoria==true){
+        if(sceltaGestioneMemoria==true){
             pagineSquare.add(
                              0,
-                             new SquareDraw(5,
+                             new SquareDraw(10,
                                             10, 
                                             LATO*6,
                                             ALTEZZA,
                                             Color.LIGHT_GRAY,
                                             " ")
                                        );
-        }*/
+        }
+        else{
+            int coordY=0;
+            int coordX=0;
+            for (int i=0; i<numPagine; i++){
+                coordY=((i/6)*LATO+5*(i/6))+10;
+                coordX=(i%6)*LATO+5*(i%6);
+                
+                pagineSquare.add(new SquareDraw(coordX,
+                                                  coordY,
+                                                  LATO,
+                                                  LATO,
+                                                  Color.LIGHT_GRAY,
+                                                  " ")
+                                );
+            }
+        }
         pannello.repaint();
         
     }
