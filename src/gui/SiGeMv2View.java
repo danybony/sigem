@@ -953,7 +953,7 @@ public class SiGeMv2View {
                  views[5],
                  views[4],
                  new SplitWindow(true,
-                                 0.6615854f, 
+                                 0.644f, 
                                  new SplitWindow(false,
                                                  0.70f, 
                                                  views[0],
