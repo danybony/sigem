@@ -2,11 +2,16 @@
  * Azienda: Stylosoft
  * Nome file: ViewFrameMemoria.java
  * Package: gui.dialog
- * Autore: Giordano Cariani
- * Data: 03/03/2008
- * Versione: 1.2
+ * Autore: Alberto Zatton
+ * Data: 02/03/2008
+ * Versione: 1.3
  * Licenza: open-source
  * Registro delle modifiche: 
+ *  - v.1.3 (19/03/2008): Rivisto ampiamente il codice. Ora la classe estende un
+ *                        JScrollPane per attivare lo scroll, completamente
+ *                        cambiate le modalità di disegno della memoria, nuova
+ *                        classe interna di tipo JPanel su cui viene disegnata
+ *                        la memoria.
  *  - v.1.2 (14/03/2008): Completato il metodo principale aggiungi() e corretti
  *                        i restanti
  *  - v.1.1 (03/03/2008): Inserita visualizzazione pagine all'inizializzazione
@@ -22,14 +27,24 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import gui.utility.SquareDraw;
-import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.RenderingHints;
 import java.util.LinkedList;
 import java.util.Vector;
+import javax.swing.JScrollPane;
 import logic.gestioneMemoria.Azione;
 import logic.gestioneMemoria.FrameMemoria;
 
-public class ViewFrameMemoria extends JPanel {
+/**
+ * Classe che è incaricata di visualizzare sulla GUI principale l'evolvere della
+ * memoria, sia essa paginata o segmentata. La classe eredita un JScrollPane
+ * per attivare gli scroll in caso di bisogno, inoltre al suo interno ha una
+ * classe privata di tipo JPanel in cui viene effettivamente effettuato il diesegno
+ * 
+ * @author Alberto Zatton
+ */
+public class ViewFrameMemoria extends JScrollPane {
     /** Necessario per il Serializable. */
     private static final long serialVersionUID = -4441774947632050544L;
     
@@ -51,33 +66,70 @@ public class ViewFrameMemoria extends JPanel {
      */
     private int numProcessi=0;
     
-    //Int che setta la grandezza dei quadrati rappresentanti le pagine
+    /**
+     * Int che setta la grandezza dei quadrati rappresentanti le pagine
+     */
     private static final int LATO=48;
     
-    //Int che imposta l'altezza totale della RAM in caso di segmentazione
+    /**
+     * Int che imposta l'altezza totale della RAM in caso di segmentazione
+     */
     private static final int ALTEZZA=600;
         
-    /** Vector che contiene le pagine/segmenti da visualizzare */
+    /**
+     * Vector che contiene le pagine/segmenti da visualizzare
+     */
     private Vector<SquareDraw> pagineSquare = new Vector<SquareDraw>();
     
     /**
      * Vector che mantiene una lista di prcessi che hanno finito di eseguire
-     * una per ogni istante
+     * una per ogni istante. Utile nel caso la simulazione "torni indietro"
      */
     Vector<Vector<Integer>> processiUltimati=null;
     
+    /**
+     * Riferimento alla classe interna incaricata di disegnare le pagine.
+     * Il JScrollPane si occuperà dello scrolling di questo oggetto, che non
+     * è altro che un JPanel.
+     */
+    PannelloFrame pannello=null;
     
     
+    /**
+     * Costruttore incaricato solo di inizializzare il grafico. Per poter utilizzare
+     * le sue funzioni, bisogna prima utilizzare il metodo configure()
+     */
     public ViewFrameMemoria() {
         super();
-        this.setLayout(new BorderLayout());
+        pannello=new PannelloFrame();
+        pannello.setPreferredSize(new Dimension(320,600));
+        setViewportView(pannello);
     }
-
+    
     /**
-    * Disegna gli elementi del grafico.
+     * Classe che eredita da JPanel, incaricata di disegnare al suo interno le
+     * pagine/segmenti. E' l'oggetto su cui il JScrollPane fa lo scrolling
+     */
+    private class PannelloFrame extends JPanel{
+        
+    /**
+    * Overriding del metodo paintComponent: viene usato per disegnare le
+    * pagine/segmenti nel JPanel attraverso il metodo disegnaPagine()
     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
+        /*
+	 * Necessito delle funzionalita` di Graphics2D, cast sempre sicuro
+	 * poiche` paint invoca sempre paintComponent con un oggetto Graphics2D
+	 */
+	Graphics2D g2 = (Graphics2D) g;
+
+	// Attivo l'antialiasing per migliorare la qualita` del rendering
+	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+	                RenderingHints.VALUE_ANTIALIAS_ON);
+	g2.setRenderingHint(RenderingHints.KEY_RENDERING,
+	                RenderingHints.VALUE_RENDER_QUALITY);
         
         setBackground(Color.white);
         
@@ -87,25 +139,39 @@ public class ViewFrameMemoria extends JPanel {
     
     
     /**
-     * Disegna tutte le pagine. 
+     * Metodo incaricato di disegnare le pagine/segmenti, ognuna con il colore
+     * del processo relativo e con il proprio indirizzo logico. Nel caso delle
+     * pagine, se queste superano l'area visibile viene aumentata l'altezza
+     * del JPanel e comunicata al JScrollPane attraverso il metodo revalidate()
+     * per gli opportuni aggiustamenti grafici
      * 
-     * @param g il grafico su cui disegnare le risorse.
+     * @param g la componente grafica su cui disegnare i frame.
      */
     private void disegnaPagine(Graphics g) {
         
         Graphics2D ga = (Graphics2D)g;
         for (int i=0; i<pagineSquare.size(); i++) {
+            
             SquareDraw pag = (SquareDraw) pagineSquare.get(i);
+            //Disegno il quadrato (solo il contorno) con il colore nero
             ga.setColor(Color.BLACK);
             ga.draw(pag.getSquare());
+            //Imposto il colore del frame a seconda dal processo di appartenenza,
+            //dopodichè riempio il quadrato vuoto con quel colore
             ga.setPaint(pag.getColor());
             ga.fill(pag.getSquare());
-            
+            //Scrivo l'indirizzo del frame col colore nero e carattere Arial
+            //grandezza 20 grassetto, centrando la scritta
             ga.setColor(Color.BLACK);
             ga.setFont(new Font("Arial", 1, 20));
             ga.drawString(pag.getText(),pag.getxCoordText(),pag.getyCoordText());
             
         }
+        //Se il disegno dei frame ha superato l'altezza del JPanel, ridimensiono
+        //lo stesso e notifico il cambiamento al JScrollPane
+        if (!pag_seg)setPreferredSize(new Dimension(320, (pagineSquare.size()/6)*55));
+        revalidate();
+    }
     }
     
     /**
@@ -116,166 +182,18 @@ public class ViewFrameMemoria extends JPanel {
      *      LinkedList di Azioni che rappresentano tutto ciï¿½ che ï¿½ stato modificato
      *      in RAM
      * 
+     * @param istante
+     *      intero che identifica l'istante di cui si sta disegnando i frame della
+     *      memoria. Utile nel caso in cui l'utente decida di tornare indietro nella
+     *      simulazione
+     * 
      * @throws Exception
      *      Lancia un'eccezione nel caso in cui la memoria non sia ancora stata configurata
      */
     public void aggiorna(LinkedList<Azione> cambiamentiInMemoria, int istante) throws Exception{
-        /*if(dimMemoria==0) throw new Exception();
+        //Se l'ambiente non è ancora stato configurato, lancio un'eccezione
+        if(dimMemoria==0) throw new Exception();
         
-        Azione azione=null;
-        SquareDraw aux=null;
-        int coordX=0, coordY=0, altezza=0, larghezza=0, posizione=0;
-        
-        for(int i=0;i<cambiamentiInMemoria.size(); i++){
-            azione=cambiamentiInMemoria.get(i);
-            switch(azione.getAzione()){
-                case 1: 
-                       //Aggiungere pagina in RAM
-                       if(pag_seg==false) {
-                           posizione=azione.getPosizione();
-                           coordY=((posizione/6)*LATO+5*(posizione/6))+10;
-                           coordX=(posizione%6)*LATO+5*(posizione%6);
-                           pagineSquare.add(
-                                   posizione,
-                                   new SquareDraw(coordX,
-                                                  coordY,
-                                                  LATO,
-                                                  LATO,
-                                                  ViewUtility.colorFactory(numProcessi, azione.getFrame().getIdProcesso()),
-                                                  azione.getFrame().getIndirizzo())
-                                   );
-                           //Rimuovo l'eventuale doppione di pagina creato
-                           if(pagineSquare.lastElement()!=pagineSquare.get(posizione))
-                               pagineSquare.remove(posizione+1);
-                       }
-                       
-                       if(pag_seg==true) {
-                           //Inserisco il nuovo segmento nel Vector dei FrameMemoria
-
-                           posizione=azione.getPosizione();
-                           aux=(SquareDraw)pagineSquare.get(posizione);
-                           
-                           coordY=aux.getyCoord();
-                           coordX=5;
-                           larghezza=LATO*6;
-                           altezza=(ALTEZZA*azione.getFrame().getDimensione())/dimMemoria;
-                               
-                           pagineSquare.add(
-                                       posizione,
-                                       new SquareDraw(coordX,
-                                                      coordY,
-                                                      larghezza,
-                                                      altezza,
-                                                      ViewUtility.colorFactory(numProcessi, azione.getFrame().getIdProcesso()),
-                                                      azione.getFrame().getIndirizzo())
-                                       );
-                           
-                           //tolgo quello vecchio che era nella stessa posizione e metto lo spazio residuo
-                           
-                           if (altezza!=aux.getAltezza()){
-                               pagineSquare.add(
-                                       posizione+1,
-                                       new SquareDraw(coordX,
-                                                      coordY+aux.getAltezza()-altezza,
-                                                      larghezza,
-                                                      aux.getAltezza()-altezza,
-                                                      Color.LIGHT_GRAY,
-                                                      " ")
-                                       );
-                           }
-                           pagineSquare.remove(posizione+2);
-                       }
-                       break;
-                case 3: 
-                       //Togliere segmento in RAM
-                       if(pag_seg==true){
-                           aux=pagineSquare.get(azione.getPosizione());
-                           
-                           //Salvo i dati per il nuovo segmento spazio
-                           posizione=azione.getPosizione();
-                           coordX=aux.getxCoord();
-                           coordY=aux.getyCoord();
-                           larghezza=LATO*6;
-                           altezza=aux.getAltezza();
-                           
-                           //Rimuovo il vecchio segmento
-                           pagineSquare.remove(posizione);
-                           
-                           //Ora guardo se prima e dopo il vecchio segmento ci sono segmenti
-                           //spazio; in caso affermativo li connetto assieme
-                           
-                           if(posizione<pagineSquare.size()){
-                               aux=pagineSquare.elementAt(posizione);
-                               if(aux.getText().equals(" ")){
-                                   
-                                   //Il segmento successivo ï¿½ uno spazio; lo connetto al segmento corrente
-                                   altezza+=aux.getAltezza();
-                                   pagineSquare.remove(posizione);
-                                   
-                               }
-                           }
-                           
-                           if(posizione>0){
-                               aux=pagineSquare.elementAt(posizione-1);
-                               if(aux.getText().equals(" ")){
-                                   
-                                   //Il segmento precedente ï¿½ uno spazio; lo connetto al segmento corrente
-                                   altezza+=aux.getAltezza();
-                                   coordX=aux.getxCoord();
-                                   coordY=aux.getyCoord();
-                                   
-                                   posizione-=1;
-                                   pagineSquare.remove(posizione);
-                               }
-                           }
-                           
-                           //Infine inserisco il nuovo segmento spazio
-                           pagineSquare.add(
-                                       posizione,
-                                       new SquareDraw(coordX,
-                                                      coordY,
-                                                      larghezza,
-                                                      altezza,
-                                                      Color.LIGHT_GRAY,
-                                                      " ")
-                                       );
-                       }
-                
-                       break;
-                       
-                case 6:
-                       //Un processo ha finito di eseguire, libero la memoria associata
-                       //Prima di tutto, scorro il vettore impostando nelle pagine/segmenti
-                       //associati al processo il colore grigio e lo spazio:
-                           for(int j=0; j<pagineSquare.size();j++){
-                               aux=pagineSquare.get(j);
-                               if(aux.getColor().equals(ViewUtility.colorFactory(numProcessi, azione.getPosizione()))){
-                                   aux.setColor(Color.LIGHT_GRAY);
-                                   aux.setText(" ");
-                               }
-                           }
-                       //Dopodichï¿½, se la memoria ï¿½ composta da segmenti, compatto i segmenti
-                       //spazio contigui:
-                       if(pag_seg==true){
-                           SquareDraw aux2=null;
-                           for(int j=0; j<pagineSquare.size()-1;j++){
-                               aux=pagineSquare.get(j);
-                               aux2=pagineSquare.get(j+1);
-                               if(aux.getText().equals(" ") && aux2.getText().equals(" ")){
-                                   aux.setAltezza(aux.getAltezza()+aux2.getAltezza());
-                                   pagineSquare.remove(j+1);
-                                   j-=1;
-                               }
-                           }
-                       }
-                       
-                       break;
-                default:
-                       //Non faccio nulla, non ï¿½ un'azione rilevante
-                
-                       
-            }
-        }*/
         
         
         //Aggiorno, se necessario, lo storico dei processi ultimati
@@ -361,14 +279,17 @@ public class ViewFrameMemoria extends JPanel {
             }
         }
         
-        repaint();
+        pannello.repaint();
         }
         catch(Exception e){}
     }
     
 
     
-    /**Metodo per impostare il grafico come visualizzatore di pagine o segmenti<br>
+    /**
+     * Metodo che inizializza il grafico. E' necessario passare per questo metodo
+     * prima di usare effettivamente la classe, cioè chiamare il metodo aggiorna()<br>
+     * 
      * @param sceltaGestioneMemoria
      *      FALSE se si vogliono visualizzare pagine, TRUE per i segmenti
      * @param dimMemoria
@@ -394,7 +315,7 @@ public class ViewFrameMemoria extends JPanel {
                                             " ")
                                        );
         }*/
-        repaint();
+        pannello.repaint();
         
     }
 
