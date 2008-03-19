@@ -60,12 +60,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     
     private Vector<DefaultListModel> modelliListaFrame = new Vector<DefaultListModel>();
     
-    /** 
-     * Contatore dei frameMemoria. Serve per generare un numero sempre nuovo
-     per l'indirizzo del nuovo frame */
-    private int contatoreFrame=0;
-    
-    
+        
      /** Creates new form AssociazioneProcessiJDialog */
     public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, ProcessiJDialog proc, SiGeMv2View view) {
         super(parent, modal);
@@ -332,11 +327,13 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
 
     private void jButtonNuovoFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuovoFrameActionPerformed
         
+        int nuovoIndirizzo = getNuovoIndirizzo(jTabbedPaneProcessi.getSelectedIndex());
+        
         if (politica.getGestioneMemoria() == 1){
             
            // listaFrame.add(new Pagina(new Integer(contatoreFrame).toString(),configurazioneAmbiente.getDimensionePagina(),0));
             
-            listaFrameModel.addElement(new Pagina(Integer.toString(contatoreFrame),
+            listaFrameModel.addElement(new Pagina(Integer.toString(nuovoIndirizzo),
                     configurazioneAmbiente.getDimensionePagina(),0));
             
         }
@@ -352,7 +349,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 
                 // listaFrame.add(new Segmento(new Integer(contatoreFrame).toString(),   datiSegmentoDialog.getDimensione(),0));
             
-                 listaFrameModel.addElement(new Segmento(Integer.toString(contatoreFrame),
+                 listaFrameModel.addElement(new Segmento(Integer.toString(nuovoIndirizzo),
                     datiSegmentoDialog.getDimensione(),0));
             
             }
@@ -361,8 +358,6 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             }
             
         }
-        
-        contatoreFrame++;
     }//GEN-LAST:event_jButtonNuovoFrameActionPerformed
 
     private void jTabbedPaneProcessiStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneProcessiStateChanged
@@ -562,7 +557,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     }
     
     /**
-     * Metodo che aggiorna il modello per la lista dei FrameMemoria di un processo.
+     * Metodo che aggiorna il modello per la lista dei FrameMemoria di un processo
+     * quando viene selezionato un'altro processo nel JTabbedPane.
      * E' necessario perchè ogni processo ha i propri FrameMemoria.
      */
     private void aggiornaListaFrame(){        
@@ -573,6 +569,38 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
         jListFrame.setModel(listaFrameModel);
         
+    }
+    
+    /**
+     * Ritorna il primo intero rappresentante l'indirizzo del primo frameMemoria
+     * disponibile per il processo indicato.
+     * 
+     * @param idProcesso
+     *          L'id del processo che chiede un nuovo FrameMemoria
+     * @return  L'indirizzo del nuovo FrameMemoria
+     */
+    private int getNuovoIndirizzo(int idProcesso){
+        DefaultListModel modelloAttuale = modelliListaFrame.get(idProcesso);
+        int min = 0;
+        boolean valido = false;
+        
+        while(! valido){
+            boolean trovato = false;
+            int i = 0;
+            for(; i<modelloAttuale.size() && !trovato; i++){
+                  if(min == Integer.parseInt(((FrameMemoria)modelloAttuale.get(i)).getIndirizzo())){
+                      trovato = true;
+                  }
+            }
+            if(! trovato){
+                valido = true;
+            }
+            else{
+                min++;
+            }
+        }
+        
+        return min;
     }
     
     /**
