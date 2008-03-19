@@ -67,6 +67,12 @@ public class ViewFrameMemoria extends JScrollPane {
     private int numProcessi=0;
     
     /**
+     * Numero di pagine: utile per la visualizzazione iniziale di tutta la RAM.
+     * Rimane a 0 in caso di gestione memoria tramite segmentazione
+     */
+    private int numPagine=0;
+    
+    /**
      * Int che setta la grandezza dei quadrati rappresentanti le pagine
      */
     private static final int LATO=48;
@@ -223,11 +229,13 @@ public class ViewFrameMemoria extends JScrollPane {
         
         Vector<FrameMemoria> memoria=azione.getMemoriaRAM();
         pagineSquare.clear();
-        for(int i=0; i<memoria.size(); i++){
+        
+        int i=0;
+        for(; i<memoria.size(); i++){
             frame=memoria.get(i);
             if (pag_seg==false){
-                coordY=((i/6)*LATO+5*(i/6))+10;
-                coordX=(i%6)*LATO+5*(i%6);
+                coordY=((i/6)*LATO+5*(i/6))+5;
+                coordX=(i%6)*LATO+5*(i%6)+5;
                 boolean trovato=false;
                 for(int j=0;j<processiUltimati.get(istante).size()&&!trovato;j++){
                     if(processiUltimati.get(istante).get(j).equals(new Integer(frame.getIdProcesso()))){
@@ -279,6 +287,22 @@ public class ViewFrameMemoria extends JScrollPane {
             }
         }
         
+        //In caso di memoria paginata, aggiungo le pagine residue per far vedere
+        //la memoria nella sua interezza
+        if(!pag_seg){
+            for (int j=i; j<numPagine; j++){
+                coordY=((j/6)*LATO+5*(j/6))+5;
+                coordX=(j%6)*LATO+5*(j%6)+5;
+                
+                pagineSquare.add(new SquareDraw(coordX,
+                                                  coordY,
+                                                  LATO,
+                                                  LATO,
+                                                  Color.LIGHT_GRAY,
+                                                  " ")
+                                );
+            }
+        }
         pannello.repaint();
         }
         catch(Exception e){}
@@ -302,6 +326,7 @@ public class ViewFrameMemoria extends JScrollPane {
         pag_seg=sceltaGestioneMemoria;
         this.dimMemoria=dimMemoria;
         this.numProcessi=numProcessi;
+        this.numPagine=numPagine;
         processiUltimati=new Vector<Vector<Integer>>();
         processiUltimati.add(0, new Vector<Integer>());
         if(sceltaGestioneMemoria==true){
@@ -319,8 +344,8 @@ public class ViewFrameMemoria extends JScrollPane {
             int coordY=0;
             int coordX=0;
             for (int i=0; i<numPagine; i++){
-                coordY=((i/6)*LATO+5*(i/6))+10;
-                coordX=(i%6)*LATO+5*(i%6);
+                coordY=((i/6)*LATO+5*(i/6))+5;
+                coordX=(i%6)*LATO+5*(i%6)+5;
                 
                 pagineSquare.add(new SquareDraw(coordX,
                                                   coordY,
