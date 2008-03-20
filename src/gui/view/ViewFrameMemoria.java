@@ -91,7 +91,7 @@ public class ViewFrameMemoria extends JScrollPane {
      * Vector che mantiene una lista di prcessi che hanno finito di eseguire
      * una per ogni istante. Utile nel caso la simulazione "torni indietro"
      */
-    Vector<Vector<Integer>> processiUltimati=null;
+    //Vector<Vector<Integer>> processiUltimati=null;
     
     /**
      * Riferimento alla classe interna incaricata di disegnare le pagine.
@@ -196,13 +196,14 @@ public class ViewFrameMemoria extends JScrollPane {
      * @throws Exception
      *      Lancia un'eccezione nel caso in cui la memoria non sia ancora stata configurata
      */
-    public void aggiorna(LinkedList<Azione> cambiamentiInMemoria, int istante) throws Exception{
+    public void aggiorna(LinkedList<Azione> cambiamentiInMemoria, int istante, Vector<Vector<Integer>> processiUltimati) throws Exception{
         //Se l'ambiente non è ancora stato configurato, lancio un'eccezione
         if(dimMemoria==0) throw new Exception();
         
         
         
         //Aggiorno, se necessario, lo storico dei processi ultimati
+        /*
         if(istante>=processiUltimati.size()){
             processiUltimati.add(new Vector(processiUltimati.get(istante-1)));
             if(cambiamentiInMemoria==null) return;
@@ -216,7 +217,7 @@ public class ViewFrameMemoria extends JScrollPane {
                 processiUltimati.get(istante).add(new Integer(processoUltimato));
             }
         }
-        
+        */
         int coordX=10;
         int larghezza=LATO*6;
         int coordY=10;
@@ -327,8 +328,8 @@ public class ViewFrameMemoria extends JScrollPane {
         this.dimMemoria=dimMemoria;
         this.numProcessi=numProcessi;
         this.numPagine=numPagine;
-        processiUltimati=new Vector<Vector<Integer>>();
-        processiUltimati.add(0, new Vector<Integer>());
+        //processiUltimati=new Vector<Vector<Integer>>();
+        //processiUltimati.add(0, new Vector<Integer>());
         if(sceltaGestioneMemoria==true){
             pagineSquare.add(
                              0,
