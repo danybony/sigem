@@ -94,9 +94,9 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
      */
     public LinkedList<Azione> notificaProcessoTerminato(int id) {
         LinkedList<Azione> Azioni=new LinkedList();
-        Azioni.add( new Azione(MemoriaRam.getSituazione(),6,null,id) );
         MemoriaRam.liberaMemoria(id);
         MemoriaSwap.liberaMemoria(id);
+        Azioni.add( new Azione(MemoriaRam.getSituazione(),6,null,id) );
         return Azioni;
     }
     /**
