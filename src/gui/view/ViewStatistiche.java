@@ -20,6 +20,9 @@ import java.awt.GridLayout;
 //import simulazione.Statistiche;
 //import simulazione.StatisticheProcesso;
 import gui.SiGeMv2View;
+import java.util.Vector;
+import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 import logic.parametri.ConfigurazioneIniziale;
 import logic.simulazione.Istante;
 import logic.simulazione.Player;
@@ -30,109 +33,126 @@ import logic.simulazione.Player;
  * @see SiGeMv2View
  */
 public class ViewStatistiche extends JScrollPane {
-	/** Il pannello che contiene il pannello che contiene le statistiche*/
-	private JPanel panel = null;
-	/**Il pannello che contiene le statistiche*/
-	private JPanel panelStat = null; 
-        /**La JTextPane dove vengono scritte le statistiche*/
-        private JTextPane jTextPane=null;
-	/** Il possessore di questo JScrollPane.*/
-	private SiGeMv2View gui= null;
-	/** Vale true solo se il ViewPort del JScrollPane � impostato sul secondo pannello */
-	private boolean stato; 
-	
-	/**
-	 * Chiama il costruttore della superclasse JScrollPane.
-	 * Imposta l'origine dati per il viewport della JScrollPane con il metodo 
-	 * setViewportView(), sul JPanel p1.
-	 */
-	public ViewStatistiche(SiGeMv2View gui) {
-		super();
-		this.gui = gui;
-                panelStat=getpanel();
-                GridLayout gridLayout = new GridLayout(-1,1,10,10);
-		panelStat.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.LIGHT_GRAY,6));
-		panelStat.setBackground(java.awt.Color.LIGHT_GRAY);
-		panelStat.setLayout(gridLayout);
-		this.setViewportView(panel);
-		this.stato = false;
-                jTextPane = new JTextPane();
-		jTextPane.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 12));
-		jTextPane.setEditable(false);
-                panelStat.add(jTextPane);
-                panel = getpanel();
-                panel.add(panelStat, BorderLayout.CENTER);
-                
-	}
-	
-	/**
-	 * Crea il JPanel che contiene le statistiche.	
-	 * 	
-	 * @return javax.swing.JPanel	
-	 */
-	private JPanel getpanel() {
-            panel = new JPanel();
-            panel.setLayout(new BorderLayout());
-            return panel;
-	}
-	
-	/**
-	 * Questo metodo genera un JPanel contenente le statistiche relative all'istante
-	 * corrente della simulazione, e lo visualizza nel pannello.	
-	 * 	
-	 * @return javax.swing.JPanel	
-	 */
-        
-        
-	public void generaStatistiche(Player player, Istante istante, ConfigurazioneIniziale conf) {
+    /** Il pannello che contiene il pannello che contiene le statistiche*/
+    private JPanel panel = null;
+    /**Il pannello che contiene le statistiche*/
+    private JPanel panelStat = null; 
+    /**La JTextPane dove vengono scritte le statistiche*/
+    private JTextPane jTextPane=null;
+    /** Il possessore di questo JScrollPane.*/
+    private SiGeMv2View gui= null;
+    /** Vale true solo se il ViewPort del JScrollPane � impostato sul secondo pannello */
+    private boolean stato; 
+
+    /**
+     * Chiama il costruttore della superclasse JScrollPane.
+     * Imposta l'origine dati per il viewport della JScrollPane con il metodo 
+     * setViewportView(), sul JPanel p1.
+     */
+    public ViewStatistiche(SiGeMv2View gui) {
+            super();
+            this.gui = gui;
+            panelStat=getpanel();
+            GridLayout gridLayout = new GridLayout(5,2,5,5);
+            panelStat.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.LIGHT_GRAY,6));
+            panelStat.setBackground(java.awt.Color.LIGHT_GRAY);
+            panelStat.setLayout(gridLayout);
+            this.setViewportView(panel);
+            this.stato = false;
+            JProgressBar progRAM = new JProgressBar(0,0,100);
+            progRAM.setValue(0);
+            progRAM.setStringPainted(true);
             
-		this.stato = true;
-		String contenuto = "";
-                if(player.getIndiceIstanteCorrente() > 0){
-                    // ottengo i valori delle statistiche
+            panelStat.add(new JLabel("Occupazione RAM (KB): "));
+            panelStat.add(progRAM);
+            panelStat.add();
+            panelStat.add();
+            panelStat.add();
+            panelStat.add();
+            
+            
+            /*jTextPane = new JTextPane();
+            jTextPane.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 12));
+            jTextPane.setEditable(false);
+            panelStat.add(jTextPane);
+            panel = getpanel();
+            panel.add(panelStat, BorderLayout.CENTER);*/
 
-                    contenuto += "Utilizzo RAM (KB): \t\t"
-                                    + (player.getStatistiche().getUtilizzoRAM())
-                                    + " di "
-                                    + conf.getDimensioneRAM();
+    }
+
+    /**
+     * Crea il JPanel che contiene le statistiche.	
+     * 	
+     * @return javax.swing.JPanel	
+     */
+    private JPanel getpanel() {
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        return panel;
+    }
+
+    /**
+     * Questo metodo genera un JPanel contenente le statistiche relative all'istante
+     * corrente della simulazione, e lo visualizza nel pannello.	
+     * 	
+     * @return javax.swing.JPanel	
+     */
 
 
-                    contenuto += "\nUtlizzo Swap (KB): \t\t"
-                                    + ( player.getStatistiche().getUtilizzoSwap())
-                                    + " di "
-                                    + conf.getDimensioneSwap();
+    public void generaStatistiche(Player player,
+                                  Istante istante, ConfigurazioneIniziale conf,
+                                  Vector<Vector<Integer>> processiUltimati) {
+
+     
 
 
-                    contenuto += "\nIstante: \t\t\t"
-                                    + ( player.getIndiceIstanteCorrente())
-                                    + " di "
-                                    + player.numeroIstanti();
+            this.stato = true;
+            String contenuto = "";
+            if(player.getIndiceIstanteCorrente() > 0){
+                // ottengo i valori delle statistiche
 
-                    contenuto += "\nNumero Fault in memoria: \t"
-                            + ( player.getStatistiche().getNumeroFault());
+                contenuto += "Utilizzo RAM (KB): \t\t"
+                                + (player.getStatistiche().getUtilizzoRAM())
+                                + " di "
+                                + conf.getDimensioneRAM();
 
-                    contenuto += "\nMemoria RAM riempita completamente:"
-                            +((istante.getFull_RAM()) ? "Si" : "No");
 
-                    contenuto += "\nArea di Swap riempita completamente: \t"
-                            +((istante.getFull_Swap()) ? "Si" : "No");
-                }
-                else{
-                    contenuto += "Utilizzo RAM (KB): \t\tn.d.";
+                contenuto += "\nUtlizzo Swap (KB): \t\t"
+                                + ( player.getStatistiche().getUtilizzoSwap())
+                                + " di "
+                                + conf.getDimensioneSwap();
 
-                    contenuto += "\nUtlizzo Swap (KB): \t\tn.d.";
 
-                    contenuto += "\nIstante: \t\t\tn.d.";
+                contenuto += "\nIstante: \t\t\t"
+                                + ( player.getIndiceIstanteCorrente())
+                                + " di "
+                                + player.numeroIstanti();
 
-                    contenuto += "\nNumero Fault in memoria: \tn.d.";
+                contenuto += "\nNumero Fault in memoria: \t"
+                        + ( player.getStatistiche().getNumeroFault());
 
-                    contenuto += "\nMemoria RAM riempita completamente: n.d.";
+                contenuto += "\nMemoria RAM riempita completamente:"
+                        +((istante.getFull_RAM()) ? "Si" : "No");
 
-                    contenuto += "\nArea di Swap riempita completamente: \tn.d.";
-                }
-                
-		jTextPane.setText(contenuto);
-		this.setViewportView(panel);
-	}
+                contenuto += "\nArea di Swap riempita completamente: \t"
+                        +((istante.getFull_Swap()) ? "Si" : "No");
+            }
+            else{
+                contenuto += "Utilizzo RAM (KB): \t\tn.d.";
+
+                contenuto += "\nUtlizzo Swap (KB): \t\tn.d.";
+
+                contenuto += "\nIstante: \t\t\tn.d.";
+
+                contenuto += "\nNumero Fault in memoria: \tn.d.";
+
+                contenuto += "\nMemoria RAM riempita completamente: n.d.";
+
+                contenuto += "\nArea di Swap riempita completamente: \tn.d.";
+            }
+
+            jTextPane.setText(contenuto);
+            this.setViewportView(panel);
+    }
 
 }

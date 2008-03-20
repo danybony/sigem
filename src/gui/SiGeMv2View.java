@@ -193,28 +193,17 @@ public class SiGeMv2View {
             setDefaultLayout();
             showFrame();
     }
-
-    /** Disegna le statistiche sulla vista ViewStatistiche */
-    public void visualizzaStatisticheProcessi(Player player, Istante istante) {
-            if ((views[3]).getComponent() instanceof ViewStatistiche) {
-                    ViewStatistiche currView = (ViewStatistiche) views[3].getComponent();
-                    currView.generaStatistiche(player, istante,configurazioneIniziale);
-            }
-    };
     
     /** Disegna le statistiche sulla vista ViewStatistiche */
     public void visualizzaStatisticheSimulazione(Player player, Istante istante) {
             if ((views[2]).getComponent() instanceof ViewStatistiche) {
                     ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
-                    currView.generaStatistiche(player, istante,configurazioneIniziale);
+                    currView.generaStatistiche(player, istante,configurazioneIniziale, processiUltimati);
             }
     };
     
     public void visualizzaSimulazioneTestuale() {
-            if ((views[2]).getComponent() instanceof ViewStatistiche) {
-                    ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
-                    currView.generaStatistiche(player, istante,configurazioneIniziale);
-            }
+            
     };
 
     /**
@@ -1124,6 +1113,8 @@ public class SiGeMv2View {
             return;
         }
         istante = player.primoIstante();
+        processiUltimati = new Vector<Vector<Integer>>();
+        processiUltimati.add(0, new Vector<Integer>());
         aggiornaProcessiTerminati();
         abilitaTutto();
 
