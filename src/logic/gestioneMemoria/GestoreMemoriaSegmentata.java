@@ -77,9 +77,9 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
      */
     public LinkedList<Azione> notificaProcessoTerminato(int id) {
         LinkedList<Azione> Azioni=new LinkedList();
-        Azioni.add( new Azione(MemoriaRam.getSituazione(),6,null,id) ); /*Creo l'azione con la terminazione del processo*/
         MemoriaRam.liberaMemoria(id);
         MemoriaSwap.liberaMemoria(id);
+        Azioni.add( new Azione(MemoriaRam.getSituazione(),6,null,id) ); /*Creo l'azione con la terminazione del processo*/
         return Azioni;
     }
     /**
@@ -162,9 +162,23 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         
         LinkedList<Azione> Azioni=new LinkedList();
         Iterator<FrameMemoria> I=ListaSegmenti.iterator();
-        
+        /*
+        int dimensione_totale_inserimento=0;
+        while( I.hasNext() ) {
+            dimensione_totale_inserimento+=I.next().getDimensione();
+        }
+        //if ( dimensione_totale_inserimento > 0 )
         boolean Errore=false;
+        while ( MemoriaRam.getSpazioMaggiore().getDimensione() < dimensione_totale_inserimento && !Errore) {
+                    // rimuovo tutti i segmenti che mi servono
+
+                }
         
+        
+        
+        I=ListaSegmenti.iterator();
+        */
+        boolean Errore=false;
         while( I.hasNext() && !Errore ) {
             
             FrameMemoria F=I.next();
