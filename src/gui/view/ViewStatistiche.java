@@ -20,6 +20,8 @@ import java.awt.GridLayout;
 //import simulazione.Statistiche;
 //import simulazione.StatisticheProcesso;
 import gui.SiGeMv2View;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -53,22 +55,35 @@ public class ViewStatistiche extends JScrollPane {
             super();
             this.gui = gui;
             panelStat=getpanel();
-            GridLayout gridLayout = new GridLayout(5,2,5,5);
+            GridLayout gridLayout = new GridLayout(3,1,5,5);
+            FlowLayout flow = new FlowLayout();
             panelStat.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.LIGHT_GRAY,6));
             panelStat.setBackground(java.awt.Color.LIGHT_GRAY);
             panelStat.setLayout(gridLayout);
+            panelStat.setMaximumSize(new Dimension(100,100));
+            panelStat.setMinimumSize(new Dimension(100,100));
             this.setViewportView(panel);
             this.stato = false;
-            JProgressBar progRAM = new JProgressBar(0,0,100);
+            JProgressBar progRAM = new JProgressBar(0);
             progRAM.setValue(0);
             progRAM.setStringPainted(true);
+            JProgressBar progSwap = new JProgressBar(0);
+            progSwap.setValue(0);
+            progSwap.setStringPainted(true);
+            JPanel panel1=new JPanel();
+            JPanel panel2=new JPanel();
             
             panelStat.add(new JLabel("Occupazione RAM (KB): "));
-            panelStat.add(progRAM);
-            panelStat.add();
-            panelStat.add();
-            panelStat.add();
-            panelStat.add();
+            panelStat.add((progRAM));
+            panelStat.add(new JLabel("Occupazione Swap (KB): "));
+            panelStat.add(progSwap);
+            panelStat.add(new JPanel());
+            //panelStat.add(panel1);
+            //panelStat.add(panel2);
+            //panelStat.add();
+            //panelStat.add();
+            //panelStat.add();
+            //panelStat.add();
             
             
             /*jTextPane = new JTextPane();
@@ -105,7 +120,7 @@ public class ViewStatistiche extends JScrollPane {
 
      
 
-
+/*
             this.stato = true;
             String contenuto = "";
             if(player.getIndiceIstanteCorrente() > 0){
@@ -152,7 +167,7 @@ public class ViewStatistiche extends JScrollPane {
             }
 
             jTextPane.setText(contenuto);
-            this.setViewportView(panel);
+            this.setViewportView(panel);*/
     }
 
 }

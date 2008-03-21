@@ -172,14 +172,45 @@ public class Player{
             return this.numeroIstantiRimanenti;
         }
         
+        void aggiornaFault(Istante nuovoIstante, boolean avanti){
+            if(avanti){
+                this.numeroFault += nuovoIstante.getFault();
+                this.numeroIstantiRimanenti--;
+            }
+            else{
+                this.numeroFault -= nuovoIstante.getFault();
+                this.numeroIstantiRimanenti++;
+            }
+        }
+        
+        void aggiornaFault(LinkedList<Istante> listaNuoviIstanti,
+                                        boolean avanti){
+            if(avanti){
+                for(int i=0; i < listaNuoviIstanti.size(); i++){}
+            }
+            else{
+                
+            }
+        
+        }
+        
+        void aggiornaUtilizzoMemoria(Istante nuovoIstante, boolean avanti){
+        
+        }
+        
+        void aggiornaUtilizzoMemoria(LinkedList<Istante> listaNuoviIstanti,
+                                        boolean avanti){
+        
+        }
+        
         /**
          * Aggiorna l'occupazione della RAM e dello Swap.
          */
         private void AggiornaOccupazioni(Istante nuovoIstante, boolean avanti){
             LinkedList<Azione> listaAzioni = nuovoIstante.getCambiamentiInMemoria();
             int numeroAzioniMemoria = 0;
-            //if(listaAzioni!=null)
-              //  numeroAzioniMemoria = listaAzioni.size();
+            if(listaAzioni!=null)
+                numeroAzioniMemoria = listaAzioni.size();
             int i=0;
             Azione azioneCorrente = null;
             if(avanti){ // Istante successivo al corrente
@@ -187,8 +218,13 @@ public class Player{
                     azioneCorrente = listaAzioni.get(i);
                     if(Player.this.config.getModalitaGestioneMemoria()==1)
                         utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
-                    else if(Player.this.config.getModalitaGestioneMemoria()==2)
-                        utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
+                    else if(Player.this.config.getModalitaGestioneMemoria()==2){
+                        utilizzoRAM =0;
+                        for(int j = 0; j < azioneCorrente.getMemoriaRAM().size(); j++){
+                            utilizzoRAM += azioneCorrente.getMemoriaRAM().get(j).getDimensione();
+                        }
+                    }
+//                        utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
                     /*switch(azioneCorrente.getAzione()){
                         case 1: // INSERT RAM
                                 utilizzoRAM += azioneCorrente.getFrame().getDimensione();

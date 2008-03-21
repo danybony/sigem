@@ -195,16 +195,23 @@ public class SiGeMv2View {
     }
     
     /** Disegna le statistiche sulla vista ViewStatistiche */
-    public void visualizzaStatisticheSimulazione(Player player, Istante istante) {
-            if ((views[2]).getComponent() instanceof ViewStatistiche) {
-                    ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
-                    currView.generaStatistiche(player, istante,configurazioneIniziale, processiUltimati);
+    public void visualizzaStatisticheSimulazione(Player player, Istante istante, boolean avanti) {
+            if ((views[2]).getComponent() instanceof ViewStatistiche2) {
+                    ViewStatistiche2 currView = (ViewStatistiche2) views[2].getComponent();
+                    currView.generaStatistiche(player, istante,configurazioneIniziale, processiUltimati, avanti);
             }
-    };
+    }
+    
+    public void azzeraStatisticheSimulazione() {
+            if ((views[2]).getComponent() instanceof ViewStatistiche2) {
+                    ViewStatistiche2 currView = (ViewStatistiche2) views[2].getComponent();
+                    currView.azzeraStatistiche();
+            }
+    }
     
     public void visualizzaSimulazioneTestuale() {
             
-    };
+    }
 
     /**
      * Apre una vista statica. Questo metodo serve per aprire le viste dal menu
@@ -239,7 +246,7 @@ public class SiGeMv2View {
                             new ViewFrameMemoria());
             viewMap.addView(1, views[1]);
             views[2] = new View("Statistiche simulazione", IconStylosoft
-                            .getGeneralIcon("statistiche"), new ViewStatistiche(this));
+                            .getGeneralIcon("statistiche"), new ViewStatistiche2(this));
             viewMap.addView(2, views[2]);
             views[3] = new View("Statistiche Processi", IconStylosoft
                             .getGeneralIcon("statistiche"), new ViewStatistiche(this));
@@ -1115,7 +1122,7 @@ public class SiGeMv2View {
         istante = player.primoIstante();
         processiUltimati = new Vector<Vector<Integer>>();
         processiUltimati.add(0, new Vector<Integer>());
-        aggiornaProcessiTerminati();
+        aggiornaProcessiTerminati(0);
         abilitaTutto();
 
         if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
@@ -1156,7 +1163,8 @@ public class SiGeMv2View {
 
         processiEseguiti = new LinkedList<Processo>();
         visualizzaOrdProcessi(processiEseguiti);
-        visualizzaStatisticheSimulazione(player,istante);
+        azzeraStatisticheSimulazione();
+        visualizzaStatisticheSimulazione(player,istante,true);
     };
         
     /** Istanzia una nuova simulazione */
@@ -1216,7 +1224,7 @@ public class SiGeMv2View {
                     Double t =((Double)scegliVelocita.getValue()).doubleValue();
                     velocita = (int) (t * 10);
                     pcbAttuale = istante.getProcessoInEsecuzione();
-                    aggiornaProcessiTerminati();
+                    aggiornaProcessiTerminati(player.getIndiceIstanteCorrente());
                     if(pcbAttuale==null){
                         processiEseguiti.add(PROC_VUOTO);
                     }    
@@ -1225,7 +1233,7 @@ public class SiGeMv2View {
                     }
                     
                     visualizzaOrdProcessi(processiEseguiti);
-                    visualizzaStatisticheSimulazione(player,istante);
+                    visualizzaStatisticheSimulazione(player,istante,true);
                     try {
                         currView.aggiorna(istante.getCambiamentiInMemoria(),
                                           player.getIndiceIstanteCorrente(),
@@ -1290,7 +1298,8 @@ public class SiGeMv2View {
             istante = player.primoIstante();
             processiEseguiti = new LinkedList<Processo>();
             visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatisticheSimulazione(player,istante);
+            azzeraStatisticheSimulazione();
+            visualizzaStatisticheSimulazione(player,istante,true);
             
             // Svuota l'interfaccia della RAM
             if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
@@ -1378,7 +1387,7 @@ public class SiGeMv2View {
         statoStop = false;
         
         istante = player.primoIstante();
-        aggiornaProcessiTerminati();
+        aggiornaProcessiTerminati(0);
         processiEseguiti = new LinkedList<Processo>();
         
         PCB pcbAttuale;
@@ -1386,7 +1395,8 @@ public class SiGeMv2View {
         pcbAttuale = istante.getProcessoInEsecuzione();
 
         visualizzaOrdProcessi(processiEseguiti);
-        visualizzaStatisticheSimulazione(player,istante);
+        azzeraStatisticheSimulazione();
+        visualizzaStatisticheSimulazione(player,istante,true);
         // Svuota l'interfaccia della RAM
         if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
                 ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
@@ -1437,7 +1447,7 @@ public class SiGeMv2View {
     private void simulazioneIndietro() {
 
         istante = player.istantePrecedente();
-        aggiornaProcessiTerminati();
+        aggiornaProcessiTerminati(player.getIndiceIstanteCorrente());
         
         // Se istante e' null significa che non ho istanti precedenti e
         // quindi metto la simulazione nell'istante 0
@@ -1453,7 +1463,7 @@ public class SiGeMv2View {
         
             processiEseguiti.removeLast();
             visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatisticheSimulazione(player,istante);
+            visualizzaStatisticheSimulazione(player,istante,false);
             try{
                 currView.aggiorna(istante.getCambiamentiInMemoria(),
                                    player.getIndiceIstanteCorrente(),
@@ -1488,7 +1498,7 @@ public class SiGeMv2View {
     private void simulazioneAvanti() { 
             
         istante = player.istanteSuccessivo();
-        aggiornaProcessiTerminati();
+        aggiornaProcessiTerminati(player.getIndiceIstanteCorrente());
         
         if(istante!=null){
             PCB pcbAttuale;
@@ -1504,7 +1514,7 @@ public class SiGeMv2View {
             }
 
             visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatisticheSimulazione(player,istante);
+            visualizzaStatisticheSimulazione(player,istante,true);
             try{
                 currView.aggiorna(istante.getCambiamentiInMemoria(),
                                   player.getIndiceIstanteCorrente(),
@@ -1549,7 +1559,7 @@ public class SiGeMv2View {
         int numeroIstanteCorrente;
         for(int i = 0; i < numeroIstanti; i++){
             istante = istantiAllaFine.get(i);
-            aggiornaProcessiTerminati();
+            aggiornaProcessiTerminati(player.getIndiceIstanteCorrente() - numeroIstanti + i + 1);
             pcbAttuale = istante.getProcessoInEsecuzione();
             if(pcbAttuale==null){
                 processiEseguiti.add(PROC_VUOTO);
@@ -1565,8 +1575,9 @@ public class SiGeMv2View {
             }catch(Exception e){}
         }
         visualizzaOrdProcessi(processiEseguiti);
-        visualizzaStatisticheSimulazione(player,istante);
-        
+        for(int i = 0; i < numeroIstanti; i++){
+            visualizzaStatisticheSimulazione(player,istantiAllaFine.get(i),true);
+        }
         aggiornaComandi();
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
@@ -1626,7 +1637,7 @@ public class SiGeMv2View {
             int numeroIstanteCorrente;
             for(int i = 0 ; i < numeroIstanti; i++){
                 istante = istantiAllEvento.get(i);
-                aggiornaProcessiTerminati();
+                aggiornaProcessiTerminati(player.getIndiceIstanteCorrente() + numeroIstanti - i - 1);
                 processiEseguiti.removeLast();
                 try{
                     numeroIstanteCorrente = (player.getIndiceIstanteCorrente() + numeroIstanti - i - 1);
@@ -1637,8 +1648,10 @@ public class SiGeMv2View {
             }
             
             visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatisticheSimulazione(player,istante);
-
+            for(int i = 0 ; i < numeroIstanti; i++){
+                visualizzaStatisticheSimulazione(player,istantiAllEvento.get(i),false);
+            }
+            
             aggiornaComandi();
             jButtonNuovaConfigurazione.setEnabled(true);
             jButtonApriConfigurazione.setEnabled(true);
@@ -1701,7 +1714,8 @@ public class SiGeMv2View {
             int numeroIstanteCorrente;
             for(int i = 0; i < istantiAllEvento.size(); i++){
                 istante = istantiAllEvento.get(i);
-                aggiornaProcessiTerminati();
+                aggiornaProcessiTerminati(player.getIndiceIstanteCorrente() - numeroIstanti + i + 1);
+                
                 pcbAttuale = istante.getProcessoInEsecuzione();
                 if(pcbAttuale==null){
                     processiEseguiti.add(PROC_VUOTO);
@@ -1718,7 +1732,9 @@ public class SiGeMv2View {
             }
 
             visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatisticheSimulazione(player,istante);
+            for(int i = 0; i < istantiAllEvento.size(); i++){
+                visualizzaStatisticheSimulazione(player,istantiAllEvento.get(i),true);
+            }
 
             aggiornaComandi();
             jButtonNuovaConfigurazione.setEnabled(true);
@@ -1860,23 +1876,32 @@ public class SiGeMv2View {
         configurazioneAmbiente.setVisible(true);
     }
     
-    public void aggiornaProcessiTerminati(){
+    public void aggiornaProcessiTerminati(int numeroIstante){
         //Aggiorno, se necessario, lo storico dei processi ultimati
-        int numeroIstante = player.getIndiceIstanteCorrente();
-        LinkedList<Azione> cambiamentiInMemoria = istante.getCambiamentiInMemoria();
-        if(numeroIstante >= processiUltimati.size()){
-            processiUltimati.add(new Vector(processiUltimati.get(numeroIstante-1)));
-            if(cambiamentiInMemoria==null) return;
-            int processoUltimato=-2;
-            for(int i=0;i<cambiamentiInMemoria.size();i++){
-                if (cambiamentiInMemoria.get(i).getAzione()==6){
-                    processoUltimato=cambiamentiInMemoria.get(i).getPosizione();
+        if(istante!=null){
+            LinkedList<Azione> cambiamentiInMemoria = istante.getCambiamentiInMemoria();
+            if(numeroIstante >= processiUltimati.size()){
+                processiUltimati.add(new Vector(processiUltimati.get(numeroIstante-1)));
+                if(cambiamentiInMemoria==null) return;
+                int processoUltimato=-2;
+                for(int i=0;i<cambiamentiInMemoria.size();i++){
+                    if (cambiamentiInMemoria.get(i).getAzione()==6){
+                        processoUltimato=cambiamentiInMemoria.get(i).getPosizione();
+                    }
+                }
+                if(processoUltimato!=-2){
+                    processiUltimati.get(numeroIstante).add(new Integer(processoUltimato));
                 }
             }
-            if(processoUltimato!=-2){
-                processiUltimati.get(numeroIstante).add(new Integer(processoUltimato));
-            }
         }
+        
+        /*for(int i=0; i < processiUltimati.size(); i++){
+            System.out.print("Istante" + i +": ");
+            for (int j=0; j<processiUltimati.get(i).size();j++){
+                System.out.print(processiUltimati.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }*/
            
     }
 
