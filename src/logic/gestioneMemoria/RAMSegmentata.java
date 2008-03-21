@@ -75,7 +75,7 @@ public class RAMSegmentata extends MemoriaSegmentata{
         else{
             memoria.remove(pos+1);
         }
-        spazioRimasto-=seg.getDimensione();
+        spazioResiduo-=seg.getDimensione();
         
         return pos;
     }
@@ -98,7 +98,7 @@ public class RAMSegmentata extends MemoriaSegmentata{
         spazioResiduo+=seg.getDimensione();
         
         /**Aggiungo uno spazio grande quanto il segmento tolto*/
-        memoria.add(new Segmento("spazio",seg.getDimensione(),-1));
+        memoria.add(pos, new Segmento("spazio",seg.getDimensione(),-1));
         
         /**Sfruttando la posizione del segmento appena tolto, compatto eventuali
          * spazi liberi adiacenti*/
