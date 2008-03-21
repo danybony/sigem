@@ -746,6 +746,12 @@ public class SiGeMv2View {
             helpMenu.addSeparator();
             helpMenu.add(InfoSu);
             
+            mniHelp.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            new Guida().setVisible(true);
+                        }
+                    });
+            
             InfoSu.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             new About(frame,true).setVisible(true);
