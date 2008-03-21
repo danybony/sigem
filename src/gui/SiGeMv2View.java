@@ -3,13 +3,23 @@
  * Nome file: SiGeMv2View
  * Package: gui
  * Autore: Cariani Giordano
- * Data: 04/03/2008
- * Versione: 1.2
+ * Data: 21/03/2008
+ * Versione: 1.8
  * Licenza: open-source
  * Registro delle modifiche:
- * - v.1.2 (05/03/2008): implementazione di Player
- * - v.1.1 (02/03/2008): Create le 3 finestre e inizializzazione grafico processi (dopo wizard)
- * - v.1.0 (01/03/2008): Creato scheletro interfaccia grafica
+ * - v 1.9 (18/03/2008): creazione dei metodi per impostare una configurazione
+ *                       di default
+ * - v 1.8 (16/03/2008): collegamento alla guida
+ * - v 1.7 (15/03/2008): preparazione dell'interfaccia per ospitare la modalita'
+ *                       testuale e il riepilogo della configurazione
+ * - v 1.6 (13/03/2008): interfacciamento con il frame delle statistiche
+ * - v 1.5 (10/03/2008): creazione delle funzioni per l'appertura e il salvataggio
+ *                       di una configurazione su file
+ * - v 1.4 (08/03/2008): integrazione della visualizzazione della memoria
+ * - v 1.3 (07/03/2008): ottimizzazione della gestione dei tasti del player
+ * - v 1.2 (05/03/2008): integrazione del Player
+ * - v 1.1 (02/03/2008): Create le 3 finestre e inizializzazione grafico processi (dopo wizard)
+ * - v 1.0 (01/03/2008): Creato scheletro interfaccia grafica
  * */
 
 package gui;
@@ -735,6 +745,12 @@ public class SiGeMv2View {
             helpMenu.add(mniHelp);
             helpMenu.addSeparator();
             helpMenu.add(InfoSu);
+            
+            InfoSu.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            new About(frame,true).setVisible(true);
+                        }
+                    });
             return helpMenu;
     }
 
