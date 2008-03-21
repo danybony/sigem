@@ -162,59 +162,58 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         
         LinkedList<Azione> Azioni=new LinkedList();
         Iterator<FrameMemoria> I=ListaSegmenti.iterator();
-        /*
+        
         int dimensione_totale_inserimento=0;
+        /* calcolo lo spazio necessario per inserite tutti i segmenti in questo istante */
         while( I.hasNext() ) {
             dimensione_totale_inserimento+=I.next().getDimensione();
         }
-        //if ( dimensione_totale_inserimento > 0 )
+        /* rimuovo i segmenti fino a liberare abbastanza spazio */
         boolean Errore=false;
-        while ( MemoriaRam.getSpazioMaggiore().getDimensione() < dimensione_totale_inserimento && !Errore) {
-                    // rimuovo tutti i segmenti che mi servono
+        if ( dimensione_totale_inserimento > 0 ) {  
+            while ( MemoriaRam.getSpazioMaggiore().getDimensione() < dimensione_totale_inserimento && !Errore) {
+                
+                Azioni.add( new Azione(MemoriaRam.getSituazione(),0,null) );
+                
+                FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
+                Azioni.add( new Azione(MemoriaRam.getSituazione(),3, FrameRimosso, MemoriaRam.indiceDi(FrameRimosso) ) );
+                
+                if ( FrameRimosso.getModifica()==true ) {                                                        
+                    try { 
+                          Inserisci( MemoriaSwap, FrameRimosso );
+                          Azioni.add( new Azione(MemoriaRam.getSituazione(),2, FrameRimosso ) );
+                    }
+                    catch ( MemoriaEsaurita SwapEsaurita ) {
+                        Azioni.add( new Azione(MemoriaRam.getSituazione(),-1,null) );
+                        Errore=true;
+                    }
 
                 }
-        
-        
+
+            }
+        }
+        /*Errore perchè non ho sufficiente spazio in swap*/
+        if (Errore==true) return Azioni;
         
         I=ListaSegmenti.iterator();
-        */
-        boolean Errore=false;
-        while( I.hasNext() && !Errore ) {
+                
+        while( I.hasNext()  ) {
             
             FrameMemoria F=I.next();
             ((Segmento)F).setTempoInRAM(UT);
             
             if ( !MemoriaRam.cerca(F) ) {
+                
                 FrameMemoria Temp=Rimuovi( MemoriaSwap, F );
                 if (Temp!=null) Azioni.add( new Azione(MemoriaRam.getSituazione(),4, Temp) );
-                /* non devo rimuovere un segmento che mi serve in ram */    
-                while ( MemoriaRam.getSpazioMaggiore().getDimensione() /*errore senza compattamento dei buchi*/
-                         < F.getDimensione() && !Errore ) {
-                    Azioni.add( new Azione(MemoriaRam.getSituazione(),0,null) );
-                    FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
-                    Azioni.add( new Azione(MemoriaRam.getSituazione(),3, FrameRimosso, MemoriaRam.indiceDi(FrameRimosso) ) );
-                    if ( FrameRimosso.getModifica()==true ) {                                                        
-                        try { 
-                              Inserisci( MemoriaSwap, FrameRimosso );
-                              Azioni.add( new Azione(MemoriaRam.getSituazione(),2, FrameRimosso ) );
-                        }
-                        catch ( MemoriaEsaurita SwapEsaurita ) {
-                            Azioni.add( new Azione(MemoriaRam.getSituazione(),-1,null) );
-                            Errore=true;
-                        }
-
-                    }
+                               
+                try {
+                    int posizione=Inserisci( MemoriaRam, F );
+                    Azioni.add( new Azione(MemoriaRam.getSituazione(),1, F, posizione ) ); 
 
                 }
-                if ( Errore==false ) 
-                    try {
-                        int posizione=Inserisci( MemoriaRam, F );
-                        Azioni.add( new Azione(MemoriaRam.getSituazione(),1, F, posizione ) ); 
-
-                    }
-                    catch ( MemoriaEsaurita Impossibile ) { Errore=true; }
-                
-   
+                catch ( MemoriaEsaurita Impossibile ) { /* Situazione mai realizzabile */ }
+                   
             }
             else Azioni.add( new Azione(MemoriaRam.getSituazione(),5, F, MemoriaRam.indiceDi(F) ) );
         }
