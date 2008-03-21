@@ -1810,8 +1810,10 @@ public class SiGeMv2View {
                 frame.setTitle(file.getName() + " - SiGeM StyloSoft");
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(rootWindow, "File di configurazione non valido","Errore",JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
             } catch (ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(rootWindow, "File di configurazione non valido","Errore",JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
             }
         }
     }
