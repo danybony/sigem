@@ -19,6 +19,7 @@ package gui.dialog;
  * DragListDemo.java example.
  */
 
+import gui.dialog.AssociazioneProcessiJDialog.FrameModifica;
 import java.util.*;
 import java.io.*;
 import java.awt.*;
@@ -113,10 +114,18 @@ public class ArrayListTransferHandler extends TransferHandler {
             int spazioOccupato = 0;
             hit=false;
             for(int j = 0; j< listModel.getSize(); j++){
-                spazioOccupato += ((FrameMemoria)listModel.getElementAt(j)).getDimensione();
-                if((listModel.getElementAt(j)).equals(alist.get(i))){
-                    hit = true;
-                }                    
+                if(listModel.getElementAt(j) instanceof FrameMemoria){
+                    spazioOccupato += ((FrameMemoria)listModel.getElementAt(j)).getDimensione();
+                    if((listModel.getElementAt(j)).equals(alist.get(i))){
+                         hit = true;
+                    }
+                }
+                else{
+                    spazioOccupato += ((FrameModifica)listModel.getElementAt(j)).frame.getDimensione();
+                    if(((FrameModifica)listModel.getElementAt(j)).frame.equals(alist.get(i))){
+                         hit = true;
+                    }
+                }                   
             }
             if(!hit){
                 if(spazioOccupato+((FrameMemoria)alist.get(i)).getDimensione() <= dimensioneRAM){

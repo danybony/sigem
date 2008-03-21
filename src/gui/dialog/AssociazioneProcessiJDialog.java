@@ -22,6 +22,8 @@ import gui.SiGeMv2View;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
@@ -29,7 +31,9 @@ import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import logic.gestioneMemoria.FrameMemoria;
@@ -52,6 +56,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     private Vector<DefaultListModel> listModels = new Vector<DefaultListModel>();
             
     private ArrayListTransferHandler arrayListHandler;
+    
+    JPopupMenu menu;
+    JMenuItem menuItemElimina, menuItemModifica;
     
     /**
      * Modello per la lista delle pagine
@@ -77,6 +84,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         } 
         
         initComponents();
+        creaMenu();
         
         if (politica.getGestioneMemoria() == 1){
             jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI - PAGINE");
@@ -96,11 +104,71 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             modelliListaFrame.add(new DefaultListModel());
         }          
         
+        /* Imposto la lista dei FrameMemoria di destra */
         listaFrameModel = modelliListaFrame.get(0);
         jListFrame.setModel(listaFrameModel);
         jListFrame.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jListFrame.setTransferHandler(arrayListHandler);
         jListFrame.setDragEnabled(true);
+        
+        
+    }
+    class FrameModifica{
+        FrameMemoria frame;
+        FrameModifica(FrameMemoria frame){
+            this.frame = frame;
+        }
+        @Override
+        public String toString() {
+		return frame.toString();
+	} 
+    }
+
+    /**
+     * Metodo incaricato di creare il menu che apparira' nelle varie JList con 
+     * il click destro.
+     */
+    private void creaMenu() {   
+        /* Crea il menu i i suoi item */
+        menu = new JPopupMenu();
+        menu.add(menuItemElimina= new JMenuItem("Elimina"));
+        menu.add(new JPopupMenu.Separator());
+        menu.add(menuItemModifica = new JMenuItem("Modifica"));
+        menu.pack();
+        
+        /* Crea un actionListner per i due item del menu */
+        ActionListener menuListner = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+               JList lista = ((JList)((JPopupMenu)((JMenuItem)e.getSource()).
+                                    getParent()).getInvoker());
+               
+               if (e.getSource() == menuItemElimina) {                   
+                     // Elimina il frameMemoria selezionato                   
+                     int index = lista.getSelectedIndex();
+                     int idLista = Integer.parseInt(lista.getName());
+                     listModels.get(idLista).remove(index);                 
+                }
+               else {
+                     // Modifica
+                     int index = lista.getSelectedIndex();
+                     int idLista = Integer.parseInt(lista.getName());
+                     if (listModels.get(idLista).get(index) instanceof FrameMemoria){
+                         FrameMemoria frameSelezionato = (FrameMemoria) listModels.get(idLista).get(index);
+                         listModels.get(idLista).setElementAt(new FrameModifica(frameSelezionato), index);
+                     }
+                     else{
+                         FrameMemoria frameSelezionato = ((FrameModifica) listModels.get(idLista).get(index)).frame;
+                         listModels.get(idLista).setElementAt(frameSelezionato, index);
+                     
+                     }
+                }
+            }
+        };
+        
+        /* Associa il listner agli item del menu */
+        menuItemElimina.addActionListener(menuListner);
+        menuItemModifica.addActionListener(menuListner);
     }
     
     /** This method is called from within the constructor to
@@ -387,11 +455,19 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             
                 for(int elemento = 0; elemento < modello.size(); elemento++){
 
-                    if(((FrameMemoria)modello.get(elemento)).getIndirizzo().
-                            equals(indirizzo)){
-                        modello.removeElementAt(elemento);
+                    if(modello.get(elemento) instanceof FrameMemoria){
+                        if(((FrameMemoria)modello.get(elemento)).getIndirizzo().
+                                equals(indirizzo)){
+                            modello.removeElementAt(elemento);
+                        }
                     }
-                
+                    else{
+                        if(((FrameModifica)modello.get(elemento)).frame.getIndirizzo().
+                                equals(indirizzo)){
+                            modello.removeElementAt(elemento);
+                        }
+                    }
+                    
                 }
                 
             }
@@ -437,12 +513,25 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             
             for(int elemento = 0; elemento < modello.size(); elemento++){
                 
-                if(((Segmento)modello.get(elemento)).getIndirizzo().equals(segmentoSelezionato.getIndirizzo())){
-                    presente = true;
+                if(modello.get(elemento) instanceof Segmento){
+                    if(((Segmento)modello.get(elemento)).getIndirizzo().
+                            equals(segmentoSelezionato.getIndirizzo())){
+                        presente = true;
+                    }
+                    else{
+                        spazioLibero -= ((Segmento)modello.get(elemento)).getDimensione();
+                    }    
                 }
                 else{
-                    spazioLibero -= ((Segmento)modello.get(elemento)).getDimensione();
+                    if(((FrameModifica)modello.get(elemento)).frame.getIndirizzo().
+                            equals(segmentoSelezionato.getIndirizzo())){
+                        presente = true;
+                    }
+                    else{
+                        spazioLibero -= ((FrameModifica)modello.get(elemento)).frame.getDimensione();
+                    } 
                 }
+                
                 
             }
             
@@ -528,16 +617,32 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             
             /* Per ogni lista creo un mouseListner */
             list1.addMouseListener(new MouseAdapter() {
-                 public void mouseClicked(MouseEvent e) {                     
-                     if (e.getButton() == MouseEvent.BUTTON1) {
-                         JList lista =((JList)e.getComponent());
-                         int index = lista.getSelectedIndex();
-                         if(index != -1){
+                @Override
+                 public void mouseClicked(MouseEvent e) { 
+                     /* Rende visibile il menu alle coordinate attuali del mouse */
+                     JList lista =((JList)e.getComponent());
+                     if (e.getButton() == MouseEvent.BUTTON3) {
+                         if(!lista.isSelectionEmpty()
+                         && lista.locationToIndex(e.getPoint())
+                         == lista.getSelectedIndex()){
+                            int index = lista.getSelectedIndex();
                             int idLista = Integer.parseInt(lista.getName());
-                            listModels.get(idLista).remove(index);
-                         }
-                         
+                            if (listModels.get(idLista).get(index) instanceof FrameMemoria){
+                                menuItemModifica.setText("Modificato in questo istante");
+                            }
+                            else{
+                                menuItemModifica.setText("Non modificato in questo istante");
+                            }
+                            menu.show(lista, e.getX(), e.getY());
+                         }                         
                       }
+                 }
+                @Override
+                 public void mouseExited(MouseEvent e){
+                     if(!menu.isVisible()){
+                         JList lista =((JList)e.getComponent());
+                         lista.clearSelection();
+                     }                     
                  }
              });   
             
@@ -618,14 +723,27 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 
                 /* Per ogni FrameMemoria dell'istante crea l'Accesso */
                 for (int frame = 0; frame < listModels.get(indiceModello).size(); frame++){
-                     
-                    FrameMemoria frameAttuale = (FrameMemoria) listModels.get(indiceModello).get(frame);
+                    
+                    boolean modifica = false;
+                    
+                    FrameMemoria frameAttuale;
+                    
+                    if(listModels.get(indiceModello).get(frame) instanceof FrameModifica){
+                        
+                        modifica = true;
+                        frameAttuale = ((FrameModifica) listModels.get(indiceModello).get(frame)).frame;
+                    
+                    }
+                    else{
+                        frameAttuale = (FrameMemoria) listModels.get(indiceModello).get(frame);
+                    }
+                    
                     
                     if(frameAttuale != null){
                         
                         frameAttuale.setIdProcesso(processoAttuale.getId());
                         
-                        processoAttuale.richiestaFrameMemoria(frameAttuale, istante);
+                        processoAttuale.richiestaFrameMemoria(frameAttuale, istante, modifica);
                         
                      }
                     

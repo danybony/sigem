@@ -387,7 +387,13 @@ public class Processore {
             
             if((frameTotali.get(i)).getIstanteRichiesta() == istanteCorrente){
                 
-                frameNecessari.add((frameTotali.get(i)).getRisorsa());
+                /* Controlla se il frame debba essere modificato in questo 
+                 istante */
+                FrameMemoria frame = (frameTotali.get(i)).getRisorsa();
+                if(frameTotali.get(i).getModifica()){
+                    frame.setModifica(true);
+                }
+                frameNecessari.add(frame);
             
             }                
         

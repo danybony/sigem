@@ -54,7 +54,22 @@ public class Processo implements Serializable {
                 public int getIstanteRichiesta() {
                         return istanteRichiesta;
                 }
+                
+                /**
+                 * Specifica se il FrameMemoria debba essere modificato nell'istante 
+                 * della richiesta
+                 */
+                private boolean modifica = false;
 
+                /**
+                 * Metodo che ritorna il valore di modifica
+                 * 
+                 * @return Specifica se il FrameMemoria venga modificato nell'istante 
+                 *         di richiesta
+                 */
+                public boolean getModifica(){
+                    return modifica;
+                }
 
                 /**
                  * Campo dati contenente il FrameMemoria a cui la richiesta d'accesso si
@@ -85,6 +100,25 @@ public class Processo implements Serializable {
                 public Accesso(FrameMemoria frame, int istanteRichiesta) {
                         this.frame = frame;
                         this.istanteRichiesta = istanteRichiesta;
+                }                
+                
+                /**
+                 * Costruttore che si occupa di creare un oggetto rappresentante tutte le
+                 * informazioni che riguardano una richiesta d'accesso ad un FrameMemoria 
+                 * da parte di un processo che andra' a contenerlo.
+                 * 
+                 * @param frame
+                 *            Il FrameMemoria a cui il processo richiede di poter accedere
+                 * @param istanteRichiesta
+                 *            L'istante di tempo in cui la richiesta d'accesso deve essere
+                 *            effettuata.
+                 * @param modifica 
+                 *            Specifica se il frame sarà modificato nell'istante della richiesta
+                 */
+                public Accesso(FrameMemoria frame, int istanteRichiesta, boolean modifica){
+                    this.frame = frame;
+                    this.istanteRichiesta = istanteRichiesta;
+                    this.modifica = modifica;
                 }
 
 
@@ -134,11 +168,14 @@ public class Processo implements Serializable {
 	 * @param richiesta
 	 *            istante di esecuzione in cui avviene al richiesta di accesso
 	 *            al FrameMemoria	 
-	 * @return true se l'inserimento ha successo, false altrimenti.
+         * @param modifica 
+         *            indica se all'istante della richiesta la pagina venga modificata 
+         *            dal processo
+         * @return true se l'inserimento ha successo, false altrimenti.
 	 */
         
-	public boolean richiestaFrameMemoria(FrameMemoria frame, int richiesta) {
-		Accesso accesso = new Accesso(frame, richiesta);
+	public boolean richiestaFrameMemoria(FrameMemoria frame, int richiesta, boolean modifica) {
+		Accesso accesso = new Accesso(frame, richiesta, modifica);
 		for (int i = 0; i < accessi.size(); i++) {
 			/*
 			 * Controllo di mantenere l'ArrayList ordianto per istante di
@@ -219,6 +256,7 @@ public class Processo implements Serializable {
 	 *            il processo da confrontare.
 	 * @return Ritorna true se due processi sono uguali false altrimenti.
 	 */
+        @Override
 	public boolean equals(Object processo) {
 		Processo proc;
 		/*
@@ -251,6 +289,7 @@ public class Processo implements Serializable {
 	 * 
 	 * @return Ritorna il nome del processo.
 	 */
+        @Override
 	public String toString() {
 		return this.nome;
 	}
