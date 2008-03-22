@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it"><head>
+
+
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+
+	
+	<style type="text/css" title="currentStyle" media="screen">
+		@import "pagina_files/205.css";
+	</style>
+
+<div id="container">
+  	<div id="intro">
+  		<div id="quickSummary">
+  			<p class="p2"><span><a href="http://stylosoft.altervista.org" title="Sito Web">stylosoft.altervista.org</a></span></p>
+		</div>
+		
+	</div>
+	<div id="supportingText">
+		<div id="explanation">
+			<h3><span><a name="Intro">Introduzione</a></span></h3>
+			<p class="p1"><span>
+                        Ciao e benvenuto! Se stai leggendo ora queste pagine significa che sei interessato al nostro
+                        sistema software di simulazione <acronym title="Simulatore Gestione Memoria">SiGeM</acronym>.
+                        Ti ringraziamo quindi e ti invitiamo a scriverci o visitare il nostro sito web facendo
+                        riferimento alle informazioni che trovi sul menu a lato. Non dimenticare di comunicare i problemi
+                        nell'utilizzo di questo software e/o miglioramenti che vorresti ricevere,
+                        seguendo le informazioni sulle problematiche.
+                        Puoi passare ora al prossimo passo per imparare ad utilizzare l'interfaccia.
+                        </span></p>
+                        
+                        <h3><span><a name="Avvio">Istruzioni per l'avvio</a></span></h3>
+			<p class="p1"><span>
+                        Per quanto riguarda l'avvio del programma dovrai semplicemente fare un doppio click con il mouse sul
+                        file jar che hai in tuo possesso, o alternativamente da linea di comando digitare
+                        "java -jar SiGeM.jar". Se ti trovi in un ambiente Unix/Linux dovrai eseguire lo script in allegato,
+                        affinchè tutto funzioni correttamente.
+                        <div class="image">
+                        <img src="pagina_files/img/avvio.jpg"></img></div></span></p>
+
+                        <h3><span><a name="Panoramica">Panoramica del prodotto</a></span></h3>
+			<p class="p1"><span>
+                        Ecco come si presenta l'interfaccia di <acronym title="Simulatore Gestione Memoria">SiGeM</acronym>.
+                        Nella parte in alto hai la barra dei menu, con la quale hai accesso a tutte le funzionalità.
+                        Essa è composta dal menu File con il quale puoi iniziare, aprire, salvare una nuova simulazione, 
+                        nonchè uscire dal programma.
+                        Nel menu Simulazione si trovano tutti i controlli con i quali puoi avviare, avanzare, riavvolgere una simulazione.
+                        Nel menu Help infine trovi un collegamento alla guida, e varie informazioni sul programma.
+                        La barra immediatamente sotto si chiama barra dei comandi, e ti permette sostanzialmente di avere un approcio più
+                        intuitivo col programma. Infatti potrai eseguire tutte le funzioni semplicemente cliccando sui pulsanti.
+                        <ul>
+                         <li>Il pulsante 1 crea una nuova simulazione.</li>
+                         <li>Il pulsante 2 apre una simulazione già salvata.</li>
+                         <li>Il pulsante 3 salva una simulazione.</li>
+                         <li>Il pulsante 4 modifica una simulazione.</li>
+                         <li>Il pulsante 5 avvia la simulazione con avanzamento automatico.</li>
+                         <li>Il pulsante 6 ferma la simulazione in un certo istante.</li>
+                         <li>Il pulsante 7 arresta la simulazione.</li>
+                         <li>Il pulsante 8 porta la simulazione allo stato iniziale.</li>
+                         <li>Il pulsante 9 porta la simulazione all'istante precedente.</li>
+                         <li>Il pulsante 10 porta la simulazione all'istante seguente.</li>
+                         <li>Il pulsante 11 porta la simulazione allo stato finale.</li>
+                         <li>Il pulsante 12 porta la simulazione all'istante significatico precedente.</li>
+                         <li>Il pulsante 13 imposta l'evento significativo.</li>
+                         <li>Il pulsante 14 porta la simulazione all'istante significatico seguente.</li>
+                         <li>Il pulsante 15 imposta la velocità di avanzamento.</li>
+                        </ul>
+                        Infine avrai a disposizione tre finestre indipendenti e modificabili a piacimento
+                        con le quali potrai visualizzare i risultati nel layout da te impostato.
+                        La prima finestra visualizza in un grafico l'avanzamento temporale e l'alternanza dei processi.
+                        Le seconda rappresenta invece lo stato della memoria ad un certo istante.
+                        Nella terza verranno mostrate tutte le statistiche sottoforma testuale.
+                        <div class="image">
+                        <img src="pagina_files/img/panoramica.jpg"></img></div></span></p>
+
+                        <h3><span><a name="Creazione">Creazione di una nuova simulazione</a></span></h3>
+			<p class="p1"><span>
+                        Per iniziare premi il pulsante 1 evidenziato
+                        nella figura, oppure seleziona Nuova Configurazione dal menu File.
+                        <div class="image"><img src="pagina_files/img/crea1.jpg" alt="Figura 3.1" ></img>
+                        <img src="pagina_files/img/crea2.jpg" alt="Figura 3.1" ></img></div></span></p>
+                        
+                        <h3><span><a name="Passo1">Passo 1</a></span></h3>
+			<p class="p1"><span>
+                        Ti apparirà quindi una finestra nella quale dovrai inserire i campi richiesti.
+                        <ul>
+                         <li>Numero di processi da 1 a 20.</li>
+                         <li>Dimensione della RAM in KB.</li>
+                         <li>Dimensione dell'area di Swap in KB.</li>
+                         <li>Dimensione della pagina in KB.</li>
+                         <li>Tempo del cambio di contesto da un processo all'altro in ms.</li>
+                         <li>Tempo di accesso al disco in ms.</li>
+                         <li>Banda del bus dati del sistema.</li>
+                        </ul>
+                        Dopo aver completato prosegui premendo Avanti.
+                        <div class="image"><img src="pagina_files/img/passo1.jpg"></img></div></span></p>
+                        
+                        <h3><span><a name="Passo2">Passo 2</a></span></h3>
+			<p class="p1"><span>
+                        In questa finestra dovrai dapprima impostare la tecnica di gestione della memoria,
+                        successivamente la politica di rimpiazzo delle pagine se hai scelto paginazione, altrimenti
+                        la politica di allocazione dei segmenti. Infine dovrai scegliere con che politica i processi
+                        saranno schedulati.
+                        Dopo aver completato prosegui premendo Avanti.
+                        Oppure torna al passo precedente premendo Indietro.
+                        <div class="image"><img src="pagina_files/img/passo2.jpg"></img></div></span></p>
+                        
+                        <h3><span><a name="Passo3">Passo 3</a></span></h3>
+			<p class="p1"><span>
+                        Questo passo riguarda esclusivamente i processi.
+                        Qui hai la possibilità di impostare i parametri dei processi, quali nome,
+                        istante di arrivo e tempo di esecuzione. Il numero di processi è corrispondente
+                        a quello impostato al Passo 1.
+                        Dopo aver completato prosegui premendo Avanti.
+                        Oppure torna al passo precedente premendo Indietro.
+                        <div class="image"><img src="pagina_files/img/passo3.jpg"></img></div></span></p>
+
+                        <h3><span><a name="Passo4">Passo 4</a></span></h3>
+			<p class="p1"><span>
+                        In questa ultima fase dovrai associare le pagine o segmenti ad ogni processo per ogni suo istante.
+                        Avrai a disposizione a sinistra un pannello a schede, dove ogni scheda identifica
+                        il processo in questione. Dentro ogni scheda ci saranno tante caselle rettangolari quante saranno le unità di 
+                        tempo di esecuzione del processo, nelle quali dovrai trascinare con il mouse le pagine o segmenti che creerai 
+                        con il menu a destra. Per rimuovere una pagina o segmento associato ad un certo istante, è necessario cliccarci sopra.
+                        Il menu a destra appunto ti permette di creare e eliminare le pagine o segmenti affinchè tu
+                        le possa associare ai processi.
+                        Dopo aver completato prosegui premendo OK.
+                        Oppure torna al passo precedente premendo Indietro.
+                        <div class="image"><img src="pagina_files/img/passo4.jpg"></img></div>
+                        </span></p>
+
+                        <h3><span><a name="Salvataggio">Salvataggio di una simulazione</a></span></h3>
+			<p class="p1"><span>
+                        Per salvare una simulazione è sufficiente premere sul pulsante 3, oppure selezionare la voce Salva
+                        dal menu File. Nel caso di primo salvataggio sarà necessario specificare il nome del file in cui salvare,
+                        altrimenti si assumerà il nome dell'ultimo salvataggio. Nel caso si volesse cambiare il nome, è sufficiente
+                        selezionere Salva con nome dal menu File, e specificare il nuovo nome. 
+                        <div class="image"><img src="pagina_files/img/salva.jpg"></img></div></span></p>
+
+                        <h3><span><a name="Caricamento">Caricamento di una simulazione</a></span></h3>
+			<p class="p1"><span>
+                        Per caricare una simulazione salvata è sufficiente premere il pulsante 2, oppure selezionare la
+                        voce Apri Configurazione dal menu File. Aquesto punto basterà selezionare il file sul quale si erano effettuati i salvataggi
+                         e premere Apri.
+                         <div class="image"><img src="pagina_files/img/carica.jpg"></img></div></span></p>
+
+                        <h3><span><a name="Visualizzazione">Visualizzazione di una simulazione</a></span></h3>
+			<p class="p1"><span>
+                        Dopo aver creato o caricato una simulazione, potrai eseguirla semplicemente premendo il pulsante 5 o selezionando
+                        la voce corrispondente dal menu Simulazione. Potrai utilizzare inoltre tutti gli altri tasti da 6 a 14 per avanzare
+                        o retrocedere nel tempo intelligentemente secondo le tue esigenze. Nel caso volessi velocizzare o rallentare la simulazione
+                        in avanzamento automatico dovrai utilizzare il pulsante 15.
+                        <div class="image"><img src="pagina_files/img/visual.jpg"></img></div>
+                        </span></p>
+
+                        <h3><span><a name="Requisiti">Requisiti</a></span></h3>
+			<p class="p1"><span>
+                        Non sono necessarie particolari risorse hardware, pertanto se possiedi
+                        un comune sistema con una delle piattaforme sottostanti non avrai problemi di funzionamento.
+                        Questo programma è stato testato sulle seguenti piattaforme:
+                        <ul>
+                         <li>Microsoft Windows NT</li>
+                         <li>Mac OSX 10.4.X</li>
+                         <li>Linux/Unix</li>
+                        </ul>
+                        Affinchè il programma funzioni correttamente avrai bisogno:
+                        <ul>
+                         <li><acronym title="Java Virtual Machine">JVM</acronym> versione 6 o superiore dal sito di riferimento <a href="http://www.java.com/">java.com</a></li>
+                         <li>Browser Web preferibilmente con supporto XHTML 1.0 e <acronym title="Cascading Style Sheets versione 2">CSS2</acronym></li>
+                        </ul>
+                        </span></p>
+				
+				<h3><span><a name="Errori">Messaggi di errore e loro significato</a></span></h3>
+			<p class="p1"><span>
+                        E' possibile il manifestarsi di errori, soprattutto nella fase di avvio del programma. 
+                        Questi sono principalmente dovuti all'assenza della Java Virtual Machine,
+                        contenuta nel pacchetto Sun Java Runtime Environment, o di una Java Virtual Machine.
+                        Benché la procedura di inserimento dei dati per la creazione di una nuova configurazione 
+                        sia realizzata in modo da minimizzare la possibilità di errori da parte dell'utente,
+                        possono comunque sorgere problemi, qui elencati con la relativa spiegazione.
+                        <ol>
+                         <li>Al caricamento di una configurazione esistente viene segnalato “File non compatibile”.</li>
+                         <li>Al Passo 3 del wizard di configurazione viene segnalato “Valore inserito non valido”.</li>
+                         <li>Al Passo 3 del wizard di configurazione viene segnalato “Nome di processo duplicato”.</li>
+                        </ol>
+                        Soluzioni:
+                        <ol>
+                         <li>Il file selezionato non contiene una configurazione valida per il programma SiGem da noi realizzato</li>
+                         <li>Si è cercato di immettere un valore non valido in un campo relativo al tempo di arrivo o al tempo di esecuzione di un processo. Si ricorda che sono possibili solo valori interi positivi</li>
+                         <li>Si è cercato di impostare lo stesso nome per due processi distinti. E' necessario che ogni processo abbia un nome univoco</li>
+                        </ol>
+                        </span></p>
+		</div>
+	</div>
+	<div id="linkList">
+		<div id="linkList2">
+			<div id="lselect">
+				<h3 class="select"></h3>
+				<ul>
+					<li><a href="#Introduzione" accesskey="a">Introduzione</a></li>
+					<li><a href="#Avvio" accesskey="b">Avvio</a></li>
+					<li><a href="#Panoramica" accesskey="c">Panoramica</a></li>
+					<li><a href="#Creazione" accesskey="d">Creazione</a></li>
+                                        <li><a href="#Passo1" accesskey="e">Passo 1</a></li>
+					<li><a href="#Passo2" accesskey="f">Passo 2</a></li>
+					<li><a href="#Passo3" accesskey="g">Passo 3</a></li>
+					<li><a href="#Passo4" accesskey="h">Passo 4</a></li>
+					<li><a href="#Salvataggio" accesskey="h">Salvataggio</a></li>
+					<li><a href="#Caricamento" accesskey="i">Caricamento</a></li>
+					<li><a href="#Visualizzazione" accesskey="l">Visualizzazione</a></li>
+					<li><a href="#Requisiti" accesskey="m">Requisiti</a></li>
+                                        <li><a href="#Errori" accesskey="n">Errori</a></li>
+				</ul>
+			</div>
+
+			<div id="larchives">
+				<h3 class="archives"></h3>
+				<ul>
+					<li><a href="mailto:stylosoft@gmail.com" title="Indirizzo email" accesskey="m">stylosoft@gmail.com</a></li>
+				</ul>
+			</div>
+			
+			
+		</div>
+	</div>
+
+
+</div>
+
+
+</body></html>
