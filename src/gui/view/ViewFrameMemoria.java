@@ -4,9 +4,11 @@
  * Package: gui.dialog
  * Autore: Alberto Zatton
  * Data: 02/03/2008
- * Versione: 1.3
+ * Versione: 1.4
  * Licenza: open-source
  * Registro delle modifiche: 
+ *  - v.1.4 (22/03/2008): Adattata la funzione aggiungi(): ora ai suoi parametri
+ *                        viene passata direttamente la situazione della memoria.
  *  - v.1.3 (19/03/2008): Rivisto ampiamente il codice. Ora la classe estende un
  *                        JScrollPane per attivare lo scroll, completamente
  *                        cambiate le modalità di disegno della memoria, nuova
@@ -196,7 +198,7 @@ public class ViewFrameMemoria extends JScrollPane {
      * @throws Exception
      *      Lancia un'eccezione nel caso in cui la memoria non sia ancora stata configurata
      */
-    public void aggiorna(LinkedList<Azione> cambiamentiInMemoria, int istante, Vector<Vector<Integer>> processiUltimati) throws Exception{
+    public void aggiorna(Vector<FrameMemoria> memoria, int istante, Vector<Vector<Integer>> processiUltimati) throws Exception{
         //Se l'ambiente non è ancora stato configurato, lancio un'eccezione
         if(dimMemoria==0) throw new Exception();
         
@@ -225,10 +227,7 @@ public class ViewFrameMemoria extends JScrollPane {
         Color color;
         String text;
         FrameMemoria frame;
-        try{
-            Azione azione=cambiamentiInMemoria.getLast();
         
-        Vector<FrameMemoria> memoria=azione.getMemoriaRAM();
         pagineSquare.clear();
         
         int i=0;
@@ -305,8 +304,7 @@ public class ViewFrameMemoria extends JScrollPane {
             }
         }
         pannello.repaint();
-        }
-        catch(Exception e){}
+        
     }
     
 
