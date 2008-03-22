@@ -4,26 +4,21 @@
  * Package: gui.dialog
  * Autore: Alberto Zatton
  * Data: 15/03/2008
- * Versione: 1.0
+ * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche: 
- *
+ *  - v.1.1 (22/03/2008): Prima realizzazione completa del metodo principale
+ *                        aggiorna()
  *  - v.1.0 (15/03/2008): Impostazione dello scheletro della classe
  */
 
 package gui.view;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.util.LinkedList;
 import java.util.Vector;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
 import logic.gestioneMemoria.Azione;
 import logic.gestioneMemoria.FrameMemoria;
 import logic.simulazione.Istante;
@@ -74,14 +69,16 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
     /**
      * Metodo che aggiorna la tabella ad ogni istante
      */
-    public void aggiorna(Istante istante, int idIstanteCorrente, int idProcessoCorrente){
+    public void aggiorna(Istante istante, int idIstanteCorrente){
         if(idIstanteCorrente>avanzamentoTestuale.size()-1){
             String aux="";
+            int idProcessoCorrente=istante.getProcessoInEsecuzione().getRifProcesso().getId();
             Vector<FrameMemoria>frameAuxRAM=new Vector<FrameMemoria>();
             Vector<FrameMemoria>frameAuxSwap=new Vector<FrameMemoria>();
             Vector<FrameMemoria>frameToltiRAM=new Vector<FrameMemoria>();
             Vector<FrameMemoria>frameToltiSwap=new Vector<FrameMemoria>();
-            Vector<FrameMemoria>memoria=new Vector<FrameMemoria>();
+            Vector<FrameMemoria>memoria=istante.getStatoRAM();
+            
             aux+="La simulazione è passata all'istante "+idIstanteCorrente+" su un totale di "+istantiTotali+"\n";
             aux+="E' stato schedulato per l'esecuzione il processo "+idProcessoCorrente+"\n" ;
         
@@ -134,7 +131,74 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 }
             }
             //Se nn ci sono stati cambiamenti, lo scrivo
+            if(frameAuxRAM.isEmpty() && frameAuxSwap.isEmpty())
+                aux+="Non ci sono stati uleriori cambiamenti in memoria\n";
             
+            //Se invece ci sono stati cambiamenti, elenco le varie modifiche
+            //Parto elencando i frame tolti dalla RAM
+            if(!frameToltiRAM.isEmpty()){
+                if(tipoGestioneMemoria){
+                    aux+="Sono stati rimossi dalla  RAM i segmenti numero ";
+                }
+                else aux+="Sono state rimosse dalla RAM le pagine di indirizzo ";
+                
+                for(int i=0; i<frameToltiRAM.size(); i++){
+                    aux+=frameToltiRAM.get(i).getIndirizzo();
+                    if(i<frameToltiRAM.size()-1){
+                        aux+=", ";
+                    }
+                    else aux+="\n";
+                }
+            }
+            
+            //Elenco ora gli eventuali frame aggiunti in RAM
+            if(!frameAuxRAM.isEmpty()){
+                if(tipoGestioneMemoria){
+                    aux+="Sono stati aggiunti alla  RAM i segmenti numero ";
+                }
+                else aux+="Sono state aggiunte alla RAM le pagine di indirizzo ";
+                
+                for(int i=0; i<frameAuxRAM.size(); i++){
+                    aux+=frameAuxRAM.get(i).getIndirizzo();
+                    if(i<frameAuxRAM.size()-1){
+                        aux+=", ";
+                    }
+                    else aux+="\n";
+                }
+            }
+            
+            //Elenco degli eventuali frame tolti dallo Swap
+            if(!frameToltiSwap.isEmpty()){
+                if(tipoGestioneMemoria){
+                    aux+="Sono stati rimossi dallo Swap i segmenti numero ";
+                }
+                else aux+="Sono state rimosse dallo Swap le pagine di indirizzo ";
+                
+                for(int i=0; i<frameToltiSwap.size(); i++){
+                    aux+=frameToltiSwap.get(i).getIndirizzo();
+                    if(i<frameToltiSwap.size()-1){
+                        aux+=", ";
+                    }
+                    else aux+="\n";
+                }
+            }
+            
+            //Elenco degli eventuali frame aggiunti allo Swap
+            if(!frameAuxSwap.isEmpty()){
+                if(tipoGestioneMemoria){
+                    aux+="Sono stati aggiunti allo Swap i segmenti numero ";
+                }
+                else aux+="Sono state aggiunte allo Swap le pagine di indirizzo ";
+                
+                for(int i=0; i<frameAuxSwap.size(); i++){
+                    aux+=frameAuxSwap.get(i).getIndirizzo();
+                    if(i<frameAuxSwap.size()-1){
+                        aux+=", ";
+                    }
+                    else aux+="\n";
+                }
+            }
+            aux+="\n";
             testo.append(aux);
             avanzamentoTestuale.add(idIstanteCorrente, aux);
         }
