@@ -388,7 +388,7 @@ public class Player{
         listaIstanti = simulazioneEseguita.crea();
         if(listaIstanti == null)
             return false;
-        listaIstanti.addFirst(new Istante(null,null,false,0,null,false,false));
+        listaIstanti.addFirst(new Istante(null,null,false,0,null,false,false,null,null));
         /*for(int i =0;i<listaIstanti.size();i++){
             System.out.println("Istante: " + i);
             LinkedList<Azione> azioni = listaIstanti.get(i).getCambiamentiInMemoria();
