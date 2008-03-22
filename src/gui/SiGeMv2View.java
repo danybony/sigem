@@ -76,7 +76,7 @@ public class SiGeMv2View {
     private RootWindow rootWindow;
 
     /** Array delle viste statiche */
-    private View[] views = new View[6];
+    private View[] views = new View[5];
 
     /** Contiene le viste statiche */
     private ViewMap viewMap = new ViewMap();
@@ -258,15 +258,12 @@ public class SiGeMv2View {
             views[2] = new View("Statistiche simulazione", IconStylosoft
                             .getGeneralIcon("statistiche"), new ViewStatistiche2(this));
             viewMap.addView(2, views[2]);
-            views[3] = new View("Statistiche Processi", IconStylosoft
-                            .getGeneralIcon("statistiche"), new ViewStatistiche(this));
+            views[3] = new View("Modalita' testuale", IconStylosoft
+                            .getGeneralIcon("proc"), new JPanel());
             viewMap.addView(3, views[3]);
-            views[4] = new View("Modalita' testuale", IconStylosoft
-                            .getGeneralIcon("proc"), new ViewStatistiche(this));
-            viewMap.addView(4, views[4]);
-            views[5] = new View("Riepilogo configurazione", IconStylosoft
+            views[4] = new View("Riepilogo configurazione", IconStylosoft
                             .getGeneralIcon(""), new ViewStatistiche(this));
-            viewMap.addView(5, views[5]);
+            viewMap.addView(4, views[4]);
 
             // Aggiungo i pulsanti help alle viste
             JButton button = new JButton(IconStylosoft.getGeneralIcon("help"));
@@ -971,8 +968,8 @@ public class SiGeMv2View {
      */
     private void setDefaultLayout() {
         rootWindow.setWindow(new TabWindow(new DockingWindow[] {
-                 views[5],
                  views[4],
+                 views[3],
                  new SplitWindow(true,
                                  0.644f, 
                                  new SplitWindow(false,
