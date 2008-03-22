@@ -227,8 +227,6 @@ public class ViewStatistiche extends javax.swing.JPanel {
         }
         catch(NullPointerException e){}
         catch(NoSuchElementException e){}
-
-        
     }
     
      void aggiornaUtilizzoSwap(Player player,
@@ -236,6 +234,48 @@ public class ViewStatistiche extends javax.swing.JPanel {
                              ConfigurazioneIniziale conf,
                              Vector<Vector<Integer>> processiUltimati){
      
+        int tot = conf.getDimensioneSwap();
+        int ultimo=0;
+        
+        // screen-shot memoria
+        try{
+            Vector<FrameMemoria> shot = istante.getStatoSwap();
+            // controllo per ogni slot della RAM se il frame corrisponde ad
+            // un processo terminato
+            for(int j=0; j < shot.size(); j++){
+
+                // il processo a cui appartiene il frame in memoria
+                int proc = shot.get(j).getIdProcesso();
+                //prendo i processi terminati nell'istante corrente
+                Vector<Integer> procCorrenti = processiUltimati.get(player.getIndiceIstanteCorrente());
+
+                boolean trovato = false;
+
+                // cerco se proc e' uno dei processi terminati
+                for(int i = 0; i < procCorrenti.size(); i++){
+                    if(proc==procCorrenti.get(i).intValue())
+                        trovato=true;
+                }
+
+                // se proc non e' terminato, aggiungo o tolgo mem
+                if(!trovato){
+                    if(conf.getModalitaGestioneMemoria()==1){
+                        ultimo += conf.getDimensionePagina();
+                    }
+                    else if(conf.getModalitaGestioneMemoria()==2){
+                        if(shot.get(j).getIdProcesso()!=-1){
+                            ultimo += shot.get(j).getDimensione();
+                            
+                        }
+                    }
+                }
+            }
+
+            this.jProgressBar1.setValue(ultimo*100/tot);
+            this.jProgressBar1.setString(ultimo*100/tot + "%  (" + ultimo + " di " + tot + " KB)");
+        }
+        catch(NullPointerException e){}
+        catch(NoSuchElementException e){}
      }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
