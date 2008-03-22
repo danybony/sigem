@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
@@ -40,6 +41,7 @@ import logic.gestioneMemoria.FrameMemoria;
 import logic.gestioneMemoria.Pagina;
 import logic.gestioneMemoria.Segmento;
 import logic.parametri.*;
+import logic.parametri.Processo.Accesso;
 
 /**
  *
@@ -86,7 +88,12 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
      */
     private Vector<DefaultListModel> modelliListaFrame = new Vector<DefaultListModel>();
     
-        
+    /**
+     * Indica se si sta modificando una configurazione preesistente o se ne 
+     * sta creando una nuova
+     */
+    boolean modifica = false;
+    
     /** Creates new form AssociazioneProcessiJDialog
      * @param parent
      * @param modal 
@@ -95,7 +102,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
      * @param proc
      * @param view 
      */
-    public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, ProcessiJDialog proc, SiGeMv2View view) {
+    public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, 
+            ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol,
+            ProcessiJDialog proc, SiGeMv2View view) {
         super(parent, modal);
         configurazioneAmbiente = configurazione;
         politica = pol;
@@ -138,6 +147,29 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         jListFrame.setDragEnabled(true);
     }
     
+    /** Creates new form AssociazioneProcessiJDialog
+     * @param parent
+     * @param modal 
+     * @param configurazione
+     * @param pol 
+     * @param proc
+     * @param view
+     * @param confIniziale 
+     */
+    public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, 
+            ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, 
+            ProcessiJDialog proc, SiGeMv2View view, ConfigurazioneIniziale confIniziale) {
+        
+        this(parent, modal, configurazione, pol, proc, view);
+        this.confIniziale = confIniziale;
+        modifica = true;
+        caricaAccessi();
+    }
+    
+    /**
+     * Classe interna che contiene i FrameMemoria nel caso debbano essere modificati
+     * durante la simulazione
+     */
     class FrameModifica{
         FrameMemoria frame;
         FrameModifica(FrameMemoria frame){
@@ -147,6 +179,40 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         public String toString() {
 		return frame.toString();
 	} 
+    }
+    
+    
+    /**
+     * Metodo che carica gli accessi dalla ConfigurazioneIniziale che si sta modificando
+     */
+    private void caricaAccessi() {
+        for(int indiceProcesso = 0; indiceProcesso < confIniziale.getListaProcessi().size()
+                && indiceProcesso < configurazioneAmbiente.getNumProcessi(); 
+                indiceProcesso++){
+            /* Prendo la durata salvata nella ConfigurazioneIniziale */
+            int numIstanti = confIniziale.getListaProcessi().get(indiceProcesso).getTempoEsecuzione();
+            /* Controllo se la durata modificata e' dicversa e temgo la minore */
+            if(numIstanti > ((Integer)processi.getCombinazioneProcessi()[indiceProcesso][2]).intValue()){
+                numIstanti = ((Integer)processi.getCombinazioneProcessi()[indiceProcesso][2]).intValue();
+            }
+            
+            ArrayList<Accesso> accessi = confIniziale.getListaProcessi().get(indiceProcesso).getAccessi();
+            
+            for(int indiceAccesso = 0; indiceAccesso < accessi.size() && 
+                    accessi.get(indiceAccesso).getIstanteRichiesta() < numIstanti; indiceAccesso++){
+                
+                FrameMemoria frame = accessi.get(indiceAccesso).getRisorsa();
+                DefaultListModel modello = modelliListaFrame.get(indiceProcesso);
+                
+                if(!modello.contains(frame)){
+                    
+                    modello.addElement(frame);
+                    
+                }
+                
+            }
+            
+        }
     }
 
     /**

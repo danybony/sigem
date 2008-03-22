@@ -340,7 +340,7 @@ public class Processore {
         
         Vector<FrameMemoria> statoRAM = gestoreMemoria.getStatoRAM();
         
-        Vector<FrameMemoria> statoSwap = gestoreMemoria.getStatoSwap;
+        Vector<FrameMemoria> statoSwap = gestoreMemoria.getStatoSwap();
         
         if(terminato){
             
