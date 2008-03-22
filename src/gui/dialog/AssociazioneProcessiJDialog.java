@@ -199,7 +199,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             /* Trovo il primo modello del processo proprietario del segmento */
             int primaLista = 0 ;
 
-            for(int processo = 0; processo < jTabbedPaneProcessi.getSelectedIndex(); processo++){
+            for(int processo = 0; processo < indiceProcesso; processo++){
                 primaLista += ((Integer)processi.getCombinazioneProcessi()[processo][2]).intValue();
             }
             
@@ -344,6 +344,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         });
 
         jListFrame.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jListFrame.setToolTipText("<html>Insieme delle locazioni di memoria<BR>\na disposizione del<br>\nprocesso selezionato.</html>");
         jListFrame.setName("jListFrame"); // NOI18N
         jScrollPane1.setViewportView(jListFrame);
 
@@ -708,14 +709,14 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         String commento;
         
         if(politica.getGestioneMemoria() == 1){
-            commento = new String("Trascinare qui le pagine che il processo utilizzerà" +
-                    " in questo istante. Fare click col tasto destro del mouse per" +
-                    "visualizzare le possibili scelte per la pagina selezionata.");
+            commento = new String("<html>Trascinare qui le pagine che il processo utilizzerà" +
+                    " in questo istante. <br> Fare click col tasto destro del mouse per " +
+                    "visualizzare le possibili scelte per la pagina selezionata.</html>");
         }
         else{
-            commento = new String("Trascinare qui i segmenti che il processo utilizzerà" +
-                    " in questo istante. Fare click col tasto destro del mouse per" +
-                    "visualizzare le possibili scelte per il segmento selezionata.");
+            commento = new String("<html>Trascinare qui i segmenti che il processo utilizzerà" +
+                    " in questo istante. <br> Fare click col tasto destro del mouse per" +
+                    " visualizzare le possibili scelte per il segmento selezionata.</html>");
         }
         
                 
