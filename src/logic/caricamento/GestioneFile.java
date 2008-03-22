@@ -78,12 +78,12 @@ public class GestioneFile {
      */
     public boolean salvaFileConfigurazione (ConfigurazioneIniziale conf) 
                                                             throws IOException {
+        this.configurazione = conf;
         if(this.percosoFileConfigurazione==null) return false;
         ObjectOutputStream out = new ObjectOutputStream(
                                     new FileOutputStream(
                                     this.percosoFileConfigurazione)
                                     );
-        
         out.writeObject(this.configurazione);
         return true;
     }
