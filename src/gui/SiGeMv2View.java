@@ -262,7 +262,7 @@ public class SiGeMv2View {
                             .getGeneralIcon("proc"), new JPanel());
             viewMap.addView(3, views[3]);
             views[4] = new View("Riepilogo configurazione", IconStylosoft
-                            .getGeneralIcon(""), new ViewStatistiche(this));
+                            .getGeneralIcon(""), new JPanel());
             viewMap.addView(4, views[4]);
 
             // Aggiungo i pulsanti help alle viste
@@ -276,7 +276,7 @@ public class SiGeMv2View {
                                             "Visualizza help", JOptionPane.INFORMATION_MESSAGE);
                     }
             });
-//		views[1].getCustomTabComponents().add(button);
+            views[1].getCustomTabComponents().add(button);
 
             rootWindow = DockingUtil.createRootWindow(viewMap, true);
 
@@ -372,7 +372,7 @@ public class SiGeMv2View {
              * filtro alpha che renda visibile la posizione del pannello durante il
              * suo drag come un rettangolo pieno semitrasparente.
              */
-            ComponentPainter alphaBlendPainter = new ComponentPainter() {
+             ComponentPainter alphaBlendPainter = new ComponentPainter() {
 
                     /**
                      * @see net.infonode.gui.componentpainter
@@ -427,7 +427,7 @@ public class SiGeMv2View {
                             return new Color(129, 156, 231);
                     }
             };
-            // Applico il filtro alla finestra principale
+            //Applico il filtro alla finestra principale
             rootWindow.getRootWindowProperties()
                             .getDragRectangleShapedPanelProperties().setComponentPainter(
                                             alphaBlendPainter);
