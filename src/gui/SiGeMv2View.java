@@ -1254,7 +1254,7 @@ public class SiGeMv2View {
                     visualizzaOrdProcessi(processiEseguiti);
                     visualizzaStatisticheSimulazione(player,istante,true);
                     try {
-                        currView.aggiorna(istante.getCambiamentiInMemoria(),
+                        currView.aggiorna(istante.getStatoRAM(),
                                           player.getIndiceIstanteCorrente(),
                                           processiUltimati);
                     }catch (Exception e){e.printStackTrace();}
@@ -1484,7 +1484,7 @@ public class SiGeMv2View {
             visualizzaOrdProcessi(processiEseguiti);
             visualizzaStatisticheSimulazione(player,istante,false);
             try{
-                currView.aggiorna(istante.getCambiamentiInMemoria(),
+                currView.aggiorna(istante.getStatoRAM(),
                                    player.getIndiceIstanteCorrente(),
                                    processiUltimati);    
             }catch(Exception e){}   
@@ -1535,7 +1535,7 @@ public class SiGeMv2View {
             visualizzaOrdProcessi(processiEseguiti);
             visualizzaStatisticheSimulazione(player,istante,true);
             try{
-                currView.aggiorna(istante.getCambiamentiInMemoria(),
+                currView.aggiorna(istante.getStatoRAM(),
                                   player.getIndiceIstanteCorrente(),
                                   processiUltimati);    
             }catch(Exception e){}
@@ -1588,7 +1588,7 @@ public class SiGeMv2View {
             }
             try{
                 numeroIstanteCorrente = (player.getIndiceIstanteCorrente() - numeroIstanti + i + 1);
-                currView.aggiorna(istante.getCambiamentiInMemoria(),
+                currView.aggiorna(istante.getStatoRAM(),
                                   numeroIstanteCorrente,
                                   processiUltimati);    
             }catch(Exception e){}
@@ -1660,7 +1660,7 @@ public class SiGeMv2View {
                 processiEseguiti.removeLast();
                 try{
                     numeroIstanteCorrente = (player.getIndiceIstanteCorrente() + numeroIstanti - i - 1);
-                    currView.aggiorna(istante.getCambiamentiInMemoria(),
+                    currView.aggiorna(istante.getStatoRAM(),
                                       numeroIstanteCorrente,
                                       processiUltimati);    
                 }catch(Exception e){}
@@ -1744,7 +1744,7 @@ public class SiGeMv2View {
                 }
                 try{
                     numeroIstanteCorrente = (player.getIndiceIstanteCorrente() - numeroIstanti + i + 1);
-                    currView.aggiorna(istante.getCambiamentiInMemoria() ,
+                    currView.aggiorna(istante.getStatoRAM(),
                                       numeroIstanteCorrente,
                                       processiUltimati);    
                 }catch(Exception e){}

@@ -71,297 +71,10 @@ public class Player{
     private int indiceElementoCorrente = 0;
     
     /**
-     * L'istanza della classe Statistiche.
-     */
-    public static Statistiche stat;
-    
-    /**
      * Possibili eventi da ricercare nella simulazione
      */
     public enum Evento{FAULT, SWITCH, FULL_RAM, FULL_SWAP, END_PROC, NEW_PROC}
-    
-    /**
-     * L'istanza della classe Statistiche.
-     */
-   // public static Statistiche stat;
-    
-   public class Statistiche{
         
-        /**
-         * Numero di KB utilizzati della RAM.
-         */
-        private int utilizzoRAM;
-        
-        /**
-         * Numero di KB utilizzati nell'area di Swap.
-         */
-        private int utilizzoSwap;
-        
-        /**
-         * Numero di fault in memoria.
-         */
-        private int numeroFault;
-        
-        /**
-         * Numero di istanti rimanenti alla fine della simulazione.
-         */
-        private int numeroIstantiRimanenti;
-        
-        /**
-         * Numero di KB utilizzati della RAM.
-         */
-        private int utilizzoRAMBack;
-        
-        /**
-         * Numero di KB utilizzati nell'area di Swap.
-         */
-        private int utilizzoSwapBack;
-        
-        /**
-         * Numero di fault in memoria.
-         */
-        private int numeroFaultBack;
-        
-        /**
-         * Numero di istanti rimanenti alla fine della simulazione.
-         */
-        private int numeroIstantiRimanentiBack;
-        
-        
-        
-        /**
-         * Costruttore della classe. Inizializza a zero i campi dato.
-         */
-        Statistiche(){
-            this.numeroFault = 0;
-            this.utilizzoRAM = 0;
-            this.utilizzoSwap = 0;
-            this.numeroIstantiRimanenti = Player.this.numeroIstanti();
-            this.numeroFaultBack = 0;
-            this.utilizzoRAMBack = 0;
-            this.utilizzoSwapBack = 0;
-            this.numeroIstantiRimanentiBack = 0;
-        }
-        
-        /**
-         * Ritorna il numero di KB utilizzati nella RAM.
-         */
-        public int getUtilizzoRAM(){
-            return this.utilizzoRAM;
-        }
-        
-        /**
-         * Ritorna il numero di KB utilizzati nell'area di Swap.
-         */
-        public int getUtilizzoSwap(){
-            return this.utilizzoSwap;
-        }
-        
-        /**
-         * Ritorna il numero di fault avvenuti in memoria.
-         */
-        public int getNumeroFault(){
-            return this.numeroFault;
-        }
-        
-        /**
-         * Ritorna il numero di istanti rimanenti per la conclusione della
-         * simulazione.
-         */
-        public int getNumeroIstantiRimanenti(){
-            return this.numeroIstantiRimanenti;
-        }
-        
-        void aggiornaFault(Istante nuovoIstante, boolean avanti){
-            if(avanti){
-                this.numeroFault += nuovoIstante.getFault();
-                this.numeroIstantiRimanenti--;
-            }
-            else{
-                this.numeroFault -= nuovoIstante.getFault();
-                this.numeroIstantiRimanenti++;
-            }
-        }
-        
-        void aggiornaFault(LinkedList<Istante> listaNuoviIstanti,
-                                        boolean avanti){
-            if(avanti){
-                for(int i=0; i < listaNuoviIstanti.size(); i++){}
-            }
-            else{
-                
-            }
-        
-        }
-        
-        void aggiornaUtilizzoMemoria(Istante nuovoIstante, boolean avanti){
-        
-        }
-        
-        void aggiornaUtilizzoMemoria(LinkedList<Istante> listaNuoviIstanti,
-                                        boolean avanti){
-        
-        }
-        
-        /**
-         * Aggiorna l'occupazione della RAM e dello Swap.
-         */
-        private void AggiornaOccupazioni(Istante nuovoIstante, boolean avanti){
-            LinkedList<Azione> listaAzioni = nuovoIstante.getCambiamentiInMemoria();
-            int numeroAzioniMemoria = 0;
-            if(listaAzioni!=null)
-                numeroAzioniMemoria = listaAzioni.size();
-            int i=0;
-            Azione azioneCorrente = null;
-            if(avanti){ // Istante successivo al corrente
-                while(i<numeroAzioniMemoria){
-                    azioneCorrente = listaAzioni.get(i);
-                    if(Player.this.config.getModalitaGestioneMemoria()==1)
-                        utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
-                    else if(Player.this.config.getModalitaGestioneMemoria()==2){
-                        utilizzoRAM =0;
-                        for(int j = 0; j < azioneCorrente.getMemoriaRAM().size(); j++){
-                            utilizzoRAM += azioneCorrente.getMemoriaRAM().get(j).getDimensione();
-                        }
-                    }
-//                        utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
-                    /*switch(azioneCorrente.getAzione()){
-                        case 1: // INSERT RAM
-                                utilizzoRAM += azioneCorrente.getFrame().getDimensione();
-                                break;
-                        case 2: // INSERT SWAP
-                                utilizzoSwap += azioneCorrente.getFrame().getDimensione();
-                                break;
-                        case 3: // REMOVE RAM
-                                utilizzoRAM -= azioneCorrente.getFrame().getDimensione();
-                                break;
-                        case 4: // REMOVE SWAP
-                                utilizzoSwap -= azioneCorrente.getFrame().getDimensione();
-                                break;
-                    
-                    }*/
-                    i++;
-                }
-            }
-            else{ // Istante precedente al corrente
-                while(i<numeroAzioniMemoria){
-                    azioneCorrente = listaAzioni.get(i);
-                    if(Player.this.config.getModalitaGestioneMemoria()==1)
-                        utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
-                    else if(Player.this.config.getModalitaGestioneMemoria()==2)
-                        utilizzoRAM = azioneCorrente.getMemoriaRAM().size() * Player.this.config.getDimensionePagina();
-                    /*switch(azioneCorrente.getAzione()){
-                        case 1: // INSERT RAM
-                                utilizzoRAM -= azioneCorrente.getFrame().getDimensione();
-                                break;
-                        case 2: // INSERT SWAP
-                                utilizzoSwap -= azioneCorrente.getFrame().getDimensione();
-                                break;
-                        case 3: // REMOVE RAM
-                                utilizzoRAM += azioneCorrente.getFrame().getDimensione();
-                                break;
-                        case 4: // REMOVE SWAP
-                                utilizzoSwap += azioneCorrente.getFrame().getDimensione();
-                                break;
-                    
-                    }*/
-                    i++;
-                }
-            }
-        }
-        
-        /**
-         * Aggiorna le statistiche in base al nuovo istante corrente.
-         * 
-         * @param nuovoIstante
-         *          il nuovo istante corrente
-         * 
-         * @param avanti
-         *          parametro booleano che indica se il nuovo istante e'
-         *          successivo (true) o precedente (false) rispetto al vecchio
-         *          istante corrente.
-         */
-        void AggiornaStatistiche(Istante nuovoIstante, boolean avanti ){
-            if(avanti){ // istante successivo a quello corrente
-                AggiornaOccupazioni(nuovoIstante, avanti);
-                numeroFault = numeroFault + nuovoIstante.getFault();
-                numeroIstantiRimanenti--;
-            }
-            else{ // istante precedente a quello corrente
-                AggiornaOccupazioni(nuovoIstante, avanti);
-                numeroFault = numeroFault - nuovoIstante.getFault();
-                numeroIstantiRimanenti++;
-            }
-        }
-        
-        /**
-         * Aggiorna le statistiche in base ad una lista di istanti consecutivi
-         * rispetto al vecchio istante corrente.
-         * 
-         * @param listaNuoviIstanti
-         *          la lista di nuovi istanti
-         * 
-         * @param avanti
-         *          parametro booleano che indica se i nuovi istanti sono
-         *          successivi (true) o precedenti (false) rispetto al vecchio
-         *          istante corrente.
-         * 
-         */
-        void AggiornaStatistiche(LinkedList<Istante> listaNuoviIstanti,
-                                        boolean avanti)
-        {
-            int numeroNuoviIstanti = 0;
-            if(listaNuoviIstanti!=null)
-                numeroNuoviIstanti = listaNuoviIstanti.size();
-            int corrente = 0;
-            Istante nuovoIstante = null;
-            if(avanti){ // istante successivo a quello corrente
-                while(corrente<numeroNuoviIstanti){
-                    nuovoIstante = listaNuoviIstanti.get(corrente);
-                    AggiornaOccupazioni(nuovoIstante, avanti);
-                    numeroFault += nuovoIstante.getFault();
-                    numeroIstantiRimanenti--;
-                    corrente++;
-                }
-            }
-            else{ // istante precedente a quello corrente
-                while(corrente<numeroNuoviIstanti){
-                    nuovoIstante = listaNuoviIstanti.get(corrente);
-                    AggiornaOccupazioni(nuovoIstante, avanti);
-                    numeroFault -= nuovoIstante.getFault();
-                    numeroIstantiRimanenti++;
-                    corrente++;
-                }
-            }
-        }
-        
-        /**
-         * Azzera tutte le statistiche
-         */
-        void AzzeraStatistiche(){
-            this.numeroFault = 0;
-            this.utilizzoRAM = 0;
-            this.utilizzoSwap = 0;
-            this.numeroIstantiRimanenti = 0;
-        }
-        
-        void SalvaStatistiche(){
-            this.numeroFaultBack = this.numeroFault;
-            this.utilizzoRAMBack = this.utilizzoRAM;
-            this.utilizzoSwapBack = this.utilizzoSwap;
-            this.numeroIstantiRimanentiBack = this.numeroIstantiRimanenti;
-        }
-        
-        void RipristinaStatistiche(){
-            this.numeroFault = this.numeroFaultBack;
-            this.utilizzoRAM = this.utilizzoRAMBack;
-            this.utilizzoSwap = this.utilizzoSwapBack;
-            this.numeroIstantiRimanenti = this.numeroIstantiRimanentiBack;
-        }
-    }
-    
-    
-    
     /**
      * Costruttore della classe.<br>
      * Si occupa dell'istanziazione dell'oggetto simulazione, sulla base della
@@ -413,7 +126,6 @@ public class Player{
         }*/
         //Metto l'iteratore prima del primo elemento
         indiceElementoCorrente = 0;
-        stat = new Statistiche();
         return true;
     }
     
@@ -428,7 +140,6 @@ public class Player{
         if(this.listaIstanti==null)
             return null;
         if(this.indiceElementoCorrente > 1){
-            stat.AggiornaStatistiche(listaIstanti.get(indiceElementoCorrente), false);
             this.indiceElementoCorrente--;
             Istante prev = this.listaIstanti.get(indiceElementoCorrente);
             return prev;
@@ -449,7 +160,6 @@ public class Player{
         if(hasNext()){
             this.indiceElementoCorrente++;
             Istante next = this.listaIstanti.get(indiceElementoCorrente);
-            stat.AggiornaStatistiche(next, true);
             return next;
         }
         return null;
@@ -514,7 +224,6 @@ public class Player{
         // lo stato attuale in caso di evento non trovato
         // e salvo le statistiche per permetterne il ripristino
         int istantePrimaDellaRicerca = this.indiceElementoCorrente;
-        stat.SalvaStatistiche();
         
         // Eseguo la ricerca finchè ho elementi che mi precedono arrivando al
         // massimo a confrontare con l'istante 1
@@ -560,7 +269,6 @@ public class Player{
         }
         else{
             this.indiceElementoCorrente = istantePrimaDellaRicerca;
-            stat.RipristinaStatistiche();
             return null;
         }
     }
@@ -628,7 +336,6 @@ public class Player{
         // lo stato attuale in caso di evento non trovato
         // e salvo le statistiche per permetterne il ripristino
         int istantePrimaDellaRicerca = this.indiceElementoCorrente;
-        stat.SalvaStatistiche();
  
         // Eseguo la ricerca finchè ho istanti successivi e finchè non ho
         // trovato l'evento
@@ -675,7 +382,6 @@ public class Player{
         }
         else{
             this.indiceElementoCorrente = istantePrimaDellaRicerca;
-            stat.RipristinaStatistiche();
             return null;
         }
     }
@@ -691,7 +397,6 @@ public class Player{
         if(this.listaIstanti==null) return null;
         this.indiceElementoCorrente = 0;
         Istante primo = this.listaIstanti.getFirst();
-        stat.AzzeraStatistiche();
         //stat.AggiornaStatistiche(primo, true);
         return primo;
     }
@@ -710,7 +415,6 @@ public class Player{
             this.indiceElementoCorrente++;
             listaAllaFine.add(this.listaIstanti.get(indiceElementoCorrente));
         }
-        stat.AggiornaStatistiche(listaAllaFine, true);
         return listaAllaFine;
     }
     
@@ -729,14 +433,6 @@ public class Player{
     public int getIndiceIstanteCorrente(){
         return this.indiceElementoCorrente;
     }
-    
-    /**
-     * Ritorna un riferimento all'oggetto interno Statistiche
-     */
-    public Statistiche getStatistiche(){
-        return this.stat;
-    }
-    
     
     public boolean hasPrev(){
         if(this.indiceElementoCorrente > 0){

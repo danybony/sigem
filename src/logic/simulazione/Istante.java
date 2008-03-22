@@ -186,7 +186,7 @@ public class Istante {
      * Ritorna lo stato della RAM
      */
     public Vector<FrameMemoria> getStatoRAM(){
-        return this.getStatoRAM();
+        return this.statoRAM;
     }
     
     /**

@@ -194,7 +194,7 @@ public class ViewStatistiche2 extends javax.swing.JPanel {
         
         // screen-shot memoria
         try{
-            Vector<FrameMemoria> shot = istante.getCambiamentiInMemoria().getLast().getMemoriaRAM();
+            Vector<FrameMemoria> shot = istante.getStatoRAM();
             // controllo per ogni slot della RAM se il frame corrisponde ad
             // un processo terminato
             for(int j=0; j < shot.size(); j++){
