@@ -17,7 +17,9 @@ package logic.simulazione;
  */
 
 import java.util.LinkedList;
+import java.util.Vector;
 import logic.gestioneMemoria.Azione;
+import logic.gestioneMemoria.FrameMemoria;
 import logic.schedulazione.PCB;
 
 /**
@@ -69,6 +71,18 @@ public class Istante {
      */
     private boolean full_Swap = false;
     
+    /**
+     * Lo stato della RAM
+     */
+    private Vector<FrameMemoria> statoRAM;
+    
+    
+    /**
+     * Lo stato dello Swap
+     */
+    private Vector<FrameMemoria> statoSwap;
+    
+    
     
     /**
      * Costruttore della classe.<br>
@@ -90,6 +104,10 @@ public class Istante {
      *      dichiara il riempimento della memoria centrale RAM all'istante t
      * @param full_Swap
      *      dichiara il riempimento dell'area di Swap all'istante t
+     * @param statoRAM
+     *      lo stato della RAM
+     * @param
+     *      lo stato dello Swap
      */
     public Istante(
             PCB inEsecuzione,
@@ -98,7 +116,9 @@ public class Istante {
             int fault,
             LinkedList<Azione> memoria,
             boolean full_RAM,
-            boolean full_Swap
+            boolean full_Swap,
+            Vector<FrameMemoria> statoRAM,
+            Vector<FrameMemoria> statoSwap
             ){
         this.processoInEsecuzione = inEsecuzione;
         this.processoPrecedenteTerminato = terminato;
@@ -107,6 +127,8 @@ public class Istante {
         this.cambiamentiInMemoria = memoria;
         this.full_RAM = full_RAM;
         this.full_Swap = full_Swap;
+        this.statoRAM = statoRAM;
+        this.statoSwap = statoSwap;
     }
     
     /**
@@ -158,5 +180,19 @@ public class Istante {
      */
     public boolean getFull_Swap(){
         return this.full_Swap;
+    }
+    
+    /**
+     * Ritorna lo stato della RAM
+     */
+    public Vector<FrameMemoria> getStatoRAM(){
+        return this.getStatoRAM();
+    }
+    
+    /**
+     * Ritorna lo stato dello Swap
+     */
+    public Vector<FrameMemoria> getStatoSwap(){
+        return this.statoSwap;
     }
 }
