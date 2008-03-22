@@ -77,7 +77,7 @@ public class SiGeMv2View {
     private RootWindow rootWindow;
 
     /** Array delle viste statiche */
-    private View[] views = new View[5];
+    private View[] views = new View[6];
 
     /** Contiene le viste statiche */
     private ViewMap viewMap = new ViewMap();
@@ -207,15 +207,15 @@ public class SiGeMv2View {
     
     /** Disegna le statistiche sulla vista ViewStatistiche */
     public void visualizzaStatisticheSimulazione(Player player, Istante istante, boolean avanti) {
-            if ((views[2]).getComponent() instanceof ViewStatistiche2) {
-                    ViewStatistiche2 currView = (ViewStatistiche2) views[2].getComponent();
+            if ((views[2]).getComponent() instanceof ViewStatistiche) {
+                    ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
                     currView.generaStatistiche(player, istante,configurazioneIniziale, processiUltimati, avanti);
             }
     }
     
     public void azzeraStatisticheSimulazione() {
-            if ((views[2]).getComponent() instanceof ViewStatistiche2) {
-                    ViewStatistiche2 currView = (ViewStatistiche2) views[2].getComponent();
+            if ((views[2]).getComponent() instanceof ViewStatistiche) {
+                    ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
                     currView.azzeraStatistiche();
             }
     }
@@ -253,11 +253,11 @@ public class SiGeMv2View {
                             IconStylosoft.getGeneralIcon("processi"), new ViewStatoAvanzamentoProcessi());
             viewMap.addView(0, views[0]);
 
-            views[1] = new View("Frame Memoria", IconStylosoft.getGeneralIcon("mv"),
+            views[1] = new View("RAM", IconStylosoft.getGeneralIcon("mv"),
                             new ViewFrameMemoria());
             viewMap.addView(1, views[1]);
             views[2] = new View("Statistiche simulazione", IconStylosoft
-                            .getGeneralIcon("statistiche"), new ViewStatistiche2(this));
+                            .getGeneralIcon("statistiche"), new ViewStatistiche(this));
             viewMap.addView(2, views[2]);
             views[3] = new View("Modalita' testuale", IconStylosoft
                             .getGeneralIcon("proc"), new JPanel());
@@ -265,6 +265,9 @@ public class SiGeMv2View {
             views[4] = new View("Riepilogo configurazione", IconStylosoft
                             .getGeneralIcon(""), new JPanel());
             viewMap.addView(4, views[4]);
+            views[5] = new View("Swap", IconStylosoft
+                            .getGeneralIcon("mv"), new ViewFrameMemoria());
+            viewMap.addView(5, views[5]);
 
             // Aggiungo i pulsanti help alle viste
             JButton button = new JButton(IconStylosoft.getGeneralIcon("help"));
@@ -981,7 +984,8 @@ public class SiGeMv2View {
                                                  views[0],
                                                  views[2]),
                                                  //new TabWindow(new DockingWindow[] {views[3],views[2]})),
-                                 views[1])
+                                 new SplitWindow(false, 0.5f, views[1], views[5])
+                                 )
                   }));
             WindowBar windowBar = rootWindow.getWindowBar(Direction.DOWN);
 
@@ -1178,7 +1182,29 @@ public class SiGeMv2View {
                             currView.configura(true,
                                     configurazioneIniziale.getDimensioneRAM(),
                                     configurazioneIniziale.getListaProcessi().size(),
-                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
+                                    0);
+                            break;
+                    }
+                }
+        }
+        if ((views[5]).getComponent() instanceof ViewFrameMemoria) {
+                ViewFrameMemoria currView = (ViewFrameMemoria) views[5]
+                                .getComponent();
+
+                if(configurazioneIniziale!=null){
+
+                    switch(configurazioneIniziale.getModalitaGestioneMemoria()){
+                        case 1: 
+                            currView.configura(false,
+                                    configurazioneIniziale.getDimensioneSwap(),
+                                    configurazioneIniziale.getListaProcessi().size(),
+                                    configurazioneIniziale.getDimensioneSwap()/configurazioneIniziale.getDimensionePagina());
+                            break;
+                        case 2:
+                            currView.configura(true,
+                                    configurazioneIniziale.getDimensioneSwap(),
+                                    configurazioneIniziale.getListaProcessi().size(),
+                                    0);
                             break;
                     }
                 }
@@ -1241,7 +1267,9 @@ public class SiGeMv2View {
             @SuppressWarnings("static-access")
             public void run(){
                 PCB pcbAttuale;
-                ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
+                ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
+                                    .getComponent();
+                ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
                                     .getComponent();
                 while(istante!=null && statoGui){
                     Double t =((Double)scegliVelocita.getValue()).doubleValue();
@@ -1258,7 +1286,10 @@ public class SiGeMv2View {
                     visualizzaOrdProcessi(processiEseguiti);
                     visualizzaStatisticheSimulazione(player,istante,true);
                     try {
-                        currView.aggiorna(istante.getStatoRAM(),
+                        currView1.aggiorna(istante.getStatoRAM(),
+                                          player.getIndiceIstanteCorrente(),
+                                          processiUltimati);
+                        currView5.aggiorna(istante.getStatoSwap(),
                                           player.getIndiceIstanteCorrente(),
                                           processiUltimati);
                     }catch (Exception e){e.printStackTrace();}
@@ -1341,10 +1372,32 @@ public class SiGeMv2View {
                             currView.configura(true,
                                     configurazioneIniziale.getDimensioneRAM(),
                                     configurazioneIniziale.getListaProcessi().size(),
-                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
+                                    0);
                             break;
                     }
                 }
+            }
+            if ((views[5]).getComponent() instanceof ViewFrameMemoria) {
+                    ViewFrameMemoria currView = (ViewFrameMemoria) views[5]
+                                    .getComponent();
+
+                    if(configurazioneIniziale!=null){
+
+                        switch(configurazioneIniziale.getModalitaGestioneMemoria()){
+                            case 1: 
+                                currView.configura(false,
+                                        configurazioneIniziale.getDimensioneSwap(),
+                                        configurazioneIniziale.getListaProcessi().size(),
+                                        configurazioneIniziale.getDimensioneSwap()/configurazioneIniziale.getDimensionePagina());
+                                break;
+                            case 2:
+                                currView.configura(true,
+                                        configurazioneIniziale.getDimensioneSwap(),
+                                        configurazioneIniziale.getListaProcessi().size(),
+                                        0);
+                                break;
+                        }
+                    }
             }
 
             aggiornaComandi();
@@ -1431,16 +1484,38 @@ public class SiGeMv2View {
                         currView.configura(false,
                                 configurazioneIniziale.getDimensioneRAM(),
                                 configurazioneIniziale.getListaProcessi().size(),
-                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
+                                configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                         break;
                     case 2:
                         currView.configura(true,
                                 configurazioneIniziale.getDimensioneRAM(),
                                 configurazioneIniziale.getListaProcessi().size(),
-                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
+                                0);
                         break;
                 }
             }
+        }
+        if ((views[5]).getComponent() instanceof ViewFrameMemoria) {
+                ViewFrameMemoria currView = (ViewFrameMemoria) views[5]
+                                .getComponent();
+
+                if(configurazioneIniziale!=null){
+
+                    switch(configurazioneIniziale.getModalitaGestioneMemoria()){
+                        case 1: 
+                            currView.configura(false,
+                                    configurazioneIniziale.getDimensioneSwap(),
+                                    configurazioneIniziale.getListaProcessi().size(),
+                                    configurazioneIniziale.getDimensioneSwap()/configurazioneIniziale.getDimensionePagina());
+                            break;
+                        case 2:
+                            currView.configura(true,
+                                    configurazioneIniziale.getDimensioneSwap(),
+                                    configurazioneIniziale.getListaProcessi().size(),
+                                    0);
+                            break;
+                    }
+                }
         }
         
         aggiornaComandi();
@@ -1481,17 +1556,22 @@ public class SiGeMv2View {
         statoStop = false;
         
         if(istante!=null){
-             ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
-                                .getComponent();
+             ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
+                                    .getComponent();
+             ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
+                                    .getComponent();
         
             processiEseguiti.removeLast();
             visualizzaOrdProcessi(processiEseguiti);
             visualizzaStatisticheSimulazione(player,istante,false);
             try{
-                currView.aggiorna(istante.getStatoRAM(),
+                currView1.aggiorna(istante.getStatoRAM(),
                                    player.getIndiceIstanteCorrente(),
-                                   processiUltimati);    
-            }catch(Exception e){}   
+                                   processiUltimati);
+                currView5.aggiorna(istante.getStatoSwap(),
+                                   player.getIndiceIstanteCorrente(),
+                                   processiUltimati);
+            }catch(Exception e){} 
         }
         
         aggiornaComandi();
@@ -1525,8 +1605,10 @@ public class SiGeMv2View {
         
         if(istante!=null){
             PCB pcbAttuale;
-            ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
-                                .getComponent();
+            ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
+                                    .getComponent();
+            ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
+                                    .getComponent();
 
             pcbAttuale = istante.getProcessoInEsecuzione();
             if(pcbAttuale==null){
@@ -1539,9 +1621,12 @@ public class SiGeMv2View {
             visualizzaOrdProcessi(processiEseguiti);
             visualizzaStatisticheSimulazione(player,istante,true);
             try{
-                currView.aggiorna(istante.getStatoRAM(),
+                currView1.aggiorna(istante.getStatoRAM(),
                                   player.getIndiceIstanteCorrente(),
-                                  processiUltimati);    
+                                  processiUltimati);
+                currView5.aggiorna(istante.getStatoSwap(),
+                                  player.getIndiceIstanteCorrente(),
+                                  processiUltimati);
             }catch(Exception e){}
         }
         
@@ -1575,8 +1660,10 @@ public class SiGeMv2View {
         
         statoStop = false;
         PCB pcbAttuale;
-        ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
-                            .getComponent();
+        ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
+                                    .getComponent();
+        ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
+                                    .getComponent();
         
         int numeroIstanti = istantiAllaFine.size();
         int numeroIstanteCorrente;
@@ -1592,9 +1679,12 @@ public class SiGeMv2View {
             }
             try{
                 numeroIstanteCorrente = (player.getIndiceIstanteCorrente() - numeroIstanti + i + 1);
-                currView.aggiorna(istante.getStatoRAM(),
+                currView1.aggiorna(istante.getStatoRAM(),
                                   numeroIstanteCorrente,
-                                  processiUltimati);    
+                                  processiUltimati);
+                currView5.aggiorna(istante.getStatoSwap(),
+                                  numeroIstanteCorrente,
+                                  processiUltimati);
             }catch(Exception e){}
         }
         visualizzaOrdProcessi(processiEseguiti);
@@ -1653,8 +1743,10 @@ public class SiGeMv2View {
         
         if(istantiAllEvento != null){
         
-            ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
-                                .getComponent();
+            ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
+                                    .getComponent();
+            ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
+                                    .getComponent();
             
             int numeroIstanti = istantiAllEvento.size();
             int numeroIstanteCorrente;
@@ -1664,9 +1756,12 @@ public class SiGeMv2View {
                 processiEseguiti.removeLast();
                 try{
                     numeroIstanteCorrente = (player.getIndiceIstanteCorrente() + numeroIstanti - i - 1);
-                    currView.aggiorna(istante.getStatoRAM(),
+                    currView1.aggiorna(istante.getStatoRAM(),
                                       numeroIstanteCorrente,
-                                      processiUltimati);    
+                                      processiUltimati);
+                    currView5.aggiorna(istante.getStatoSwap(),
+                                      numeroIstanteCorrente,
+                                      processiUltimati);
                 }catch(Exception e){}
             }
             
@@ -1730,8 +1825,10 @@ public class SiGeMv2View {
         if(istantiAllEvento != null){ 
 
             PCB pcbAttuale;
-            ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
-                                .getComponent();
+            ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
+                                    .getComponent();
+            ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
+                                    .getComponent();;
             
             int numeroIstanti = istantiAllEvento.size();
             int numeroIstanteCorrente;
@@ -1748,9 +1845,12 @@ public class SiGeMv2View {
                 }
                 try{
                     numeroIstanteCorrente = (player.getIndiceIstanteCorrente() - numeroIstanti + i + 1);
-                    currView.aggiorna(istante.getStatoRAM(),
+                    currView1.aggiorna(istante.getStatoRAM(),
                                       numeroIstanteCorrente,
-                                      processiUltimati);    
+                                      processiUltimati);
+                    currView5.aggiorna(istante.getStatoSwap(),
+                                      numeroIstanteCorrente,
+                                      processiUltimati);
                 }catch(Exception e){}
             }
 
