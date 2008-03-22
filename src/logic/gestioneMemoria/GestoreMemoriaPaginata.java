@@ -26,6 +26,7 @@ package logic.gestioneMemoria;
 import java.util.LinkedList;
 import java.util.Iterator;
 import logic.parametri.ConfigurazioneIniziale;
+import java.util.Vector;
 /**
  * Si occupa interamente ed esclusivamente della 
  * gestione della memoria paginata, ossia quando l'utente richiede una 	simulazione
@@ -87,17 +88,27 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         }
         
     }
+    
+    public Vector<FrameMemoria> getStatoRAM() {
+        return MemoriaRam.getSituazione();
+    }
+    
+    public Vector<FrameMemoria> getStatoSwap() {
+        return MemoriaSwap.getSituazione();
+    }
+    
+
     /**
      * Rilascia la memoria del processo terminato
      * @param id
      * Identificativo del processo
      */
     public LinkedList<Azione> notificaProcessoTerminato(int id) {
-        LinkedList<Azione> Azioni=new LinkedList();
+        LinkedList<Azione> ListaAzioni=new LinkedList();
         MemoriaRam.liberaMemoria(id);
         MemoriaSwap.liberaMemoria(id);
-        Azioni.add( new Azione(MemoriaRam.getSituazione(),6,null,id) );
-        return Azioni;
+        ListaAzioni.add( new Azione(6,null,id) );
+        return ListaAzioni;
     }
     /**
      * Metodo di inserimento di utilità interna
@@ -151,7 +162,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
         /* Controllo se la dimensione della pagina è nulla, 
          * in qual caso ritorno l'azione di errore */
         if ( PaginaNulla==true ) { 
-            ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),-1,null) );
+            ListaAzioni.add( new Azione(-1,null) );
             return ListaAzioni;
         }
         
@@ -169,26 +180,26 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
             if ( !MemoriaRam.cerca(F) ) { // Pagina non in ram
                 try {
                     FrameMemoria Temp=rimuovi( MemoriaSwap, F );
-                    if (Temp!=null) ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),4, Temp ) );
+                    if (Temp!=null) ListaAzioni.add( new Azione(4, Temp ) );
                     int posizione=inserisci(MemoriaRam,F,UT);
-                    ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),1, F, posizione ) );
+                    ListaAzioni.add( new Azione(1, F, posizione ) );
                 }
                 catch ( MemoriaEsaurita RamEsaurita ) {
                     try {
-                        ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),0,null) );
+                        ListaAzioni.add( new Azione(0,null) );
                         FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
-                        ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),3, Frame_Rimosso, MemoriaRam.indiceDi(Frame_Rimosso) ) );
+                        ListaAzioni.add( new Azione(3, Frame_Rimosso, MemoriaRam.indiceDi(Frame_Rimosso) ) );
                         if ( Frame_Rimosso.getModifica()==true ) {
                             int posizione=inserisci(MemoriaSwap,Frame_Rimosso,UT);
-                            ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),2, Frame_Rimosso, 
+                            ListaAzioni.add( new Azione(2, Frame_Rimosso, 
                                     posizione ) );
                         }
                         int posizione=inserisci(MemoriaRam,F,UT);
-                        ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),1, F, posizione ) );
+                        ListaAzioni.add( new Azione(1, F, posizione ) );
                     }
                     catch ( MemoriaEsaurita SwapEsaurita ) {
                         // EXIT() situazione grave (memoria finita)
-                        ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),-1,null) );
+                        ListaAzioni.add( new Azione(-1,null) );
                         Errore=true;
                     }
                 }
@@ -196,7 +207,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
             else { // gia in ram
                 int Posizione=MemoriaRam.indiceDi(F);
                 PoliticaRimpiazzo.aggiornaEntry(Posizione, F.getModifica() );
-                ListaAzioni.add( new Azione(MemoriaRam.getSituazione(),5,F,Posizione) );
+                ListaAzioni.add( new Azione(5,F,Posizione) );
             }
         }
         return ListaAzioni;

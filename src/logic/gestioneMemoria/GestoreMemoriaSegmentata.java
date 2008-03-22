@@ -69,6 +69,18 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             case 5:PoliticaAllocazione = new QuickFit();
         }
     }
+    
+    
+    
+    public Vector<FrameMemoria> getStatoRAM() {
+        return MemoriaRam.getSituazione();
+    }
+    
+    public Vector<FrameMemoria> getStatoSwap() {
+        return MemoriaSwap.getSituazione();
+    }
+    
+    
     /**
      * Metodo pubblico chiamato dal Processore per notificare la 					terminazione di un processo. Chiama la cancellazione dalla memoria 
      * di tutte le risorse che il processo utilizzava tramite il metodo 
@@ -79,7 +91,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         LinkedList<Azione> Azioni=new LinkedList();
         MemoriaRam.liberaMemoria(id);
         MemoriaSwap.liberaMemoria(id);
-        Azioni.add( new Azione(MemoriaRam.getSituazione(),6,null,id) ); /*Creo l'azione con la terminazione del processo*/
+        Azioni.add( new Azione(6,null,id) ); /*Creo l'azione con la terminazione del processo*/
         return Azioni;
     }
     /**
@@ -173,18 +185,18 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         if ( dimensione_totale_inserimento > 0 ) {  
             while ( MemoriaRam.getSpazioMaggiore().getDimensione() < dimensione_totale_inserimento && !Errore) {
                 
-                Azioni.add( new Azione(MemoriaRam.getSituazione(),0,null) );
+                Azioni.add( new Azione(0,null) );
                 
                 FrameMemoria FrameRimosso=Rimuovi( MemoriaRam, null );
-                Azioni.add( new Azione(MemoriaRam.getSituazione(),3, FrameRimosso, MemoriaRam.indiceDi(FrameRimosso) ) );
+                Azioni.add( new Azione(3, FrameRimosso, MemoriaRam.indiceDi(FrameRimosso) ) );
                 
                 if ( FrameRimosso.getModifica()==true ) {                                                        
                     try { 
                           Inserisci( MemoriaSwap, FrameRimosso );
-                          Azioni.add( new Azione(MemoriaRam.getSituazione(),2, FrameRimosso ) );
+                          Azioni.add( new Azione(2, FrameRimosso ) );
                     }
                     catch ( MemoriaEsaurita SwapEsaurita ) {
-                        Azioni.add( new Azione(MemoriaRam.getSituazione(),-1,null) );
+                        Azioni.add( new Azione(-1,null) );
                         Errore=true;
                     }
 
@@ -205,17 +217,17 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             if ( !MemoriaRam.cerca(F) ) {
                 
                 FrameMemoria Temp=Rimuovi( MemoriaSwap, F );
-                if (Temp!=null) Azioni.add( new Azione(MemoriaRam.getSituazione(),4, Temp) );
+                if (Temp!=null) Azioni.add( new Azione(4, Temp) );
                                
                 try {
                     int posizione=Inserisci( MemoriaRam, F );
-                    Azioni.add( new Azione(MemoriaRam.getSituazione(),1, F, posizione ) ); 
+                    Azioni.add( new Azione(1, F, posizione ) ); 
 
                 }
                 catch ( MemoriaEsaurita Impossibile ) { /* Situazione mai realizzabile */ }
                    
             }
-            else Azioni.add( new Azione(MemoriaRam.getSituazione(),5, F, MemoriaRam.indiceDi(F) ) );
+            else Azioni.add( new Azione(5, F, MemoriaRam.indiceDi(F) ) );
         }
         return Azioni;
     }

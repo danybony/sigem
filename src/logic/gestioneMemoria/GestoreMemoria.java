@@ -15,6 +15,7 @@
 package logic.gestioneMemoria;
 
 import java.util.LinkedList;
+import java.util.Vector;
 
 /**
  * Classe astratta che rappresenta la struttura generica del sistema di gestione
@@ -43,4 +44,9 @@ public abstract class GestoreMemoria {
      *  Lista di azioni compiute
      */
     public abstract LinkedList<Azione> esegui( LinkedList<FrameMemoria> ListaFrame, int UT );
+    
+    public abstract Vector<FrameMemoria> getStatoRAM();
+    
+    public abstract Vector<FrameMemoria> getStatoSwap();
+    
 }

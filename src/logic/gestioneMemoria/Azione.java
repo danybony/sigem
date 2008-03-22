@@ -14,7 +14,7 @@
  */
 
 package logic.gestioneMemoria;
-import java.util.Vector;
+
 /**
  *
  * @author Davide Compagnin
@@ -45,9 +45,6 @@ public class Azione {
      */
     private FrameMemoria Frame;
     
-    
-    private Vector<FrameMemoria> MemoriaRAM;
-    
     /**
      * Costruttore
      * @param T
@@ -56,8 +53,8 @@ public class Azione {
      *   Frame conivolto nell'azione
      */
     
-    public Azione( Vector<FrameMemoria> MemoriaRAM, int T, FrameMemoria F ) {
-        TipoAzione=T; Frame=F; this.MemoriaRAM=MemoriaRAM;
+    public Azione( int T, FrameMemoria F ) {
+        TipoAzione=T; Frame=F;
     }
     /**
      * Costruttore
@@ -69,8 +66,8 @@ public class Azione {
      *   Posizione di inserimento
      */
     
-    public Azione( Vector<FrameMemoria> MemoriaRAM, int T, FrameMemoria F, int P ) {
-        this(MemoriaRAM,T,F); 
+    public Azione( int T, FrameMemoria F, int P ) {
+        this(T,F); 
         Pos=P;
     }
     /**
@@ -97,12 +94,5 @@ public class Azione {
     public int getPosizione() { 
         return Pos; 
     }
-    /**
-     * Ritorna un riferimento alla memoria RAM
-     * @return
-     *   Posizione
-     */
-    public Vector<FrameMemoria> getMemoriaRAM() {
-        return MemoriaRAM;
-    }
+    
 }
