@@ -271,8 +271,8 @@ public class ViewStatistiche extends javax.swing.JPanel {
                 }
             }
 
-            this.jProgressBar1.setValue(ultimo*100/tot);
-            this.jProgressBar1.setString(ultimo*100/tot + "%  (" + ultimo + " di " + tot + " KB)");
+            this.jProgressBar2.setValue(ultimo*100/tot);
+            this.jProgressBar2.setString(ultimo*100/tot + "%  (" + ultimo + " di " + tot + " KB)");
         }
         catch(NullPointerException e){}
         catch(NoSuchElementException e){}
