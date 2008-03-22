@@ -704,6 +704,20 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
      */
     private JScrollPane creaPannelloProcesso(int IdProcesso){
         JPanel nuovoPannelloGlobale = new JPanel();
+        
+        String commento;
+        
+        if(politica.getGestioneMemoria() == 1){
+            commento = new String("Trascinare qui le pagine che il processo utilizzerà" +
+                    " in questo istante. Fare click col tasto destro del mouse per" +
+                    "visualizzare le possibili scelte per la pagina selezionata.");
+        }
+        else{
+            commento = new String("Trascinare qui i segmenti che il processo utilizzerà" +
+                    " in questo istante. Fare click col tasto destro del mouse per" +
+                    "visualizzare le possibili scelte per il segmento selezionata.");
+        }
+        
                 
         int numIstanti = ((Integer)processi.getCombinazioneProcessi()[IdProcesso][2]).intValue();
         
@@ -718,6 +732,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             list1.setTransferHandler(arrayListHandler);
             list1.setDragEnabled(true);
             list1.setName(Integer.toString(listaList.size()));
+            list1.setToolTipText(commento);
             listaList.add(list1); 
             
             /* Per ogni lista creo un mouseListner */
