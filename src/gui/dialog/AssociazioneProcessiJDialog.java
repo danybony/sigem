@@ -53,22 +53,48 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     private ConfigurazioneIniziale confIniziale;
     private LinkedList<Processo> listaProcessi;
     private Vector<JList> listaList = new Vector<JList>();
+    
+    /**
+     * Lista dei modelli delle JList associate ai vari istanti
+     */
     private Vector<DefaultListModel> listModels = new Vector<DefaultListModel>();
             
+    /**
+     * ArrayListTransferHandler incaricato di gestire il Drag&Drop
+     */
     private ArrayListTransferHandler arrayListHandler;
     
-    JPopupMenu menu;
-    JMenuItem menuItemElimina, menuItemModifica;
+    /**
+     * Il menu che compare nelle JList degli istanti, e permette di rimuovere un
+     * FrameMemoria da quell'istante, o di impostarne la modifica in quell'istante
+     */
+    private JPopupMenu menu;
+    
+    /**
+     * I due componenti del menu
+     */
+    private JMenuItem menuItemElimina, menuItemModifica;
     
     /**
      * Modello per la lista delle pagine
      */
     DefaultListModel listaFrameModel;
     
+    /**
+     * Vector contenente le liste di FrameMemoria a disposizione di ogni processo
+     * sotto forma di DefaultListModel
+     */
     private Vector<DefaultListModel> modelliListaFrame = new Vector<DefaultListModel>();
     
         
-     /** Creates new form AssociazioneProcessiJDialog */
+    /** Creates new form AssociazioneProcessiJDialog
+     * @param parent
+     * @param modal 
+     * @param configurazione
+     * @param pol 
+     * @param proc
+     * @param view 
+     */
     public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, ProcessiJDialog proc, SiGeMv2View view) {
         super(parent, modal);
         configurazioneAmbiente = configurazione;
@@ -110,9 +136,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         jListFrame.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jListFrame.setTransferHandler(arrayListHandler);
         jListFrame.setDragEnabled(true);
-        
-        
     }
+    
     class FrameModifica{
         FrameMemoria frame;
         FrameModifica(FrameMemoria frame){

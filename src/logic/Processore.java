@@ -18,6 +18,7 @@ package logic;
 import logic.simulazione.Istante;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Vector;
 import logic.gestioneMemoria.*;
 import logic.parametri.ConfigurazioneIniziale;
 import logic.parametri.Processo;
@@ -335,18 +336,22 @@ public class Processore {
         
         boolean RAMPiena = controllaRAMPiena(istruzioni);
         
-        Istante istante;              
+        Istante istante;  
+        
+        Vector<FrameMemoria> statoRAM = gestoreMemoria.getStatoRAM();
+        
+        Vector<FrameMemoria> statoSwap = gestoreMemoria.getStatoSwap;
         
         if(terminato){
             
             istante = new Istante(corrente, ultimoEseguito, nuovoProcesso,
-                             fault, istruzioni, RAMPiena, SwapPiena);
+                             fault, istruzioni, RAMPiena, SwapPiena, statoRAM, statoSwap);
        
         }
         else{
             
             istante = new Istante(corrente, null, nuovoProcesso, fault, 
-                                istruzioni, RAMPiena, SwapPiena);
+                                istruzioni, RAMPiena, SwapPiena, statoRAM, statoSwap);
             
         }
         
