@@ -746,7 +746,7 @@ public class SiGeMv2View {
             
             mniHelp.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                            String URL="file:///"+System.getProperty("user.dir")+File.separatorChar+"/src/help"+File.separatorChar+"pagina.htm";
+                            String URL="file:///"+System.getProperty("user.dir")+File.separatorChar+"help"+File.separatorChar+"pagina.htm";
                             URL=URL.replace("\\", "/");
                             URL=URL.replace(" ","%20");
                             BareBonesBrowserLaunch.openURL(URL);
