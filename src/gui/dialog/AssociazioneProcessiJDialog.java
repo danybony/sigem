@@ -196,6 +196,13 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 numIstanti = ((Integer)processi.getCombinazioneProcessi()[indiceProcesso][2]).intValue();
             }
             
+            /* Trovo il primo modello del processo proprietario del segmento */
+            int primaLista = 0 ;
+
+            for(int processo = 0; processo < jTabbedPaneProcessi.getSelectedIndex(); processo++){
+                primaLista += ((Integer)processi.getCombinazioneProcessi()[processo][2]).intValue();
+            }
+            
             ArrayList<Accesso> accessi = confIniziale.getListaProcessi().get(indiceProcesso).getAccessi();
             
             for(int indiceAccesso = 0; indiceAccesso < accessi.size() && 
@@ -204,10 +211,17 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 FrameMemoria frame = accessi.get(indiceAccesso).getRisorsa();
                 DefaultListModel modello = modelliListaFrame.get(indiceProcesso);
                 
-                if(!modello.contains(frame)){
-                    
-                    modello.addElement(frame);
-                    
+                /* Aggiungo il FrameMemoria fra quelli del processo */
+                if(!modello.contains(frame)){                    
+                    modello.addElement(frame);                    
+                }
+                
+                if(accessi.get(indiceAccesso).getModifica()){
+                    listModels.get(primaLista + accessi.get(indiceAccesso).getIstanteRichiesta())
+                            .addElement(new FrameModifica(frame));
+                }
+                else{
+                    listModels.get(primaLista + accessi.get(indiceAccesso).getIstanteRichiesta()).addElement(frame);
                 }
                 
             }
