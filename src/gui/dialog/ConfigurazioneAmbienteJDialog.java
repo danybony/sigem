@@ -138,6 +138,9 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         jLabelBandaBusDati.setText("Banda del bus di dati");
 
         jButtonAvanti.setText("Avanti");
+        jButtonAvanti.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonAvanti.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonAvanti.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonAvanti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAvantiActionPerformed(evt);
@@ -145,6 +148,9 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         });
 
         jButtonAnnulla.setText("Annulla");
+        jButtonAnnulla.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonAnnulla.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonAnnulla.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonAnnulla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAnnullaActionPerformed(evt);
@@ -186,9 +192,9 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
                                         .addComponent(jSpinnerProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))))
                             .addContainerGap())
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jButtonAvanti)
+                            .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButtonAnnulla)
+                            .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(138, 138, 138)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabelPasso)
@@ -230,8 +236,8 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
                     .addComponent(jSpinnerBandaBusDati, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAvanti)
-                    .addComponent(jButtonAnnulla))
+                    .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 

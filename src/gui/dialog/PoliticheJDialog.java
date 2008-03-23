@@ -152,6 +152,9 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         });
 
         jButtonIndietro.setText("Indietro");
+        jButtonIndietro.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonIndietro.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonIndietro.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonIndietro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonIndietroActionPerformed(evt);
@@ -159,6 +162,9 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         });
 
         jButtonAvanti.setText("Avanti");
+        jButtonAvanti.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonAvanti.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonAvanti.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonAvanti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAvantiActionPerformed(evt);
@@ -166,6 +172,9 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         });
 
         jButtonAnnulla.setText("Annulla");
+        jButtonAnnulla.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonAnnulla.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonAnnulla.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonAnnulla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAnnullaActionPerformed(evt);
@@ -204,11 +213,11 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                         .addComponent(jLabelPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(82, 82, 82)
-                        .addComponent(jButtonIndietro)
+                        .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAvanti)
+                        .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAnnulla))
+                        .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -261,9 +270,9 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                     .addComponent(jSpinnerTimeSlice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAvanti)
-                    .addComponent(jButtonAnnulla)
-                    .addComponent(jButtonIndietro))
+                    .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 

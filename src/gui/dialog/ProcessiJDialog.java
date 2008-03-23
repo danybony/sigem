@@ -72,7 +72,7 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         jButtonIndietro = new javax.swing.JButton();
         jButtonAvanti = new javax.swing.JButton();
         jButtonAnnulla = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelPasso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -81,6 +81,9 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         jLabelParametriProcessi.setText("PARAMETRI PROCESSI");
 
         jButtonIndietro.setText("Indietro");
+        jButtonIndietro.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonIndietro.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonIndietro.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonIndietro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonIndietroActionPerformed(evt);
@@ -88,6 +91,9 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         });
 
         jButtonAvanti.setText("Avanti");
+        jButtonAvanti.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonAvanti.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonAvanti.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonAvanti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAvantiActionPerformed(evt);
@@ -95,15 +101,18 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         });
 
         jButtonAnnulla.setText("Annulla");
+        jButtonAnnulla.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonAnnulla.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonAnnulla.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonAnnulla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAnnullaActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Passo 3 di 4");
+        jLabelPasso.setFont(new java.awt.Font("Tahoma", 0, 10));
+        jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelPasso.setText("Passo 3 di 4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,29 +127,29 @@ public class ProcessiJDialog extends javax.swing.JDialog {
                             .addComponent(jLabelParametriProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLabelPasso)
                         .addGap(31, 31, 31))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonIndietro)
+                        .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAvanti)
+                        .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAnnulla)
+                        .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(126, 126, 126))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelParametriProcessi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPaneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAvanti)
-                    .addComponent(jButtonAnnulla)
-                    .addComponent(jButtonIndietro))
+                    .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -229,8 +238,8 @@ public class ProcessiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButtonAnnulla;
     private javax.swing.JButton jButtonAvanti;
     private javax.swing.JButton jButtonIndietro;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelParametriProcessi;
+    private javax.swing.JLabel jLabelPasso;
     private javax.swing.JScrollPane jScrollPaneProcessi;
     // End of variables declaration//GEN-END:variables
      private javax.swing.JTable jTableProcessi;

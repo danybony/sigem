@@ -305,6 +305,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         jLabelPasso.setText("Passo 4 di 4");
 
         jButtonIndietro.setText("Indietro");
+        jButtonIndietro.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonIndietro.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonIndietro.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonIndietro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonIndietroActionPerformed(evt);
@@ -312,6 +315,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         });
 
         jButtonOk.setText("Ok");
+        jButtonOk.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonOk.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonOk.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonOkActionPerformed(evt);
@@ -319,6 +325,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         });
 
         jButtonAnnulla.setText("Annulla");
+        jButtonAnnulla.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonAnnulla.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonAnnulla.setPreferredSize(new java.awt.Dimension(72, 23));
         jButtonAnnulla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAnnullaActionPerformed(evt);
@@ -409,17 +418,17 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(244, Short.MAX_VALUE)
+                .addContainerGap(211, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabelPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonIndietro)
+                        .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonOk)
+                        .addComponent(jButtonOk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAnnulla)
+                        .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(164, 164, 164))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
@@ -440,9 +449,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonOk)
-                    .addComponent(jButtonAnnulla)
-                    .addComponent(jButtonIndietro))
+                    .addComponent(jButtonOk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
