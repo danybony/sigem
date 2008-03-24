@@ -188,13 +188,15 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                     try {
                         ListaAzioni.add( new Azione(0,null) );
                         FrameMemoria Frame_Rimosso=rimuovi( MemoriaRam, null );
-                        ListaAzioni.add( new Azione(3, Frame_Rimosso, MemoriaRam.indiceDi(Frame_Rimosso) ) );
+                        int posizione=MemoriaRam.indiceDi(Frame_Rimosso);
+                        PoliticaRimpiazzo.liberaEntry(posizione);
+                        ListaAzioni.add( new Azione(3, Frame_Rimosso, posizione ) );
                         if ( Frame_Rimosso.getModifica()==true ) {
-                            int posizione=inserisci(MemoriaSwap,Frame_Rimosso,UT);
+                            posizione=inserisci(MemoriaSwap,Frame_Rimosso,UT);
                             ListaAzioni.add( new Azione(2, Frame_Rimosso, 
                                     posizione ) );
                         }
-                        int posizione=inserisci(MemoriaRam,F,UT);
+                        posizione=inserisci(MemoriaRam,F,UT);
                         ListaAzioni.add( new Azione(1, F, posizione ) );
                     }
                     catch ( MemoriaEsaurita SwapEsaurita ) {
