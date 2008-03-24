@@ -80,7 +80,7 @@ public class A implements IRimpiazzo {
     
     public FrameMemoria selezionaEntry() {
         int pos=0; int C=Tabella.firstElement().Contatore;
-        for (int i=0; i<Tabella.size(); i++ ) {
+        for (int i=1; i<Tabella.size(); i++ ) {
             if ( Tabella.elementAt(i).Contatore<C ) {
                 C=Tabella.elementAt(i).Contatore;
                 pos=i;
