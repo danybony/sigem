@@ -55,6 +55,9 @@ public class A implements IRimpiazzo {
      *   FrameMemoria da inserire
      */
     public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
+        for(int i=0; i<Tabella.size();i++) {
+            Tabella.elementAt(i).Contatore/=2;
+        }
         Tabella.elementAt(Posizione).Contatore=Integer.MAX_VALUE/2;
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).F=F;
