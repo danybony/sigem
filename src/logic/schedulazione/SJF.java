@@ -87,7 +87,7 @@ public class SJF implements PoliticaOrdinamentoProcessi {
 	public void inserisci(PCB pronto) {
 		boolean inserito = false;
 
-		PCB tmp = null;
+		PCB tmp;
 		// scorro i PCB contenuti nella codaPronti
 		for (int i = 0; i < codaPronti.size() && !inserito; i++) {
 			tmp = (PCB) codaPronti.get(i);

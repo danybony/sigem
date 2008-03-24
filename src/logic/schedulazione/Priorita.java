@@ -90,7 +90,7 @@ public class Priorita implements PoliticaOrdinamentoProcessi {
 
 		boolean inserito = false;
 
-		ProcessoConPriorita proc = (ProcessoConPriorita) pronto.getRifProcesso(), tmp = null;
+		ProcessoConPriorita proc = (ProcessoConPriorita) pronto.getRifProcesso(), tmp;
 
 		/* Inserimento mantenendo l'ordine di priorita' decrescente */
 		for (int i = 0; i < codaPronti.size() && !inserito; i++) {

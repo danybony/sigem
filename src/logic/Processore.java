@@ -66,7 +66,7 @@ public class Processore {
      */
     public Processore(ConfigurazioneIniziale conf){
         
-        PoliticaOrdinamentoProcessi politica = null;
+        PoliticaOrdinamentoProcessi politica;
         
         switch (conf.getPoliticaSchedulazioneProcessi()){ 
             case 2:politica = new SJF(); break;
@@ -119,8 +119,6 @@ public class Processore {
         boolean stop, nuovoProcesso,terminato, SwapPiena = false;
         
         while(!scheduler.fineSimulazione() && !SwapPiena){
-            
-            stop = false;
             
             nuovoProcesso = false;
             
