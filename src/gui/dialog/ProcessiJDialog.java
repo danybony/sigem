@@ -225,7 +225,10 @@ public class ProcessiJDialog extends javax.swing.JDialog {
                 combinazioneProcessi[row][col]= jTableProcessi.getValueAt(row, col);
                                     
         this.setVisible(false);
-        associazioneProcessi = new AssociazioneProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, politiche, this, view);
+        if (modifica)
+            associazioneProcessi = new AssociazioneProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, politiche, this, view, confIniziale);
+        else
+            associazioneProcessi = new AssociazioneProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, politiche, this, view);
         associazioneProcessi.setVisible(true);
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
