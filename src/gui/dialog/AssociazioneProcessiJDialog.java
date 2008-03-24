@@ -170,7 +170,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
      * Classe interna che contiene i FrameMemoria nel caso debbano essere modificati
      * durante la simulazione
      */
-    class FrameModifica{
+    static class FrameModifica{
         FrameMemoria frame;
         FrameModifica(FrameMemoria frame){
             this.frame = frame;
@@ -211,22 +211,56 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 FrameMemoria frame = accessi.get(indiceAccesso).getRisorsa();
                 DefaultListModel modello = modelliListaFrame.get(indiceProcesso);
                 
-                /* Aggiungo il FrameMemoria fra quelli del processo */
-                if(!modello.contains(frame)){                    
-                    modello.addElement(frame);                    
-                }
-                
-                if(accessi.get(indiceAccesso).getModifica()){
-                    listModels.get(primaLista + accessi.get(indiceAccesso).getIstanteRichiesta())
-                            .addElement(new FrameModifica(frame));
-                }
-                else{
-                    listModels.get(primaLista + accessi.get(indiceAccesso).getIstanteRichiesta()).addElement(frame);
+                if(accessoValido(frame,primaLista + accessi.get(indiceAccesso).getIstanteRichiesta())){
+                    
+                    /* Aggiungo il FrameMemoria fra quelli del processo */
+                    if(!modello.contains(frame)){                    
+                        modello.addElement(frame);                    
+                    }
+
+                    if(accessi.get(indiceAccesso).getModifica()){
+                        listModels.get(primaLista + accessi.get(indiceAccesso).getIstanteRichiesta())
+                                .addElement(new FrameModifica(frame));
+                    }
+                    else{
+                        listModels.get(primaLista + accessi.get(indiceAccesso).getIstanteRichiesta()).addElement(frame);
+                    }
+                    
                 }
                 
             }
             
         }
+    }
+    
+    /**
+     * Metodo che controlla la validita' di un accesso al suo caricamento, controllando
+     * se lo spazio disponibile in RAM e' sufficiente a contenere il FrameMemoria,
+     * considerando i FrameMemoria gia' caricati.
+     * @param frame
+     *          Il FrameMemoria da inserire
+     * @param indiceLista
+     *          L'indice del modello della lista corrispondente all'istante in cui
+     *          caricare il FrameMemoria
+     * @return  Ritorna true se c'e' spazio a sufficienza per inserire il FrameMemoria,
+     *          false altrimenti.
+     */
+    private boolean accessoValido(FrameMemoria frame, int indiceLista) {
+        /* Recupero il modello in cui inserire il frame */
+        DefaultListModel modello = listModels.get(indiceLista);        
+        boolean valido = true;
+        /* Imposto lo spazio disponibile in quell'istante */
+        int spazioRimanente = configurazioneAmbiente.getDimensioneRAM() - frame.getDimensione();
+        if(spazioRimanente < 0){
+            valido = false;
+        }
+        for(int elemento = 0; elemento < modello.size() && valido; elemento++){
+            spazioRimanente -= ((FrameMemoria)modello.get(elemento)).getDimensione();
+            if(spazioRimanente < 0){
+                valido = false;
+            }
+        }
+        return valido;
     }
 
     /**
@@ -718,14 +752,14 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         String commento;
         
         if(politica.getGestioneMemoria() == 1){
-            commento = new String("<html>Trascinare qui le pagine che il processo utilizzerà" +
+            commento = "<html>Trascinare qui le pagine che il processo utilizzerà" +
                     " in questo istante. <br> Fare click col tasto destro del mouse per " +
-                    "visualizzare le possibili scelte per la pagina selezionata.</html>");
+                    "visualizzare le possibili scelte per la pagina selezionata.</html>";
         }
         else{
-            commento = new String("<html>Trascinare qui i segmenti che il processo utilizzerà" +
+            commento = "<html>Trascinare qui i segmenti che il processo utilizzerà" +
                     " in questo istante. <br> Fare click col tasto destro del mouse per" +
-                    " visualizzare le possibili scelte per il segmento selezionata.</html>");
+                    " visualizzare le possibili scelte per il segmento selezionata.</html>";
         }
         
                 
@@ -827,11 +861,11 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                       trovato = true;
                   }
             }
-            if(! trovato){
-                valido = true;
+            if(trovato){
+                min++;
             }
             else{
-                min++;
+                valido = true;
             }
         }
         
@@ -854,13 +888,13 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 /* Per ogni FrameMemoria dell'istante crea l'Accesso */
                 for (int frame = 0; frame < listModels.get(indiceModello).size(); frame++){
                     
-                    boolean modifica = false;
+                    boolean modificaFrame = false;
                     
                     FrameMemoria frameAttuale;
                     
                     if(listModels.get(indiceModello).get(frame) instanceof FrameModifica){
                         
-                        modifica = true;
+                        modificaFrame = true;
                         frameAttuale = ((FrameModifica) listModels.get(indiceModello).get(frame)).frame;
                     
                     }
@@ -873,7 +907,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                         
                         frameAttuale.setIdProcesso(processoAttuale.getId());
                         
-                        processoAttuale.richiestaFrameMemoria(frameAttuale, istante, modifica);
+                        processoAttuale.richiestaFrameMemoria(frameAttuale, istante, modificaFrame);
                         
                      }
                     
