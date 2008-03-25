@@ -7,6 +7,7 @@
  * Versione: 1.8
  * Licenza: open-source
  * Registro delle modifiche:
+ * - v 1.10 (19/03/2008): inserimento frame per la visualizzazione dello Swap
  * - v 1.9 (18/03/2008): creazione dei metodi per impostare una configurazione
  *                       di default
  * - v 1.8 (16/03/2008): collegamento alla guida
@@ -147,6 +148,7 @@ public class SiGeMv2View {
 
     private JMenuItem jFileItemSalvaConfigurazione, jFileItemSalvaConfigurazioneConNome;
     private JMenuItem jFileItemModificaConfigurazione, jFileItemEsci;
+    private JMenuItem jFileItemDefaultConfigurazione;
 
     JScrollPane scrollMemoria = new JScrollPane();
 
@@ -203,6 +205,7 @@ public class SiGeMv2View {
             createRootWindow();
             setDefaultLayout();
             showFrame();
+            caricaSimulazioneDefault();
     }
     
     /** Disegna le statistiche sulla vista ViewStatistiche */
@@ -527,6 +530,15 @@ public class SiGeMv2View {
                     }
             });
             fileMenu.add(jFileItemModificaConfigurazione);
+            
+            jFileItemDefaultConfigurazione = new JMenuItem("Imposta la configurazione \"di default\"",IconStylosoft.getGeneralIcon(""));
+            jFileItemDefaultConfigurazione.setEnabled(false);
+            jFileItemDefaultConfigurazione.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        defaultConfigurazione();
+                    }
+            });
+            fileMenu.add(jFileItemDefaultConfigurazione);
 
             fileMenu.addSeparator();
 
@@ -1015,6 +1027,7 @@ public class SiGeMv2View {
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
         jButtonModificaConfigurazione.setEnabled(true);
+        jFileItemDefaultConfigurazione.setEnabled(true);
         
         jButtonSimulazionePlay.setEnabled(true);
         jButtonSimulazionePausa.setEnabled(false);
@@ -1052,6 +1065,7 @@ public class SiGeMv2View {
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
         jButtonModificaConfigurazione.setEnabled(true);
+        jFileItemDefaultConfigurazione.setEnabled(true);
         
         jButtonSimulazionePlay.setEnabled(true);
         jButtonSimulazionePausa.setEnabled(true);
@@ -2051,6 +2065,43 @@ public class SiGeMv2View {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(rootWindow, "Impossibile salvare. \nErrore nella scrittura del file","Errore",JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    public void defaultConfigurazione(){
+        String nomeFile=System.getProperty("user.dir")+File.separatorChar+"default.sigem";
+        nomeFile=nomeFile.replace("\\", "/");
+        nomeFile=nomeFile.replace(" ","%20");
+                            
+        gestione = new GestioneFile(nomeFile,SiGeMv2View.this.getConfigurazioneIniziale());
+
+        try {
+            if(gestione.salvaFileConfigurazione(SiGeMv2View.this.getConfigurazioneIniziale())){
+                JOptionPane.showMessageDialog(rootWindow, "La configurazione di default e' stata impostata!","Configurazione di default",JOptionPane.INFORMATION_MESSAGE);
+                frame.setTitle("SiGeM StyloSoft");
+            }
+            else{
+                JOptionPane.showMessageDialog(rootWindow, "Impossibile impostare la configurazione di default","Errore",JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(rootWindow, "Impossibile impostare la configurazione di default. \nErrore nella scrittura del file","Errore",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public boolean caricaSimulazioneDefault(){
+        String nomeFile=System.getProperty("user.dir")+File.separatorChar+"default.sigem";
+        nomeFile=nomeFile.replace("\\", "/");
+        nomeFile=nomeFile.replace(" ","%20");
+
+        try {
+            gestione = new GestioneFile(nomeFile, null);
+            ConfigurazioneIniziale conf = gestione.caricaFileConfigurazione();
+            setConfigurazioneIniziale(conf);
+            this.setIstanteZero();
+            frame.setTitle("SiGeM StyloSoft");
+        } catch (IOException ex) {return false;} 
+          catch (ClassNotFoundException ex) {return false;}
+        
+        return true;
     }
     
     public void modificaConfigurazione(){
