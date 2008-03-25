@@ -46,11 +46,11 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
     
     /**
      * Tipo di gestione della memoria<br>
-     * 0: paginazione<br>
-     * 1: segmentazione<br>
+     * 1: paginazione<br>
+     * 2: segmentazione<br>
      * Default: paginazione
      */
-    private int tipoGestioneMemoria=0;
+    private int tipoGestioneMemoria=1;
     
     /**
      * Array che mantiene traccia di quanto accade nel log. Utile in caso la
@@ -97,7 +97,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 
                 aux += "Il processo in questo istante richiede ";
 
-                if (tipoGestioneMemoria==1) {
+                if (tipoGestioneMemoria==2) {
                     aux += "i segmenti numero ";
                 } else {
                     aux += "le pagine di indirizzo ";
@@ -143,7 +143,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 //Se invece ci sono stati cambiamenti, elenco le varie modifiche
                 //Parto elencando i frame tolti dalla RAM
                 if (!frameToltiRAM.isEmpty()) {
-                    if (tipoGestioneMemoria==1) {
+                    if (tipoGestioneMemoria==2) {
                         aux += "Sono stati rimossi dalla  RAM i segmenti numero ";
                     } else {
                         aux += "Sono state rimosse dalla RAM le pagine di indirizzo ";
@@ -160,7 +160,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
 
                 //Elenco ora gli eventuali frame aggiunti in RAM
                 if (!frameAuxRAM.isEmpty()) {
-                    if (tipoGestioneMemoria==1) {
+                    if (tipoGestioneMemoria==2) {
                         aux += "Sono stati aggiunti alla  RAM i segmenti numero ";
                     } else {
                         aux += "Sono state aggiunte alla RAM le pagine di indirizzo ";
@@ -177,7 +177,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
 
                 //Elenco degli eventuali frame tolti dallo Swap
                 if (!frameToltiSwap.isEmpty()) {
-                    if (tipoGestioneMemoria==1) {
+                    if (tipoGestioneMemoria==2) {
                         aux += "Sono stati rimossi dallo Swap i segmenti numero ";
                     } else {
                         aux += "Sono state rimosse dallo Swap le pagine di indirizzo ";
@@ -194,7 +194,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
 
                 //Elenco degli eventuali frame aggiunti allo Swap
                 if (!frameAuxSwap.isEmpty()) {
-                    if (tipoGestioneMemoria==1) {
+                    if (tipoGestioneMemoria==2) {
                         aux += "Sono stati aggiunti allo Swap i segmenti numero ";
                     } else {
                         aux += "Sono state aggiunte allo Swap le pagine di indirizzo ";
