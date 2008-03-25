@@ -227,6 +227,24 @@ public class SiGeMv2View {
             
     }
 
+    public void visualizzaRiepilogo() {
+        ViewRiepilogo vr = null;
+        
+        switch(this.configurazioneIniziale.getModalitaGestioneMemoria()){
+            case 1:
+                    vr = new ViewRiepilogo(false);
+                    break;
+            case 2:
+                    vr = new ViewRiepilogo(true);
+                    break;
+        }
+        views[4] = new View("Riepilogo configurazione", IconStylosoft
+                            .getGeneralIcon(""), vr);
+        vr.aggiorna(this.configurazioneIniziale);
+    }
+    
+    
+    
     /**
      * Apre una vista statica. Questo metodo serve per aprire le viste dal menu
      * Finestre dell'interfacci grafica.
@@ -266,7 +284,7 @@ public class SiGeMv2View {
                             .getGeneralIcon(""),  new ViewAvanzamentoTestuale(0,true));
             viewMap.addView(3, views[3]);
             views[4] = new View("Riepilogo configurazione", IconStylosoft
-                            .getGeneralIcon(""), new JPanel());
+                            .getGeneralIcon(""), new ViewRiepilogo(false));
             viewMap.addView(4, views[4]);
             views[5] = new View("Swap", IconStylosoft
                             .getGeneralIcon("mv"), new ViewFrameMemoria());
@@ -1242,6 +1260,7 @@ public class SiGeMv2View {
         visualizzaOrdProcessi(processiEseguiti);
         azzeraStatisticheSimulazione();
         visualizzaStatisticheSimulazione(player,istante,true);
+        visualizzaRiepilogo();
     };
         
     /** Istanzia una nuova simulazione */
