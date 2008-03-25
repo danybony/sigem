@@ -119,8 +119,10 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 }
                 //Scorro la lista di azioni e le divido a seconda del tipo
                 frameAuxRAM.clear();
-                LinkedList<Azione> azioni = new LinkedList<Azione>();
+                LinkedList<Azione> azioni = istante.getCambiamentiInMemoria();
                 for (int i = 0; i < azioni.size(); i++) {
+                    
+                            
                     switch (azioni.get(i).getAzione()) {
                         case 1:
                             frameAuxRAM.add(azioni.get(i).getFrame());
@@ -214,7 +216,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
             
         }
         else{
-            testo.append("La simulazione è tornata all'istante "+idIstanteCorrente+"\n\n");
+            testo.append("La simulazione e' tornata all'istante "+idIstanteCorrente+"\n\n");
             testo.append(avanzamentoTestuale.get(idIstanteCorrente));
         }
     }
