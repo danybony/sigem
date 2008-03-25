@@ -141,21 +141,7 @@ public class ViewRiepilogo extends javax.swing.JPanel {
     
     
         
-    /*    Object[] Testo=null;
-        
-        public ModelloTabella(Processo P) {
-            int colonne=P.getTempoEsecuzione();
-            Testo=new Object[colonne];
-            ArrayList<Accesso> Accessi=P.getAccessi();
-            // controllare accessi==null
-            for (int j=0; j<Accessi.size(); j++ ) {
-                Accesso A=Accessi.get(j);
-                String S=A.getRisorsa().toString();
-                if ( A.getRisorsa() instanceof Segmento ) S=S+" ("+((Segmento)A.getRisorsa()).getDimensione()+"KB)";
-                if ( A.getModifica() ) S+=" (M)";
-                ((Vector<String>)Testo[A.getIstanteRichiesta()]).add(S);
-            }
-        }*/
+   
     
     public void azzeraRiepilogo() {
         jLabel1.setText("Processi: ");
@@ -224,7 +210,9 @@ public class ViewRiepilogo extends javax.swing.JPanel {
             Testo.add( new Vector<String>() );
         
         ArrayList<Accesso> Accessi=P.getAccessi();
-        // controllare accessi==null
+        
+        if (Accessi==null) return new JTable(0,0);
+        
         for (int i=0; i<Accessi.size(); i++ ) {
             Accesso A=Accessi.get(i);
             String S=A.getRisorsa().toString();
@@ -232,7 +220,7 @@ public class ViewRiepilogo extends javax.swing.JPanel {
             if ( A.getModifica() ) S+=" (M)";
             Testo.elementAt( A.getIstanteRichiesta() ).add(S);
         }
-        
+        colonne=Testo.size();
         int righe=0;
         for ( int i=0; i<colonne; i++ )
             if ( righe < Testo.elementAt(i).size() ) righe=Testo.elementAt(i).size();
