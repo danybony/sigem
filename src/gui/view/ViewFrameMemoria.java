@@ -52,11 +52,11 @@ public class ViewFrameMemoria extends JScrollPane {
     
     /**
      * Boolean che indica se il grafico deve visualizzare:<br>
-     * FALSE: Pagine<br>
-     * TRUE: Segmenti<br>
+     * 1: Pagine<br>
+     * 2: Segmenti<br>
      * Di default visualizza pagine.
      */
-    private boolean pag_seg=false;
+    private int pag_seg=1;
     
     /**
      * Dimensione totale della memoria in byte
@@ -176,7 +176,7 @@ public class ViewFrameMemoria extends JScrollPane {
         }
         //Se il disegno dei frame ha superato l'altezza del JPanel, ridimensiono
         //lo stesso e notifico il cambiamento al JScrollPane
-        if (!pag_seg)setPreferredSize(new Dimension(320, (pagineSquare.size()/6)*55));
+        if (pag_seg==1)setPreferredSize(new Dimension(320, (pagineSquare.size()/6)*55));
         else setPreferredSize(new Dimension(320, pagineSquare.get(pagineSquare.size()-1).getyCoord()+pagineSquare.get(pagineSquare.size()-1).getAltezza()+5));
         revalidate();
     }
@@ -233,7 +233,7 @@ public class ViewFrameMemoria extends JScrollPane {
         int i=0;
         for(; i<memoria.size(); i++){
             frame=memoria.get(i);
-            if (pag_seg==false){
+            if (pag_seg==1){
                 coordY=((i/6)*LATO+5*(i/6))+5;
                 coordX=(i%6)*LATO+5*(i%6)+5;
                 boolean trovato=false;
@@ -289,7 +289,7 @@ public class ViewFrameMemoria extends JScrollPane {
         
         //In caso di memoria paginata, aggiungo le pagine residue per far vedere
         //la memoria nella sua interezza
-        if(!pag_seg){
+        if(pag_seg==1){
             for (int j=i; j<numPagine; j++){
                 coordY=((j/6)*LATO+5*(j/6))+5;
                 coordX=(j%6)*LATO+5*(j%6)+5;
@@ -320,7 +320,7 @@ public class ViewFrameMemoria extends JScrollPane {
      * @param numProcessi
      *      Numero di processi della simulazione
      */
-    public void configura(boolean sceltaGestioneMemoria, int dimMemoria, int numProcessi, int numPagine){
+    public void configura(int sceltaGestioneMemoria, int dimMemoria, int numProcessi, int numPagine){
         pagineSquare.clear();
         pag_seg=sceltaGestioneMemoria;
         this.dimMemoria=dimMemoria;
@@ -328,7 +328,7 @@ public class ViewFrameMemoria extends JScrollPane {
         this.numPagine=numPagine;
         //processiUltimati=new Vector<Vector<Integer>>();
         //processiUltimati.add(0, new Vector<Integer>());
-        if(sceltaGestioneMemoria==true){
+        if(sceltaGestioneMemoria==2){
             pagineSquare.add(
                              0,
                              new SquareDraw(10,
