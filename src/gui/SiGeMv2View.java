@@ -224,15 +224,15 @@ public class SiGeMv2View {
     }
     
     public void visualizzaSimulazioneTestuale(Istante istante, int numero) {
-            if ((views[2]).getComponent() instanceof ViewAvanzamentoTestuale) {
-                    ViewAvanzamentoTestuale currView = (ViewAvanzamentoTestuale) views[2].getComponent();
+            if ((views[3]).getComponent() instanceof ViewAvanzamentoTestuale) {
+                    ViewAvanzamentoTestuale currView = (ViewAvanzamentoTestuale) views[3].getComponent();
                     currView.aggiorna(istante,numero);
             }
     }
     
     public void azzeraSimulazioneTestuale(int tot, int modalita) {
-            if ((views[2]).getComponent() instanceof ViewAvanzamentoTestuale) {
-                    ViewAvanzamentoTestuale currView = (ViewAvanzamentoTestuale) views[2].getComponent();
+            if ((views[3]).getComponent() instanceof ViewAvanzamentoTestuale) {
+                    ViewAvanzamentoTestuale currView = (ViewAvanzamentoTestuale) views[3].getComponent();
                     currView.configura(tot, modalita);
             }
     }
@@ -1312,11 +1312,11 @@ public class SiGeMv2View {
                     visualizzaSimulazioneTestuale(istante, player.getIndiceIstanteCorrente());
                     try {
                         currView1.aggiorna(istante.getStatoRAM(),
-                                          player.getIndiceIstanteCorrente(),
-                                          processiUltimati);
+                                           player.getIndiceIstanteCorrente(),
+                                           processiUltimati);
                         currView5.aggiorna(istante.getStatoSwap(),
-                                          player.getIndiceIstanteCorrente(),
-                                          processiUltimati);
+                                           player.getIndiceIstanteCorrente(),
+                                           processiUltimati);
                     }catch (Exception e){e.printStackTrace();}
                     
                     try {
