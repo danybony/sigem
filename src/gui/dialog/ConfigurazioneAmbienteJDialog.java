@@ -17,6 +17,7 @@ package gui.dialog;
 
 import javax.swing.SpinnerListModel;
 import gui.SiGeMv2View;
+import gui.utility.HelpHtml;
 import gui.utility.PopUpError;
 import java.awt.Color;
 import logic.parametri.ConfigurazioneIniziale;
@@ -109,6 +110,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         jButtonAvanti = new javax.swing.JButton();
         jButtonAnnulla = new javax.swing.JButton();
         jLabelPasso = new javax.swing.JLabel();
+        jButtonHelp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -161,6 +163,16 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPasso.setText("Passo 1 di 4");
 
+        jButtonHelp.setText("Help");
+        jButtonHelp.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonHelp.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonHelp.setPreferredSize(new java.awt.Dimension(72, 23));
+        jButtonHelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHelpActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,37 +180,39 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabelConfigurazioneIniziale, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabelProcessi)
-                                        .addComponent(jLabelDimensioneRAM)
-                                        .addComponent(jLabelDimensionaAreaSWAP)
-                                        .addComponent(jLabelDimensionePagina)
-                                        .addComponent(jLabelTempoContextSwitch)
-                                        .addComponent(jLabelTempoAccessoDisco)
-                                        .addComponent(jLabelBandaBusDati))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jSpinnerBandaBusDati)
-                                        .addComponent(jSpinnerTempoAccessoDisco)
-                                        .addComponent(jSpinnerTempoContextSwitch)
-                                        .addComponent(jSpinnerDimensionePagina)
-                                        .addComponent(jSpinnerDimensioneAreaSWAP)
-                                        .addComponent(jSpinnerDimensioneRAM)
-                                        .addComponent(jSpinnerProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))))
-                            .addContainerGap())
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(138, 138, 138)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelConfigurazioneIniziale, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelProcessi)
+                                    .addComponent(jLabelDimensioneRAM)
+                                    .addComponent(jLabelDimensionaAreaSWAP)
+                                    .addComponent(jLabelDimensionePagina)
+                                    .addComponent(jLabelTempoContextSwitch)
+                                    .addComponent(jLabelTempoAccessoDisco)
+                                    .addComponent(jLabelBandaBusDati))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jSpinnerBandaBusDati)
+                                    .addComponent(jSpinnerTempoAccessoDisco)
+                                    .addComponent(jSpinnerTempoContextSwitch)
+                                    .addComponent(jSpinnerDimensionePagina)
+                                    .addComponent(jSpinnerDimensioneAreaSWAP)
+                                    .addComponent(jSpinnerDimensioneRAM)
+                                    .addComponent(jSpinnerProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))))
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabelPasso)
                         .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +251,8 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -270,10 +285,15 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
     private void jButtonAnnullaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnullaActionPerformed
         this.setVisible(false);
 }//GEN-LAST:event_jButtonAnnullaActionPerformed
+
+    private void jButtonHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHelpActionPerformed
+        HelpHtml.openUrl("pagina.htm#Passo1");
+    }//GEN-LAST:event_jButtonHelpActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;
     private javax.swing.JButton jButtonAvanti;
+    private javax.swing.JButton jButtonHelp;
     private javax.swing.JLabel jLabelBandaBusDati;
     private javax.swing.JLabel jLabelConfigurazioneIniziale;
     private javax.swing.JLabel jLabelDimensionaAreaSWAP;

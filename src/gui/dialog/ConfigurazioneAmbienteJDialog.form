@@ -24,46 +24,47 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelConfigurazioneIniziale" alignment="0" pref="380" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabelProcessi" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelDimensioneRAM" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelDimensionaAreaSWAP" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelDimensionePagina" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelTempoContextSwitch" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelTempoAccessoDisco" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelBandaBusDati" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace pref="23" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jSpinnerBandaBusDati" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="jSpinnerTempoAccessoDisco" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="jSpinnerTempoContextSwitch" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="jSpinnerDimensionePagina" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="jSpinnerDimensioneAreaSWAP" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="jSpinnerDimensioneRAM" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="jSpinnerProcessi" alignment="0" pref="171" max="32767" attributes="1"/>
-                                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelConfigurazioneIniziale" alignment="0" pref="380" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabelProcessi" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelDimensioneRAM" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelDimensionaAreaSWAP" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelDimensionePagina" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelTempoContextSwitch" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelTempoAccessoDisco" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelBandaBusDati" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="23" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jSpinnerBandaBusDati" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerTempoAccessoDisco" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerTempoContextSwitch" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerDimensionePagina" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerDimensioneAreaSWAP" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerDimensioneRAM" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerProcessi" alignment="0" pref="171" max="32767" attributes="1"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jButtonAvanti" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jButtonAnnulla" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
-                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabelPasso" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+              <Component id="jButtonAvanti" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonAnnulla" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonHelp" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="87" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -112,6 +113,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonAvanti" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonAnnulla" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonHelp" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
@@ -240,6 +242,23 @@
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Passo 1 di 4"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonHelp">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Help"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[72, 23]"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[72, 23]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[72, 23]"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonHelpActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -24,7 +24,6 @@ public class HelpHtml {
         String URL="file:///"+System.getProperty("user.dir")+File.separatorChar+"help"+File.separatorChar+url;
         URL=URL.replace("\\", "/");
         URL=URL.replace(" ","%20");
-        System.out.println("URL: " + URL);
         BareBonesBrowserLaunch.openURL(URL);
     }
     
