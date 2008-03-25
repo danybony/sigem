@@ -13,7 +13,8 @@
  */
 
 package gui.view;
-
+import java.util.GregorianCalendar;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -21,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import logic.gestioneMemoria.Azione;
@@ -56,7 +58,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
      * Array che mantiene traccia di quanto accade nel log. Utile in caso la
      * simulazione torni indietro
      */
-    private Vector<String> avanzamentoTestuale= new Vector<String>();
+    private Vector<String> avanzamentoTestuale;
     
     /**
      * Costruttore della classe.
@@ -71,7 +73,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
      */
     public void aggiorna(Istante istante, int idIstanteCorrente){
         
-        if(idIstanteCorrente>avanzamentoTestuale.size()-1){
+        if(idIstanteCorrente>avanzamentoTestuale.size()-1 && istante.getProcessoInEsecuzione()!=null){
                 String aux = new String("");
                 int idProcessoCorrente = istante.getProcessoInEsecuzione().getRifProcesso().getId();
                 Vector<FrameMemoria> frameAuxRAM = new Vector<FrameMemoria>();
@@ -80,8 +82,8 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 Vector<FrameMemoria> frameToltiSwap = new Vector<FrameMemoria>();
                 Vector<FrameMemoria> memoria = istante.getStatoRAM();
 
-                aux += "La simulazione è passata all'istante " + idIstanteCorrente + " su un totale di " + istantiTotali + "\n";
-                aux += "E' stato schedulato per l'esecuzione il processo " + idProcessoCorrente + "\n";
+                aux += GregorianCalendar.getInstance().getTime()+": La simulazione è passata all'istante " + idIstanteCorrente + " su un totale di " + istantiTotali + "\n";
+                aux += GregorianCalendar.getInstance().getTime()+": E' stato schedulato per l'esecuzione il processo " + idProcessoCorrente + "\n";
 
                 //Scorro la memoria alla ricerca di frame memoria del processo in esecuzione
                 for (int i = 0; i < memoria.size(); i++) {
@@ -92,9 +94,9 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
 
                 //Se il processo non ha richiesto nessun frame memoria, lo scrivo
                 if (frameAuxRAM.isEmpty()) {
-                    aux += "Il processo in questo istante non ha richiesto l'utilizzo della memoria\n";
+                    aux += GregorianCalendar.getInstance().getTime()+": Il processo in questo istante non ha richiesto l'utilizzo della memoria\n";
                 }
-                
+                /*
                 aux += "Il processo in questo istante richiede ";
 
                 if (tipoGestioneMemoria==2) {
@@ -110,12 +112,12 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                         aux += "\n";
                     }
                 }
-
+*/
 
                 //Considero ora i cambiamenti avvenuti in RAM e in Swap
                 //Prima di tutto, se un processo ha finito la sua esecuzione:
                 if (istante.getProcessoPrecedenteTerminato() != null) {
-                    aux += "Il processo " + istante.getProcessoPrecedenteTerminato().getRifProcesso().getId() + " ha ultimato la sua escuzione. La memoria da esso occupata è stata liberata.";
+                    aux += GregorianCalendar.getInstance().getTime()+": Il processo " + istante.getProcessoPrecedenteTerminato().getRifProcesso().getId() + " ha ultimato la sua escuzione. La memoria da esso occupata è stata liberata.";
                 }
                 //Scorro la lista di azioni e le divido a seconda del tipo
                 frameAuxRAM.clear();
@@ -140,15 +142,15 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 }
                 //Se nn ci sono stati cambiamenti, lo scrivo
                 if (frameAuxRAM.isEmpty() && frameAuxSwap.isEmpty()) {
-                    aux += "Non ci sono stati ulteriori cambiamenti in memoria\n";
+                    aux += GregorianCalendar.getInstance().getTime()+": Non ci sono stati ulteriori cambiamenti in memoria\n";
                 }
                 //Se invece ci sono stati cambiamenti, elenco le varie modifiche
                 //Parto elencando i frame tolti dalla RAM
                 if (!frameToltiRAM.isEmpty()) {
                     if (tipoGestioneMemoria==2) {
-                        aux += "Sono stati rimossi dalla  RAM i segmenti numero ";
+                        aux += GregorianCalendar.getInstance().getTime()+": Sono stati rimossi dalla  RAM i segmenti numero ";
                     } else {
-                        aux += "Sono state rimosse dalla RAM le pagine di indirizzo ";
+                        aux += GregorianCalendar.getInstance().getTime()+": Sono state rimosse dalla RAM le pagine di indirizzo ";
                     }
                     for (int i = 0; i < frameToltiRAM.size(); i++) {
                         aux += frameToltiRAM.get(i).getIndirizzo();
@@ -163,9 +165,9 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 //Elenco ora gli eventuali frame aggiunti in RAM
                 if (!frameAuxRAM.isEmpty()) {
                     if (tipoGestioneMemoria==2) {
-                        aux += "Sono stati aggiunti alla  RAM i segmenti numero ";
+                        aux += GregorianCalendar.getInstance().getTime()+": Sono stati aggiunti alla  RAM i segmenti numero ";
                     } else {
-                        aux += "Sono state aggiunte alla RAM le pagine di indirizzo ";
+                        aux += GregorianCalendar.getInstance().getTime()+": Sono state aggiunte alla RAM le pagine di indirizzo ";
                     }
                     for (int i = 0; i < frameAuxRAM.size(); i++) {
                         aux += frameAuxRAM.get(i).getIndirizzo();
@@ -180,9 +182,9 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 //Elenco degli eventuali frame tolti dallo Swap
                 if (!frameToltiSwap.isEmpty()) {
                     if (tipoGestioneMemoria==2) {
-                        aux += "Sono stati rimossi dallo Swap i segmenti numero ";
+                        aux += GregorianCalendar.getInstance().getTime()+": Sono stati rimossi dallo Swap i segmenti numero ";
                     } else {
-                        aux += "Sono state rimosse dallo Swap le pagine di indirizzo ";
+                        aux += GregorianCalendar.getInstance().getTime()+": Sono state rimosse dallo Swap le pagine di indirizzo ";
                     }
                     for (int i = 0; i < frameToltiSwap.size(); i++) {
                         aux += frameToltiSwap.get(i).getIndirizzo();
@@ -197,9 +199,9 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 //Elenco degli eventuali frame aggiunti allo Swap
                 if (!frameAuxSwap.isEmpty()) {
                     if (tipoGestioneMemoria==2) {
-                        aux += "Sono stati aggiunti allo Swap i segmenti numero ";
+                        aux += GregorianCalendar.getInstance().getTime()+": Sono stati aggiunti allo Swap i segmenti numero ";
                     } else {
-                        aux += "Sono state aggiunte allo Swap le pagine di indirizzo ";
+                        aux += GregorianCalendar.getInstance().getTime()+": Sono state aggiunte allo Swap le pagine di indirizzo ";
                     }
                     for (int i = 0; i < frameAuxSwap.size(); i++) {
                         aux += frameAuxSwap.get(i).getIndirizzo();
@@ -212,24 +214,25 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 }
                 aux += "\n";
                 testo.append(aux);
-                avanzamentoTestuale.add(idIstanteCorrente, aux);
+                avanzamentoTestuale.add(aux);
             
         }
         else{
-            testo.append("La simulazione e' tornata all'istante "+idIstanteCorrente+"\n\n");
+            testo.append(GregorianCalendar.getInstance().getTime()+": La simulazione e' tornata all'istante "+idIstanteCorrente+"\n\n");
             testo.append(avanzamentoTestuale.get(idIstanteCorrente));
         }
     }
     
     public void configura(int istantiTotali, int tipoGestioneMemoria){
-        
+        setBorder(new EmptyBorder(10,10,10,10));
+        setBackground(Color.WHITE);
         testo=new JTextArea();
         this.istantiTotali=istantiTotali;
         this.tipoGestioneMemoria=tipoGestioneMemoria;
         testo.setEditable(false);
         setViewportView(testo);
         //Inizializzo il primo elemento del Vector di avanzamento testuale
-        avanzamentoTestuale.add("");
+        avanzamentoTestuale= new Vector<String>();
     }
     
 
