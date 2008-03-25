@@ -3,10 +3,11 @@
  * Nome file: ConfigurazioneAmbienteJDialog.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 15/03/2008
- * Versione: 1.2
+ * Data: 25/03/2008
+ * Versione: 1.3
  * Licenza: open-source
- * Registro delle modifiche: *  
+ * Registro delle modifiche: 
+ *  - v.1.3 (25/03/2008): Inserito bottone help
  *  - v.1.2 (15/03/2008): Inserita gestione modifica configurazione
  *  - v.1.1 (02/03/2008): Impostato gli intervalli dei valori per gli jspinner
  *                        inserita label "passo 1 di 4"

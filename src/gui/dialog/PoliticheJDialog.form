@@ -25,48 +25,42 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelPolitiche" pref="397" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelPasso" min="-2" pref="63" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelPolitiche" pref="397" max="32767" attributes="0"/>
+                          <Component id="jLabelPasso" alignment="1" min="-2" pref="63" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <Component id="jLabelTimeSlice" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jComboBoxSchedulazione" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jSpinnerTimeSlice" min="-2" pref="51" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="jLabelSchedulazione" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabelRimpiazzoSegmenti" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jLabelRimpiazzoPagine" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="jLabelTecnicaGestioneMemoria" alignment="0" max="32767" attributes="1"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jComboBoxSuddivisioneMemoria" pref="180" max="32767" attributes="1"/>
+                                  <Component id="jComboBoxRimpiazzoPagine" alignment="1" pref="180" max="32767" attributes="1"/>
+                                  <Component id="jComboBoxRimpiazzoSegmenti" alignment="0" pref="180" max="32767" attributes="1"/>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                       <Component id="jButtonIndietro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButtonAvanti" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButtonAnnulla" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabelTimeSlice" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jComboBoxSchedulazione" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jSpinnerTimeSlice" min="-2" pref="51" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelSchedulazione" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabelRimpiazzoSegmenti" alignment="0" max="32767" attributes="1"/>
-                          <Component id="jLabelRimpiazzoPagine" alignment="0" max="32767" attributes="1"/>
-                          <Component id="jLabelTecnicaGestioneMemoria" alignment="0" max="32767" attributes="1"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jComboBoxSuddivisioneMemoria" pref="180" max="32767" attributes="1"/>
-                          <Component id="jComboBoxRimpiazzoPagine" alignment="1" pref="180" max="32767" attributes="1"/>
-                          <Component id="jComboBoxRimpiazzoSegmenti" alignment="0" pref="180" max="32767" attributes="1"/>
-                      </Group>
+                      <Component id="jButtonHelp" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -109,6 +103,7 @@
                   <Component id="jButtonAvanti" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonAnnulla" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonIndietro" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonHelp" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -303,6 +298,23 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JSpinner" name="jSpinnerTimeSlice">
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonHelp">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Help"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[72, 23]"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[72, 23]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[72, 23]"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonHelpActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

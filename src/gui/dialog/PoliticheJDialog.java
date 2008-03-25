@@ -3,10 +3,11 @@
  * Nome file: PoliticheJDialog.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 15/03/2008
- * Versione: 1.2
+ * Data: 25/03/2008
+ * Versione: 1.3
  * Licenza: open-source
- * Registro delle modifiche: *  
+ * Registro delle modifiche: 
+ *  - v.1.3 (25/03/2008): Inserito bottone help
  *  - v.1.2 (15/03/2008): Inserita gestione modifica configurazione
  *  - v.1.1 (02/03/2008): migliorata la gestione delle variabili private
  *                        inserita label "passo 2 di 4"
@@ -15,6 +16,7 @@
 
 package gui.dialog;
 import gui.SiGeMv2View;
+import gui.utility.HelpHtml;
 import javax.swing.SpinnerListModel;
 import logic.parametri.ConfigurazioneIniziale;
 /**
@@ -111,6 +113,7 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         jLabelPasso = new javax.swing.JLabel();
         jLabelTimeSlice = new javax.swing.JLabel();
         jSpinnerTimeSlice = new javax.swing.JSpinner();
+        jButtonHelp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -199,6 +202,16 @@ public class PoliticheJDialog extends javax.swing.JDialog {
         jLabelTimeSlice.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelTimeSlice.setText("Time Slice");
 
+        jButtonHelp.setText("Help");
+        jButtonHelp.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonHelp.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonHelp.setPreferredSize(new java.awt.Dimension(72, 23));
+        jButtonHelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHelpActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -207,39 +220,35 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabelPolitiche, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelPolitiche, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+                            .addComponent(jLabelPasso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabelTimeSlice)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jSpinnerTimeSlice, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabelSchedulazione)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabelRimpiazzoSegmenti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabelRimpiazzoPagine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabelTecnicaGestioneMemoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jComboBoxSuddivisioneMemoria, 0, 180, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxRimpiazzoPagine, 0, 180, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxRimpiazzoSegmenti, javax.swing.GroupLayout.Alignment.LEADING, 0, 180, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
+                        .addGap(53, 53, 53)
                         .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelTimeSlice)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBoxSchedulazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jSpinnerTimeSlice, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelSchedulazione))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelRimpiazzoSegmenti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelRimpiazzoPagine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelTecnicaGestioneMemoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboBoxSuddivisioneMemoria, 0, 180, Short.MAX_VALUE)
-                            .addComponent(jComboBoxRimpiazzoPagine, 0, 180, Short.MAX_VALUE)
-                            .addComponent(jComboBoxRimpiazzoSegmenti, javax.swing.GroupLayout.Alignment.LEADING, 0, 180, Short.MAX_VALUE))))
+                        .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -272,7 +281,8 @@ public class PoliticheJDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -332,10 +342,15 @@ public class PoliticheJDialog extends javax.swing.JDialog {
            jComboBoxRimpiazzoSegmenti.setEnabled(true);
        }
     }//GEN-LAST:event_jComboBoxSuddivisioneMemoriaActionPerformed
+
+    private void jButtonHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHelpActionPerformed
+        HelpHtml.openUrl("pagina.htm#Passo2");
+    }//GEN-LAST:event_jButtonHelpActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;
     private javax.swing.JButton jButtonAvanti;
+    private javax.swing.JButton jButtonHelp;
     private javax.swing.JButton jButtonIndietro;
     private javax.swing.JComboBox jComboBoxRimpiazzoPagine;
     private javax.swing.JComboBox jComboBoxRimpiazzoSegmenti;

@@ -3,10 +3,11 @@
  * Nome file: ProcessiJDialog.java
  * Package: gui.dialog
  * Autore: Giordano Cariani
- * Data: 16/03/2008
- * Versione: 1.4
+ * Data: 25/03/2008
+ * Versione: 1.5
  * Licenza: open-source
- * Registro delle modifiche: * 
+ * Registro delle modifiche: 
+ *  - v.1.5 (25/03/2008): Inserito bottone help
  *  - v.1.4 (16/03/2008): Corretta gestione modifica configurazione
  *  - v.1.3 (15/03/2008): Inserita gestione modifica configurazione
  *  - v.1.2 (05/03/2008): Inserita gestione processi con priorita' 
@@ -17,6 +18,7 @@
 package gui.dialog;
 
 import gui.SiGeMv2View;
+import gui.utility.HelpHtml;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -73,6 +75,7 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         jButtonAvanti = new javax.swing.JButton();
         jButtonAnnulla = new javax.swing.JButton();
         jLabelPasso = new javax.swing.JLabel();
+        jButtonHelp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -114,6 +117,16 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         jLabelPasso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPasso.setText("Passo 3 di 4");
 
+        jButtonHelp.setText("Help");
+        jButtonHelp.setMaximumSize(new java.awt.Dimension(72, 23));
+        jButtonHelp.setMinimumSize(new java.awt.Dimension(72, 23));
+        jButtonHelp.setPreferredSize(new java.awt.Dimension(72, 23));
+        jButtonHelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHelpActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,14 +141,17 @@ public class ProcessiJDialog extends javax.swing.JDialog {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabelPasso)
-                        .addGap(31, 31, 31))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(126, 126, 126))))
+                        .addGap(31, 31, 31))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,7 +165,8 @@ public class ProcessiJDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAvanti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -186,12 +203,14 @@ public class ProcessiJDialog extends javax.swing.JDialog {
                         .addContainerGap()
                         .addComponent(jScrollPaneProcessi, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
+                        .addGap(76, 76, 76)
                         .addComponent(jButtonIndietro)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAvanti)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAnnulla)))
+                        .addComponent(jButtonAnnulla)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         
@@ -206,7 +225,8 @@ public class ProcessiJDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonIndietro)
                     .addComponent(jButtonAvanti)
-                    .addComponent(jButtonAnnulla))
+                    .addComponent(jButtonAnnulla)
+                    .addComponent(jButtonHelp))
                 .addContainerGap()));
         pack();
          
@@ -235,11 +255,16 @@ public class ProcessiJDialog extends javax.swing.JDialog {
     private void jButtonAnnullaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnullaActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnullaActionPerformed
+
+    private void jButtonHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHelpActionPerformed
+        HelpHtml.openUrl("pagina.htm#Passo3");
+    }//GEN-LAST:event_jButtonHelpActionPerformed
     
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnulla;
     private javax.swing.JButton jButtonAvanti;
+    private javax.swing.JButton jButtonHelp;
     private javax.swing.JButton jButtonIndietro;
     private javax.swing.JLabel jLabelParametriProcessi;
     private javax.swing.JLabel jLabelPasso;
