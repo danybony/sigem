@@ -1212,21 +1212,10 @@ public class SiGeMv2View {
                                 .getComponent();
 
                 if(configurazioneIniziale!=null){
-
-                    switch(configurazioneIniziale.getModalitaGestioneMemoria()){
-                        case 1: 
-                            currView.configura(false,
-                                    configurazioneIniziale.getDimensioneRAM(),
-                                    configurazioneIniziale.getListaProcessi().size(),
-                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
-                            break;
-                        case 2:
-                            currView.configura(true,
-                                    configurazioneIniziale.getDimensioneRAM(),
-                                    configurazioneIniziale.getListaProcessi().size(),
-                                    0);
-                            break;
-                    }
+                    currView.configura(configurazioneIniziale.getModalitaGestioneMemoria(),
+                                       configurazioneIniziale.getDimensioneRAM(),
+                                       configurazioneIniziale.getListaProcessi().size(),
+                                       configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                 }
         }
         if ((views[5]).getComponent() instanceof ViewFrameMemoria) {
@@ -1234,31 +1223,20 @@ public class SiGeMv2View {
                                 .getComponent();
 
                 if(configurazioneIniziale!=null){
-
-                    switch(configurazioneIniziale.getModalitaGestioneMemoria()){
-                        case 1: 
-                            currView.configura(false,
-                                    configurazioneIniziale.getDimensioneSwap(),
-                                    configurazioneIniziale.getListaProcessi().size(),
-                                    configurazioneIniziale.getDimensioneSwap()/configurazioneIniziale.getDimensionePagina());
-                            break;
-                        case 2:
-                            currView.configura(true,
-                                    configurazioneIniziale.getDimensioneSwap(),
-                                    configurazioneIniziale.getListaProcessi().size(),
-                                    0);
-                            break;
-                    }
+                    currView.configura(configurazioneIniziale.getModalitaGestioneMemoria(),
+                                       configurazioneIniziale.getDimensioneSwap(),
+                                       configurazioneIniziale.getListaProcessi().size(),
+                                       configurazioneIniziale.getDimensioneSwap()/configurazioneIniziale.getDimensionePagina());
                 }
         }
         
         processiEseguiti = new LinkedList<Processo>();
         visualizzaOrdProcessi(processiEseguiti);
         azzeraStatisticheSimulazione();
+        visualizzaStatisticheSimulazione(player,istante,true);
         azzeraSimulazioneTestuale(player.numeroIstanti(), 
                                   configurazioneIniziale.getModalitaGestioneMemoria());
         visualizzaSimulazioneTestuale(istante, player.getIndiceIstanteCorrente());
-        visualizzaStatisticheSimulazione(player,istante,true);
         visualizzaRiepilogo();
     };
         
@@ -1406,44 +1384,23 @@ public class SiGeMv2View {
             if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
                     ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
                                     .getComponent();
-                    
-                if(configurazioneIniziale!=null){
-                    switch(configurazioneIniziale.getModalitaGestioneMemoria()){
-                        case 1: 
-                            currView.configura(false,
-                                    configurazioneIniziale.getDimensioneRAM(),
-                                    configurazioneIniziale.getListaProcessi().size(),
-                                    configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
-                            break;
-                        case 2:
-                            currView.configura(true,
-                                    configurazioneIniziale.getDimensioneRAM(),
-                                    configurazioneIniziale.getListaProcessi().size(),
-                                    0);
-                            break;
+
+                    if(configurazioneIniziale!=null){
+                        currView.configura(configurazioneIniziale.getModalitaGestioneMemoria(),
+                                           configurazioneIniziale.getDimensioneRAM(),
+                                           configurazioneIniziale.getListaProcessi().size(),
+                                           configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                     }
-                }
             }
             if ((views[5]).getComponent() instanceof ViewFrameMemoria) {
                     ViewFrameMemoria currView = (ViewFrameMemoria) views[5]
                                     .getComponent();
 
                     if(configurazioneIniziale!=null){
-
-                        switch(configurazioneIniziale.getModalitaGestioneMemoria()){
-                            case 1: 
-                                currView.configura(false,
-                                        configurazioneIniziale.getDimensioneSwap(),
-                                        configurazioneIniziale.getListaProcessi().size(),
-                                        configurazioneIniziale.getDimensioneSwap()/configurazioneIniziale.getDimensionePagina());
-                                break;
-                            case 2:
-                                currView.configura(true,
-                                        configurazioneIniziale.getDimensioneSwap(),
-                                        configurazioneIniziale.getListaProcessi().size(),
-                                        0);
-                                break;
-                        }
+                        currView.configura(configurazioneIniziale.getModalitaGestioneMemoria(),
+                                           configurazioneIniziale.getDimensioneSwap(),
+                                           configurazioneIniziale.getListaProcessi().size(),
+                                           configurazioneIniziale.getDimensioneSwap()/configurazioneIniziale.getDimensionePagina());
                     }
             }
             
@@ -1525,47 +1482,26 @@ public class SiGeMv2View {
         azzeraStatisticheSimulazione();
         visualizzaStatisticheSimulazione(player,istante,true);
         // Svuota l'interfaccia della RAM
-        if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
+       if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
                 ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
                                 .getComponent();
 
-            if(configurazioneIniziale!=null){
-                switch(configurazioneIniziale.getModalitaGestioneMemoria()){
-                    case 1: 
-                        currView.configura(false,
-                                configurazioneIniziale.getDimensioneRAM(),
-                                configurazioneIniziale.getListaProcessi().size(),
-                                configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
-                        break;
-                    case 2:
-                        currView.configura(true,
-                                configurazioneIniziale.getDimensioneRAM(),
-                                configurazioneIniziale.getListaProcessi().size(),
-                                0);
-                        break;
+                if(configurazioneIniziale!=null){
+                    currView.configura(configurazioneIniziale.getModalitaGestioneMemoria(),
+                                       configurazioneIniziale.getDimensioneRAM(),
+                                       configurazioneIniziale.getListaProcessi().size(),
+                                       configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                 }
-            }
         }
         if ((views[5]).getComponent() instanceof ViewFrameMemoria) {
                 ViewFrameMemoria currView = (ViewFrameMemoria) views[5]
                                 .getComponent();
 
                 if(configurazioneIniziale!=null){
-
-                    switch(configurazioneIniziale.getModalitaGestioneMemoria()){
-                        case 1: 
-                            currView.configura(false,
-                                    configurazioneIniziale.getDimensioneSwap(),
-                                    configurazioneIniziale.getListaProcessi().size(),
-                                    configurazioneIniziale.getDimensioneSwap()/configurazioneIniziale.getDimensionePagina());
-                            break;
-                        case 2:
-                            currView.configura(true,
-                                    configurazioneIniziale.getDimensioneSwap(),
-                                    configurazioneIniziale.getListaProcessi().size(),
-                                    0);
-                            break;
-                    }
+                    currView.configura(configurazioneIniziale.getModalitaGestioneMemoria(),
+                                       configurazioneIniziale.getDimensioneSwap(),
+                                       configurazioneIniziale.getListaProcessi().size(),
+                                       configurazioneIniziale.getDimensioneSwap()/configurazioneIniziale.getDimensionePagina());
                 }
         }
         
