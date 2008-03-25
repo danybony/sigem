@@ -4,15 +4,22 @@
  * Package: gui.dialog
  * Autore: Davide Compagnin
  * Data: 14/03/2008
- * Versione: 1.0
+ * Versione: 1.1
  * Licenza: open-source
  * Registro delle modifiche: 
- *
+ *  - v.1.1 (14/03/2008): Aggiunta Pannello Tabbed e tabelle
  *  - v.1.0 (14/03/2008): Creazione e impostazione grafica
  */
 
 package gui.view;
-import logic.parametri.ConfigurazioneIniziale;
+import logic.parametri.*;
+import logic.parametri.Processo.Accesso;
+import logic.gestioneMemoria.*;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.*;
+import java.util.ArrayList;
+import java.util.Vector;
 /**
  *
  * @author  Compagnin Davide
@@ -133,6 +140,23 @@ public class ViewRiepilogo extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
     
+        
+    /*    Object[] Testo=null;
+        
+        public ModelloTabella(Processo P) {
+            int colonne=P.getTempoEsecuzione();
+            Testo=new Object[colonne];
+            ArrayList<Accesso> Accessi=P.getAccessi();
+            // controllare accessi==null
+            for (int j=0; j<Accessi.size(); j++ ) {
+                Accesso A=Accessi.get(j);
+                String S=A.getRisorsa().toString();
+                if ( A.getRisorsa() instanceof Segmento ) S=S+" ("+((Segmento)A.getRisorsa()).getDimensione()+"KB)";
+                if ( A.getModifica() ) S+=" (M)";
+                ((Vector<String>)Testo[A.getIstanteRichiesta()]).add(S);
+            }
+        }*/
+    
     public void azzeraRiepilogo() {
         jLabel1.setText("Processi: ");
         jLabel2.setText("Dimensione RAM (KB): ");
@@ -170,9 +194,57 @@ public class ViewRiepilogo extends javax.swing.JPanel {
             case 5: jLabel9.setText(S+"Quick-Fit"); break;        
         }
     }
+    
     public void aggiorna( ConfigurazioneIniziale C ) {
+        // imposta i campi su
         if ( C.getModalitaGestioneMemoria() == 1 ) // Paginazione
             setPaginazione(C);
-        else setSegmentazione(C);
+        else setSegmentazione(C); // Segmentazione
+        
+        for(int i=0; i<C.getListaProcessi().size(); i++ ) {
+            Processo P=C.getListaProcessi().get(i);
+            JScrollPane Pannello = new JScrollPane( creaTabella(P) );
+            String NomeProcesso=P.getNome();
+            if (P instanceof ProcessoConPriorita ) NomeProcesso=NomeProcesso+"("+((ProcessoConPriorita)P).getPriorita();            
+            jTabbedPane1.addTab(NomeProcesso, Pannello);
+        }
+   
+
+    }
+    
+    
+    private JTable creaTabella( Processo P ) {
+        
+        
+        int colonne=P.getTempoEsecuzione();
+        
+        Vector<Vector<String>> Testo=new Vector<Vector<String>>();
+        
+        for (int i=0; i<colonne; i++)
+            Testo.add( new Vector<String>() );
+        
+        ArrayList<Accesso> Accessi=P.getAccessi();
+        // controllare accessi==null
+        for (int i=0; i<Accessi.size(); i++ ) {
+            Accesso A=Accessi.get(i);
+            String S=A.getRisorsa().toString();
+            if ( A.getRisorsa() instanceof Segmento ) S=S+" ("+((Segmento)A.getRisorsa()).getDimensione()+"KB)";
+            if ( A.getModifica() ) S+=" (M)";
+            Testo.elementAt( A.getIstanteRichiesta() ).add(S);
+        }
+        
+        int righe=0;
+        for ( int i=0; i<colonne; i++ )
+            if ( righe < Testo.elementAt(i).size() ) righe=Testo.elementAt(i).size();
+        
+            
+        JTable TabellaProcesso=new JTable(righe,colonne);
+        
+        for ( int r=0; r<righe; r++ )
+            for (int c=0; c<colonne; c++ )
+                TabellaProcesso.setValueAt(Testo.elementAt(c).elementAt(r), r, c );
+        
+        return TabellaProcesso;
+    
     }
 }
