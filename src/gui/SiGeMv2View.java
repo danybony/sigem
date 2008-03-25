@@ -228,7 +228,7 @@ public class SiGeMv2View {
     }
 
     public void visualizzaRiepilogo() {
-        ViewRiepilogo vr = null;
+        /*ViewRiepilogo vr = null;
         
         switch(this.configurazioneIniziale.getModalitaGestioneMemoria()){
             case 1:
@@ -240,7 +240,7 @@ public class SiGeMv2View {
         }
         views[4] = new View("Riepilogo configurazione", IconStylosoft
                             .getGeneralIcon(""), vr);
-        vr.aggiorna(this.configurazioneIniziale);
+        vr.aggiorna(this.configurazioneIniziale);*/
     }
     
     
@@ -283,8 +283,10 @@ public class SiGeMv2View {
             views[3] = new View("Modalita' testuale", IconStylosoft
                             .getGeneralIcon(""),  new ViewAvanzamentoTestuale(0,true));
             viewMap.addView(3, views[3]);
+            /*views[4] = new View("Riepilogo configurazione", IconStylosoft
+                            .getGeneralIcon(""), new ViewRiepilogo(false));*/
             views[4] = new View("Riepilogo configurazione", IconStylosoft
-                            .getGeneralIcon(""), new ViewRiepilogo(false));
+                            .getGeneralIcon(""), new JPanel());
             viewMap.addView(4, views[4]);
             views[5] = new View("Swap", IconStylosoft
                             .getGeneralIcon("mv"), new ViewFrameMemoria());
