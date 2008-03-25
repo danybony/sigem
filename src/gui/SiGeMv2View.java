@@ -238,19 +238,11 @@ public class SiGeMv2View {
     }
 
     public void visualizzaRiepilogo() {
-        /*ViewRiepilogo vr = null;
-        
-        switch(this.configurazioneIniziale.getModalitaGestioneMemoria()){
-            case 1:
-                    vr = new ViewRiepilogo(false);
-                    break;
-            case 2:
-                    vr = new ViewRiepilogo(true);
-                    break;
-        }
-        views[4] = new View("Riepilogo configurazione", IconStylosoft
-                            .getGeneralIcon(""), vr);
-        vr.aggiorna(this.configurazioneIniziale);*/
+        if ((views[4]).getComponent() instanceof ViewRiepilogo) {
+                    ViewRiepilogo currView = (ViewRiepilogo) views[4].getComponent();
+                    currView.azzeraRiepilogo();
+                    currView.aggiorna(this.configurazioneIniziale);
+            }
     }
     
     
