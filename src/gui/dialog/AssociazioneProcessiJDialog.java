@@ -255,7 +255,12 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             valido = false;
         }
         for(int elemento = 0; elemento < modello.size() && valido; elemento++){
-            spazioRimanente -= ((FrameMemoria)modello.get(elemento)).getDimensione();
+            if(modello.get(elemento) instanceof FrameMemoria){
+                spazioRimanente -= ((FrameMemoria)modello.get(elemento)).getDimensione();
+            }
+            else{
+                spazioRimanente -= ((FrameModifica)modello.get(elemento)).frame.getDimensione();
+            }            
             if(spazioRimanente < 0){
                 valido = false;
             }
