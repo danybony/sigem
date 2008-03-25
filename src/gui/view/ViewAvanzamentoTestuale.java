@@ -37,20 +37,20 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
     /**
      * JTextArea dove si scriverà il log visualizzato a schermo
      */
-    private JTextArea testo=new JTextArea();
+    private JTextArea testo;
     
     /**
      * Numero di istanti totali della simulazione
      */
-    private final int istantiTotali;
+    private int istantiTotali;
     
     /**
      * Tipo di gestione della memoria<br>
-     * FALSE: paginazione<br>
-     * TRUE: segmentazione<br>
+     * 0: paginazione<br>
+     * 1: segmentazione<br>
      * Default: paginazione
      */
-    private boolean tipoGestioneMemoria=false;
+    private int tipoGestioneMemoria=0;
     
     /**
      * Array che mantiene traccia di quanto accade nel log. Utile in caso la
@@ -61,14 +61,8 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
     /**
      * Costruttore della classe.
      */
-    public ViewAvanzamentoTestuale(int istantiTotali, boolean tipoGestioneMemoria){
+    public ViewAvanzamentoTestuale(){
         super();
-        this.istantiTotali=istantiTotali;
-        this.tipoGestioneMemoria=tipoGestioneMemoria;
-        testo.setEditable(false);
-        setViewportView(testo);
-        //Inizializzo il primo elemento del Vector di avanzamento testuale
-        avanzamentoTestuale.add("");
     }
     
 
@@ -103,7 +97,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 
                 aux += "Il processo in questo istante richiede ";
 
-                if (tipoGestioneMemoria) {
+                if (tipoGestioneMemoria==1) {
                     aux += "i segmenti numero ";
                 } else {
                     aux += "le pagine di indirizzo ";
@@ -149,7 +143,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 //Se invece ci sono stati cambiamenti, elenco le varie modifiche
                 //Parto elencando i frame tolti dalla RAM
                 if (!frameToltiRAM.isEmpty()) {
-                    if (tipoGestioneMemoria) {
+                    if (tipoGestioneMemoria==1) {
                         aux += "Sono stati rimossi dalla  RAM i segmenti numero ";
                     } else {
                         aux += "Sono state rimosse dalla RAM le pagine di indirizzo ";
@@ -166,7 +160,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
 
                 //Elenco ora gli eventuali frame aggiunti in RAM
                 if (!frameAuxRAM.isEmpty()) {
-                    if (tipoGestioneMemoria) {
+                    if (tipoGestioneMemoria==1) {
                         aux += "Sono stati aggiunti alla  RAM i segmenti numero ";
                     } else {
                         aux += "Sono state aggiunte alla RAM le pagine di indirizzo ";
@@ -183,7 +177,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
 
                 //Elenco degli eventuali frame tolti dallo Swap
                 if (!frameToltiSwap.isEmpty()) {
-                    if (tipoGestioneMemoria) {
+                    if (tipoGestioneMemoria==1) {
                         aux += "Sono stati rimossi dallo Swap i segmenti numero ";
                     } else {
                         aux += "Sono state rimosse dallo Swap le pagine di indirizzo ";
@@ -200,7 +194,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
 
                 //Elenco degli eventuali frame aggiunti allo Swap
                 if (!frameAuxSwap.isEmpty()) {
-                    if (tipoGestioneMemoria) {
+                    if (tipoGestioneMemoria==1) {
                         aux += "Sono stati aggiunti allo Swap i segmenti numero ";
                     } else {
                         aux += "Sono state aggiunte allo Swap le pagine di indirizzo ";
@@ -223,6 +217,17 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
             testo.append("La simulazione è tornata all'istante "+idIstanteCorrente+"\n\n");
             testo.append(avanzamentoTestuale.get(idIstanteCorrente));
         }
+    }
+    
+    public void configura(int istantiTotali, int tipoGestioneMemoria){
+        
+        testo=new JTextArea();
+        this.istantiTotali=istantiTotali;
+        this.tipoGestioneMemoria=tipoGestioneMemoria;
+        testo.setEditable(false);
+        setViewportView(testo);
+        //Inizializzo il primo elemento del Vector di avanzamento testuale
+        avanzamentoTestuale.add("");
     }
     
 
