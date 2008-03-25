@@ -260,7 +260,7 @@ public class SiGeMv2View {
                             .getGeneralIcon("statistiche"), new ViewStatistiche(this));
             viewMap.addView(2, views[2]);
             views[3] = new View("Modalita' testuale", IconStylosoft
-                            .getGeneralIcon("proc"), new JPanel());
+                            .getGeneralIcon(""),  new ViewAvanzamentoTestuale(0,true));
             viewMap.addView(3, views[3]);
             views[4] = new View("Riepilogo configurazione", IconStylosoft
                             .getGeneralIcon(""), new JPanel());
@@ -1209,6 +1209,20 @@ public class SiGeMv2View {
                     }
                 }
         }
+        
+        switch(configurazioneIniziale.getModalitaGestioneMemoria()){
+            case 1:
+                views[3] = new View("Modalita' testuale", IconStylosoft.getGeneralIcon(""),
+                                    new ViewAvanzamentoTestuale(player.numeroIstanti(),
+                                                                false));
+                viewMap.addView(3, views[3]);
+                break;
+            case 2:
+                views[3] = new View("Modalita' testuale", IconStylosoft.getGeneralIcon(""),
+                                    new ViewAvanzamentoTestuale(player.numeroIstanti(),true));
+                viewMap.addView(3, views[3]);
+                break;
+        }
 
         processiEseguiti = new LinkedList<Processo>();
         visualizzaOrdProcessi(processiEseguiti);
@@ -1271,6 +1285,8 @@ public class SiGeMv2View {
                                     .getComponent();
                 ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
                                     .getComponent();
+                ViewAvanzamentoTestuale currView3 = (ViewAvanzamentoTestuale) views[3]
+                                    .getComponent();
                 while(istante!=null && statoGui){
                     Double t =((Double)scegliVelocita.getValue()).doubleValue();
                     velocita = (int) (t * 10);
@@ -1285,6 +1301,7 @@ public class SiGeMv2View {
                     
                     visualizzaOrdProcessi(processiEseguiti);
                     visualizzaStatisticheSimulazione(player,istante,true);
+                    currView3.aggiorna(istante, player.getIndiceIstanteCorrente());
                     try {
                         currView1.aggiorna(istante.getStatoRAM(),
                                           player.getIndiceIstanteCorrente(),
@@ -1398,6 +1415,20 @@ public class SiGeMv2View {
                                 break;
                         }
                     }
+            }
+            
+            switch(configurazioneIniziale.getModalitaGestioneMemoria()){
+                case 1:
+                    views[3] = new View("Modalita' testuale", IconStylosoft.getGeneralIcon(""),
+                                        new ViewAvanzamentoTestuale(player.numeroIstanti(),
+                                                                    false));
+                    viewMap.addView(3, views[3]);
+                    break;
+                case 2:
+                    views[3] = new View("Modalita' testuale", IconStylosoft.getGeneralIcon(""),
+                                        new ViewAvanzamentoTestuale(player.numeroIstanti(),true));
+                    viewMap.addView(3, views[3]);
+                    break;
             }
 
             aggiornaComandi();
@@ -1518,6 +1549,20 @@ public class SiGeMv2View {
                 }
         }
         
+        switch(configurazioneIniziale.getModalitaGestioneMemoria()){
+            case 1:
+                views[3] = new View("Modalita' testuale", IconStylosoft.getGeneralIcon(""),
+                                    new ViewAvanzamentoTestuale(player.numeroIstanti(),
+                                                                false));
+                viewMap.addView(3, views[3]);
+                break;
+            case 2:
+                views[3] = new View("Modalita' testuale", IconStylosoft.getGeneralIcon(""),
+                                    new ViewAvanzamentoTestuale(player.numeroIstanti(),true));
+                viewMap.addView(3, views[3]);
+                break;
+        }
+        
         aggiornaComandi();
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
@@ -1560,10 +1605,13 @@ public class SiGeMv2View {
                                     .getComponent();
              ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
                                     .getComponent();
+             ViewAvanzamentoTestuale currView3 = (ViewAvanzamentoTestuale) views[3]
+                                    .getComponent();
         
             processiEseguiti.removeLast();
             visualizzaOrdProcessi(processiEseguiti);
             visualizzaStatisticheSimulazione(player,istante,false);
+            currView3.aggiorna(istante, player.getIndiceIstanteCorrente());
             try{
                 currView1.aggiorna(istante.getStatoRAM(),
                                    player.getIndiceIstanteCorrente(),
@@ -1609,6 +1657,8 @@ public class SiGeMv2View {
                                     .getComponent();
             ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
                                     .getComponent();
+            ViewAvanzamentoTestuale currView3 = (ViewAvanzamentoTestuale) views[3]
+                                    .getComponent();
 
             pcbAttuale = istante.getProcessoInEsecuzione();
             if(pcbAttuale==null){
@@ -1620,6 +1670,7 @@ public class SiGeMv2View {
 
             visualizzaOrdProcessi(processiEseguiti);
             visualizzaStatisticheSimulazione(player,istante,true);
+            currView3.aggiorna(istante, player.getIndiceIstanteCorrente());
             try{
                 currView1.aggiorna(istante.getStatoRAM(),
                                   player.getIndiceIstanteCorrente(),
@@ -1664,6 +1715,8 @@ public class SiGeMv2View {
                                     .getComponent();
         ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
                                     .getComponent();
+        ViewAvanzamentoTestuale currView3 = (ViewAvanzamentoTestuale) views[3]
+                                    .getComponent();
         
         int numeroIstanti = istantiAllaFine.size();
         int numeroIstanteCorrente;
@@ -1685,6 +1738,7 @@ public class SiGeMv2View {
                 currView5.aggiorna(istante.getStatoSwap(),
                                   numeroIstanteCorrente,
                                   processiUltimati);
+                currView3.aggiorna(istante, numeroIstanteCorrente);
             }catch(Exception e){}
         }
         visualizzaOrdProcessi(processiEseguiti);
@@ -1747,6 +1801,8 @@ public class SiGeMv2View {
                                     .getComponent();
             ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
                                     .getComponent();
+            ViewAvanzamentoTestuale currView3 = (ViewAvanzamentoTestuale) views[3]
+                                    .getComponent();
             
             int numeroIstanti = istantiAllEvento.size();
             int numeroIstanteCorrente;
@@ -1762,6 +1818,7 @@ public class SiGeMv2View {
                     currView5.aggiorna(istante.getStatoSwap(),
                                       numeroIstanteCorrente,
                                       processiUltimati);
+                    currView3.aggiorna(istante, numeroIstanteCorrente);
                 }catch(Exception e){}
             }
             
@@ -1828,7 +1885,9 @@ public class SiGeMv2View {
             ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
                                     .getComponent();
             ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
-                                    .getComponent();;
+                                    .getComponent();
+            ViewAvanzamentoTestuale currView3 = (ViewAvanzamentoTestuale) views[3]
+                                    .getComponent();
             
             int numeroIstanti = istantiAllEvento.size();
             int numeroIstanteCorrente;
@@ -1851,6 +1910,7 @@ public class SiGeMv2View {
                     currView5.aggiorna(istante.getStatoSwap(),
                                       numeroIstanteCorrente,
                                       processiUltimati);
+                    currView3.aggiorna(istante, numeroIstanteCorrente);
                 }catch(Exception e){}
             }
 
