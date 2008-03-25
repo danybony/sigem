@@ -63,6 +63,8 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
         this.tipoGestioneMemoria=tipoGestioneMemoria;
         testo.setPreferredSize(new Dimension(50, 1000));
         setViewportView(testo);
+        //Inizializzo il primo elemento del Vector di avanzamento testuale
+        avanzamentoTestuale.add("");
     }
     
 
