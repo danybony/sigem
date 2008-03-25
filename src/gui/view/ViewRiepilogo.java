@@ -47,5 +47,6 @@ public class ViewRiepilogo extends JScrollPane {
         CText+="Tempo di accesso al disco: "+C.getTempoAccessoDisco()+"\n";
         CText+="Banda Bus Dati: "+C.getBandaBusDati()+"\n";
         testo.append(CText);
+        this.add(testo);
     }
 }
