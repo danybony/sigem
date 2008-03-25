@@ -128,7 +128,6 @@ public class ViewStatistiche extends javax.swing.JPanel {
     
     public void azzeraStatistiche(){
         this.numeroFault = 0;
-        System.out.println("C");
         this.jProgressBar1.setValue(0);
         this.jProgressBar1.setString("0%");
         this.jProgressBar2.setValue(0);
@@ -146,7 +145,6 @@ public class ViewStatistiche extends javax.swing.JPanel {
         if(player.getIndiceIstanteCorrente()==0){
             this.numeroFault=0;
             jLabel5.setText("0");
-            System.out.println("A");
             this.jProgressBar1.setValue(0);
             this.jProgressBar1.setString("0%  (0 di " + conf.getDimensioneRAM() + " KB)");
             this.jProgressBar2.setValue(0);
@@ -177,7 +175,6 @@ public class ViewStatistiche extends javax.swing.JPanel {
             player.istantePrecedente();
         }
         jLabel5.setText(new Integer(this.numeroFault).toString());
-        System.out.println("B"+ this.numeroFault);
     }
     
     void aggiornaUtilizzoRAM(Player player,
