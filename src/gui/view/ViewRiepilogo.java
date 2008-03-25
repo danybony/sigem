@@ -40,13 +40,12 @@ public class ViewRiepilogo extends JScrollPane {
     }
     
     public void aggiorna( ConfigurazioneIniziale C ) {
-        /*String CText="";
+        String CText="";
         CText+="Dimensione RAM: "+C.getDimensioneRAM()+"KB\n";
         CText+="Dimensione Swap: "+C.getDimensioneSwap()+"KB\n";
         CText+="Tempo di context switch: "+C.getTempoContextSwitch()+"\n";
         CText+="Tempo di accesso al disco: "+C.getTempoAccessoDisco()+"\n";
         CText+="Banda Bus Dati: "+C.getBandaBusDati()+"\n";
-        switch C.getPoliticaSchedulazioneProcessi() 
-                case 1: */
+        testo.append(CText);
     }
 }

@@ -73,7 +73,7 @@ public class SC implements IRimpiazzo {
      *  Posizione di reset
      */
     public void liberaEntry( int Posizione ) {
-        Tabella.elementAt(Posizione).TArrivo=0;
+        Tabella.elementAt(Posizione).TArrivo=-1;
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).F=null;
     }
