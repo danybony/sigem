@@ -183,6 +183,25 @@ public class ViewRiepilogo extends javax.swing.JPanel {
     
     public void aggiorna( ConfigurazioneIniziale C ) {
         // imposta i campi su
+        jLabel1.setText("Processi: "+C.getListaProcessi().size());
+        jLabel2.setText("Dimensione RAM (KB): "+C.getDimensioneRAM());
+        jLabel3.setText("Dimensione area Swap (KB): "+C.getDimensioneSwap());
+        jLabel4.setText("Tempo Context Switch (ms): "+C.getTempoContextSwitch());
+        jLabel5.setText("Tempo accesso al disco (ms): "+C.getTempoAccessoDisco());
+        jLabel6.setText("Banda del bus dati: "+C.getBandaBusDati());
+        String scheduler="Politica schedulazione processi: ";
+        switch ( C.getPoliticaSchedulazioneProcessi() ) {
+            case 1: jLabel8.setText(scheduler+"FCFS"); break;
+            case 2: jLabel8.setText(scheduler+"SJF"); break;
+            case 3: jLabel8.setText(scheduler+"SRTN"); break;
+            case 4: jLabel8.setText(scheduler+"RR"); break;
+            case 5: jLabel8.setText(scheduler+"RRP"); break;
+            case 6: jLabel8.setText(scheduler+"RRPP"); break;
+            case 7: jLabel8.setText(scheduler+"P"); break;
+        }
+        jLabel9.setText(""); //Politica rimpiazzo/allocazione
+        jLabel10.setText(""); //Dimensioni pagina
+        
         if ( C.getModalitaGestioneMemoria() == 1 ) // Paginazione
             setPaginazione(C);
         else setSegmentazione(C); // Segmentazione
