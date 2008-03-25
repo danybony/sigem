@@ -223,24 +223,27 @@ public class SiGeMv2View {
             }
     }
     
-    public void visualizzaSimulazioneTestuale() {
-            
+    public void visualizzaSimulazioneTestuale(Istante is, int i) {
+            if ((views[2]).getComponent() instanceof ViewAvanzamentoTestuale) {
+                    ViewAvanzamentoTestuale currView = (ViewAvanzamentoTestuale) views[2].getComponent();
+                    currView.aggiorna(is,i);
+            }
     }
 
     public void visualizzaRiepilogo() {
-        ViewRiepilogo vr = null;
+        /*ViewRiepilogo vr = null;
         
         switch(this.configurazioneIniziale.getModalitaGestioneMemoria()){
             case 1:
-                    vr = new ViewRiepilogo();
+                    vr = new ViewRiepilogo(false);
                     break;
             case 2:
-                    vr = new ViewRiepilogo();
+                    vr = new ViewRiepilogo(true);
                     break;
         }
         views[4] = new View("Riepilogo configurazione", IconStylosoft
                             .getGeneralIcon(""), vr);
-        vr.aggiorna(this.configurazioneIniziale);
+        vr.aggiorna(this.configurazioneIniziale);*/
     }
     
     
@@ -1242,7 +1245,7 @@ public class SiGeMv2View {
                 }
         }
         
-        switch(configurazioneIniziale.getModalitaGestioneMemoria()){
+        /*switch(configurazioneIniziale.getModalitaGestioneMemoria()){
             case 1:
                 views[3] = new View("Modalita' testuale", IconStylosoft.getGeneralIcon(""),
                                     new ViewAvanzamentoTestuale(player.numeroIstanti(),
@@ -1254,11 +1257,12 @@ public class SiGeMv2View {
                                     new ViewAvanzamentoTestuale(player.numeroIstanti(),true));
                 viewMap.addView(3, views[3]);
                 break;
-        }
+        }*/
 
         processiEseguiti = new LinkedList<Processo>();
         visualizzaOrdProcessi(processiEseguiti);
         azzeraStatisticheSimulazione();
+        this.visualizzaSimulazioneTestuale(null, 10);
         visualizzaStatisticheSimulazione(player,istante,true);
         visualizzaRiepilogo();
     };
