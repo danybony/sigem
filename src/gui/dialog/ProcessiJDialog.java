@@ -26,6 +26,7 @@ import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import logic.parametri.ConfigurazioneIniziale;
 /**
  *
@@ -193,31 +194,20 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         }
         jTableProcessi.setName("jTableProcessi"); // NOI18N
         jTableProcessi.setCellSelectionEnabled(true);
-        jTableProcessi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        /*
+        jTableProcessi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);        
+        
         jTableProcessi.addMouseListener(new MouseAdapter(){
 
             public void mouseClicked(MouseEvent e) {
                int riga = jTableProcessi.getSelectionModel().getLeadSelectionIndex();
                int colonna = jTableProcessi.getColumnModel().getSelectionModel().
                         getLeadSelectionIndex();
-               System.out.println(jTableProcessi.getModel().getValueAt(riga, colonna));  
-            }
-
-            public void mouseReleased(MouseEvent e) {
-                
-            }
-
-            public void mouseEntered(MouseEvent e) {
-               
-            }
-
-            public void mouseExited(MouseEvent e) {
-                
+               if(riga!=-1 && colonna!=-1){
+                   jTableProcessi.editCellAt(riga, colonna);
+               }                
             }
             
-            
-        });*/
+        });
         jScrollPaneProcessi.setViewportView(jTableProcessi);
 /*
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -266,6 +256,15 @@ public class ProcessiJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
+        /* Termina la modifica della tabella con i dati parzialmente scritti */
+        int riga = jTableProcessi.getSelectionModel().getLeadSelectionIndex();
+        int colonna = jTableProcessi.getColumnModel().getSelectionModel().
+                        getLeadSelectionIndex();
+        if(riga!=-1 && colonna!=-1){
+            jTableProcessi.getCellEditor(riga,colonna).stopCellEditing();
+        }
+        
+        
         combinazioneProcessi = new Object[jTableProcessi.getRowCount()][jTableProcessi.getColumnCount()];
         
         for (int row=0; row<jTableProcessi.getRowCount(); row++) 

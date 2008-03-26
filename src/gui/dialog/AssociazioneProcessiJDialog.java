@@ -95,13 +95,21 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
      */
     boolean modifica = false;
     
-    /** Creates new form AssociazioneProcessiJDialog
+    /** Crostruttore principale della classe.
+     * Incaricato di creare tutte le liste per i vari processi e le liste dei FrameMemoria
+     * a disposizione di ogni processo.
      * @param parent
+     *          La classe parent di questa
      * @param modal 
+     *          Booleano che indica se la finestra sarà modale o meno
      * @param configurazione
+     *          Riferimento alla finestra di configurazione dell'ambiente
      * @param pol 
+     *          Riferimento alla finestra di configurazione delle politiche
      * @param proc
+     *          Riferimento alla finestra di configurazione dei processi
      * @param view 
+     *          Riferimento alla finestra principale del programma
      */
     public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, 
             ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol,
@@ -148,14 +156,22 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         jListFrame.setDragEnabled(true);
     }
     
-    /** Creates new form AssociazioneProcessiJDialog
+    /** Crostruttore invocato nel caso di modifica di una configurazione. Invoca
+     * il costruttore principale della classe e successivamente carica gli accessi.
      * @param parent
+     *          La classe parent di questa
      * @param modal 
+     *          Booleano che indica se la finestra sarà modale o meno
      * @param configurazione
+     *          Riferimento alla finestra di configurazione dell'ambiente
      * @param pol 
+     *          Riferimento alla finestra di configurazione delle politiche
      * @param proc
-     * @param view
+     *          Riferimento alla finestra di configurazione dei processi
+     * @param view 
+     *          Riferimento alla finestra principale del programma
      * @param confIniziale 
+     *          La ConfigurazioneIniziale che si sta modificando
      */
     public AssociazioneProcessiJDialog(java.awt.Frame parent, boolean modal, 
             ConfigurazioneAmbienteJDialog configurazione, PoliticheJDialog pol, 
@@ -164,6 +180,9 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         this(parent, modal, configurazione, pol, proc, view);
         this.confIniziale = confIniziale;
         modifica = true;
+        
+        /* Se e' stata cambiata la modalita' di gestione della memoria non carico
+         gli accessi perche' pagine e segmenti non hanno nulla in comune */
         if(confIniziale.getModalitaGestioneMemoria() == politica.getGestioneMemoria()){
              caricaAccessi();
         }
