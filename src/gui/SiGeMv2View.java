@@ -35,6 +35,7 @@ import net.infonode.docking.util.*;
 import net.infonode.gui.componentpainter.ComponentPainter;
 import net.infonode.gui.laf.InfoNodeLookAndFeel;
 import net.infonode.util.Direction;
+import net.infonode.docking.theme.*;
 
 import javax.swing.*;
 
@@ -2056,8 +2057,8 @@ public class SiGeMv2View {
 
     public static void main(String[] args) throws Exception {
             // Set InfoNode Look and Feel
-            UIManager.setLookAndFeel(new InfoNodeLookAndFeel());
-
+            //UIManager.setLookAndFeel(new InfoNodeLookAndFeel());
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             // Docking windwos should be run in the Swing thread
             SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
