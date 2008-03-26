@@ -1079,14 +1079,14 @@ public class SiGeMv2View {
             frame.setVisible(true);
     }
 
-    private JFrame getFrame() {
+    public JFrame getFrame() {
         return frame;
     }
 
     /**
      * Abilita ogni comando.
      */
-    private void abilitaTutto(){
+    public void abilitaTutto(){
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
@@ -1220,7 +1220,7 @@ public class SiGeMv2View {
     /** 
      * Inizializza le viste e prepara l'applicazione per l'esecuzione della simulazione
      */
-    private void setIstanteZero() {
+    public void setIstanteZero() {
             
         statoGui = false;
         // viene creato il player
