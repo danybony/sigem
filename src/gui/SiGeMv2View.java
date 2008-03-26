@@ -2063,9 +2063,9 @@ public class SiGeMv2View {
             // Set InfoNode Look and Feel
             
             try{UIManager.setLookAndFeel(new com.sun.java.swing.plaf.gtk.GTKLookAndFeel());}
-            catch(UnsupportedLookAndFeelException e1){
+            catch(Exception e1){
                 try{UIManager.setLookAndFeel(new com.sun.java.swing.plaf.windows.WindowsLookAndFeel());}
-                catch(UnsupportedLookAndFeelException e2){
+                catch(Exception e2){
                     UIManager.setLookAndFeel(new InfoNodeLookAndFeel());
                 }
             }
