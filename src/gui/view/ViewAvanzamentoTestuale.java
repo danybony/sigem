@@ -73,7 +73,17 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
      */
     public void aggiorna(Istante istante, int idIstanteCorrente){
         
-        if(idIstanteCorrente>avanzamentoTestuale.size()-1 && istante.getProcessoInEsecuzione()!=null){
+        if(idIstanteCorrente==0){
+            avanzamentoTestuale.add(0,"");
+            //testo.append("************************************************************************************************************\n");
+            testo.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+            testo.append("~~~~~~~~~~~~~~~~~~~~~~~~ INIZIO DELLA SIMULAZIONE ~~~~~~~~~~~~~~~~~~~~~~~~\n");
+            testo.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+            //testo.append("************************************************************************************************************\n\n");
+            return;
+        }
+        
+        if(idIstanteCorrente>=avanzamentoTestuale.size()){
                 String aux = new String("");
                 int idProcessoCorrente = istante.getProcessoInEsecuzione().getRifProcesso().getId();
                 Vector<FrameMemoria> frameAuxRAM = new Vector<FrameMemoria>();
@@ -82,7 +92,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 Vector<FrameMemoria> frameToltiSwap = new Vector<FrameMemoria>();
                 Vector<FrameMemoria> memoria = istante.getStatoRAM();
 
-                aux += GregorianCalendar.getInstance().getTime()+": La simulazione è passata all'istante " + idIstanteCorrente + " su un totale di " + istantiTotali + "\n";
+                aux += GregorianCalendar.getInstance().getTime()+": La simulazione e' passata all'istante " + idIstanteCorrente + " su un totale di " + istantiTotali + "\n";
                 aux += GregorianCalendar.getInstance().getTime()+": E' stato schedulato per l'esecuzione il processo " + idProcessoCorrente + "\n";
 
                 //Scorro la memoria alla ricerca di frame memoria del processo in esecuzione
@@ -92,12 +102,8 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                     }
                 }
 
-                //Se il processo non ha richiesto nessun frame memoria, lo scrivo
-                if (frameAuxRAM.isEmpty()) {
-                    aux += GregorianCalendar.getInstance().getTime()+": Il processo in questo istante non ha richiesto l'utilizzo della memoria\n";
-                }
-                /*
-                aux += "Il processo in questo istante richiede ";
+                if(!frameAuxRAM.isEmpty()){
+                aux += GregorianCalendar.getInstance().getTime()+": Sono già presenti in RAM ";
 
                 if (tipoGestioneMemoria==2) {
                     aux += "i segmenti numero ";
@@ -109,15 +115,20 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                     if (i < frameAuxRAM.size() - 1) {
                         aux += ", ";
                     } else {
-                        aux += "\n";
+                        aux += " ";
                     }
                 }
-*/
+                if (tipoGestioneMemoria==2) {
+                    aux += "riferiti dal processo\n";
+                } else {
+                    aux += "riferite dal processo\n";
+                }
+                }
 
                 //Considero ora i cambiamenti avvenuti in RAM e in Swap
                 //Prima di tutto, se un processo ha finito la sua esecuzione:
                 if (istante.getProcessoPrecedenteTerminato() != null) {
-                    aux += GregorianCalendar.getInstance().getTime()+": Il processo " + istante.getProcessoPrecedenteTerminato().getRifProcesso().getId() + " ha ultimato la sua escuzione. La memoria da esso occupata è stata liberata.";
+                    aux += GregorianCalendar.getInstance().getTime()+": Il processo " + istante.getProcessoPrecedenteTerminato().getRifProcesso().getId() + " ha ultimato la sua escuzione. La memoria da esso occupata e' stata liberata.";
                 }
                 //Scorro la lista di azioni e le divido a seconda del tipo
                 frameAuxRAM.clear();
@@ -224,9 +235,10 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
     }
     
     public void configura(int istantiTotali, int tipoGestioneMemoria){
-        setBorder(new EmptyBorder(10,10,10,10));
+        
         setBackground(Color.WHITE);
         testo=new JTextArea();
+        testo.setBorder(new EmptyBorder(10,10,10,10));
         this.istantiTotali=istantiTotali;
         this.tipoGestioneMemoria=tipoGestioneMemoria;
         testo.setEditable(false);
