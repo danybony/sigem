@@ -177,16 +177,30 @@ public class SiGeMv2View {
     /** Processi */
     LinkedList<Processo> processiEseguiti;
 
-    // thread per aumentare l'interattività del utente durante l'avanzamento automatico
+    /** 
+     * Thread per aumentare l'interattivita' del utente durante l'avanzamento 
+     * automatico 
+     */
     private Thread auto;
     
-    // velocità di avanzamento nella modalità automatica
+    /**
+     * Velocita' di avanzamento nella modalità automatica
+     */
     private int velocita;
     
+    /**
+     * La lista dei processi ultimati nei vari istanti
+     */
     Vector<Vector<Integer>> processiUltimati = null;
     
+    /**
+     * Istanza di GestioneFile per le operazioni di IO
+     */
     GestioneFile gestione;
     
+    /**
+     * Un'istanza fittizia di processo
+     */
     private static final Processo PROC_VUOTO = new Processo("",0,0);
     
     // ----------------------------------
@@ -194,8 +208,8 @@ public class SiGeMv2View {
     // ----------------------------------
 
     /**
-     * Costruttore della classe GuiBlueThoth. Carica le politiche di ordinamento
-     * disponibili. Visualizza il frame principale.
+     * Costruttore della classe.
+     * Crea il frame principale e tutti i suoi sotto-frame.
      */
     public SiGeMv2View() throws Exception {
             // i controlli da fare prima della chiusura dell'applicazione
@@ -215,58 +229,85 @@ public class SiGeMv2View {
             caricaSimulazioneDefault();
     }
     
-    /** Disegna le statistiche sulla vista ViewStatistiche */
-    public void visualizzaStatisticheSimulazione(Player player, Istante istante, boolean avanti) {
+    /**
+     * Disegna le statistiche sulla vista ViewStatistiche 
+     */
+    private void visualizzaStatisticheSimulazione(Player player, Istante istante, boolean avanti) {
             if ((views[2]).getComponent() instanceof ViewStatistiche) {
                     ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
                     currView.generaStatistiche(player, istante,configurazioneIniziale, processiUltimati, avanti);
             }
     }
     
-    public void azzeraStatisticheSimulazione() {
+    /**
+     * Azzera le statistiche sulla vista ViewStatistiche 
+     */
+    private void azzeraStatisticheSimulazione() {
             if ((views[2]).getComponent() instanceof ViewStatistiche) {
                     ViewStatistiche currView = (ViewStatistiche) views[2].getComponent();
                     currView.azzeraStatistiche();
             }
     }
     
-    public void visualizzaSimulazioneTestuale(Istante istante, int numero) {
+    /**
+     * Aggiorna il frame della modalita' testuale, per la visualizzazione
+     * della simulazione.
+     */
+    private void visualizzaSimulazioneTestuale(Istante istante, int numero) {
             if ((views[3]).getComponent() instanceof ViewAvanzamentoTestuale) {
                     ViewAvanzamentoTestuale currView = (ViewAvanzamentoTestuale) views[3].getComponent();
                     currView.aggiorna(istante,numero);
             }
     }
     
-    public void azzeraSimulazioneTestuale(int tot, int modalita) {
+    /**
+     * Azzera il frame della visualizzazione testuale.
+     */
+    private void azzeraSimulazioneTestuale(int tot, int modalita) {
             if ((views[3]).getComponent() instanceof ViewAvanzamentoTestuale) {
                     ViewAvanzamentoTestuale currView = (ViewAvanzamentoTestuale) views[3].getComponent();
                     currView.configura(tot, modalita);
             }
     }
 
-    public void visualizzaRiepilogo() {
+    /**
+     * Mostra il riepilogo della configurazione correntemente caricata.
+     */
+    private void visualizzaRiepilogo() {
         if ((views[4]).getComponent() instanceof ViewRiepilogo) {
                     ViewRiepilogo currView = (ViewRiepilogo) views[4].getComponent();
                     currView.azzeraRiepilogo();
                     currView.aggiorna(this.configurazioneIniziale);
             }
     }
-    
-    
-    
+
     /**
-     * Apre una vista statica. Questo metodo serve per aprire le viste dal menu
-     * Finestre dell'interfacci grafica.
-     * 
-     * @param _view
-     *            la vista da aprire
+     * Aggiorna il contenuto della vista ViewStatoAvanzamentoProcessi
      */
-    private void openStaticView(View _view) {
-            DockingUtil.addWindow(_view, rootWindow);
+    public void visualizzaOrdProcessi(LinkedList<Processo> processiEseguiti) {          
+        // aggiorna il grafico ordinamento dei processi
+        if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
+                ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
+                                .getComponent();
+                int idProcessiEseguiti[] = new int[processiEseguiti.size()];
+                for (int i = 0; i < processiEseguiti.size(); i++){
+                    Processo p = processiEseguiti.get(i);
+                    // Esiste un processo in esecuzione nell'istante i
+                    if(p!=PROC_VUOTO){
+                        idProcessiEseguiti[i] = p.getId();
+                    }
+                    // Nessun processo nell'istante i
+                    else{
+                        idProcessiEseguiti[i]=-1;
+                    }
+                }
+
+                currView.disegnaGrafico(idProcessiEseguiti);
+        }
     }
 
-    /*
-     * Crea una nuova configurazione con l'apertura del wizard
+    /**
+     * Invoca il primo wizard per la creazione di una nuova configurazione.
      */
     private void creaConfigurazione() {
         configurazioneAmbiente = new ConfigurazioneAmbienteJDialog(frame, true, this);
@@ -274,7 +315,7 @@ public class SiGeMv2View {
     }
 
     /**
-     * Crea la root window e aggiunge le view statiche.
+     * Crea la root window e aggiunge le views.
      */
     private void createRootWindow() {
 
@@ -413,8 +454,8 @@ public class SiGeMv2View {
                      *      .ComponentPainter#paint(java.awt.Component,
                      *      java.awt.Graphics, int, int, int, int)
                      */
-                    public void paint(Component component, Graphics g, int x, int y,
-                                    int width, int height) {
+                    public void paint(Component component, Graphics g, int x,
+                                    int y, int width, int height) {
                             Graphics2D g2 = (Graphics2D) g;
                             Composite oldComp = g2.getComposite();
 
@@ -424,9 +465,12 @@ public class SiGeMv2View {
                             g2.setComposite(composite);
 
                             // Coloro il rettangolo con un gradiente azzurro
-                            GradientPaint background = new GradientPaint(width, 0,
-                                            new Color(129, 156, 231), 0, height, new Color(74, 115,
-                                                            231));
+                            GradientPaint background = new GradientPaint(
+                                                width,
+                                                0,new Color(129, 156, 231),
+                                                0,
+                                                height,
+                                                new Color(74, 115, 231));
                             g2.setPaint(background);
                             g2.fillRect(x, y, width, height);
                             g2.setColor(Color.BLACK);
@@ -487,7 +531,7 @@ public class SiGeMv2View {
     }
 
     /**
-     * Crea il frame MenuBar.
+     * Crea la barra dei menu.
      * 
      * @return la barra dei menù
      */
@@ -501,10 +545,6 @@ public class SiGeMv2View {
 
     /**
      * Crea il menu File. Usato dall'utente per:
-     * - aprire 
-     * - salvare
-     * - creare una configurazione
-     * - terminare la sessione
      * 
      * @return the layout menu
      */
@@ -788,6 +828,7 @@ public class SiGeMv2View {
             
             mniHelp.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
+                            //apre la guida
                             String URL="file:///"+System.getProperty("user.dir")+File.separatorChar+"help"+File.separatorChar+"pagina.htm";
                             URL=URL.replace("\\", "/");
                             URL=URL.replace(" ","%20");
@@ -949,11 +990,6 @@ public class SiGeMv2View {
             }
             scegliVelocita.setModel(new SpinnerListModel(velocitaConsentite));
             scegliVelocita.setToolTipText("Velocita' di avanzamento della simulazione");
-            
-
-            //jButtonHelp = new JButton(IconStylosoft.getGeneralIcon("help"));
-            //jButtonHelp.addActionListener(new CSH.DisplayHelpFromSource(hb));
-            //jButtonHelp.setToolTipText("Apre la finestra di aiuto");
 
             toolBar.setRollover(true);
             toolBar.add(jButtonNuovaConfigurazione);
@@ -986,8 +1022,6 @@ public class SiGeMv2View {
             toolBar.add(scegliVelocita);
             
             toolBar.addSeparator(new java.awt.Dimension(30, 12));
-
-            //toolBar.add(jButtonHelp);
 
             // Stato iniziale dei pulsanti
             jButtonSalvaConfigurazione.setEnabled(false);
@@ -1023,7 +1057,6 @@ public class SiGeMv2View {
                                                  0.70f, 
                                                  views[0],
                                                  views[2]),
-                                                 //new TabWindow(new DockingWindow[] {views[3],views[2]})),
                                  new SplitWindow(false, 0.5f, views[1], views[5])
                                  )
                   }));
@@ -1046,11 +1079,14 @@ public class SiGeMv2View {
             frame.setVisible(true);
     }
 
-    public JFrame getFrame() {
+    private JFrame getFrame() {
         return frame;
     }
 
-    public void abilitaTutto(){
+    /**
+     * Abilita ogni comando.
+     */
+    private void abilitaTutto(){
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
@@ -1088,7 +1124,10 @@ public class SiGeMv2View {
         jSimulazioneItemFine.setEnabled(true);
     }
     
-    public void aggiornaComandi(){
+    /**
+     * Abilita i comandi in base alla necessita'.
+     */
+    private void aggiornaComandi(){
         jButtonNuovaConfigurazione.setEnabled(true);
         jButtonApriConfigurazione.setEnabled(true);
         jButtonSalvaConfigurazione.setEnabled(true);
@@ -1178,27 +1217,43 @@ public class SiGeMv2View {
             jSimulazioneItemFine.setEnabled(false);
     }
 
-    /** inizializza le viste e prepara l'applicazione per l'esecuzione della simulazione */
-    public void setIstanteZero() {
+    /** 
+     * Inizializza le viste e prepara l'applicazione per l'esecuzione della simulazione
+     */
+    private void setIstanteZero() {
             
         statoGui = false;
+        // viene creato il player
         creaPlayer();
+        // la simulazione viene calcolata, in caso contrario l'utente viene
+        // avvisato dell'errore
         if(!simulazioneCarica()){
             JOptionPane.showMessageDialog(rootWindow, "Impossibile eseguire la simulazione","Errore",JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        // se nella simulazione ci sono errori l'utente viene avvisato.
         if(player.fullSwapNellaSimulazione()){
             JOptionPane.showMessageDialog(rootWindow, "Durante la simulzione e' stata esautita la memoria (RAM e Swap).\n" + 
                     "Questa situazione viene gestita da SiGeM come un errore.\n" + 
                     "In questi casi la simulazione viene terminata prematuramente\n" + 
                     "rispetto agli effettivi istanti di cui si dovrebbe comporre.","Attenzione",JOptionPane.WARNING_MESSAGE);
         }
+        
+        // viene caricato il primo istante
         istante = player.primoIstante();
+        
+        // creazione lista processi terminati
         processiUltimati = new Vector<Vector<Integer>>();
         processiUltimati.add(0, new Vector<Integer>());
+        
+        // aggiorno il grafico dei processi
         aggiornaProcessiTerminati(0);
+        
+        // abilito tutti i controlli
         abilitaTutto();
 
+        // aggiorno il grafico dei processi
         if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
                 ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
                                 .getComponent();
@@ -1212,6 +1267,7 @@ public class SiGeMv2View {
                 }
         }
 
+        // aggiorno lo schema della RAM
         if ((views[1]).getComponent() instanceof ViewFrameMemoria) {
                 ViewFrameMemoria currView = (ViewFrameMemoria) views[1]
                                 .getComponent();
@@ -1223,6 +1279,8 @@ public class SiGeMv2View {
                                        configurazioneIniziale.getDimensioneRAM()/configurazioneIniziale.getDimensionePagina());
                 }
         }
+        
+        // aggiorno lo schema dello Swap
         if ((views[5]).getComponent() instanceof ViewFrameMemoria) {
                 ViewFrameMemoria currView = (ViewFrameMemoria) views[5]
                                 .getComponent();
@@ -1235,6 +1293,7 @@ public class SiGeMv2View {
                 }
         }
         
+        // aggiorno i frame
         processiEseguiti = new LinkedList<Processo>();
         visualizzaOrdProcessi(processiEseguiti);
         azzeraStatisticheSimulazione();
@@ -1245,12 +1304,16 @@ public class SiGeMv2View {
         visualizzaRiepilogo();
     };
         
-    /** Istanzia una nuova simulazione */
+    /**
+     * Istanzia un nuovo player
+     */
     private void creaPlayer() {
         player = new Player(configurazioneIniziale);
     }
 
-    /** Parte la simulazione */
+    /**
+     * Avanzamento automatico della simulazione
+     */
     private synchronized void simulazionePlay() {
         statoGui = true;
         
@@ -1362,12 +1425,16 @@ public class SiGeMv2View {
         auto.start();
     }
 
-    /** Carica il player */
+    /** 
+     * Crea la simulazione
+     */
     private boolean simulazioneCarica() {
         return player.caricaSimulazione();
     }
 
-    /** Stop della simulazione */
+    /**
+     * La simulazione viene fermata e portata all'istante iniziale.
+     */
     private void simulazioneStop(){
         try {
             
@@ -1435,7 +1502,10 @@ public class SiGeMv2View {
         } catch (InterruptedException ex) {}
     }
 
-    /** Ferma la simulazione */
+    /**
+     * Ferma la simulazione nell'istante corrente per permettere il passaggio
+     * dalla modalita' di avanzamento automatico a quella manuale.
+     */
     private void simulazionePausa() {
         try {
             
@@ -1468,16 +1538,14 @@ public class SiGeMv2View {
         } catch (InterruptedException ex) {}
     }
 
-    /** Porta la simulazione allo stato iniziale */
+    /**
+     * Porta la simulazione allo stato iniziale
+     */
     private void simulazioneInizio() {
         
         istante = player.primoIstante();
         aggiornaProcessiTerminati(0);
         processiEseguiti = new LinkedList<Processo>();
-        
-        PCB pcbAttuale;
-        
-        pcbAttuale = istante.getProcessoInEsecuzione();
 
         visualizzaOrdProcessi(processiEseguiti);
         azzeraStatisticheSimulazione();
@@ -1533,7 +1601,9 @@ public class SiGeMv2View {
 
     }
     
-    /** Porta la simulazione allo stato precedente */
+    /**
+     * Porta la simulazione all'istante precedente 
+     */
     private void simulazioneIndietro() {
 
         istante = player.istantePrecedente();
@@ -1589,7 +1659,9 @@ public class SiGeMv2View {
         
     }
 
-    /** Porta la simulazione allo stato successivo */
+    /**
+     * Porta la simulazione all'istante successivo
+     */
     private void simulazioneAvanti() { 
             
         istante = player.istanteSuccessivo();
@@ -1646,7 +1718,9 @@ public class SiGeMv2View {
         
     }
     
-    /** Porta la simulazione allo stato finale */
+    /**
+     * Porta la simulazione allistante finale
+     */
     private void simulazioneFine() {
         
         LinkedList<Istante> istantiAllaFine = player.ultimoIstante();
@@ -1705,7 +1779,10 @@ public class SiGeMv2View {
         jSimulazioneItemPausa.setEnabled(false);
         jSimulazioneItemStop.setEnabled(true);
     }
-        
+
+    /**
+     * Porta la simulazione all'istante significativo precedente
+     */
     private void simulazioneSignificativoPrecedente(int scelta) {
         
         LinkedList<Istante> istantiAllEvento;
@@ -1786,6 +1863,9 @@ public class SiGeMv2View {
         }
     }
     
+    /**
+     * Porta la simulazione all'istante significativo successivo.
+     */
     private void simulazioneSignificativoSuccessivo(int scelta) {
 
         LinkedList<Istante> istantiAllEvento;
@@ -1874,41 +1954,26 @@ public class SiGeMv2View {
             jSimulazioneItemInizio.setEnabled(true);
         }
     }
-    
-    
-    
-    /** Aggiorna il contenuto della vista ViewStatoAvanzamentoProcessi */
-    public void visualizzaOrdProcessi(LinkedList<Processo> processiEseguiti) {          
-        // aggiorna il grafico ordinamento dei processi
-        if ((views[0]).getComponent() instanceof ViewStatoAvanzamentoProcessi) {
-                ViewStatoAvanzamentoProcessi currView = (ViewStatoAvanzamentoProcessi) views[0]
-                                .getComponent();
-                int idProcessiEseguiti[] = new int[processiEseguiti.size()];
-                for (int i = 0; i < processiEseguiti.size(); i++){
-                    Processo p = processiEseguiti.get(i);
-                    // Esiste un processo in esecuzione nell'istante i
-                    if(p!=PROC_VUOTO){
-                        idProcessiEseguiti[i] = p.getId();
-                    }
-                    // Nessun processo nell'istante i
-                    else{
-                        idProcessiEseguiti[i]=-1;
-                    }
-                }
-
-                currView.disegnaGrafico(idProcessiEseguiti);
-        }
-    }
         
+    /**
+     * Ritorna la configurazione iniziale corrente.
+     */
     public ConfigurazioneIniziale getConfigurazioneIniziale() {
         return configurazioneIniziale;
     }
 
-    public void setConfigurazioneIniziale(ConfigurazioneIniziale configurazioneIniziale) {
+    /**
+     * Imposta la configurazione iniziale corrente
+     */
+    private void setConfigurazioneIniziale(ConfigurazioneIniziale configurazioneIniziale) {
         this.configurazioneIniziale = configurazioneIniziale;
     }
     
-    public void apriFileConfigurazione(){
+    /**
+     * Apertura di un file di configurazione e successivo caricamento della
+     * simulazione.
+     */
+    private void apriFileConfigurazione(){
         //Handle open button action.
         JFileChooser fc = new JFileChooser();
         fc.addChoosableFileFilter(new ImageFilter());
@@ -1933,7 +1998,10 @@ public class SiGeMv2View {
         }
     }
     
-    public void salvaConfigurazione(){
+    /**
+     * Salva una configurazione su file.
+     */
+    private void salvaConfigurazione(){
         if(gestione==null){
             gestione = new GestioneFile(null,null);
         }
@@ -1962,7 +2030,10 @@ public class SiGeMv2View {
         }
     }
     
-    public void salvaConfigurazioneConNome(){
+    /**
+     * Salva con nome una configurazione su file.
+     */
+    private void salvaConfigurazioneConNome(){
         final JFileChooser fc = new JFileChooser();
         File file;
         fc.addChoosableFileFilter(new ImageFilter());
@@ -1992,7 +2063,10 @@ public class SiGeMv2View {
         }
     }
     
-    public void defaultConfigurazione(){
+    /**
+     * Imposta la configurazione di default.
+     */
+    private void defaultConfigurazione(){
         String nomeFile=System.getProperty("user.dir")+File.separatorChar+"default.sigem";
         nomeFile=nomeFile.replace("\\", "/");
         nomeFile=nomeFile.replace(" ","%20");
@@ -2013,7 +2087,10 @@ public class SiGeMv2View {
         }
     }
     
-    public boolean caricaSimulazioneDefault(){
+    /**
+     * Caricamento della configurazione di default.
+     */
+    private boolean caricaSimulazioneDefault(){
         String nomeFile=System.getProperty("user.dir")+File.separatorChar+"default.sigem";
         nomeFile=nomeFile.replace("\\", "/");
         nomeFile=nomeFile.replace(" ","%20");
@@ -2030,12 +2107,15 @@ public class SiGeMv2View {
         return true;
     }
     
-    public void modificaConfigurazione(){
+    /**
+     * Procedura per la modifica della configurazione correntemente caricata.
+     */
+    private void modificaConfigurazione(){
         configurazioneAmbiente = new ConfigurazioneAmbienteJDialog(frame, true, this, this.configurazioneIniziale);
         configurazioneAmbiente.setVisible(true);
     }
     
-    public void aggiornaProcessiTerminati(int numeroIstante){
+    private void aggiornaProcessiTerminati(int numeroIstante){
         //Aggiorno, se necessario, lo storico dei processi ultimati
         if(istante!=null){
             LinkedList<Azione> cambiamentiInMemoria = istante.getCambiamentiInMemoria();
