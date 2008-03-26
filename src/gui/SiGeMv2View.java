@@ -7,6 +7,7 @@
  * Versione: 1.8
  * Licenza: open-source
  * Registro delle modifiche:
+ * - v 1.11 (21/03/2008): cambiato il Look and Feel
  * - v 1.10 (19/03/2008): inserimento frame per la visualizzazione dello Swap
  * - v 1.9 (18/03/2008): creazione dei metodi per impostare una configurazione
  *                       di default
@@ -78,16 +79,24 @@ public class SiGeMv2View {
      **/
     private RootWindow rootWindow;
 
-    /** Array delle viste statiche */
+    /**
+     * Array delle viste statiche
+     */
     private View[] views = new View[6];
 
-    /** Contiene le viste statiche */
+    /**
+     * Contiene le viste statiche
+     */
     private ViewMap viewMap = new ViewMap();
 
-    /** Gli elementi del menu view */
+    /**
+     * Gli elementi del menu view 
+     */
     private JMenuItem[] viewItems = new JMenuItem[views.length];
 
-    /** Il tema applicato all'interfaccia grafica */
+    /** 
+     * Il tema applicato all'interfaccia grafica 
+     */
     private DockingWindowsTheme currentTheme = new BlueHighlightDockingTheme();
 
     /**
@@ -97,69 +106,66 @@ public class SiGeMv2View {
      */
     private RootWindowProperties properties = new RootWindowProperties();
 
-    /** Contiene la gestione degli eventi del menu Finestra. */
-    private ActionListener lnrWindow;
-
-    /** Il frame dell'applicazione */
+    /** 
+     * Il frame dell'applicazione 
+     */
     private JFrame frame = new JFrame("SiGeM - StyloSoft");
 
-    /** Rappresenta lo stato dela Gui, vale true se la simulazione e' in avanzamento automatico,
-     * false, se e' interrotta.*/
+    /** 
+     * Rappresenta lo stato dela Gui, vale true se la simulazione e' in 
+     * avanzamento automatico, false, se e' interrotta.
+     */
     private boolean statoGui = false;
-    
-    private boolean statoStop = true;
-
-    //private HelpSet hs;
-
-    //private HelpBroker hb;
 
     // PULSANTI E MENU
-
-    /** crea un oggetto JDialogAskSave, JDialog che richiede la conferma di salvataggio.*/
-    //JDialogAskSave richiediConferma = new JDialogAskSave(frame);
 
     /** Messaggio di default visualizzato a simulazione terminata. Se si verifica 
      * un deadlock questo messaggio viene cambiato. */ 
     String messaggioSimTerminata = new String("SIMULAZIONE TERMINATA");
 
     // Pulsanti ToolBar
-    private JButton jButtonSimulazionePlay, jButtonSimulazioneStop, jButtonSimulazioneInizio, jButtonSimulazioneFine;
-    private JButton jButtonSimulazioneIndietro, jButtonSimulazioneAvanti, jButtonSimulazionePausa;
+    private JButton jButtonSimulazionePlay, jButtonSimulazioneStop;
+    private JButton jButtonSimulazioneInizio, jButtonSimulazioneFine;
+    private JButton jButtonSimulazioneIndietro, jButtonSimulazioneAvanti;
+    private JButton jButtonSimulazionePausa;
     private JButton jButtonIndietroSignificativo, jButtonAvantiSignificativo;
 
     private JButton jButtonNuovaConfigurazione, jButtonApriConfigurazione;
     private JButton jButtonSalvaConfigurazione, jButtonModificaConfigurazione;
-    private JButton jButtonHelp;
     
     JSpinner scegliVelocita;
     
     private JComboBox ComboBoxSignificativo;
 
     // Pulsanti Menu Simulazione
-    private JMenuItem jSimulazioneItemPlay, jSimulazioneItemStop, jSimulazioneItemInizio, jSimulazioneItemFine;
-    private JMenuItem jSimulazioneItemIndietro, jSimulazioneItemAvanti, jSimulazioneItemPausa;
-    private JMenu jSimulazioneItemAvantiSignificativo,jSimulazioneItemIndietroSignificativo;
+    private JMenuItem jSimulazioneItemPlay, jSimulazioneItemStop;
+    private JMenuItem jSimulazioneItemInizio, jSimulazioneItemFine;
+    private JMenuItem jSimulazioneItemIndietro, jSimulazioneItemAvanti;
+    private JMenuItem jSimulazioneItemPausa;
+    private JMenu jSimulazioneItemAvantiSignificativo;
+    private JMenu jSimulazioneItemIndietroSignificativo;
     private JMenuItem ItemAvantiFault, ItemAvantiSwitch, ItemAvantiFullRAM;
     private JMenuItem ItemAvantiFullSwap,ItemAvantiFineProc,ItemAvantiNuovoProc;
     private JMenuItem ItemIndietroFault, ItemIndietroSwitch, ItemIndietroFullRAM;
-    private JMenuItem ItemIndietroFullSwap,ItemIndietroFineProc,ItemIndietroNuovoProc;
+    private JMenuItem ItemIndietroFullSwap,ItemIndietroFineProc;
+    private JMenuItem ItemIndietroNuovoProc;
 
     // Pulsanti Menu File
     private JMenuItem jFileItemNuovaConfigurazione, jFileItemApriConfigurazione;
 
-    private JMenuItem jFileItemSalvaConfigurazione, jFileItemSalvaConfigurazioneConNome;
+    private JMenuItem jFileItemSalvaConfigurazione;
+    private JMenuItem jFileItemSalvaConfigurazioneConNome;
     private JMenuItem jFileItemModificaConfigurazione, jFileItemEsci;
     private JMenuItem jFileItemDefaultConfigurazione;
 
-    JScrollPane scrollMemoria = new JScrollPane();
-
-    /** Contiene finestre e funzioni per selezionare un file sul filesystem */
-    private GestioneFile gestioneFile;
-
-    /** Wizard per la configurazione dei processi */
+    /**
+     * Wizard per la configurazione dei processi 
+     */
     private ConfigurazioneAmbienteJDialog  configurazioneAmbiente;
 
-    /** Configurazione iniziale */
+    /**
+     * Configurazione iniziale 
+     */
     private ConfigurazioneIniziale configurazioneIniziale;
 
     /** Player */
@@ -1175,7 +1181,6 @@ public class SiGeMv2View {
     public void setIstanteZero() {
             
         statoGui = false;
-        statoStop = true;
         creaPlayer();
         if(!simulazioneCarica()){
             JOptionPane.showMessageDialog(rootWindow, "Impossibile eseguire la simulazione","Errore",JOptionPane.ERROR_MESSAGE);
@@ -1241,7 +1246,6 @@ public class SiGeMv2View {
     /** Parte la simulazione */
     private synchronized void simulazionePlay() {
         statoGui = true;
-        statoStop = false;
         
         jButtonNuovaConfigurazione.setEnabled(false);
         jButtonApriConfigurazione.setEnabled(false);
@@ -1363,7 +1367,6 @@ public class SiGeMv2View {
             // interrompe l'avanzamento automatico e aspetta che il thread
             // venga terminato
             statoGui=false;
-            statoStop = true;
             if(auto!=null)
                 auto.join();
             
@@ -1432,7 +1435,6 @@ public class SiGeMv2View {
             // interrompe l'avanzamento automatico e aspetta che il thread
             // venga terminato
             statoGui=false;
-            statoStop = false;
             auto.join();
 
             aggiornaComandi();
@@ -1461,7 +1463,6 @@ public class SiGeMv2View {
 
     /** Porta la simulazione allo stato iniziale */
     private void simulazioneInizio() {
-        statoStop = false;
         
         istante = player.primoIstante();
         aggiornaProcessiTerminati(0);
@@ -1537,7 +1538,6 @@ public class SiGeMv2View {
             simulazioneInizio();
             return;
         }
-        statoStop = false;
         
         if(istante!=null){
              ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
@@ -1644,7 +1644,6 @@ public class SiGeMv2View {
         
         LinkedList<Istante> istantiAllaFine = player.ultimoIstante();
         
-        statoStop = false;
         PCB pcbAttuale;
         ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
                                     .getComponent();
@@ -1701,7 +1700,6 @@ public class SiGeMv2View {
     }
         
     private void simulazioneSignificativoPrecedente(int scelta) {
-        statoStop = false;
         
         LinkedList<Istante> istantiAllEvento;
         
@@ -1807,8 +1805,6 @@ public class SiGeMv2View {
             default:
                 istantiAllEvento = null;
         }
-
-        statoStop = false;
         
         if(istantiAllEvento != null){ 
 
@@ -2046,30 +2042,14 @@ public class SiGeMv2View {
                 }
             }
         }
-        
-        /*for(int i=0; i < processiUltimati.size(); i++){
-            System.out.print("Istante" + i +": ");
-            for (int j=0; j<processiUltimati.get(i).size();j++){
-                System.out.print(processiUltimati.get(i).get(j) + " ");
-            }
-            System.out.println();
-        }*/
-           
     }
 
         
 
     public static void main(String[] args) throws Exception {
             // Set InfoNode Look and Feel
-            
-            try{UIManager.setLookAndFeel(new com.sun.java.swing.plaf.gtk.GTKLookAndFeel());}
-            catch(Exception e1){
-                try{UIManager.setLookAndFeel(new com.sun.java.swing.plaf.windows.WindowsLookAndFeel());}
-                catch(Exception e2){
-                    UIManager.setLookAndFeel(new InfoNodeLookAndFeel());
-                }
-            }
-            
+        
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             // Docking windwos should be run in the Swing thread
             SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
