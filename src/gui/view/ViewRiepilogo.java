@@ -124,6 +124,9 @@ public class ViewRiepilogo extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jTabbedPane1.setDoubleBuffered(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -236,7 +239,7 @@ public class ViewRiepilogo extends javax.swing.JPanel {
             JScrollPane Pannello = new JScrollPane( creaTabella(P));
             Pannello.enableInputMethods(false);
             String NomeProcesso=P.getNome();
-            if (P instanceof ProcessoConPriorita ) NomeProcesso=NomeProcesso+"("+((ProcessoConPriorita)P).getPriorita();            
+            if (P instanceof ProcessoConPriorita ) NomeProcesso=NomeProcesso+"("+((ProcessoConPriorita)P).getPriorita()+")";            
             jTabbedPane1.addTab(NomeProcesso, Pannello);
         }
    
@@ -261,7 +264,7 @@ public class ViewRiepilogo extends javax.swing.JPanel {
         for (int i=0; i<Accessi.size(); i++ ) {
             Accesso A=Accessi.get(i);
             String S=A.getRisorsa().toString();
-            if ( A.getRisorsa() instanceof Segmento ) S=S+" ("+((Segmento)A.getRisorsa()).getDimensione()+"KB)";
+            //if ( A.getRisorsa() instanceof Segmento ) S=S+" ("+((Segmento)A.getRisorsa()).getDimensione()+"KB)";
             if ( A.getModifica() ) S+=" (M)";
             Testo.elementAt( A.getIstanteRichiesta() ).add(S);
         }
