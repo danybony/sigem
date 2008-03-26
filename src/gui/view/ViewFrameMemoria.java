@@ -176,7 +176,7 @@ public class ViewFrameMemoria extends JScrollPane {
         }
         //Se il disegno dei frame ha superato l'altezza del JPanel, ridimensiono
         //lo stesso e notifico il cambiamento al JScrollPane
-        if (pag_seg==1)setPreferredSize(new Dimension(320, (pagineSquare.size()/6)*55));
+        if (pag_seg==1)setPreferredSize(new Dimension(320, (pagineSquare.size()/6)*55+55));
         else setPreferredSize(new Dimension(320, pagineSquare.get(pagineSquare.size()-1).getyCoord()+pagineSquare.get(pagineSquare.size()-1).getAltezza()+5));
         revalidate();
     }
