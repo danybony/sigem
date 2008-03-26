@@ -128,7 +128,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 //Considero ora i cambiamenti avvenuti in RAM e in Swap
                 //Prima di tutto, se un processo ha finito la sua esecuzione:
                 if (istante.getProcessoPrecedenteTerminato() != null) {
-                    aux += GregorianCalendar.getInstance().getTime()+": Il processo " + istante.getProcessoPrecedenteTerminato().getRifProcesso().getId() + " ha ultimato la sua escuzione. La memoria da esso occupata e' stata liberata.";
+                    aux += GregorianCalendar.getInstance().getTime()+": Il processo " + istante.getProcessoPrecedenteTerminato().getRifProcesso().getId() + " ha ultimato la sua escuzione. La memoria da esso occupata e' stata liberata.\n";
                 }
                 //Scorro la lista di azioni e le divido a seconda del tipo
                 frameAuxRAM.clear();
