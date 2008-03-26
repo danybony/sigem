@@ -164,7 +164,10 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         this(parent, modal, configurazione, pol, proc, view);
         this.confIniziale = confIniziale;
         modifica = true;
-        caricaAccessi();
+        if(confIniziale.getModalitaGestioneMemoria() == politica.getGestioneMemoria()){
+             caricaAccessi();
+        }
+       
     }
     
     /**
