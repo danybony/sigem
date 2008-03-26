@@ -58,7 +58,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
      * Array che mantiene traccia di quanto accade nel log. Utile in caso la
      * simulazione torni indietro
      */
-    private Vector<String> avanzamentoTestuale;
+    //private Vector<String> avanzamentoTestuale;
     
     /**
      * Costruttore della classe.
@@ -74,7 +74,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
     public void aggiorna(Istante istante, int idIstanteCorrente){
         
         if(idIstanteCorrente==0){
-            avanzamentoTestuale.add(0,"");
+            //avanzamentoTestuale.add(0,"");
             //testo.append("************************************************************************************************************\n");
             testo.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
             testo.append("~~~~~~~~~~~~~~~~~~~~~~~~ INIZIO DELLA SIMULAZIONE ~~~~~~~~~~~~~~~~~~~~~~~~\n");
@@ -83,7 +83,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
             return;
         }
         
-        if(idIstanteCorrente>=avanzamentoTestuale.size()){
+        //if(idIstanteCorrente>=avanzamentoTestuale.size()){
                 String aux = new String("");
                 int idProcessoCorrente = istante.getProcessoInEsecuzione().getRifProcesso().getId();
                 Vector<FrameMemoria> frameAuxRAM = new Vector<FrameMemoria>();
@@ -103,7 +103,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 }
 
                 if(!frameAuxRAM.isEmpty()){
-                aux += GregorianCalendar.getInstance().getTime()+": Sono già presenti in RAM ";
+                aux += GregorianCalendar.getInstance().getTime()+": Sono gia' presenti in RAM ";
 
                 if (tipoGestioneMemoria==2) {
                     aux += "i segmenti numero ";
@@ -225,13 +225,13 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 }
                 aux += "\n";
                 testo.append(aux);
-                avanzamentoTestuale.add(aux);
+                //avanzamentoTestuale.add(aux);
             
-        }
-        else{
+        //}
+        /*else{
             testo.append(GregorianCalendar.getInstance().getTime()+": La simulazione e' tornata all'istante "+idIstanteCorrente+"\n\n");
             testo.append(avanzamentoTestuale.get(idIstanteCorrente));
-        }
+        }*/
     }
     
     public void configura(int istantiTotali, int tipoGestioneMemoria){
@@ -244,7 +244,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
         testo.setEditable(false);
         setViewportView(testo);
         //Inizializzo il primo elemento del Vector di avanzamento testuale
-        avanzamentoTestuale= new Vector<String>();
+        //avanzamentoTestuale= new Vector<String>();
     }
     
 
