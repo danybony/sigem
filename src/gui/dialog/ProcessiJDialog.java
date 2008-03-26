@@ -194,6 +194,7 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         jTableProcessi.setName("jTableProcessi"); // NOI18N
         jTableProcessi.setCellSelectionEnabled(true);
         jTableProcessi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        /*
         jTableProcessi.addMouseListener(new MouseAdapter(){
 
             public void mouseClicked(MouseEvent e) {
@@ -216,7 +217,7 @@ public class ProcessiJDialog extends javax.swing.JDialog {
             }
             
             
-        });
+        });*/
         jScrollPaneProcessi.setViewportView(jTableProcessi);
 /*
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
