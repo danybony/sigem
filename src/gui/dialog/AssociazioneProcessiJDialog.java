@@ -774,12 +774,12 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         String commento;
         
         if(politica.getGestioneMemoria() == 1){
-            commento = "<html>Trascinare qui le pagine che il processo utilizzerà" +
+            commento = "<html>Trascinare qui le pagine che il processo utilizzera'" +
                     " in questo istante. <br> Fare click col tasto destro del mouse per " +
                     "visualizzare le possibili scelte per la pagina selezionata.</html>";
         }
         else{
-            commento = "<html>Trascinare qui i segmenti che il processo utilizzerà" +
+            commento = "<html>Trascinare qui i segmenti che il processo utilizzera'" +
                     " in questo istante. <br> Fare click col tasto destro del mouse per" +
                     " visualizzare le possibili scelte per il segmento selezionata.</html>";
         }
@@ -850,7 +850,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
     /**
      * Metodo che aggiorna il modello per la lista dei FrameMemoria di un processo
      * quando viene selezionato un'altro processo nel JTabbedPane.
-     * E' necessario perchè ogni processo ha i propri FrameMemoria.
+     * E' necessario perche' ogni processo ha i propri FrameMemoria.
      */
     private void aggiornaListaFrame(){        
         
