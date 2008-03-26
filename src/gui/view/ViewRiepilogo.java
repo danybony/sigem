@@ -25,7 +25,7 @@ import java.util.Vector;
  *
  * @author  Compagnin Davide
  */
-public class ViewRiepilogo extends javax.swing.JPanel {
+public class ViewRiepilogo extends javax.swing.JScrollPane {
     
     /** Creates new form ViewRiepilogo */
     public ViewRiepilogo() {
