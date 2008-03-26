@@ -1964,21 +1964,25 @@ public class SiGeMv2View {
         fc.setAcceptAllFileFilterUsed(false);
 
         int returnVal = fc.showSaveDialog(rootWindow);
-        file = fc.getSelectedFile();
-        String nomeFile = file.getAbsolutePath().concat(".sigem");
+        if(fc!=null){
+            file = fc.getSelectedFile();
+            if(file!=null){
+                String nomeFile = file.getAbsolutePath().concat(".sigem");
 
-        gestione = new GestioneFile(nomeFile,SiGeMv2View.this.getConfigurazioneIniziale());
+                gestione = new GestioneFile(nomeFile,SiGeMv2View.this.getConfigurazioneIniziale());
 
-        try {
-            if(gestione.salvaFileConfigurazione(SiGeMv2View.this.getConfigurazioneIniziale())){
-                JOptionPane.showMessageDialog(rootWindow, "Configurazione salvata!","Salvata",JOptionPane.INFORMATION_MESSAGE);
-                frame.setTitle(file.getName() + ".sigem" + " - SiGeM StyloSoft");
+                try {
+                    if(gestione.salvaFileConfigurazione(SiGeMv2View.this.getConfigurazioneIniziale())){
+                        JOptionPane.showMessageDialog(rootWindow, "Configurazione salvata!","Salvata",JOptionPane.INFORMATION_MESSAGE);
+                        frame.setTitle(file.getName() + ".sigem" + " - SiGeM StyloSoft");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(rootWindow, "Configurazione non salvata!","Errore",JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(rootWindow, "Impossibile salvare. \nErrore nella scrittura del file","Errore",JOptionPane.ERROR_MESSAGE);
+                }
             }
-            else{
-                JOptionPane.showMessageDialog(rootWindow, "Configurazione non salvata!","Errore",JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(rootWindow, "Impossibile salvare. \nErrore nella scrittura del file","Errore",JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -2057,8 +2061,15 @@ public class SiGeMv2View {
 
     public static void main(String[] args) throws Exception {
             // Set InfoNode Look and Feel
-            //UIManager.setLookAndFeel(new InfoNodeLookAndFeel());
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            
+            try{UIManager.setLookAndFeel(new com.sun.java.swing.plaf.gtk.GTKLookAndFeel());}
+            catch(UnsupportedLookAndFeelException e1){
+                try{UIManager.setLookAndFeel(new com.sun.java.swing.plaf.windows.WindowsLookAndFeel());}
+                catch(UnsupportedLookAndFeelException e2){
+                    UIManager.setLookAndFeel(new InfoNodeLookAndFeel());
+                }
+            }
+            
             // Docking windwos should be run in the Swing thread
             SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
