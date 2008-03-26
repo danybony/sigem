@@ -4,9 +4,10 @@
  * Package: gui.dialog
  * Autore: Davide Compagnin
  * Data: 14/03/2008
- * Versione: 1.1
+ * Versione: 1.2
  * Licenza: open-source
  * Registro delle modifiche: 
+ *  - v.1.2 (14/03/2008): Bloccata modifica tabelle sistemato aggiornamento
  *  - v.1.1 (14/03/2008): Aggiunta Pannello Tabbed e tabelle
  *  - v.1.0 (14/03/2008): Creazione e impostazione grafica
  */
@@ -28,6 +29,7 @@ public class ViewRiepilogo extends javax.swing.JPanel {
     
     /** Creates new form ViewRiepilogo */
     public ViewRiepilogo() {
+        super();
         initComponents();
         azzeraRiepilogo();
     }
@@ -206,9 +208,12 @@ public class ViewRiepilogo extends javax.swing.JPanel {
             setPaginazione(C);
         else setSegmentazione(C); // Segmentazione
         
+        jTabbedPane1.removeAll();
+        
         for(int i=0; i<C.getListaProcessi().size(); i++ ) {
             Processo P=C.getListaProcessi().get(i);
-            JScrollPane Pannello = new JScrollPane( creaTabella(P) );
+            JScrollPane Pannello = new JScrollPane( creaTabella(P));
+            Pannello.enableInputMethods(false);
             String NomeProcesso=P.getNome();
             if (P instanceof ProcessoConPriorita ) NomeProcesso=NomeProcesso+"("+((ProcessoConPriorita)P).getPriorita();            
             jTabbedPane1.addTab(NomeProcesso, Pannello);
@@ -245,10 +250,17 @@ public class ViewRiepilogo extends javax.swing.JPanel {
             if ( righe < Testo.elementAt(i).size() ) righe=Testo.elementAt(i).size();
         
             
-        JTable TabellaProcesso=new JTable(righe,colonne);
+        String[] NomeColonne=new String[colonne];
+        for(int c=0;c<colonne;c++)
+            NomeColonne[c]="Istante "+c;
         
-        for ( int r=0; r<righe; r++ )
-            for (int c=0; c<colonne; c++ )
+        Object[][] dim=new Object[righe][colonne];
+        
+        JTable TabellaProcesso=new JTable(dim,NomeColonne); // serve x il costruttore
+        TabellaProcesso.setEnabled(false);
+        
+        for ( int c=0; c<colonne; c++ )
+            for (int r=0; r<Testo.elementAt(c).size(); r++ ) 
                 TabellaProcesso.setValueAt(Testo.elementAt(c).elementAt(r), r, c );
         
         return TabellaProcesso;
