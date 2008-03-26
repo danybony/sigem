@@ -1965,7 +1965,7 @@ public class SiGeMv2View {
     /**
      * Imposta la configurazione iniziale corrente
      */
-    private void setConfigurazioneIniziale(ConfigurazioneIniziale configurazioneIniziale) {
+    public void setConfigurazioneIniziale(ConfigurazioneIniziale configurazioneIniziale) {
         this.configurazioneIniziale = configurazioneIniziale;
     }
     
