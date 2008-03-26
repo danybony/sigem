@@ -25,7 +25,7 @@ import java.util.Vector;
  *
  * @author  Compagnin Davide
  */
-public class ViewRiepilogo extends javax.swing.JScrollPane {
+public class ViewRiepilogo extends javax.swing.JPanel {
     
     /** Creates new form ViewRiepilogo */
     public ViewRiepilogo() {
@@ -54,8 +54,6 @@ public class ViewRiepilogo extends javax.swing.JScrollPane {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-
-        setAutoscrolls(true);
 
         jPanel1.setBackground(new java.awt.Color(219, 231, 233));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
