@@ -55,6 +55,8 @@ public class ViewRiepilogo extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
 
+        setAutoscrolls(true);
+
         jPanel1.setBackground(new java.awt.Color(219, 231, 233));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setFont(new java.awt.Font("FreeMono", 0, 12));
