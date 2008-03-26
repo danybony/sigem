@@ -101,7 +101,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                         frameAuxRAM.add(memoria.get(i));
                     }
                 }
-
+/*
                 if(!frameAuxRAM.isEmpty()){
                 aux += GregorianCalendar.getInstance().getTime()+": Sono gia' presenti in RAM ";
 
@@ -124,7 +124,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                     aux += "riferite dal processo\n";
                 }
                 }
-
+*/
                 //Considero ora i cambiamenti avvenuti in RAM e in Swap
                 //Prima di tutto, se un processo ha finito la sua esecuzione:
                 if (istante.getProcessoPrecedenteTerminato() != null) {
