@@ -57,6 +57,27 @@ public class ViewRiepilogo extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(219, 231, 233));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setFont(new java.awt.Font("FreeMono", 0, 12));
+
+        jLabel1.setFont(new java.awt.Font("Courier New", 0, 12));
+
+        jLabel2.setFont(new java.awt.Font("Courier New", 0, 12));
+
+        jLabel3.setFont(new java.awt.Font("Courier New", 0, 12));
+
+        jLabel4.setFont(new java.awt.Font("Courier New", 0, 12));
+
+        jLabel5.setFont(new java.awt.Font("Courier New", 0, 12));
+
+        jLabel6.setFont(new java.awt.Font("Courier New", 0, 12));
+
+        jLabel7.setFont(new java.awt.Font("Courier New", 0, 12));
+
+        jLabel8.setFont(new java.awt.Font("Courier New", 0, 12));
+
+        jLabel9.setFont(new java.awt.Font("Courier New", 0, 12));
+
+        jLabel10.setFont(new java.awt.Font("Courier New", 0, 12));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -158,8 +179,8 @@ public class ViewRiepilogo extends javax.swing.JPanel {
         jLabel10.setText(""); //Dimensioni pagina
     }
     private void setPaginazione( ConfigurazioneIniziale C ) {
-        jLabel7.setText("Tecnica gestione memoria: Paginazione");
-        String S="Politica rimpiazzo pagine: ";
+        jLabel7.setText("Tecnica gestione memoria: ...........Paginazione");
+        String S="Politica rimpiazzo pagine: ..........";
         switch ( C.getPoliticaGestioneMemoria() ) {
             case 1: jLabel9.setText(S+"NRU"); break;
             case 2: jLabel9.setText(S+"FIFO"); break;
@@ -169,11 +190,11 @@ public class ViewRiepilogo extends javax.swing.JPanel {
             case 6: jLabel9.setText(S+"NFU"); break;
             case 7: jLabel9.setText(S+"A"); break;        
         }
-        jLabel10.setText("Dimensione pagina: "+C.getDimensionePagina() );
+        jLabel10.setText("Dimensione pagina: .................."+C.getDimensionePagina() );
     }
     private void setSegmentazione( ConfigurazioneIniziale C ) {
-        jLabel7.setText("Tecnica gestione memoria: Segmentazione");
-        String S="Politica allocazione segmenti: ";
+        jLabel7.setText("Tecnica gestione memoria: ...........Segmentazione");
+        String S="Politica allocazione segmenti: ......";
         switch ( C.getPoliticaGestioneMemoria() ) {
             case 1: jLabel9.setText(S+"First-Fit"); break;
             case 2: jLabel9.setText(S+"Next-Fit"); break;
@@ -185,13 +206,13 @@ public class ViewRiepilogo extends javax.swing.JPanel {
     
     public void aggiorna( ConfigurazioneIniziale C ) {
         // imposta i campi su
-        jLabel1.setText("Processi: "+C.getListaProcessi().size());
-        jLabel2.setText("Dimensione RAM (KB): "+C.getDimensioneRAM());
-        jLabel3.setText("Dimensione area Swap (KB): "+C.getDimensioneSwap());
-        jLabel4.setText("Tempo Context Switch (ms): "+C.getTempoContextSwitch());
-        jLabel5.setText("Tempo accesso al disco (ms): "+C.getTempoAccessoDisco());
-        jLabel6.setText("Banda del bus dati: "+C.getBandaBusDati());
-        String scheduler="Politica schedulazione processi: ";
+        jLabel1.setText("Processi: ..........................."+C.getListaProcessi().size());
+        jLabel2.setText("Dimensione RAM (KB): ................"+C.getDimensioneRAM());
+        jLabel3.setText("Dimensione area Swap (KB): .........."+C.getDimensioneSwap());
+        jLabel4.setText("Tempo Context Switch (ms): .........."+C.getTempoContextSwitch());
+        jLabel5.setText("Tempo accesso al disco (ms): ........"+C.getTempoAccessoDisco());
+        jLabel6.setText("Banda del bus dati: ................."+C.getBandaBusDati());
+        String scheduler="Politica schedulazione processi: ....";
         switch ( C.getPoliticaSchedulazioneProcessi() ) {
             case 1: jLabel8.setText(scheduler+"FCFS"); break;
             case 2: jLabel8.setText(scheduler+"SJF"); break;
