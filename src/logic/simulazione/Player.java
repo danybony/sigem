@@ -449,4 +449,7 @@ public class Player{
         return false;
     }
     
+    public boolean fullSwapNellaSimulazione(){
+        return listaIstanti.getLast().getFull_Swap();
+    }
 }

@@ -982,6 +982,7 @@ public class SiGeMv2View {
             
             toolBar.addSeparator(new java.awt.Dimension(20, 12));
             
+            toolBar.add(new JLabel("Velocita': "));
             toolBar.add(scegliVelocita);
             
             toolBar.addSeparator(new java.awt.Dimension(30, 12));
@@ -1185,6 +1186,12 @@ public class SiGeMv2View {
         if(!simulazioneCarica()){
             JOptionPane.showMessageDialog(rootWindow, "Impossibile eseguire la simulazione","Errore",JOptionPane.ERROR_MESSAGE);
             return;
+        }
+        if(player.fullSwapNellaSimulazione()){
+            JOptionPane.showMessageDialog(rootWindow, "Durante la simulzione e' stata esautita la memoria (RAM e Swap).\n" + 
+                    "Questa situazione viene gestita da SiGeM come un errore.\n" + 
+                    "In questi casi la simulazione viene terminata prematuramente\n" + 
+                    "rispetto agli effettivi istanti di cui si dovrebbe comporre.","Attenzione",JOptionPane.WARNING_MESSAGE);
         }
         istante = player.primoIstante();
         processiUltimati = new Vector<Vector<Integer>>();
@@ -1916,6 +1923,7 @@ public class SiGeMv2View {
                 setConfigurazioneIniziale(conf);
                 this.setIstanteZero();
                 frame.setTitle(file.getName() + " - SiGeM StyloSoft");
+                System.out.println("Configurazione " + file.getName() + " caricata con successo");
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(rootWindow, "File di configurazione non valido","Errore",JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
@@ -1943,6 +1951,7 @@ public class SiGeMv2View {
                         i--;
                     }
                     frame.setTitle(nomeFile.substring(i+1) + " - SiGeM StyloSoft");
+                    System.out.println("Configurazione salvata in " + nomeFile.substring(i+1));
                 }
                 else{
                     JOptionPane.showMessageDialog(rootWindow, "Configurazione non salvata!","Errore",JOptionPane.ERROR_MESSAGE);
@@ -1971,6 +1980,7 @@ public class SiGeMv2View {
                     if(gestione.salvaFileConfigurazione(SiGeMv2View.this.getConfigurazioneIniziale())){
                         JOptionPane.showMessageDialog(rootWindow, "Configurazione salvata!","Salvata",JOptionPane.INFORMATION_MESSAGE);
                         frame.setTitle(file.getName() + ".sigem" + " - SiGeM StyloSoft");
+                        System.out.println("Configurazione salvata in " + file.getName() + ".sigem");
                     }
                     else{
                         JOptionPane.showMessageDialog(rootWindow, "Configurazione non salvata!","Errore",JOptionPane.ERROR_MESSAGE);
@@ -1988,11 +1998,12 @@ public class SiGeMv2View {
         nomeFile=nomeFile.replace(" ","%20");
                             
         gestione = new GestioneFile(nomeFile,SiGeMv2View.this.getConfigurazioneIniziale());
-
+        System.out.println("Imposto la configurazione di default in " + nomeFile);
         try {
             if(gestione.salvaFileConfigurazione(SiGeMv2View.this.getConfigurazioneIniziale())){
                 JOptionPane.showMessageDialog(rootWindow, "La configurazione di default e' stata impostata!","Configurazione di default",JOptionPane.INFORMATION_MESSAGE);
                 frame.setTitle("SiGeM StyloSoft");
+                System.out.println("Configurazione di default impostata");
             }
             else{
                 JOptionPane.showMessageDialog(rootWindow, "Impossibile impostare la configurazione di default","Errore",JOptionPane.ERROR_MESSAGE);
