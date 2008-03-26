@@ -86,6 +86,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
         //if(idIstanteCorrente>=avanzamentoTestuale.size()){
                 String aux = new String("");
                 int idProcessoCorrente = istante.getProcessoInEsecuzione().getRifProcesso().getId();
+                String ProcessoCorrente=istante.getProcessoInEsecuzione().getRifProcesso().getNome();
                 Vector<FrameMemoria> frameAuxRAM = new Vector<FrameMemoria>();
                 Vector<FrameMemoria> frameAuxSwap = new Vector<FrameMemoria>();
                 Vector<FrameMemoria> frameToltiRAM = new Vector<FrameMemoria>();
@@ -93,7 +94,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                 Vector<FrameMemoria> memoria = istante.getStatoRAM();
 
                 aux += GregorianCalendar.getInstance().getTime()+": La simulazione e' passata all'istante " + idIstanteCorrente + " su un totale di " + istantiTotali + "\n";
-                aux += GregorianCalendar.getInstance().getTime()+": E' stato schedulato per l'esecuzione il processo " + idProcessoCorrente + "\n";
+                aux += GregorianCalendar.getInstance().getTime()+": E' stato schedulato per l'esecuzione il processo " + ProcessoCorrente + "(id="+idProcessoCorrente + ")\n";
 
                 //Scorro la memoria alla ricerca di frame memoria del processo in esecuzione
                 for (int i = 0; i < memoria.size(); i++) {
