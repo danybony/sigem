@@ -359,4 +359,3 @@ public class ConfigurazioneIniziale implements Serializable{
         return this.TIME_SLICE;
     }
 }
-

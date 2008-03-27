@@ -18,4 +18,9 @@ package logic.parametri;
  * Eccezione lanciata nel momento in cui viene costruita una ConfigurazioneIniziale
  * con valori non validi per i propri campi dati.
  */
-public class EccezioneConfigurazioneNonValida extends Exception{}
+public class EccezioneConfigurazioneNonValida extends Exception{
+    public EccezioneConfigurazioneNonValida(){
+        super();
+    }
+}
+

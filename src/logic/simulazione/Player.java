@@ -27,12 +27,7 @@ package logic.simulazione;
  */
 
 import java.util.LinkedList;
-import java.util.Vector;
-import logic.gestioneMemoria.Azione;
-import logic.gestioneMemoria.FrameMemoria;
 import logic.parametri.ConfigurazioneIniziale;
-import logic.parametri.Processo;
-import logic.schedulazione.PCB;
 
 /**
  * Classe per lo scorrimento di una simulazione.<br>
@@ -141,8 +136,7 @@ public class Player{
             return null;
         if(this.indiceElementoCorrente > 1){
             this.indiceElementoCorrente--;
-            Istante prev = this.listaIstanti.get(indiceElementoCorrente);
-            return prev;
+            return this.listaIstanti.get(indiceElementoCorrente);
         }
         return null;
     }
@@ -159,8 +153,7 @@ public class Player{
             return null;
         if(hasNext()){
             this.indiceElementoCorrente++;
-            Istante next = this.listaIstanti.get(indiceElementoCorrente);
-            return next;
+            return this.listaIstanti.get(indiceElementoCorrente);
         }
         return null;
     }

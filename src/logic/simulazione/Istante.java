@@ -196,3 +196,4 @@ public class Istante {
         return this.statoSwap;
     }
 }
+
