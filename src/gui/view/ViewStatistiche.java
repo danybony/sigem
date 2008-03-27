@@ -7,8 +7,10 @@
 package gui.view;
 
 import gui.SiGeMv2View;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Vector;
+import logic.gestioneMemoria.Azione;
 import logic.gestioneMemoria.FrameMemoria;
 import logic.parametri.ConfigurazioneIniziale;
 import logic.simulazione.Istante;
@@ -21,6 +23,11 @@ import logic.simulazione.Player;
 public class ViewStatistiche extends javax.swing.JPanel {
     
     private int numeroFault;
+    private int tempo = 0;
+    private LinkedList<Boolean> contextSwitchs;
+    private Vector<Vector<Integer>> processiUltimati;
+    private ConfigurazioneIniziale configurazioneIniziale;
+    private LinkedList<Integer> listaTempi;
     
     /** Creates new form ViewStatistiche2 */
     public ViewStatistiche() {
@@ -45,6 +52,8 @@ public class ViewStatistiche extends javax.swing.JPanel {
         jProgressBar3 = new javax.swing.JProgressBar();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(305, 122));
 
@@ -70,6 +79,11 @@ public class ViewStatistiche extends javax.swing.JPanel {
 
         jLabel5.setText("0");
 
+        jLabel6.setText("Stima del tempo trascorso:");
+
+        jLabel7.setText("0 secondi");
+        jLabel7.setName(""); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -77,19 +91,25 @@ public class ViewStatistiche extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                            .addComponent(jProgressBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                            .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))))
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                                    .addComponent(jProgressBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                                    .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -111,7 +131,11 @@ public class ViewStatistiche extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -128,8 +152,19 @@ public class ViewStatistiche extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     
-    public void azzeraStatistiche(){
+    public void azzeraStatistiche(LinkedList<Boolean> contextSwitchs,
+                Vector<Vector<Integer>> processiUltimati,
+                ConfigurazioneIniziale configurazioneIniziale){
+        
+        this.configurazioneIniziale = configurazioneIniziale;
+        this.contextSwitchs = contextSwitchs;
+        this.processiUltimati = processiUltimati;
+        this.listaTempi = new LinkedList<Integer>();
+        this.listaTempi.add(new Integer(0));
         this.numeroFault = 0;
+        this.tempo = 0;
+        this.jLabel5.setText("");
+        this.jLabel7.setText("");
         this.jProgressBar1.setValue(0);
         this.jProgressBar1.setString("0%");
         this.jProgressBar2.setValue(0);
@@ -140,22 +175,22 @@ public class ViewStatistiche extends javax.swing.JPanel {
     }
     
     public void generaStatistiche(Player player,
-                                  Istante istante, ConfigurazioneIniziale conf,
-                                  Vector<Vector<Integer>> processiUltimati,
+                                  Istante istante,
                                   boolean avanti) {
     
         if(player.getIndiceIstanteCorrente()==0){
             this.numeroFault=0;
             jLabel5.setText("0");
             this.jProgressBar1.setValue(0);
-            this.jProgressBar1.setString("0%  (0 di " + conf.getDimensioneRAM() + " KB)");
+            this.jProgressBar1.setString("0%  (0 di " + configurazioneIniziale.getDimensioneRAM() + " KB)");
             this.jProgressBar2.setValue(0);
-            this.jProgressBar2.setString("0%  (0 di " + conf.getDimensioneSwap() + " KB)");
+            this.jProgressBar2.setString("0%  (0 di " + configurazioneIniziale.getDimensioneSwap() + " KB)");
         }
         else{
-            aggiornaUtilizzoRAM(player,istante,conf,processiUltimati);
-            aggiornaUtilizzoSwap(player,istante,conf,processiUltimati);
+            aggiornaUtilizzoRAM(player,istante);
+            aggiornaUtilizzoSwap(player,istante);
             aggiornaFault(istante, avanti, player);
+            aggiornaTempoTrascorso(player,istante,avanti);
         }
         aggiornaNumeroIstanti(player);
     }
@@ -180,11 +215,9 @@ public class ViewStatistiche extends javax.swing.JPanel {
     }
     
     void aggiornaUtilizzoRAM(Player player,
-                             Istante istante,
-                             ConfigurazioneIniziale conf,
-                             Vector<Vector<Integer>> processiUltimati){
+                             Istante istante){
         
-        int tot = conf.getDimensioneRAM();
+        int tot = configurazioneIniziale.getDimensioneRAM();
         int ultimo=0;
         
         // screen-shot memoria
@@ -209,10 +242,10 @@ public class ViewStatistiche extends javax.swing.JPanel {
 
                 // se proc non e' terminato, aggiungo o tolgo mem
                 if(!trovato){
-                    if(conf.getModalitaGestioneMemoria()==1){
-                        ultimo += conf.getDimensionePagina();
+                    if(configurazioneIniziale.getModalitaGestioneMemoria()==1){
+                        ultimo += configurazioneIniziale.getDimensionePagina();
                     }
-                    else if(conf.getModalitaGestioneMemoria()==2){
+                    else if(configurazioneIniziale.getModalitaGestioneMemoria()==2){
                         if(shot.get(j).getIdProcesso()!=-1){
                             ultimo += shot.get(j).getDimensione();
                             
@@ -229,11 +262,9 @@ public class ViewStatistiche extends javax.swing.JPanel {
     }
     
      void aggiornaUtilizzoSwap(Player player,
-                             Istante istante,
-                             ConfigurazioneIniziale conf,
-                             Vector<Vector<Integer>> processiUltimati){
+                             Istante istante){
      
-        int tot = conf.getDimensioneSwap();
+        int tot = configurazioneIniziale.getDimensioneSwap();
         int ultimo=0;
         
         // screen-shot memoria
@@ -258,10 +289,10 @@ public class ViewStatistiche extends javax.swing.JPanel {
 
                 // se proc non e' terminato, aggiungo o tolgo mem
                 if(!trovato){
-                    if(conf.getModalitaGestioneMemoria()==1){
-                        ultimo += conf.getDimensionePagina();
+                    if(configurazioneIniziale.getModalitaGestioneMemoria()==1){
+                        ultimo += configurazioneIniziale.getDimensionePagina();
                     }
-                    else if(conf.getModalitaGestioneMemoria()==2){
+                    else if(configurazioneIniziale.getModalitaGestioneMemoria()==2){
                         if(shot.get(j).getIdProcesso()!=-1){
                             ultimo += shot.get(j).getDimensione();
                             
@@ -276,6 +307,50 @@ public class ViewStatistiche extends javax.swing.JPanel {
         catch(NullPointerException e){}
         catch(NoSuchElementException e){}
      }
+     
+     public void aggiornaTempoTrascorso(Player player,
+                    Istante istante, boolean avanti){
+     
+         int accesso = configurazioneIniziale.getTempoAccessoDisco();
+         int banda = configurazioneIniziale.getBandaBusDati();
+         int contextSwitch = configurazioneIniziale.getTempoContextSwitch();
+         int trasferimenti = 0;
+         
+         System.out.println(accesso);
+         System.out.println(banda);
+         System.out.println(contextSwitch);
+         System.out.println();
+         
+         
+         
+         if(avanti){
+             LinkedList<Azione> azioni = istante.getCambiamentiInMemoria();
+             for(int i = 0; i<azioni.size(); i++){
+                Azione azioneCorrente = azioni.get(i);
+                switch(azioneCorrente.getAzione()){
+                    case 1:
+                        // spostamento di un frame in RAM
+                        trasferimenti += accesso + 1000*(configurazioneIniziale.getDimensionePagina()/banda);
+                        break;
+                    case 2:
+                        trasferimenti += accesso + 1000*(configurazioneIniziale.getDimensionePagina()/banda);
+                        break;
+                }
+                System.out.println(trasferimenti);
+             }
+             if(contextSwitchs.get(player.getIndiceIstanteCorrente()).booleanValue())
+                 tempo += contextSwitch;
+             tempo += trasferimenti;
+             this.listaTempi.add(new Integer(tempo));
+         }
+         else{
+             tempo = listaTempi.get(player.getIndiceIstanteCorrente());
+         }
+         int ore=0, minuti=0, secondi=0, millesimi=0;
+         millesimi = tempo%1000;
+         secondi = tempo/1000;
+         this.jLabel7.setText(Integer.valueOf(secondi).toString() + " secondi e "  +Integer.valueOf(millesimi).toString() + " millesimi");
+     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -283,6 +358,8 @@ public class ViewStatistiche extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
