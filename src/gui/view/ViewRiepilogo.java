@@ -237,7 +237,8 @@ public class ViewRiepilogo extends javax.swing.JPanel {
         for(int i=0; i<C.getListaProcessi().size(); i++ ) {
             Processo P=C.getListaProcessi().get(i);
             JScrollPane Pannello = new JScrollPane( creaTabella(P));
-            Pannello.enableInputMethods(false);
+            //Pannello.setHorizontalScrollBar( new javax.swing.JScrollBar() );
+            Pannello.setVerticalScrollBar(new javax.swing.JScrollBar() );
             String NomeProcesso=P.getNome();
             if (P instanceof ProcessoConPriorita ) NomeProcesso=NomeProcesso+"("+((ProcessoConPriorita)P).getPriorita()+")";            
             jTabbedPane1.addTab(NomeProcesso, Pannello);
@@ -282,7 +283,8 @@ public class ViewRiepilogo extends javax.swing.JPanel {
         
         JTable TabellaProcesso=new JTable(dim,NomeColonne); // serve x il costruttore
         TabellaProcesso.setEnabled(false);
-        
+        TabellaProcesso.setShowHorizontalLines(false);
+        TabellaProcesso.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
         for ( int c=0; c<colonne; c++ )
             for (int r=0; r<Testo.elementAt(c).size(); r++ ) 
                 TabellaProcesso.setValueAt(Testo.elementAt(c).elementAt(r), r, c );
