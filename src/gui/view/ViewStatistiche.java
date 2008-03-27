@@ -23,7 +23,7 @@ public class ViewStatistiche extends javax.swing.JPanel {
     private int numeroFault;
     
     /** Creates new form ViewStatistiche2 */
-    public ViewStatistiche(SiGeMv2View v) {
+    public ViewStatistiche() {
         initComponents();
     }
     
@@ -176,7 +176,7 @@ public class ViewStatistiche extends javax.swing.JPanel {
             this.numeroFault -= istante.getFault();
             player.istantePrecedente();
         }
-        jLabel5.setText(new Integer(this.numeroFault).toString());
+        jLabel5.setText(Integer.toString(this.numeroFault));
     }
     
     void aggiornaUtilizzoRAM(Player player,
@@ -291,3 +291,4 @@ public class ViewStatistiche extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
 }
+

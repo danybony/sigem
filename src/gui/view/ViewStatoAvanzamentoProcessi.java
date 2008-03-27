@@ -208,7 +208,7 @@ public class ViewStatoAvanzamentoProcessi extends JPanel {
 	         * quando spazio ci deve essere tra i numeri e quindi la dimensione
 	         * della griglia orizzontale
 	         */
-	        int maxInstantDigits = (new Integer(instants.size())).toString()
+	        int maxInstantDigits =Integer.toString(instants.size())
 	                .length();
 
 	        oldXGrid = gridX;

@@ -138,10 +138,9 @@ public class About extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setText("");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ChiudiAbout(evt);
+                chiudiAbout(evt);
             }
         });
 
@@ -170,9 +169,9 @@ public class About extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ChiudiAbout(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChiudiAbout
+    private void chiudiAbout(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chiudiAbout
         setVisible(false);
-    }//GEN-LAST:event_ChiudiAbout
+}//GEN-LAST:event_chiudiAbout
     
     /**
      * @param args the command line arguments
@@ -210,3 +209,4 @@ public class About extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
     
 }
+

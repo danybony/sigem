@@ -34,9 +34,7 @@ import net.infonode.docking.properties.RootWindowProperties;
 import net.infonode.docking.theme.*;
 import net.infonode.docking.util.*;
 import net.infonode.gui.componentpainter.ComponentPainter;
-import net.infonode.gui.laf.InfoNodeLookAndFeel;
 import net.infonode.util.Direction;
-import net.infonode.docking.theme.*;
 
 import javax.swing.*;
 
@@ -119,10 +117,6 @@ public class SiGeMv2View {
 
     // PULSANTI E MENU
 
-    /** Messaggio di default visualizzato a simulazione terminata. Se si verifica 
-     * un deadlock questo messaggio viene cambiato. */ 
-    String messaggioSimTerminata = new String("SIMULAZIONE TERMINATA");
-
     // Pulsanti ToolBar
     private JButton jButtonSimulazionePlay, jButtonSimulazioneStop;
     private JButton jButtonSimulazioneInizio, jButtonSimulazioneFine;
@@ -135,7 +129,7 @@ public class SiGeMv2View {
     
     JSpinner scegliVelocita;
     
-    private JComboBox ComboBoxSignificativo;
+    private JComboBox comboBoxSignificativo;
 
     // Pulsanti Menu Simulazione
     private JMenuItem jSimulazioneItemPlay, jSimulazioneItemStop;
@@ -144,11 +138,11 @@ public class SiGeMv2View {
     private JMenuItem jSimulazioneItemPausa;
     private JMenu jSimulazioneItemAvantiSignificativo;
     private JMenu jSimulazioneItemIndietroSignificativo;
-    private JMenuItem ItemAvantiFault, ItemAvantiSwitch, ItemAvantiFullRAM;
-    private JMenuItem ItemAvantiFullSwap,ItemAvantiFineProc,ItemAvantiNuovoProc;
-    private JMenuItem ItemIndietroFault, ItemIndietroSwitch, ItemIndietroFullRAM;
-    private JMenuItem ItemIndietroFullSwap,ItemIndietroFineProc;
-    private JMenuItem ItemIndietroNuovoProc;
+    private JMenuItem itemAvantiFault, itemAvantiSwitch, itemAvantiFullRAM;
+    private JMenuItem itemAvantiFullSwap,itemAvantiFineProc,itemAvantiNuovoProc;
+    private JMenuItem itemIndietroFault, itemIndietroSwitch, itemIndietroFullRAM;
+    private JMenuItem itemIndietroFullSwap,itemIndietroFineProc;
+    private JMenuItem itemIndietroNuovoProc;
 
     // Pulsanti Menu File
     private JMenuItem jFileItemNuovaConfigurazione, jFileItemApriConfigurazione;
@@ -328,7 +322,7 @@ public class SiGeMv2View {
                             new ViewFrameMemoria());
             viewMap.addView(1, views[1]);
             views[2] = new View("Statistiche simulazione", IconStylosoft
-                            .getGeneralIcon("statistiche"), new ViewStatistiche(this));
+                            .getGeneralIcon("statistiche"), new ViewStatistiche());
             viewMap.addView(2, views[2]);
             views[3] = new View("Modalita' testuale", IconStylosoft
                             .getGeneralIcon(""),  new ViewAvanzamentoTestuale());
@@ -666,53 +660,53 @@ public class SiGeMv2View {
             simulazioneMenu.add(jSimulazioneItemIndietroSignificativo);
 
             // sotto-menù
-                    ItemIndietroFault = new JMenuItem("Fault in memoria");
-                    ItemIndietroFault.addActionListener(new ActionListener() {
+                    itemIndietroFault = new JMenuItem("Fault in memoria");
+                    itemIndietroFault.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoPrecedente(0);
                         }
                     });
-                    jSimulazioneItemIndietroSignificativo.add(ItemIndietroFault);
+                    jSimulazioneItemIndietroSignificativo.add(itemIndietroFault);
 
-                    ItemIndietroSwitch = new JMenuItem("Context switch");
-                    ItemIndietroSwitch.addActionListener(new ActionListener() {
+                    itemIndietroSwitch = new JMenuItem("Context switch");
+                    itemIndietroSwitch.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoPrecedente(1);
                         }
                     });
-                    jSimulazioneItemIndietroSignificativo.add(ItemIndietroSwitch);
+                    jSimulazioneItemIndietroSignificativo.add(itemIndietroSwitch);
 
-                    ItemIndietroFullRAM = new JMenuItem("Riempimento RAM");
-                    ItemIndietroFullRAM.addActionListener(new ActionListener() {
+                    itemIndietroFullRAM = new JMenuItem("Riempimento RAM");
+                    itemIndietroFullRAM.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoPrecedente(2);
                         }
                     });
-                    jSimulazioneItemIndietroSignificativo.add(ItemIndietroFullRAM);
+                    jSimulazioneItemIndietroSignificativo.add(itemIndietroFullRAM);
 
-                    ItemIndietroFullSwap = new JMenuItem("Riempimento Swap");
-                    ItemIndietroFullSwap.addActionListener(new ActionListener() {
+                    itemIndietroFullSwap = new JMenuItem("Riempimento Swap");
+                    itemIndietroFullSwap.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoPrecedente(3);
                         }
                     });
-                    jSimulazioneItemIndietroSignificativo.add(ItemIndietroFullSwap);
+                    jSimulazioneItemIndietroSignificativo.add(itemIndietroFullSwap);
 
-                    ItemIndietroFineProc= new JMenuItem("Terminazione di un processo");
-                    ItemIndietroFineProc.addActionListener(new ActionListener() {
+                    itemIndietroFineProc= new JMenuItem("Terminazione di un processo");
+                    itemIndietroFineProc.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoPrecedente(4);
                         }
                     });
-                    jSimulazioneItemIndietroSignificativo.add(ItemIndietroFineProc);
+                    jSimulazioneItemIndietroSignificativo.add(itemIndietroFineProc);
 
-                    ItemIndietroNuovoProc= new JMenuItem("Arrivo di un nuovo processo");
-                    ItemIndietroNuovoProc.addActionListener(new ActionListener() {
+                    itemIndietroNuovoProc= new JMenuItem("Arrivo di un nuovo processo");
+                    itemIndietroNuovoProc.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoPrecedente(5);
                         }
                     });
-                    jSimulazioneItemIndietroSignificativo.add(ItemIndietroNuovoProc);
+                    jSimulazioneItemIndietroSignificativo.add(itemIndietroNuovoProc);
 
 
 
@@ -742,53 +736,53 @@ public class SiGeMv2View {
 
 
             // sotto-menù
-                    ItemAvantiFault= new JMenuItem("Fault in memoria");
-                    ItemAvantiFault.addActionListener(new ActionListener() {
+                    itemAvantiFault= new JMenuItem("Fault in memoria");
+                    itemAvantiFault.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoSuccessivo(0);
                         }
                     });
-                    jSimulazioneItemAvantiSignificativo.add(ItemAvantiFault);
+                    jSimulazioneItemAvantiSignificativo.add(itemAvantiFault);
 
-                    ItemAvantiSwitch = new JMenuItem("Context switch");
-                    ItemAvantiSwitch.addActionListener(new ActionListener() {
+                    itemAvantiSwitch = new JMenuItem("Context switch");
+                    itemAvantiSwitch.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoSuccessivo(1);
                         }
                     });
-                    jSimulazioneItemAvantiSignificativo.add(ItemAvantiSwitch);
+                    jSimulazioneItemAvantiSignificativo.add(itemAvantiSwitch);
 
-                    ItemAvantiFullRAM = new JMenuItem("Riempimento RAM");
-                    ItemAvantiFullRAM.addActionListener(new ActionListener() {
+                    itemAvantiFullRAM = new JMenuItem("Riempimento RAM");
+                    itemAvantiFullRAM.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoSuccessivo(2);
                         }
                     });
-                    jSimulazioneItemAvantiSignificativo.add(ItemAvantiFullRAM);
+                    jSimulazioneItemAvantiSignificativo.add(itemAvantiFullRAM);
 
-                    ItemAvantiFullSwap = new JMenuItem("Riempimento Swap");
-                    ItemAvantiFullSwap.addActionListener(new ActionListener() {
+                    itemAvantiFullSwap = new JMenuItem("Riempimento Swap");
+                    itemAvantiFullSwap.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoSuccessivo(3);
                         }
                     });
-                    jSimulazioneItemAvantiSignificativo.add(ItemAvantiFullSwap);
+                    jSimulazioneItemAvantiSignificativo.add(itemAvantiFullSwap);
 
-                    ItemAvantiFineProc = new JMenuItem("Terminazione di un processo");
-                    ItemAvantiFineProc.addActionListener(new ActionListener() {
+                    itemAvantiFineProc = new JMenuItem("Terminazione di un processo");
+                    itemAvantiFineProc.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoSuccessivo(4);
                         }
                     });
-                    jSimulazioneItemAvantiSignificativo.add(ItemAvantiFineProc);
+                    jSimulazioneItemAvantiSignificativo.add(itemAvantiFineProc);
 
-                    ItemAvantiNuovoProc = new JMenuItem("Arrivo nuovo processo");
-                    ItemAvantiNuovoProc.addActionListener(new ActionListener() {
+                    itemAvantiNuovoProc = new JMenuItem("Arrivo nuovo processo");
+                    itemAvantiNuovoProc.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             simulazioneSignificativoSuccessivo(5);
                         }
                     });
-                    jSimulazioneItemAvantiSignificativo.add(ItemAvantiNuovoProc);                
+                    jSimulazioneItemAvantiSignificativo.add(itemAvantiNuovoProc);                
 
 
             jSimulazioneItemFine = new JMenuItem("Istante finale",IconStylosoft.getGeneralIcon("next"));
@@ -954,28 +948,28 @@ public class SiGeMv2View {
             jButtonIndietroSignificativo.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     simulazioneSignificativoPrecedente(
-                            ComboBoxSignificativo.getSelectedIndex());
+                            comboBoxSignificativo.getSelectedIndex());
                 }
             });
             jButtonIndietroSignificativo.setToolTipText("Porta la simulazione" +
                     " all'istante significativo precedente");
             
             
-            ComboBoxSignificativo = new JComboBox();
-            ComboBoxSignificativo.setModel(new DefaultComboBoxModel(
+            comboBoxSignificativo = new JComboBox();
+            comboBoxSignificativo.setModel(new DefaultComboBoxModel(
                     new String[] { "Fault in memoria",
                                    "Context switch",
                                    "Riempimento RAM",
                                    "Riempimento area di Swap",
                                    "Terminazione di un processo",
                                    "Arrivo di un nuovo processo"}));
-            ComboBoxSignificativo.setToolTipText("Evento significativo");
+            comboBoxSignificativo.setToolTipText("Evento significativo");
 
             jButtonAvantiSignificativo = new JButton(IconStylosoft.getGeneralIcon("nextSign"));
             jButtonAvantiSignificativo.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     simulazioneSignificativoSuccessivo(
-                            ComboBoxSignificativo.getSelectedIndex());
+                            comboBoxSignificativo.getSelectedIndex());
                 }
             });
             jButtonAvantiSignificativo.setToolTipText("Porta la simulazione" +
@@ -986,7 +980,7 @@ public class SiGeMv2View {
             double t;
             for(int i=1;i<=20;i++){
                 t = i;
-                velocitaConsentite[i-1]=new Double(t/2);
+                velocitaConsentite[i-1]=Double.valueOf(t/2);
             }
             scegliVelocita.setModel(new SpinnerListModel(velocitaConsentite));
             scegliVelocita.setToolTipText("Velocita' di avanzamento della simulazione");
@@ -1013,7 +1007,7 @@ public class SiGeMv2View {
             toolBar.addSeparator(new java.awt.Dimension(25, 12));
             
             toolBar.add(jButtonIndietroSignificativo);
-            toolBar.add(ComboBoxSignificativo);
+            toolBar.add(comboBoxSignificativo);
             toolBar.add(jButtonAvantiSignificativo);
             
             toolBar.addSeparator(new java.awt.Dimension(20, 12));
@@ -1036,7 +1030,7 @@ public class SiGeMv2View {
             jButtonSimulazioneFine.setEnabled(false);
             
             jButtonIndietroSignificativo.setEnabled(false);
-            ComboBoxSignificativo.setEnabled(false);
+            comboBoxSignificativo.setEnabled(false);
             jButtonAvantiSignificativo.setEnabled(false);
 
             toolBar.add(Box.createHorizontalGlue());
@@ -1062,8 +1056,9 @@ public class SiGeMv2View {
                   }));
             WindowBar windowBar = rootWindow.getWindowBar(Direction.DOWN);
 
-            while (windowBar.getChildWindowCount() > 0)
+            while (windowBar.getChildWindowCount() > 0){
                     windowBar.getChildWindow(0).close();
+            }
 
     }
 
@@ -1102,7 +1097,7 @@ public class SiGeMv2View {
         jButtonSimulazioneFine.setEnabled(true);
         
         jButtonIndietroSignificativo.setEnabled(false);
-        ComboBoxSignificativo.setEnabled(true);
+        comboBoxSignificativo.setEnabled(true);
         jButtonAvantiSignificativo.setEnabled(true);
 
                 
@@ -1164,9 +1159,9 @@ public class SiGeMv2View {
             jButtonIndietroSignificativo.setEnabled(false);
 
         if(player.hasPrev() || player.hasNext())
-            ComboBoxSignificativo.setEnabled(true);
+            comboBoxSignificativo.setEnabled(true);
         else
-            ComboBoxSignificativo.setEnabled(false);
+            comboBoxSignificativo.setEnabled(false);
         
         if(player.hasNext())
             jButtonAvantiSignificativo.setEnabled(true);
@@ -1331,7 +1326,7 @@ public class SiGeMv2View {
         jButtonSimulazioneFine.setEnabled(false);
         
         jButtonIndietroSignificativo.setEnabled(false);
-        ComboBoxSignificativo.setEnabled(false);
+        comboBoxSignificativo.setEnabled(false);
         jButtonAvantiSignificativo.setEnabled(false);
 
         jFileItemNuovaConfigurazione.setEnabled(false);
@@ -1616,25 +1611,24 @@ public class SiGeMv2View {
             return;
         }
         
-        if(istante!=null){
-             ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
-                                    .getComponent();
-             ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
-                                    .getComponent();
-        
-            processiEseguiti.removeLast();
-            visualizzaOrdProcessi(processiEseguiti);
-            visualizzaStatisticheSimulazione(player,istante,false);
-            visualizzaSimulazioneTestuale(istante, player.getIndiceIstanteCorrente());
-            try{
-                currView1.aggiorna(istante.getStatoRAM(),
-                                   player.getIndiceIstanteCorrente(),
-                                   processiUltimati);
-                currView5.aggiorna(istante.getStatoSwap(),
-                                   player.getIndiceIstanteCorrente(),
-                                   processiUltimati);
-            }catch(Exception e){} 
-        }
+         ViewFrameMemoria currView1 = (ViewFrameMemoria) views[1]
+                                .getComponent();
+         ViewFrameMemoria currView5 = (ViewFrameMemoria) views[5]
+                                .getComponent();
+
+        processiEseguiti.removeLast();
+        visualizzaOrdProcessi(processiEseguiti);
+        visualizzaStatisticheSimulazione(player,istante,false);
+        visualizzaSimulazioneTestuale(istante, player.getIndiceIstanteCorrente());
+        try{
+            currView1.aggiorna(istante.getStatoRAM(),
+                               player.getIndiceIstanteCorrente(),
+                               processiUltimati);
+            currView5.aggiorna(istante.getStatoSwap(),
+                               player.getIndiceIstanteCorrente(),
+                               processiUltimati);
+        }catch(Exception e){} 
+
         
         aggiornaComandi();
         jButtonNuovaConfigurazione.setEnabled(true);
@@ -2039,7 +2033,6 @@ public class SiGeMv2View {
         fc.addChoosableFileFilter(new ImageFilter());
         fc.setAcceptAllFileFilterUsed(false);
 
-        int returnVal = fc.showSaveDialog(rootWindow);
         if(fc!=null){
             file = fc.getSelectedFile();
             if(file!=null){
@@ -2129,7 +2122,7 @@ public class SiGeMv2View {
                     }
                 }
                 if(processoUltimato!=-2){
-                    processiUltimati.get(numeroIstante).add(new Integer(processoUltimato));
+                    processiUltimati.get(numeroIstante).add(Integer.valueOf(processoUltimato));
                 }
             }
         }
