@@ -62,11 +62,11 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         MemoriaRam= new RAMSegmentata(C);
         MemoriaSwap= new SwapSegmentata(C);           
         switch ( C.getPoliticaGestioneMemoria() ) {
-            case 1:PoliticaAllocazione = new FirstFit();
-            case 2:PoliticaAllocazione = new NextFit();
-            case 3:PoliticaAllocazione = new BestFit();
-            case 4:PoliticaAllocazione = new WorstFit();
-            case 5:PoliticaAllocazione = new QuickFit();
+            case 1:PoliticaAllocazione = new FirstFit(); break;
+            case 2:PoliticaAllocazione = new NextFit(); break;
+            case 3:PoliticaAllocazione = new BestFit(); break;
+            case 4:PoliticaAllocazione = new WorstFit(); break;
+            case 5:PoliticaAllocazione = new QuickFit(); break;
         }
     }
     
