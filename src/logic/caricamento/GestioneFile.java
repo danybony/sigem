@@ -111,4 +111,3 @@ public class GestioneFile {
         return this.configurazione;
     }
 }
-
