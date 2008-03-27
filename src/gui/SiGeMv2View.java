@@ -56,6 +56,7 @@ import gui.utility.IconStylosoft;
 
 import gui.utility.ImageFilter;
 import java.io.File;
+import java.net.URL;
 import logic.caricamento.GestioneFile;
 import logic.gestioneMemoria.Azione;
 import logic.parametri.ConfigurazioneIniziale;
@@ -207,6 +208,14 @@ public class SiGeMv2View {
      */
     public SiGeMv2View() throws Exception {
             // i controlli da fare prima della chiusura dell'applicazione
+            String imageName = "/images/Stylosoft2.png";
+
+            // Get a URL pointing to the image
+            URL iconURL = this.getClass().getResource(imageName);
+            if(iconURL!=null){
+                Image img = Toolkit.getDefaultToolkit().getImage(iconURL);
+                frame.setIconImage(img);
+            }
             frame.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosing(WindowEvent e) {
