@@ -74,6 +74,19 @@ public class SegmentoTest {
         int result = instance.getDimensione();
         assertEquals(expResult, result);
     }
+    
+    /**
+     * Test of setDimensione method, of class Segmento.
+     */
+    @Test
+    public void setDimensione() {
+        System.out.println("setDimensione");
+        Segmento instance = new Segmento("123",300,2);
+        int expResult = 300;
+        instance.setDimensione(2);
+        int result = instance.getDimensione();
+        assertEquals(2, result);
+    }
 
     /**
      * Test of getIndirizzo method, of class Segmento.

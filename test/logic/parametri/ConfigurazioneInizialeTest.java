@@ -35,7 +35,8 @@ public class ConfigurazioneInizialeTest {
                                                 1,
                                                 5,
                                                 4,
-                                                list);
+                                                list,
+                                                2);
         } catch (EccezioneConfigurazioneNonValida ex) {
             fail("Costruzione test fallita per configurazione non valida");
         }
@@ -78,7 +79,8 @@ public class ConfigurazioneInizialeTest {
                                                   i*5+1,
                                                   i*5+1,
                                                   i*2+1,
-                                                  t);
+                                                  t,
+                                                  2);
         }
         for(i=0; i<numeroObj;i++){
             instance[i] = new ConfigurazioneIniziale(
@@ -91,8 +93,8 @@ public class ConfigurazioneInizialeTest {
                                                   i*5+1,
                                                   i*5+1,
                                                   i*2+1,
-                                                  t
-                                                    );
+                                                  t,
+                                                  4);
         }
         }catch(EccezioneConfigurazioneNonValida e){
             fail("Fallimento test costruzione " + numeroObj + " oggetti. ");
