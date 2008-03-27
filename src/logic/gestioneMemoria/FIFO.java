@@ -23,11 +23,16 @@ import java.util.Vector;
  */
 public class FIFO implements IRimpiazzo {
     /**
+     * Campo dati che mantiene la sequenza d'ordine dei vari inserimenti
+     */
+    int S=0;
+    /**
      * Classe interna privata che memorizza in un intero TArrivo l'unità di tempo 
      * in cui la pagina è stata caricata in RAM, oltre che il riferimento F alla pagina.
      */
     private class Dati {
-      private int TArrivo;
+      private int TArrivo=0;
+      private int Sequenza=0;
       private FrameMemoria F=null;
       /**
        * metodo private boolean Minore( Dati D ) che confronta due Dati 
@@ -37,7 +42,7 @@ public class FIFO implements IRimpiazzo {
        * @return
        *   true o false a seconda se è minore o no
        */
-      private boolean Minore( Dati D ) { return TArrivo<D.TArrivo; }
+      private boolean Minore( Dati D ) { return ( TArrivo<D.TArrivo && Sequenza<D.Sequenza ); }
     }
     /**
      * Vettore privato che memorizza una sequenza di Dati come immagine
@@ -51,6 +56,7 @@ public class FIFO implements IRimpiazzo {
      *   Dimensione della memoria
      */
     public FIFO( int dim ) {
+        S=0;
         for( int i=0; i<dim; i++ )
             Tabella.add( new Dati() );
     }
@@ -67,6 +73,8 @@ public class FIFO implements IRimpiazzo {
     public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).TArrivo=UT;
         Tabella.elementAt(Posizione).F=F;
+        Tabella.elementAt(Posizione).Sequenza=S;
+        S=S+1;
     }
     /**
      * Resetta i campi dati relativi alla pagina nella Posizione specificata dal
@@ -77,6 +85,7 @@ public class FIFO implements IRimpiazzo {
     public void liberaEntry( int Posizione ) { 
         Tabella.elementAt(Posizione).TArrivo=0;
         Tabella.elementAt(Posizione).F=null;
+        Tabella.elementAt(Posizione).Sequenza=0;
     }
     /**
      * Implementa l'algoritmo. Restituisce un riferimento alla pagina il cui 
