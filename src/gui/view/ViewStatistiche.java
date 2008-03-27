@@ -316,13 +316,6 @@ public class ViewStatistiche extends javax.swing.JPanel {
          int contextSwitch = configurazioneIniziale.getTempoContextSwitch();
          int trasferimenti = 0;
          
-         System.out.println(accesso);
-         System.out.println(banda);
-         System.out.println(contextSwitch);
-         System.out.println();
-         
-         
-         
          if(avanti){
              LinkedList<Azione> azioni = istante.getCambiamentiInMemoria();
              for(int i = 0; i<azioni.size(); i++){
@@ -336,7 +329,6 @@ public class ViewStatistiche extends javax.swing.JPanel {
                         trasferimenti += accesso + 1000*(configurazioneIniziale.getDimensionePagina()/banda);
                         break;
                 }
-                System.out.println(trasferimenti);
              }
              if(contextSwitchs.get(player.getIndiceIstanteCorrente()).booleanValue())
                  tempo += contextSwitch;
@@ -346,7 +338,7 @@ public class ViewStatistiche extends javax.swing.JPanel {
          else{
              tempo = listaTempi.get(player.getIndiceIstanteCorrente());
          }
-         int ore=0, minuti=0, secondi=0, millesimi=0;
+         int secondi=0, millesimi=0;
          millesimi = tempo%1000;
          secondi = tempo/1000;
          this.jLabel7.setText(Integer.valueOf(secondi).toString() + " secondi e "  +Integer.valueOf(millesimi).toString() + " millesimi");
