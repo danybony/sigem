@@ -1247,7 +1247,7 @@ public class SiGeMv2View {
 
             // se nella simulazione ci sono errori l'utente viene avvisato.
             if (player.fullSwapNellaSimulazione()) {
-                JOptionPane.showMessageDialog(rootWindow, "Durante la simulzione e' stata esautita la memoria (RAM e Swap).\n" + "Questa situazione viene gestita da SiGeM come un errore.\n" + "In questi casi la simulazione viene terminata prematuramente\n" + "rispetto agli effettivi istanti di cui si dovrebbe comporre.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(rootWindow, "Durante la simulazione e' stata esaurita la memoria (RAM e Swap).\n" + "Questa situazione viene gestita da SiGeM come un errore.\n" + "In questi casi la simulazione viene terminata prematuramente\n" + "rispetto agli effettivi istanti di cui si dovrebbe comporre.", "Attenzione", JOptionPane.WARNING_MESSAGE);
             }
 
             // viene caricato il primo istante
@@ -2077,6 +2077,7 @@ public class SiGeMv2View {
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(rootWindow, "Impossibile impostare la configurazione di default. \nErrore nella scrittura del file","Errore",JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
     
