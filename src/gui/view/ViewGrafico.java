@@ -5,6 +5,8 @@
 
 package gui.view;
 
+import java.awt.Panel;
+import java.util.Iterator;
 import javax.swing.JScrollPane;
 import logic.simulazione.Player;
 import logic.simulazione.Istante;
@@ -12,49 +14,50 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
  * @author compa
  */
 public class ViewGrafico extends JScrollPane {
-    private int istante_max=0;
-    private int istante_corrente=0;
+
     private int[] Fault=null;
     private int[] SumFault=null;
-    
     public ViewGrafico(Player player) {
         super();
     }
     
     public void azzeraGrafico(Player player) {
-        istante_max=0;
-        istante_corrente=0;
-        
-        Fault=new int[player.numeroIstanti()];
-        SumFault=new int[player.numeroIstanti()];
-        
-            Fault[0]=0;
-            SumFault[0]=0;
+
+        Fault=new int[player.numeroIstanti()+1];
+        SumFault=new int[player.numeroIstanti()+1];
+        Fault[0]=0;
+        SumFault[0]=0;
+        this.setViewportView(new Panel());
     }
     
-    public void aggiornaGrafico(Player player,Istante istante){
+    public void aggiornaGrafico(Player player){
         
-        istante_corrente=player.getIndiceIstanteCorrente();
-        if (istante_corrente>istante_max) {
-            Fault[istante_corrente]=istante.getFault();
-            SumFault[istante_corrente]=SumFault[istante_corrente-1]+Fault[istante_corrente];
-            istante_max=istante_corrente;
+        Iterator<Istante> I=player.ultimoIstante().iterator();
+        int i=1;
+        while(I.hasNext()){
+            Fault[i]=I.next().getFault();
+            SumFault[i]=SumFault[i-1]+Fault[i];
+            i++;
         }
         
-        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-        for (int i=0; i<istante_corrente; i++) {
-            dataset.addValue(SumFault[i],"Istante"+i, "" );
-        }
-        JFreeChart jfc = ChartFactory.createAreaChart("Fault in RAM","Fault","",dataset,PlotOrientation.HORIZONTAL, false,false,true);
+        XYSeries series = new XYSeries("Fault");
         
-        this.setViewportView(new ChartPanel(jfc));
+        for (int c=0; c<i; c++) {
+            series.add(c, SumFault[c]);
+        }
+        XYDataset xyDataset = new XYSeriesCollection(series);
+        
+        JFreeChart chart = ChartFactory.createXYAreaChart("Fault in RAM","Istanti","Fault",xyDataset,PlotOrientation.VERTICAL,false,false,false);
+        this.setViewportView(new ChartPanel(chart));
         setVisible(true);
     }
 }
