@@ -2077,7 +2077,8 @@ public class SiGeMv2View {
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(rootWindow, "Impossibile impostare la configurazione di default. \nErrore nella scrittura del file","Errore",JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
+            System.out.println("Impossibile impostare la configurazione di default in " + nomeFile);
+            System.out.println("Controllare di avere i privilegi di scrittura adeguati nella directory!");
         }
     }
     
