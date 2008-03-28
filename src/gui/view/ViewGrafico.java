@@ -5,7 +5,6 @@
 
 package gui.view;
 
-import java.awt.Panel;
 import java.util.Iterator;
 import javax.swing.JScrollPane;
 import logic.simulazione.Player;
@@ -24,35 +23,19 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class ViewGrafico extends JScrollPane {
 
-    private int[] Fault=null;
-    private int[] SumFault=null;
     public ViewGrafico(Player player) {
         super();
     }
     
-    public void azzeraGrafico(Player player) {
-
-        Fault=new int[player.numeroIstanti()+1];
-        SumFault=new int[player.numeroIstanti()+1];
-        Fault[0]=0;
-        SumFault[0]=0;
-        this.setViewportView(new Panel());
-    }
-    
     public void aggiornaGrafico(Player player){
         
-        Iterator<Istante> I=player.ultimoIstante().iterator();
-        int i=1;
-        while(I.hasNext()){
-            Fault[i]=I.next().getFault();
-            SumFault[i]=SumFault[i-1]+Fault[i];
-            i++;
-        }
-        
         XYSeries series = new XYSeries("Fault");
-        
-        for (int c=0; c<i; c++) {
-            series.add(c, SumFault[c]);
+        Iterator<Istante> I=player.ultimoIstante().iterator();
+        int i=0,somma_fault=0;
+        while(I.hasNext()){
+            series.add(i, somma_fault);
+            somma_fault+=I.next().getFault();
+            i++;
         }
         XYDataset xyDataset = new XYSeriesCollection(series);
         
