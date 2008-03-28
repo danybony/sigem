@@ -1,6 +1,14 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Azienda: Stylosoft
+ * Nome file: ViewFrameMemoria.java
+ * Package: gui.dialog
+ * Autore: Davide Compagnin
+ * Data: 14/03/2008
+ * Versione: 1.0
+ * Licenza: open-source
+ * Registro delle modifiche: 
+ *  
+ *  - v.1.0 (14/03/2008): Creazione e impostazione grafico
  */
 
 package gui.view;
@@ -19,11 +27,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
- * @author compa
+ * @author Compagnin Davide
  */
 public class ViewGrafico extends JScrollPane {
 
-    public ViewGrafico(Player player) {
+    public ViewGrafico() {
         super();
     }
     
@@ -32,10 +40,10 @@ public class ViewGrafico extends JScrollPane {
         XYSeries series = new XYSeries("Fault");
         Iterator<Istante> I=player.ultimoIstante().iterator();
         int i=0,somma_fault=0;
+        series.add(i, somma_fault);
         while(I.hasNext()){
+            i++; somma_fault+=I.next().getFault();   
             series.add(i, somma_fault);
-            somma_fault+=I.next().getFault();
-            i++;
         }
         XYDataset xyDataset = new XYSeriesCollection(series);
         
