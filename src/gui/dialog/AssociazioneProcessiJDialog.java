@@ -144,7 +144,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         arrayListHandler = new ArrayListTransferHandler(configurazioneAmbiente.getDimensioneRAM());
         
         for(int i=0; i<numProcessi; i++){
-            jTabbedPaneProcessi.addTab("Processo "+i, creaPannelloProcesso(i));
+            String nomeProcesso = (String) processi.getCombinazioneProcessi()[i][0];
+            jTabbedPaneProcessi.addTab(nomeProcesso, creaPannelloProcesso(i));
             modelliListaFrame.add(new DefaultListModel());
         }          
         
@@ -200,7 +201,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         }
         @Override
         public String toString() {
-		return frame.toString();
+		return frame.toString() + " (S)";
 	} 
     }
     
