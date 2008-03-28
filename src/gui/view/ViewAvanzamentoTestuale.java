@@ -85,15 +85,25 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
         
         //if(idIstanteCorrente>=avanzamentoTestuale.size()){
                 String aux = new String("");
-                int idProcessoCorrente = istante.getProcessoInEsecuzione().getRifProcesso().getId();
-                String ProcessoCorrente=istante.getProcessoInEsecuzione().getRifProcesso().getNome();
+                int idProcessoCorrente=0;
+                String ProcessoCorrente="";
                 Vector<FrameMemoria> frameAuxRAM = new Vector<FrameMemoria>();
                 Vector<FrameMemoria> frameAuxSwap = new Vector<FrameMemoria>();
                 Vector<FrameMemoria> frameToltiRAM = new Vector<FrameMemoria>();
                 Vector<FrameMemoria> frameToltiSwap = new Vector<FrameMemoria>();
                 Vector<FrameMemoria> memoria = istante.getStatoRAM();
-
+                
+                //Per prima cosa, visualizzo a che istante e' arrivata la simulazione
                 aux += GregorianCalendar.getInstance().getTime()+": La simulazione e' passata all'istante " + idIstanteCorrente + " su un totale di " + istantiTotali + "\n";
+                        
+                //Se e' stato schedulato il processo, continuo con le altre informazioni
+                if (istante.getProcessoInEsecuzione()!=null){
+                    idProcessoCorrente = istante.getProcessoInEsecuzione().getRifProcesso().getId();
+                    ProcessoCorrente=istante.getProcessoInEsecuzione().getRifProcesso().getNome();
+                
+                
+
+
                 aux += GregorianCalendar.getInstance().getTime()+": E' stato schedulato per l'esecuzione il processo " + ProcessoCorrente + "(id="+idProcessoCorrente + ")\n";
 
                 //Scorro la memoria alla ricerca di frame memoria del processo in esecuzione
@@ -102,30 +112,7 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                         frameAuxRAM.add(memoria.get(i));
                     }
                 }
-/*
-                if(!frameAuxRAM.isEmpty()){
-                aux += GregorianCalendar.getInstance().getTime()+": Sono gia' presenti in RAM ";
 
-                if (tipoGestioneMemoria==2) {
-                    aux += "i segmenti numero ";
-                } else {
-                    aux += "le pagine di indirizzo ";
-                }
-                for (int i = 0; i < frameAuxRAM.size(); i++) {
-                    aux += frameAuxRAM.get(i).getIndirizzo();
-                    if (i < frameAuxRAM.size() - 1) {
-                        aux += ", ";
-                    } else {
-                        aux += " ";
-                    }
-                }
-                if (tipoGestioneMemoria==2) {
-                    aux += "riferiti dal processo\n";
-                } else {
-                    aux += "riferite dal processo\n";
-                }
-                }
-*/
                 //Considero ora i cambiamenti avvenuti in RAM e in Swap
                 //Prima di tutto, se un processo ha finito la sua esecuzione:
                 if (istante.getProcessoPrecedenteTerminato() != null) {
@@ -224,6 +211,9 @@ public class ViewAvanzamentoTestuale extends JScrollPane{
                         }
                     }
                 }
+                }
+                //Non ci sono processi schedulabili
+                else aux+=GregorianCalendar.getInstance().getTime()+": Non e' stato possibile schedulare un processo perche' la coda dei pronti e' vuota\n";
                 aux += "\n";
                 testo.append(aux);
                 //avanzamentoTestuale.add(aux);
