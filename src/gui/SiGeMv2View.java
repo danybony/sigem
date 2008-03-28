@@ -2061,8 +2061,6 @@ public class SiGeMv2View {
      */
     private void defaultConfigurazione(){
         String nomeFile=System.getProperty("user.dir")+File.separatorChar+"default.sigem";
-        //nomeFile=nomeFile.replace("\\", "/");
-        //nomeFile=nomeFile.replace(" ","%20");
                             
         gestione = new GestioneFile(nomeFile,SiGeMv2View.this.getConfigurazioneIniziale());
         System.out.println("Imposto la configurazione di default in " + nomeFile);
