@@ -27,6 +27,7 @@ public class ViewStatistiche extends javax.swing.JPanel {
     private Vector<Vector<Integer>> processiUltimati;
     private ConfigurazioneIniziale configurazioneIniziale;
     private LinkedList<Integer> listaTempi;
+    private static final String assunzioni = "   (calcolato con l'assunzione che ogni quanto di tempo sia 10 millisecondi)";
     
     /** Creates new form ViewStatistiche2 */
     public ViewStatistiche() {
@@ -163,7 +164,7 @@ public class ViewStatistiche extends javax.swing.JPanel {
         this.numeroFault = 0;
         this.tempo = 0;
         this.jLabel5.setText("");
-        this.jLabel7.setText("");
+        this.jLabel7.setText("0 secondi"  + assunzioni);
         this.jProgressBar1.setValue(0);
         this.jProgressBar1.setString("0%");
         this.jProgressBar2.setValue(0);
@@ -344,7 +345,7 @@ public class ViewStatistiche extends javax.swing.JPanel {
          int secondi=0, millesimi=0;
          millesimi = tempo%1000;
          secondi = tempo/1000;
-         this.jLabel7.setText(Integer.valueOf(secondi).toString() + " secondi e "  +Integer.valueOf(millesimi).toString() + " millesimi");
+         this.jLabel7.setText(Integer.valueOf(secondi).toString() + " secondi e "  +Integer.valueOf(millesimi).toString() + " millesimi" + assunzioni);
      }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
