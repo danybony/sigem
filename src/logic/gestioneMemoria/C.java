@@ -31,6 +31,7 @@ public class C implements IRimpiazzo {
     private class Dati {
       private boolean R;
       private FrameMemoria F=null;
+      private boolean Ultimo=false;
     }
     /**
      * Vettore privato che memorizza una sequenza di Dati come immagine
@@ -58,6 +59,7 @@ public class C implements IRimpiazzo {
     public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).F=F;
+        Tabella.elementAt(Posizione).Ultimo=true;
     }
     /**
      * Resetta i campi dati relativi alla pagina nella Posizione specificata dal
@@ -81,7 +83,7 @@ public class C implements IRimpiazzo {
         boolean trovata=false;
         int dim=Tabella.size();        
         while( !trovata ) {
-            if ( Tabella.elementAt(Lancetta).R==true ) {
+            if ( Tabella.elementAt(Lancetta).R==true || Tabella.elementAt(Lancetta).Ultimo ) {
                 Tabella.elementAt(Lancetta).R=false;
                 Lancetta=(Lancetta+1)%dim;
             }
@@ -96,9 +98,16 @@ public class C implements IRimpiazzo {
      * @param Posizione
      * @param M
      */
-    public void aggiornaEntry( int Posizione, boolean M ) {}
+    public void aggiornaEntry( int Posizione, boolean M ) {
+        Tabella.elementAt(Posizione).Ultimo=true;
+    }
     /**
      * NULLA
      */
     public void aggiornaEntries( ) {}
+    
+    public void azzeraUltimo() {
+        for( int i=0; i<Tabella.size(); i++ )
+            Tabella.elementAt(i).Ultimo=false;
+    }
 }

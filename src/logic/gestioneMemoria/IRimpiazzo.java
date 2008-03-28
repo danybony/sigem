@@ -58,5 +58,9 @@ public interface IRimpiazzo {
      * Aggiorna i dati relativi a tutte le pagine in memoria
      */
     public void aggiornaEntries( );
+    /**
+     * Azzera i dati relativi all'ultimo inserimento
+     */
+    public void azzeraUltimo();
     
 }

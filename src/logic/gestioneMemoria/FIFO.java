@@ -110,5 +110,5 @@ public class FIFO implements IRimpiazzo {
      * NULLA
      */
     public void aggiornaEntries( ) {}
-    
+    public void azzeraUltimo() { }
 }

@@ -31,6 +31,7 @@ public class NFU implements IRimpiazzo {
       private int Contatore;
       private boolean R;
       private FrameMemoria F=null;
+      private boolean Ultimo=false;
     }
     /**
      * Vettore privato che memorizza una sequenza di Dati come immagine
@@ -61,6 +62,7 @@ public class NFU implements IRimpiazzo {
      *  Bit di Modifica
      */
     public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) {
+        Tabella.elementAt(Posizione).Ultimo=true;
         Tabella.elementAt(Posizione).Contatore=0;
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).F=F;
@@ -75,6 +77,7 @@ public class NFU implements IRimpiazzo {
         Tabella.elementAt(Posizione).Contatore=0;
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).F=null;
+        Tabella.elementAt(Posizione).Ultimo=false;
     }
     /**
      * 
@@ -84,9 +87,13 @@ public class NFU implements IRimpiazzo {
      *  Ritorna la pagina ottimale da togliere
      */
     public FrameMemoria selezionaEntry() {
-        int pos=0; int C=Tabella.firstElement().Contatore;
-        for (int i=0; i<Tabella.size(); i++ ) {
-            if ( Tabella.elementAt(i).Contatore<C ) {
+        boolean U=false; int pos=0;
+        for(int i=0; i<Tabella.size() && !U; i++)
+            if ( Tabella.elementAt(i).Ultimo==false ) { pos=i; U=true; }
+        
+        int C=Tabella.elementAt(pos).Contatore;
+        for (int i=pos+1; i<Tabella.size(); i++ ) {
+            if ( Tabella.elementAt(i).Contatore<C && Tabella.elementAt(i).Ultimo==false ) {
                 C=Tabella.elementAt(i).Contatore;
                 pos=i;
             }
@@ -102,6 +109,7 @@ public class NFU implements IRimpiazzo {
     */ 
    public void aggiornaEntry( int Posizione, boolean M ) { 
        Tabella.elementAt(Posizione).R=true;
+       Tabella.elementAt(Posizione).Ultimo=true;
    }
    /**
     * Per ogni pagina controllo se essa è stata riferita, cioè R è true, incremento il
@@ -114,5 +122,10 @@ public class NFU implements IRimpiazzo {
                Tabella.elementAt(i).R=false;
            }
    }
+   
+   public void azzeraUltimo() {
+        for( int i=0; i<Tabella.size(); i++ )
+            Tabella.elementAt(i).Ultimo=false;
+    }
    
 }

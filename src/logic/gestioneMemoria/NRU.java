@@ -34,6 +34,7 @@ public class NRU implements IRimpiazzo {
       private boolean M;
       private boolean R;
       private FrameMemoria F=null;
+      private boolean Ultimo=false;
       /**
        * Metodo
        * che ritorna la classe a cui appartiene una pagina:
@@ -75,7 +76,7 @@ public class NRU implements IRimpiazzo {
      *  Bit di modifica
      */
     public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
-        this.aggiornaEntries();
+        Tabella.elementAt(Posizione).Ultimo=true;
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).M=M;
         Tabella.elementAt(Posizione).F=F;
@@ -90,6 +91,7 @@ public class NRU implements IRimpiazzo {
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).M=false;
         Tabella.elementAt(Posizione).F=null;
+        Tabella.elementAt(Posizione).Ultimo=false;
     }
     /**
      * Implementa l'algoritmo. Restituisce un riferimento alla pagina di Classe minore.
@@ -97,10 +99,13 @@ public class NRU implements IRimpiazzo {
      *  Riferimento alla pagina di classe minore
      */
     public FrameMemoria selezionaEntry() { 
-      int classe=0,pos=0;
-      for (int i=0; i<Tabella.size(); i++ ) {
-        if ( Tabella.elementAt(i).Classe()==0 ) return Tabella.elementAt(i).F;
-        else if ( Tabella.elementAt(i).Classe()<classe ) pos=i;
+      boolean U=false; int pos=0;
+        for(int i=0; i<Tabella.size() && !U; i++)
+            if ( Tabella.elementAt(i).Ultimo==false ) { pos=i; U=true; }
+      int classe=Tabella.elementAt(pos).Classe();
+      for (int i=pos+1; i<Tabella.size(); i++ ) {
+        if ( Tabella.elementAt(i).Classe()==0 &&  Tabella.elementAt(i).Ultimo==false ) return Tabella.elementAt(i).F;
+        else if ( Tabella.elementAt(i).Classe()<classe && Tabella.elementAt(i).Ultimo==false ) pos=i;
       }
       return Tabella.elementAt(pos).F;
     }
@@ -114,6 +119,7 @@ public class NRU implements IRimpiazzo {
     public void aggiornaEntry( int Posizione, boolean M ) {
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).M=M;
+        Tabella.elementAt(Posizione).Ultimo=true;
     }
     /**
      * Per ogni pagina resetta R a false
@@ -121,6 +127,11 @@ public class NRU implements IRimpiazzo {
     public void aggiornaEntries( ) { 
         for(int i=0; i<Tabella.size(); i++)
             Tabella.elementAt(i).R=false;
+    }
+    
+    public void azzeraUltimo() {
+        for( int i=0; i<Tabella.size(); i++ )
+            Tabella.elementAt(i).Ultimo=false;
     }
     
 }

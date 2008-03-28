@@ -107,5 +107,5 @@ public class LRU implements IRimpiazzo {
      * NULLA
      */
     public void aggiornaEntries( ) { }
-    
+    public void azzeraUltimo() {}
 }

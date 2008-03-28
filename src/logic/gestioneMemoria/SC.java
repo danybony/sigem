@@ -31,6 +31,7 @@ public class SC implements IRimpiazzo {
       private int TArrivo=0;
       private boolean R=false;
       private FrameMemoria F=null;
+      private boolean Ultimo=false;
     }
     /**
      * Vettore privato che memorizza una sequenza di Dati come immagine
@@ -65,6 +66,7 @@ public class SC implements IRimpiazzo {
         Tabella.elementAt(Posizione).TArrivo=UT;
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).F=F;
+        Tabella.elementAt(Posizione).Ultimo=true;
     }
     /**
      * Resetta i campi dati relativi alla pagina nella Posizione specificata dal
@@ -76,6 +78,7 @@ public class SC implements IRimpiazzo {
         Tabella.elementAt(Posizione).TArrivo=-1;
         Tabella.elementAt(Posizione).R=false;
         Tabella.elementAt(Posizione).F=null;
+        Tabella.elementAt(Posizione).Ultimo=false;
     }
     /**
      * Implementa l'algoritmo. Restituisce un riferimento alla pagina il cui valore 
@@ -84,14 +87,17 @@ public class SC implements IRimpiazzo {
      *  Frame da rimuovere
      */
     public FrameMemoria selezionaEntry() {
+        boolean primo=false; int pos=0;
+        for(int i=0; i<Tabella.size() && !primo; i++)
+            if ( Tabella.elementAt(i).Ultimo==false ) { pos=i; primo=true; }
         
-        int i=0,pos=0; Dati DMinore=Tabella.firstElement();       
-        boolean primo=false;
+        int i=pos+1; Dati DMinore=Tabella.elementAt(pos);       
+        primo=false;
         
         /*Cerco l'indice del primo elemento con R=false, cioè la prima pagina
          * non riferita */
         while( i<Tabella.size() && primo==false ) {
-            if( Tabella.elementAt(i).R==false ) {
+            if( Tabella.elementAt(i).R==false && Tabella.elementAt(i).Ultimo==false ) {
                 DMinore=Tabella.elementAt(i);
                 pos=i;
                 primo=true;
@@ -100,25 +106,25 @@ public class SC implements IRimpiazzo {
         }
         /* Se la trovo, cerco quella con il tempo di arrivo minore */
         if ( primo==true ) {
-            for (i=pos; i<Tabella.size(); i++ ) {
+            for (i=pos+1; i<Tabella.size(); i++ ) {
                 Dati D=Tabella.elementAt(i);
-                if ( D.R==false && D.TArrivo < DMinore.TArrivo ) {
+                if ( D.R==false && D.TArrivo < DMinore.TArrivo && D.Ultimo==false ) {
                     pos=i; DMinore=D; 
                 }
             }
             /* Imposto R=false alle pagine con TArrivo 
              * minore della pagina selezionata */
             for (i=0; i<Tabella.size(); i++ )
-                if (Tabella.elementAt(i).TArrivo<DMinore.TArrivo ) 
+                if (Tabella.elementAt(i).TArrivo<DMinore.TArrivo && Tabella.elementAt(i).Ultimo==false ) 
                     Tabella.elementAt(i).R=false;
         }
         else {
             /* Altrimenti cerco tra tutte le pagine come FIFO settando
              * R a false */
-            DMinore=Tabella.firstElement();
-            for(i=0; i<Tabella.size(); i++ ) {
+            
+            for(i=pos+1; i<Tabella.size(); i++ ) {
                 Tabella.elementAt(i).R=false;
-                if ( Tabella.elementAt(i).TArrivo<DMinore.TArrivo ) { 
+                if ( Tabella.elementAt(i).TArrivo<DMinore.TArrivo && Tabella.elementAt(i).Ultimo==false ) { 
                     pos=i; DMinore=Tabella.elementAt(i); 
                 }
             }
@@ -132,10 +138,16 @@ public class SC implements IRimpiazzo {
      * @param Posizione
      * @param M
      */
-    public void aggiornaEntry( int Posizione, boolean M ) {}
+    public void aggiornaEntry( int Posizione, boolean M ) {
+    Tabella.elementAt(Posizione).Ultimo=true;
+    }
     /**
      * NULLA
      */
     public void aggiornaEntries( ) {}
     
+    public void azzeraUltimo() {
+        for( int i=0; i<Tabella.size(); i++ )
+            Tabella.elementAt(i).Ultimo=false;
+    }
 }

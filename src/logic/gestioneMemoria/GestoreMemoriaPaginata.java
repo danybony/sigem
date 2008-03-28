@@ -59,7 +59,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
     /**
      * Unità di tempo dopo le quali il page_deamon resetta i dati delle pagine
      */
-    private int tempo_page_deamon=3;
+    private int tempo_page_deamon=2;
     /**
      * Costruttore del GestoreMemoriaPaginato
      * @param C
@@ -212,6 +212,7 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                 ListaAzioni.add( new Azione(5,F,Posizione) );
             }
         }
+        PoliticaRimpiazzo.azzeraUltimo();
         return ListaAzioni;
     }
 
