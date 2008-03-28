@@ -32,6 +32,7 @@ public class SwapSegmentata extends MemoriaSegmentata{
      */
     public SwapSegmentata(ConfigurazioneIniziale conf){
         super(conf.getDimensioneSwap());
+        memoria.add(new Segmento("spazio", conf.getDimensioneSwap(),-1));
     }
     
     
@@ -49,6 +50,7 @@ public class SwapSegmentata extends MemoriaSegmentata{
         if(spazioResiduo>=seg.getDimensione()){
             memoria.add(seg);
             spazioResiduo-=seg.getDimensione();
+            if(spazioResiduo>0)memoria.set(memoria.lastIndexOf(memoria.lastElement()), new Segmento("spazio", spazioResiduo,-1));
         }
         else{
             throw new MemoriaEsaurita(0);
@@ -69,6 +71,7 @@ public class SwapSegmentata extends MemoriaSegmentata{
     public boolean rimuovi(FrameMemoria seg){
         if(memoria.remove(seg)) {
             spazioResiduo+=seg.getDimensione();
+            memoria.set(memoria.lastIndexOf(memoria.lastElement()), new Segmento("spazio", spazioResiduo,-1));
             return true;
         }
         
@@ -92,6 +95,7 @@ public class SwapSegmentata extends MemoriaSegmentata{
                 i-=1;
             }
         }
+        memoria.set(memoria.lastIndexOf(memoria.lastElement()), new Segmento("spazio", spazioResiduo,-1));
     }
     
     
