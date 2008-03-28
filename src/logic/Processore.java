@@ -396,6 +396,9 @@ public class Processore {
                 if(frameTotali.get(i).getModifica()){
                     frame.setModifica(true);
                 }
+                else{
+                    frame.setModifica(false);
+                }
                 frameNecessari.add(frame);
             
             }                
