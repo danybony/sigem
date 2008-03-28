@@ -201,7 +201,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         }
         @Override
         public String toString() {
-		return frame.toString() + " (S)";
+		return frame.toString() + " (M)";
 	} 
     }
     
