@@ -47,13 +47,15 @@ public class ViewGrafico extends JScrollPane {
         while(I.hasNext()){
             int f=I.next().getFault();
             i++; somma_fault+=f; 
-            series.add(i, somma_fault);
             series2.add(i, f);
+            series.add(i, somma_fault);
+            
         }
         
         DefaultTableXYDataset TabellaDati=new DefaultTableXYDataset();
-        TabellaDati.addSeries(series);
         TabellaDati.addSeries(series2);
+        TabellaDati.addSeries(series);
+        
         
         //XYDataset xyDataset = new XYSeriesCollection(series);
         JFreeChart chart = ChartFactory.createStackedXYAreaChart("Fault in RAM", "Istanti", "Fault", TabellaDati, PlotOrientation.VERTICAL, false,false,false);
