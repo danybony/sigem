@@ -82,7 +82,6 @@ public class GestoreMemoriaPaginata extends GestoreMemoria {
                 case 6:PoliticaRimpiazzo = new NFU(numero_frame_ram); break;
                 case 7:PoliticaRimpiazzo = new A(numero_frame_ram); break;
             }
-            if (PoliticaRimpiazzo instanceof NRU) tempo_page_deamon=1;
         }
         catch ( PaginaNulla paginanulla ) {
             PaginaNulla=true;

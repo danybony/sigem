@@ -75,6 +75,7 @@ public class NRU implements IRimpiazzo {
      *  Bit di modifica
      */
     public void inserisciEntry( FrameMemoria F, int Posizione, int UT, boolean M ) { 
+        this.aggiornaEntries();
         Tabella.elementAt(Posizione).R=true;
         Tabella.elementAt(Posizione).M=M;
         Tabella.elementAt(Posizione).F=F;
