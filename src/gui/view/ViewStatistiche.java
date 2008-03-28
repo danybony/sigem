@@ -6,7 +6,6 @@
 
 package gui.view;
 
-import gui.SiGeMv2View;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Vector;

@@ -28,8 +28,6 @@ package gui;
 
 import com.centerkey.utils.BareBonesBrowserLaunch;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.infonode.docking.*;
 import net.infonode.docking.mouse.DockingWindowActionMouseButtonListener;
 import net.infonode.docking.properties.RootWindowProperties;
