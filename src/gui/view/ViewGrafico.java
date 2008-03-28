@@ -35,7 +35,7 @@ public class ViewGrafico extends JScrollPane {
         SumFault=new int[player.numeroIstanti()];
     }
     
-    public void aggiornaGraficoFault(Player player,Istante istante){
+    public void aggiornaGrafico(Player player,Istante istante){
         istante_corrente=player.getIndiceIstanteCorrente();
         if (istante_corrente>istante_max) {
             Fault[istante_corrente]=istante.getFault();
