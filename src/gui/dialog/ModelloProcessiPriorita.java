@@ -171,6 +171,8 @@ public class ModelloProcessiPriorita extends AbstractTableModel {
                         if (col == 2)
                             value = new Integer(1);
                     }
+                    if (col==2 && ((Integer) value).intValue()>100)
+                        value = new Integer(100);
                 }
             contenutiRighe[row][col] = value;
             fireTableCellUpdated(row, col);

@@ -446,15 +446,16 @@ public class PoliticheJDialog extends javax.swing.JDialog {
     }
     
     private Integer[] impostaJSpinnerTimeSlice() {
-        Integer[] tempiTimeSlice= new Integer[9];
-        tempiTimeSlice[0]=2;
-        for (int i=1; i<9; i++)
-            tempiTimeSlice[i] = i+2;
+        Integer[] tempiTimeSlice= new Integer[10];
+        tempiTimeSlice[0]=1;
+        for (int i=1; i<10; i++)
+            tempiTimeSlice[i] = i+1;
         return tempiTimeSlice;
     }
    
     private void initJSpinnerTimeSlice() {
         jSpinnerTimeSlice.setModel(new SpinnerListModel(impostaJSpinnerTimeSlice()));
+        jSpinnerTimeSlice.setValue(2);
     }
     
     private void impostaSpinnerTimeSlice() {
