@@ -1231,6 +1231,7 @@ public class SiGeMv2View {
      */
     public synchronized void setIstanteZero() {
 
+            System.gc();
             statoGui = false;
             
             // viene creato il player
