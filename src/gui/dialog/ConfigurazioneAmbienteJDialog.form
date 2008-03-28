@@ -24,43 +24,46 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabelConfigurazioneIniziale" alignment="0" pref="583" max="32767" attributes="0"/>
+                  <Component id="jLabelPasso" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelConfigurazioneIniziale" alignment="0" pref="380" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabelProcessi" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelDimensioneRAM" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelDimensionaAreaSWAP" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelDimensionePagina" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelTempoContextSwitch" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelTempoAccessoDisco" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelBandaBusDati" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace pref="23" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jSpinnerBandaBusDati" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerTempoAccessoDisco" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerTempoContextSwitch" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerDimensionePagina" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerDimensioneAreaSWAP" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerDimensioneRAM" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jSpinnerProcessi" alignment="0" pref="171" max="32767" attributes="1"/>
-                              </Group>
-                          </Group>
-                          <Component id="jLabelPasso" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelBandaBusDati" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelTempoAccessoDisco" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelTempoContextSwitch" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDimensioneRAM" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonHelp" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelProcessi" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDimensionaAreaSWAP" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelDimensionePagina" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButtonHelp" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="131" max="32767" attributes="0"/>
-                      <Component id="jButtonAvanti" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButtonAnnulla" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jSpinnerProcessi" alignment="0" pref="260" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerDimensioneRAM" alignment="0" pref="260" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerDimensioneAreaSWAP" alignment="0" pref="260" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerDimensionePagina" alignment="0" pref="260" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerTempoContextSwitch" alignment="0" pref="260" max="32767" attributes="1"/>
+                                  <Component id="jSpinnerTempoAccessoDisco" alignment="0" pref="260" max="32767" attributes="1"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jSpinnerBandaBusDati" pref="260" max="32767" attributes="1"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                              <Component id="jButtonAvanti" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jButtonAnnulla" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -70,48 +73,48 @@
               <Component id="jLabelPasso" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabelConfigurazioneIniziale" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabelProcessi" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jSpinnerProcessi" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabelDimensioneRAM" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jSpinnerDimensioneRAM" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabelDimensionaAreaSWAP" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jSpinnerDimensioneAreaSWAP" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabelDimensionePagina" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jSpinnerDimensionePagina" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabelTempoContextSwitch" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jSpinnerTempoContextSwitch" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelTempoAccessoDisco" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jSpinnerTempoAccessoDisco" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabelTempoAccessoDisco" min="-2" max="-2" attributes="0"/>
+                  <Component id="jSpinnerTempoAccessoDisco" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelBandaBusDati" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jSpinnerBandaBusDati" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabelBandaBusDati" min="-2" max="-2" attributes="0"/>
+                  <Component id="jSpinnerBandaBusDati" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace pref="34" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonHelp" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonAnnulla" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonAvanti" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonAnnulla" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="12" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -179,7 +182,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Banda del bus di dati"/>
+        <Property name="text" type="java.lang.String" value="Banda del bus di dati (KB/s)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSpinner" name="jSpinnerProcessi">

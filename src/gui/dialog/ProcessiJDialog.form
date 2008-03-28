@@ -26,8 +26,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPaneProcessi" alignment="0" pref="474" max="32767" attributes="0"/>
-                          <Component id="jLabelParametriProcessi" alignment="0" pref="474" max="32767" attributes="0"/>
+                          <Component id="jScrollPaneProcessi" alignment="0" pref="583" max="32767" attributes="0"/>
+                          <Component id="jLabelParametriProcessi" alignment="0" pref="583" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -37,13 +37,13 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jButtonHelp" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="142" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
                       <Component id="jButtonIndietro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButtonAvanti" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButtonAnnulla" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -56,13 +56,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabelParametriProcessi" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPaneProcessi" pref="208" max="32767" attributes="0"/>
+              <Component id="jScrollPaneProcessi" pref="272" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonHelp" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonAnnulla" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonAvanti" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonIndietro" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonAnnulla" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
