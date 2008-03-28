@@ -81,7 +81,7 @@ public class SiGeMv2View {
     /**
      * Array delle viste statiche
      */
-    private View[] views = new View[7];
+    private View[] views = new View[8];
 
     /**
      * Contiene le viste statiche
@@ -296,6 +296,13 @@ public class SiGeMv2View {
             }
     }
     
+    private void visualizzaGraficoTempi() {
+            if ((views[7]).getComponent() instanceof ViewGraficoTempi) {
+                    ViewGraficoTempi currView = (ViewGraficoTempi) views[7].getComponent();
+                    currView.aggiornaGrafico(player,contextSwitchs,configurazioneIniziale);
+            }
+    }
+    
     /**
      * Aggiorna il contenuto della vista ViewStatoAvanzamentoProcessi
      */
@@ -355,8 +362,11 @@ public class SiGeMv2View {
                             .getGeneralIcon("mv"), new ViewFrameMemoria());
             viewMap.addView(5, views[5]);
             views[6] = new View("Grafici", IconStylosoft
-                            .getGeneralIcon(""), new ViewGrafico(player));
+                            .getGeneralIcon(""), new ViewGrafico());
             viewMap.addView(6, views[6]);
+            views[7] = new View("Grafici", IconStylosoft
+                            .getGeneralIcon(""), new ViewGraficoTempi());
+            viewMap.addView(7, views[7]);
 
             // Aggiungo i pulsanti help alle viste
             JButton button = new JButton(IconStylosoft.getGeneralIcon("help"));
@@ -1070,6 +1080,7 @@ public class SiGeMv2View {
                  views[4],
                  views[3],
                  views[6],
+                 views[7],
                  new SplitWindow(true,
                                  0.644f, 
                                  new SplitWindow(false,
@@ -1265,6 +1276,8 @@ public class SiGeMv2View {
             // viene caricato il primo istante
             istante = player.primoIstante();
             visualizzaGrafico();
+            istante = player.primoIstante();
+            visualizzaGraficoTempi();
             istante = player.primoIstante();
             // creazione lista processi terminati
             //processiUltimati = new Vector<Vector<Integer>>();
