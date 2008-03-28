@@ -175,7 +175,8 @@ public class ViewStatistiche extends javax.swing.JPanel {
     
     public void generaStatistiche(Player player,
                                   Istante istante,
-                                  boolean avanti) {
+                                  boolean avanti,
+                                  int numeroIstante) {
     
         if(player.getIndiceIstanteCorrente()==0){
             this.numeroFault=0;
@@ -189,7 +190,7 @@ public class ViewStatistiche extends javax.swing.JPanel {
             aggiornaUtilizzoRAM(player,istante);
             aggiornaUtilizzoSwap(player,istante);
             aggiornaFault(istante, avanti, player);
-            aggiornaTempoTrascorso(player,istante,avanti);
+            aggiornaTempoTrascorso(player,istante,avanti,numeroIstante);
         }
         aggiornaNumeroIstanti(player);
     }
@@ -308,7 +309,7 @@ public class ViewStatistiche extends javax.swing.JPanel {
      }
      
      public void aggiornaTempoTrascorso(Player player,
-                    Istante istante, boolean avanti){
+                    Istante istante, boolean avanti, int numeroIstante){
      
          int accesso = configurazioneIniziale.getTempoAccessoDisco();
          int banda = configurazioneIniziale.getBandaBusDati();
@@ -317,25 +318,28 @@ public class ViewStatistiche extends javax.swing.JPanel {
          
          if(avanti){
              LinkedList<Azione> azioni = istante.getCambiamentiInMemoria();
-             for(int i = 0; i<azioni.size(); i++){
-                Azione azioneCorrente = azioni.get(i);
-                switch(azioneCorrente.getAzione()){
-                    case 1:
-                        // spostamento di un frame in RAM
-                        trasferimenti += accesso + 1000*(configurazioneIniziale.getDimensionePagina()/banda);
-                        break;
-                    case 2:
-                        trasferimenti += accesso + 1000*(configurazioneIniziale.getDimensionePagina()/banda);
-                        break;
-                }
+             if(azioni!=null){
+                 for(int i = 0; i<azioni.size(); i++){
+                    Azione azioneCorrente = azioni.get(i);
+                    switch(azioneCorrente.getAzione()){
+                        case 1:
+                            // spostamento di un frame in RAM
+                            trasferimenti += accesso + 1000*(configurazioneIniziale.getDimensionePagina()/banda);
+                            break;
+                        case 2:
+                            trasferimenti += accesso + 1000*(configurazioneIniziale.getDimensionePagina()/banda);
+                            break;
+                    }
+                 }
              }
-             if(contextSwitchs.get(player.getIndiceIstanteCorrente()).booleanValue())
+             if(contextSwitchs.get(numeroIstante).booleanValue())
                  tempo += contextSwitch;
              tempo += trasferimenti;
+             tempo += 10;
              this.listaTempi.add(new Integer(tempo));
          }
          else{
-             tempo = listaTempi.get(player.getIndiceIstanteCorrente());
+             tempo = listaTempi.get(numeroIstante);
          }
          int secondi=0, millesimi=0;
          millesimi = tempo%1000;
