@@ -52,6 +52,10 @@ public class ViewGraficoTempi extends JScrollPane {
             XYSeries series2 = new XYSeries("Accesso", true, false); 
             XYSeries series3 = new XYSeries("Banda", true, false); 
             XYSeries series4 = new XYSeries("Slice", true, false); 
+            series1.add(0, 0);
+            series2.add(0, 0);
+            series3.add(0, 0);
+            series4.add(0, 0);
             int switchs = conf.getTempoContextSwitch();
             int banda = conf.getBandaBusDati();
             int accesso = conf.getTempoAccessoDisco();
@@ -59,9 +63,9 @@ public class ViewGraficoTempi extends JScrollPane {
             LinkedList<Istante> listaIstanti = player.ultimoIstante();
             Istante istante;
             System.out.println("AAA");
-            for(int j = 0; j< listaIstanti.size(); j++){
+            for(int j = 1; j< listaIstanti.size()+1; j++){
                System.out.println("BBB");
-                istante = listaIstanti.get(j);
+                istante = listaIstanti.get(j-1);
                 LinkedList<Azione> azioni = istante.getCambiamentiInMemoria();
                  if(azioni!=null){
                      int bandat = 0;
@@ -117,13 +121,14 @@ public class ViewGraficoTempi extends JScrollPane {
             //StandardXYToolTipGenerator ttg = new StandardXYToolTipGenerator( 
             //StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, 
             //sdf, NumberFormat.getInstance()); 
-            DateAxis xAxis = new DateAxis("Istanti"); 
-            xAxis.setTickMarkPosition(DateTickMarkPosition.START); 
+            NumberAxis xAxis = new NumberAxis("Istanti"); 
+            //xAxis.setTickMarkPosition(DateTickMarkPosition.START); 
             xAxis.setVerticalTickLabels(true); 
-            xAxis.setTickUnit(new DateTickUnit(DateTickUnit.DAY, 1)); 
+            //xAxis.setTickUnit(new DateTickUnit(DateTickUnit.DAY, 1)); 
             //xAxis.setDateFormatOverride(new SimpleDateFormat("dd-MMM-yy")); 
             xAxis.setLowerMargin(0.001); 
             xAxis.setUpperMargin(0.001); 
+            xAxis.setAutoRangeIncludesZero(true); 
 
             NumberAxis yAxis = new NumberAxis("Tempo"); 
             yAxis.setAutoRangeIncludesZero(true); 
