@@ -1,14 +1,13 @@
 package gui.view;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.geom.Ellipse2D;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Locale;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import logic.gestioneMemoria.Azione;
 import logic.parametri.ConfigurazioneIniziale;
@@ -17,41 +16,33 @@ import logic.simulazione.Istante;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.DateTickMarkPosition;
-import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StackedXYAreaRenderer;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
 import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.TableXYDataset;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
 
 /**
  *
  * @author Compagnin Davide
  */
-public class ViewGraficoTempi extends JScrollPane {
+public class DatiGraficiTempi {
 
     private ConfigurazioneIniziale conf;
     
-    class StackedXYAreaChart { 
+  /*  class StackedXYAreaChart { 
         
         ChartPanel StackedXYAreaChartm(Player player, LinkedList<Boolean> contextSwitchs) { 
 
             //super("Titolo"); 
 
-            XYSeries series1 = new XYSeries("ContextSwitch", true, false); 
-            XYSeries series2 = new XYSeries("Accesso", true, false); 
-            XYSeries series3 = new XYSeries("Banda", true, false); 
-            XYSeries series4 = new XYSeries("Slice", true, false); 
+            XYSeries series1 = new XYSeries("ContextSwitch", false, false); 
+            XYSeries series2 = new XYSeries("Accesso", false, false); 
+            XYSeries series3 = new XYSeries("Banda", false, false); 
+            XYSeries series4 = new XYSeries("Slice", false, false); 
             series1.add(0, 0);
             series2.add(0, 0);
             series3.add(0, 0);
@@ -59,7 +50,8 @@ public class ViewGraficoTempi extends JScrollPane {
             int switchs = conf.getTempoContextSwitch();
             int banda = conf.getBandaBusDati();
             int accesso = conf.getTempoAccessoDisco();
-
+                     int bandat = 0;
+                     int accessot = 0;
             LinkedList<Istante> listaIstanti = player.ultimoIstante();
             Istante istante;
             System.out.println("AAA");
@@ -68,19 +60,18 @@ public class ViewGraficoTempi extends JScrollPane {
                 istante = listaIstanti.get(j-1);
                 LinkedList<Azione> azioni = istante.getCambiamentiInMemoria();
                  if(azioni!=null){
-                     int bandat = 0;
-                     int accessot = 0;
+
                      for(int i = 0; i<azioni.size(); i++){   
                         Azione azioneCorrente = azioni.get(i);
                         switch(azioneCorrente.getAzione()){
                             case 1:
                                 // spostamento di un frame in RAM
-                                bandat += banda;
+                                bandat += 1000*conf.getDimensionePagina()/banda;
                                 accessot += accesso;
                                 //trasferimenti += accesso + 1000*(conf.getDimensionePagina()/banda);
                                 break;
                             case 2:
-                                bandat += banda;
+                                bandat += 1000*conf.getDimensionePagina()/banda;
                                 accessot += accesso;
                                 //trasferimenti += accesso + 1000*(conf.getDimensionePagina()/banda);
                                 break;
@@ -89,14 +80,11 @@ public class ViewGraficoTempi extends JScrollPane {
                      System.out.println(accessot);
                      System.out.println(bandat);
                      series2.add(j, accessot);
-                     if(bandat>0)
-                        series3.add(j, 1000*conf.getDimensionePagina()/bandat);
-                     else
-                         series3.add(j, 0);
                      series4.add(j, 10);
+                     series3.add(j, bandat);
                  }
                  if(contextSwitchs.get(j).booleanValue())
-                     series1.add(j, switchs);
+                     series1.add(j, switchs+accessot+bandat);
             }
 
             DefaultTableXYDataset dataset = new DefaultTableXYDataset(); 
@@ -126,14 +114,16 @@ public class ViewGraficoTempi extends JScrollPane {
             xAxis.setVerticalTickLabels(true); 
             //xAxis.setTickUnit(new DateTickUnit(DateTickUnit.DAY, 1)); 
             //xAxis.setDateFormatOverride(new SimpleDateFormat("dd-MMM-yy")); 
-            xAxis.setLowerMargin(0.001); 
+            xAxis.setLowerMargin(1.0); 
             xAxis.setUpperMargin(0.001); 
             xAxis.setAutoRangeIncludesZero(true); 
 
             NumberAxis yAxis = new NumberAxis("Tempo"); 
             yAxis.setAutoRangeIncludesZero(true); 
+            yAxis.setLowerMargin(0.001); 
+            yAxis.setUpperMargin(0.001); 
             StackedXYAreaRenderer renderer = new StackedXYAreaRenderer( 
-            XYAreaRenderer.AREA_AND_SHAPES, null, null ); 
+            XYAreaRenderer.AREA, null, null ); 
             renderer.setSeriesPaint(0, new Color(255, 255, 0)); 
             renderer.setSeriesPaint(1, new Color(255, 0, 255)); 
             renderer.setSeriesPaint(2, new Color(0, 255, 255)); 
@@ -163,24 +153,86 @@ public class ViewGraficoTempi extends JScrollPane {
 
     } 
     
+    */
     
-    
-    
-    public ViewGraficoTempi() {
-        super();
-    }
-    
-    public void aggiornaGrafico(Player player, LinkedList<Boolean> contextSwitchs,
+    public XYSeries[] ClacolaDatiGrafici(Player player, LinkedList<Boolean> contextSwitchs,
             ConfigurazioneIniziale conf){
         
         this.conf=conf;
-        StackedXYAreaChart demo = new StackedXYAreaChart(); 
         
-        //demo.pack(); 
-        //RefineryUtilities.centerFrameOnScreen(demo.StackedXYAreaChartm(player,contextSwitchs)); 
-        //demo.setVisible(true);
-        this.setViewportView(demo.StackedXYAreaChartm(player,contextSwitchs));
-        setVisible(true);
+            XYSeries series1 = new XYSeries("ContextSwitch", false, false); 
+            XYSeries series2 = new XYSeries("Accesso", false, false); 
+            XYSeries series3 = new XYSeries("Banda", false, false); 
+            XYSeries series4 = new XYSeries("Slice", false, false); 
+            XYSeries series5 = new XYSeries("Totale", false, false); 
+            series1.add(0, 0);
+            series2.add(0, 0);
+            series3.add(0, 0);
+            series4.add(0, 0);
+            series5.add(0, 0);
+            int switchs = conf.getTempoContextSwitch();
+            int banda = conf.getBandaBusDati();
+            int accesso = conf.getTempoAccessoDisco();
+            int bandat = 0;
+            int accessot = 0;
+            int totale = 0;
+            int switchTot = 0;
+            
+            LinkedList<Istante> listaIstanti = player.ultimoIstante();
+            Istante istante;
+            for(int j = 1; j< listaIstanti.size()+1; j++){
+                istante = listaIstanti.get(j-1);
+                LinkedList<Azione> azioni = istante.getCambiamentiInMemoria();
+                 if(azioni!=null){
+
+                     for(int i = 0; i<azioni.size(); i++){   
+                        Azione azioneCorrente = azioni.get(i);
+                        switch(azioneCorrente.getAzione()){
+                            case 1:
+                                // spostamento di un frame in RAM
+                                if(conf.getModalitaGestioneMemoria()==1){
+                                    bandat += 1000*conf.getDimensionePagina()/banda;
+                                }
+                                else if(conf.getModalitaGestioneMemoria()==2){
+                                    bandat += 1000*azioneCorrente.getFrame().getDimensione()/banda;
+                                }
+                                
+                                accessot += accesso;
+                                //trasferimenti += accesso + 1000*(conf.getDimensionePagina()/banda);
+                                break;
+                            case 2:
+                                if(conf.getModalitaGestioneMemoria()==1){
+                                    bandat += 1000*conf.getDimensionePagina()/banda;
+                                }
+                                else if(conf.getModalitaGestioneMemoria()==2){
+                                    bandat += 1000*azioneCorrente.getFrame().getDimensione()/banda;
+                                }
+                                accessot += accesso;
+                                //trasferimenti += accesso + 1000*(conf.getDimensionePagina()/banda);
+                                break;
+                        }
+                     }
+                     series2.add(j, accessot);
+                     series4.add(j, 10*j);
+                     series3.add(j, bandat);
+                 }
+                 if(contextSwitchs.get(j).booleanValue()){
+                     switchTot += switchs;
+                 }
+                series1.add(j, switchTot);
+                series5.add(j, (switchTot+accessot+bandat+(10*j))/1000);
+            }
+        
+ 
+            XYSeries[] ritorna = new XYSeries[5];
+            
+            ritorna[0] = series1;
+            ritorna[1] = series2;
+            ritorna[2] = series3;
+            ritorna[3] = series4;
+            ritorna[4] = series5;
+            
+            return ritorna;
     }
 }
 

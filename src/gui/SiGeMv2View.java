@@ -64,6 +64,7 @@ import logic.parametri.Processo;
 import logic.simulazione.*;
 import logic.schedulazione.PCB;
 import logic.simulazione.Player.Evento;
+import org.jfree.data.xy.XYSeries;
 
 
 public class SiGeMv2View {
@@ -81,7 +82,7 @@ public class SiGeMv2View {
     /**
      * Array delle viste statiche
      */
-    private View[] views = new View[8];
+    private View[] views = new View[13];
 
     /**
      * Contiene le viste statiche
@@ -128,7 +129,7 @@ public class SiGeMv2View {
     private JButton jButtonNuovaConfigurazione, jButtonApriConfigurazione;
     private JButton jButtonSalvaConfigurazione, jButtonModificaConfigurazione;
     
-    JSpinner scegliVelocita;
+    private JSpinner scegliVelocita;
     
     private JComboBox comboBoxSignificativo;
 
@@ -170,7 +171,7 @@ public class SiGeMv2View {
     private Istante istante;
 
     /** Processi */
-    LinkedList<Processo> processiEseguiti;
+    private LinkedList<Processo> processiEseguiti;
 
     /** 
      * Thread per aumentare l'interattivita' del utente durante l'avanzamento 
@@ -186,17 +187,17 @@ public class SiGeMv2View {
     /**
      * La lista dei processi ultimati nei vari istanti
      */
-    Vector<Vector<Integer>> processiUltimati = null;
+    private Vector<Vector<Integer>> processiUltimati = null;
     
     /**
      * La lista dei context-switch avvenuti nella simulazione
      */
-    LinkedList<Boolean> contextSwitchs = null;
+    private LinkedList<Boolean> contextSwitchs = null;
     
     /**
      * Istanza di GestioneFile per le operazioni di IO
      */
-    GestioneFile gestione;
+    private GestioneFile gestione;
     
     /**
      * Un'istanza fittizia di processo
@@ -297,9 +298,26 @@ public class SiGeMv2View {
     }
     
     private void visualizzaGraficoTempi() {
-            if ((views[7]).getComponent() instanceof ViewGraficoTempi) {
-                    ViewGraficoTempi currView = (ViewGraficoTempi) views[7].getComponent();
-                    currView.aggiornaGrafico(player,contextSwitchs,configurazioneIniziale);
+            XYSeries[] siries = new DatiGraficiTempi().ClacolaDatiGrafici(player, contextSwitchs, configurazioneIniziale);
+            if ((views[7]).getComponent() instanceof ViewGraficoTempiAccesso) {
+                    ViewGraficoTempiAccesso currView = (ViewGraficoTempiAccesso) views[7].getComponent();
+                    currView.aggiorna(siries[1]);
+            }
+            if ((views[8]).getComponent() instanceof ViewGraficoTempiBanda) {
+                    ViewGraficoTempiBanda currView = (ViewGraficoTempiBanda) views[8].getComponent();
+                    currView.aggiorna(siries[2]);
+            }
+            if ((views[9]).getComponent() instanceof ViewGraficoTempiSwitch) {
+                    ViewGraficoTempiSwitch currView = (ViewGraficoTempiSwitch) views[9].getComponent();
+                    currView.aggiorna(siries[0]);
+            }
+            if ((views[10]).getComponent() instanceof ViewGraficoTempiSlice) {
+                    ViewGraficoTempiSlice currView = (ViewGraficoTempiSlice) views[10].getComponent();
+                    currView.aggiorna(siries[3]);
+            }
+            if ((views[11]).getComponent() instanceof ViewGraficoTempiTotali) {
+                    ViewGraficoTempiTotali currView = (ViewGraficoTempiTotali) views[11].getComponent();
+                    currView.aggiorna(siries[4]);
             }
     }
     
@@ -361,12 +379,28 @@ public class SiGeMv2View {
             views[5] = new View("Swap", IconStylosoft
                             .getGeneralIcon("mv"), new ViewFrameMemoria());
             viewMap.addView(5, views[5]);
-            views[6] = new View("Grafici", IconStylosoft
+            views[6] = new View("Fault in memoria", IconStylosoft
                             .getGeneralIcon(""), new ViewGrafico());
             viewMap.addView(6, views[6]);
-            views[7] = new View("Grafici", IconStylosoft
-                            .getGeneralIcon(""), new ViewGraficoTempi());
+            views[7] = new View("Tempi di accesso al disco", IconStylosoft
+                            .getGeneralIcon(""), new ViewGraficoTempiAccesso());
             viewMap.addView(7, views[7]);
+            views[8] = new View("Tempi del bus dati", IconStylosoft
+                            .getGeneralIcon(""), new ViewGraficoTempiBanda());
+            viewMap.addView(8, views[8]);
+            views[9] = new View("Tempi context-switch ", IconStylosoft
+                            .getGeneralIcon(""), new ViewGraficoTempiSwitch());
+            viewMap.addView(9, views[9]);
+            views[10] = new View("Tempi time slice", IconStylosoft
+                            .getGeneralIcon(""), new ViewGraficoTempiSlice());
+            viewMap.addView(10, views[10]);
+            views[11] = new View("Tempo totale", IconStylosoft
+                            .getGeneralIcon(""), new ViewGraficoTempiTotali());
+            viewMap.addView(11, views[11]);
+            views[12] = new View("Grafici", IconStylosoft
+                            .getGeneralIcon(""), new ViewGraficoTempiTotali());
+            viewMap.addView(12, views[12]);
+            
 
             // Aggiungo i pulsanti help alle viste
             JButton button = new JButton(IconStylosoft.getGeneralIcon("help"));
@@ -1077,10 +1111,9 @@ public class SiGeMv2View {
      */
     private void setDefaultLayout() {
         rootWindow.setWindow(new TabWindow(new DockingWindow[] {
+                 new TabWindow(new DockingWindow[] {views[6],views[7],views[8],views[9],views[10],views[11]}),     
                  views[4],
                  views[3],
-                 views[6],
-                 views[7],
                  new SplitWindow(true,
                                  0.644f, 
                                  new SplitWindow(false,
