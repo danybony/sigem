@@ -1,3 +1,5 @@
+package gui.dialog;
+
 /*
  * Azienda: Stylosoft
  * Nome file: AssociazioneProcessiJDialog.java
@@ -16,8 +18,9 @@
  *  - v.1.0 (01/03/2008): Creazione JDialog e impostazione grafica
  */
 
-package gui.dialog;
 
+
+import gui.dialog.*;
 import gui.SiGeMv2View;
 import gui.utility.HelpHtml;
 import java.awt.BorderLayout;
@@ -49,12 +52,40 @@ import logic.parametri.Processo.Accesso;
  * @author  Jordy
  */
 public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
+    
+    /**
+     * Riferimento al primo passo del wizard
+     */
     private ConfigurazioneAmbienteJDialog configurazioneAmbiente;
+    
+    /**
+     * RIferimento al secondo passo del wizard
+     */
     private PoliticheJDialog politica;
+    
+    /**
+     * Riferimento al terzo passo del wizard
+     */
     private ProcessiJDialog processi;
+    
+    /**
+     * Riferimento alla finestra principale del programma
+     */
     private SiGeMv2View view;
+    
+    /**
+     * Configurazione iniziale preesistente nel caso di modifica
+     */
     private ConfigurazioneIniziale confIniziale;
+    
+    /**
+     * Lista dei processi configurati da inserire nella configurazioneIniziale
+     */
     private LinkedList<Processo> listaProcessi;
+    
+    /**
+     * Lista degli oggetto JList rappresentanti tutti gli istanti
+     */
     private Vector<JList> listaList = new Vector<JList>();
     
     /**
@@ -535,7 +566,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
 
     private void jButtonIndietroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIndietroActionPerformed
         this.setVisible(false);
-        processi.setVisible(true);
+        processi.setVisible(true);        
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
@@ -777,6 +808,10 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
 
         view.setConfigurazioneIniziale(confIniziale);        
+        
+    }
+    
+    private void creaListe(){
         
     }
     
