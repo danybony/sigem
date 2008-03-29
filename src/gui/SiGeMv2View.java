@@ -1110,18 +1110,19 @@ public class SiGeMv2View {
      * Imposta il layout di default delle viste
      */
     private void setDefaultLayout() {
-        rootWindow.setWindow(new TabWindow(new DockingWindow[] {
-                 new TabWindow(new DockingWindow[] {views[6],views[7],views[8],views[9],views[10],views[11]}),     
-                 views[4],
-                 views[3],
-                 new SplitWindow(true,
-                                 0.644f, 
-                                 new SplitWindow(false,
-                                                 0.70f, 
-                                                 views[0],
-                                                 views[2]),
-                                 new SplitWindow(false, 0.5f, views[1], views[5])
-                                 )
+        rootWindow.setWindow(new TabWindow(
+                 new DockingWindow[] {
+                     new TabWindow(new DockingWindow[] {views[6],views[7],views[8],views[9],views[10],views[11]}),     
+                     views[4],
+                     views[3],
+                     new SplitWindow(true,
+                                     0.644f, 
+                                     new SplitWindow(false,
+                                                     0.70f, 
+                                                     views[0],
+                                                     views[2]),
+                                     new SplitWindow(false, 0.5f, views[1], views[5])
+                                     )
                   }));
             WindowBar windowBar = rootWindow.getWindowBar(Direction.DOWN);
 
