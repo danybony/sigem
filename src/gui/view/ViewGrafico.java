@@ -14,7 +14,6 @@
 package gui.view;
 
 
-import java.awt.Panel;
 import java.util.Iterator;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -24,7 +23,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -34,11 +32,17 @@ import org.jfree.data.xy.XYSeriesCollection;
  * @author Compagnin Davide
  */
 public class ViewGrafico extends JScrollPane {
-
+    /**
+     * Costruttore che inizializza lo scrollPane
+     */
     public ViewGrafico() {
         super();
     }
-    
+    /**
+     * Metodo che aggiorna i due grafici dei Fault di pagina 
+     * @param player
+     *  Player di esecuzione
+     */
     public void aggiornaGrafico(Player player){
         
         XYSeries series1 = new XYSeries("SommaFault",true,false);
