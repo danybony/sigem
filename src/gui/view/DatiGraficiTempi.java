@@ -1,3 +1,16 @@
+/*
+ * Azienda: Stylosoft
+ * Nome file: DatiGraficiTempi
+ * Package: gui.view
+ * Autore: Rubin Luca
+ * Data: 21/03/2008
+ * Versione: 1.1
+ * Licenza: open-source
+ * Registro delle modifiche:
+ * - v 1.1 (02/03/2008): Verificata
+ * - v 1.0 (01/03/2008): Creata classe
+ * */
+
 package gui.view;
 
 import java.util.LinkedList;
