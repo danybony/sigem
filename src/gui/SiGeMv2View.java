@@ -363,25 +363,25 @@ public class SiGeMv2View {
                             .getGeneralIcon("statistiche"), new ViewStatistiche());
             viewMap.addView(2, views[2]);
             views[3] = new View("Modalita' testuale", IconStylosoft
-                            .getGeneralIcon(""),  new ViewAvanzamentoTestuale());
+                            .getGeneralIcon("text"),  new ViewAvanzamentoTestuale());
             viewMap.addView(3, views[3]);
             views[4] = new View("Riepilogo configurazione", IconStylosoft
-                            .getGeneralIcon(""), new ViewRiepilogo());
+                            .getGeneralIcon("riepilogo"), new ViewRiepilogo());
             viewMap.addView(4, views[4]);
             views[5] = new View("Swap", IconStylosoft
                             .getGeneralIcon("mv"), new ViewFrameMemoria());
             viewMap.addView(5, views[5]);
             views[6] = new View("Fault in memoria", IconStylosoft
-                            .getGeneralIcon(""), new ViewGrafico());
+                            .getGeneralIcon("statistiche"), new ViewGrafico());
             viewMap.addView(6, views[6]);
             views[7] = new View("Tempi Parziali1", IconStylosoft
-                            .getGeneralIcon(""), new ViewGraficoTempiBandaAccesso());
+                            .getGeneralIcon("statistiche"), new ViewGraficoTempiBandaAccesso());
             viewMap.addView(7, views[7]);
             views[8] = new View("Tempi Parziali2", IconStylosoft
-                            .getGeneralIcon(""), new ViewGraficoTempiSliceSwitch());
+                            .getGeneralIcon("statistiche"), new ViewGraficoTempiSliceSwitch());
             viewMap.addView(8, views[8]);
             views[9] = new View("Tempo totale", IconStylosoft
-                            .getGeneralIcon(""), new ViewGraficoTempiTotali());
+                            .getGeneralIcon("statistiche"), new ViewGraficoTempiTotali());
             viewMap.addView(9, views[9]);
             
 
@@ -643,7 +643,7 @@ public class SiGeMv2View {
             });
             fileMenu.add(jFileItemModificaConfigurazione);
             
-            jFileItemDefaultConfigurazione = new JMenuItem("Imposta la configurazione \"di default\"",IconStylosoft.getGeneralIcon(""));
+            jFileItemDefaultConfigurazione = new JMenuItem("Imposta la configurazione \"di default\"",IconStylosoft.getGeneralIcon("default"));
             jFileItemDefaultConfigurazione.setEnabled(false);
             jFileItemDefaultConfigurazione.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {

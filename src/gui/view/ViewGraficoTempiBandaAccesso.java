@@ -28,11 +28,19 @@ import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
 
 /**
- *
- * @author luca
+ * Classe per la visualizzazione di due grafici relativi ai tempi del bus dati e
+ * ai tempi di accesso al disco, ricavati dalla simulazione.
  */
 public class ViewGraficoTempiBandaAccesso  extends JScrollPane {
 
+    /**
+     * Crea e aggiorna i grafici.
+     * 
+     * @param serie1
+     *      la serie di coordinate X e Y per disegnare il primo grafico
+     * @param serie2
+     *      la serie di coordinate X e Y per disegnare il secondo grafico
+     */
     public void aggiorna(XYSeries serie1, XYSeries serie2){
         DefaultTableXYDataset TabellaDati1=new DefaultTableXYDataset();
         TabellaDati1.addSeries(serie1);
@@ -51,7 +59,6 @@ public class ViewGraficoTempiBandaAccesso  extends JScrollPane {
         renderer.setSeriesPaint(0, new Color(255, 0, 255)); 
         renderer.setShapePaint(Color.gray); 
         renderer.setShapeStroke(new BasicStroke(0.5f)); 
-        renderer.setShape(new Ellipse2D.Double(-3, -3, 6, 6)); 
         renderer.setOutline(true); 
 
         XYPlot plot = new XYPlot(TabellaDati1, xAxis, yAxis, renderer); 
@@ -60,8 +67,6 @@ public class ViewGraficoTempiBandaAccesso  extends JScrollPane {
         yAxis.configure(); 
 
         JFreeChart chart = new JFreeChart("Tempi del bus dati", JFreeChart.DEFAULT_TITLE_FONT, plot, false); 
-        
-        //JFreeChart chart = ChartFactory.createStackedXYAreaChart("Tempi context-switch", "Istanti", "millisecondi", TabellaDati, PlotOrientation.VERTICAL, false,false,false);
         
         DefaultTableXYDataset TabellaDati2=new DefaultTableXYDataset();
         TabellaDati2.addSeries(serie2);
@@ -80,7 +85,6 @@ public class ViewGraficoTempiBandaAccesso  extends JScrollPane {
         renderer2.setSeriesPaint(0, new Color(0, 255, 255)); 
         renderer2.setShapePaint(Color.gray); 
         renderer2.setShapeStroke(new BasicStroke(0.5f)); 
-        renderer2.setShape(new Ellipse2D.Double(-3, -3, 6, 6)); 
         renderer2.setOutline(true); 
 
         XYPlot plot2 = new XYPlot(TabellaDati2, xAxis2, yAxis2, renderer2); 
@@ -90,7 +94,6 @@ public class ViewGraficoTempiBandaAccesso  extends JScrollPane {
 
         JFreeChart chart2 = new JFreeChart("Tempi di accesso al disco", JFreeChart.DEFAULT_TITLE_FONT, plot2, false); 
         
-        //JFreeChart chart = ChartFactory.createStackedXYAreaChart("Tempi context-switch", "Istanti", "millisecondi", TabellaDati, PlotOrientation.VERTICAL, false,false,false);
         ChartPanel p = new ChartPanel(chart);
         ChartPanel p2 = new ChartPanel(chart2);
         p.setPreferredSize(new java.awt.Dimension(450, 300));

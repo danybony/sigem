@@ -27,11 +27,17 @@ import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
 
 /**
- *
- * @author luca
+ * Classe per la visualizzazione del grafico che riepiloga la stima del  tempo
+ * reale necessario per eseguire la simulazione.
  */
 public class ViewGraficoTempiTotali extends JScrollPane {
     
+    /**
+     * Crea e aggiorna il grafico.
+     * 
+     * @param serie1
+     *      la serie di coordinate X e Y per disegnare il primo grafico
+     */
     public void aggiorna(XYSeries serie){
         DefaultTableXYDataset TabellaDati=new DefaultTableXYDataset();
         TabellaDati.addSeries(serie);
@@ -50,7 +56,6 @@ public class ViewGraficoTempiTotali extends JScrollPane {
         renderer.setSeriesPaint(0, new Color(255, 255, 0)); 
         renderer.setShapePaint(Color.gray); 
         renderer.setShapeStroke(new BasicStroke(0.5f)); 
-        renderer.setShape(new Ellipse2D.Double(-3, -3, 6, 6)); 
         renderer.setOutline(true); 
 
         XYPlot plot = new XYPlot(TabellaDati, xAxis, yAxis, renderer); 
@@ -60,9 +65,6 @@ public class ViewGraficoTempiTotali extends JScrollPane {
 
         JFreeChart chart = new JFreeChart(null, JFreeChart.DEFAULT_TITLE_FONT, plot, false); 
         
-        
-        
-       // JFreeChart chart = ChartFactory.createStackedXYAreaChart("Tempo totale della simulazione", "Istanti", "secondi", TabellaDati, PlotOrientation.VERTICAL, false,false,false);
         ChartPanel p = new ChartPanel(chart);
         this.setViewportView(p);
         setVisible(true);

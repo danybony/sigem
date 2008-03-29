@@ -21,13 +21,23 @@ import logic.simulazione.Istante;
 import org.jfree.data.xy.XYSeries;
 
 /**
- *
- * @author Compagnin Davide
+ * Elabora le coordinate X e Y per la generazione dei diagrammi relativi ai tempi
+ * di esecuzione della simulazione.
  */
 public class DatiGraficiTempi {
 
+    /**
+     * La configurazione corrente.
+     */
     private ConfigurazioneIniziale conf;
 
+    
+    /**
+     * Esegue il calcolo delle coordinate X e Y.
+     * 
+     * @return un array di XYSeries; ogni elemento dell'array raccoglie i dati per
+     * uno specifico grafico
+     */
     public XYSeries[] ClacolaDatiGrafici(Player player, LinkedList<Boolean> contextSwitchs,
             ConfigurazioneIniziale conf){
         

@@ -28,9 +28,19 @@ import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
 
 /**
- * 
+ * Classe per la visualizzazione di due grafici relativi ai tempi di time-slice e
+ * ai tempi di context-switch, ricavati dalla simulazione.
  */
 public class ViewGraficoTempiSliceSwitch  extends JScrollPane {
+    
+    /**
+     * Crea e aggiorna i grafici.
+     * 
+     * @param serie1
+     *      la serie di coordinate X e Y per disegnare il primo grafico
+     * @param serie2
+     *      la serie di coordinate X e Y per disegnare il secondo grafico
+     */
     public void aggiorna(XYSeries serie1, XYSeries serie2){
         DefaultTableXYDataset TabellaDati1=new DefaultTableXYDataset();
         TabellaDati1.addSeries(serie1);
@@ -49,7 +59,6 @@ public class ViewGraficoTempiSliceSwitch  extends JScrollPane {
         renderer.setSeriesPaint(0, new Color(255, 0, 0)); 
         renderer.setShapePaint(Color.gray); 
         renderer.setShapeStroke(new BasicStroke(0.5f)); 
-        renderer.setShape(new Ellipse2D.Double(-3, -3, 6, 6)); 
         renderer.setOutline(true); 
 
         XYPlot plot = new XYPlot(TabellaDati1, xAxis, yAxis, renderer); 
@@ -78,7 +87,6 @@ public class ViewGraficoTempiSliceSwitch  extends JScrollPane {
         renderer2.setSeriesPaint(0, new Color(255, 255, 0)); 
         renderer2.setShapePaint(Color.gray); 
         renderer2.setShapeStroke(new BasicStroke(0.5f)); 
-        renderer2.setShape(new Ellipse2D.Double(-3, -3, 6, 6)); 
         renderer2.setOutline(true); 
 
         XYPlot plot2 = new XYPlot(TabellaDati2, xAxis2, yAxis2, renderer2); 
