@@ -6,28 +6,16 @@
 package gui.view;
 
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.geom.Ellipse2D;
-import java.util.LinkedList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import logic.gestioneMemoria.Azione;
-import logic.parametri.ConfigurazioneIniziale;
-import logic.simulazione.Player;
-import logic.simulazione.Istante;
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StackedXYAreaRenderer;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
 import org.jfree.data.xy.DefaultTableXYDataset;
-import org.jfree.data.xy.TableXYDataset;
 import org.jfree.data.xy.XYSeries;
 
 /**

@@ -82,7 +82,7 @@ public class SiGeMv2View {
     /**
      * Array delle viste statiche
      */
-    private View[] views = new View[13];
+    private View[] views = new View[10];
 
     /**
      * Contiene le viste statiche
@@ -299,24 +299,16 @@ public class SiGeMv2View {
     
     private void visualizzaGraficoTempi() {
             XYSeries[] siries = new DatiGraficiTempi().ClacolaDatiGrafici(player, contextSwitchs, configurazioneIniziale);
-            if ((views[7]).getComponent() instanceof ViewGraficoTempiAccesso) {
-                    ViewGraficoTempiAccesso currView = (ViewGraficoTempiAccesso) views[7].getComponent();
-                    currView.aggiorna(siries[1]);
+            if ((views[7]).getComponent() instanceof ViewGraficoTempiBandaAccesso) {
+                    ViewGraficoTempiBandaAccesso currView = (ViewGraficoTempiBandaAccesso) views[7].getComponent();
+                    currView.aggiorna(siries[2],siries[1]);
             }
-            if ((views[8]).getComponent() instanceof ViewGraficoTempiBanda) {
-                    ViewGraficoTempiBanda currView = (ViewGraficoTempiBanda) views[8].getComponent();
-                    currView.aggiorna(siries[2]);
+            if ((views[8]).getComponent() instanceof ViewGraficoTempiSliceSwitch) {
+                    ViewGraficoTempiSliceSwitch currView = (ViewGraficoTempiSliceSwitch) views[8].getComponent();
+                    currView.aggiorna(siries[3],siries[0]);
             }
-            if ((views[9]).getComponent() instanceof ViewGraficoTempiSwitch) {
-                    ViewGraficoTempiSwitch currView = (ViewGraficoTempiSwitch) views[9].getComponent();
-                    currView.aggiorna(siries[0]);
-            }
-            if ((views[10]).getComponent() instanceof ViewGraficoTempiSlice) {
-                    ViewGraficoTempiSlice currView = (ViewGraficoTempiSlice) views[10].getComponent();
-                    currView.aggiorna(siries[3]);
-            }
-            if ((views[11]).getComponent() instanceof ViewGraficoTempiTotali) {
-                    ViewGraficoTempiTotali currView = (ViewGraficoTempiTotali) views[11].getComponent();
+            if ((views[9]).getComponent() instanceof ViewGraficoTempiTotali) {
+                    ViewGraficoTempiTotali currView = (ViewGraficoTempiTotali) views[9].getComponent();
                     currView.aggiorna(siries[4]);
             }
     }
@@ -382,24 +374,15 @@ public class SiGeMv2View {
             views[6] = new View("Fault in memoria", IconStylosoft
                             .getGeneralIcon(""), new ViewGrafico());
             viewMap.addView(6, views[6]);
-            views[7] = new View("Tempi di accesso al disco", IconStylosoft
-                            .getGeneralIcon(""), new ViewGraficoTempiAccesso());
+            views[7] = new View("Tempi Parziali1", IconStylosoft
+                            .getGeneralIcon(""), new ViewGraficoTempiBandaAccesso());
             viewMap.addView(7, views[7]);
-            views[8] = new View("Tempi del bus dati", IconStylosoft
-                            .getGeneralIcon(""), new ViewGraficoTempiBanda());
+            views[8] = new View("Tempi Parziali2", IconStylosoft
+                            .getGeneralIcon(""), new ViewGraficoTempiSliceSwitch());
             viewMap.addView(8, views[8]);
-            views[9] = new View("Tempi context-switch ", IconStylosoft
-                            .getGeneralIcon(""), new ViewGraficoTempiSwitch());
+            views[9] = new View("Tempo totale", IconStylosoft
+                            .getGeneralIcon(""), new ViewGraficoTempiTotali());
             viewMap.addView(9, views[9]);
-            views[10] = new View("Tempi time slice", IconStylosoft
-                            .getGeneralIcon(""), new ViewGraficoTempiSlice());
-            viewMap.addView(10, views[10]);
-            views[11] = new View("Tempo totale", IconStylosoft
-                            .getGeneralIcon(""), new ViewGraficoTempiTotali());
-            viewMap.addView(11, views[11]);
-            views[12] = new View("Grafici", IconStylosoft
-                            .getGeneralIcon(""), new ViewGraficoTempiTotali());
-            viewMap.addView(12, views[12]);
             
 
             // Aggiungo i pulsanti help alle viste
@@ -1112,7 +1095,7 @@ public class SiGeMv2View {
     private void setDefaultLayout() {
         rootWindow.setWindow(new TabWindow(
                  new DockingWindow[] {
-                     new TabWindow(new DockingWindow[] {views[6],views[7],views[8],views[9],views[10],views[11]}),     
+                     new TabWindow(new DockingWindow[] {views[6],views[7],views[8],views[9]}),     
                      views[4],
                      views[3],
                      new SplitWindow(true,
