@@ -70,6 +70,9 @@
                         La prima finestra visualizza in un grafico l'avanzamento temporale e l'alternanza dei processi.
                         Le seconda rappresenta invece lo stato della memoria ad un certo istante.
                         Nella terza verranno mostrate tutte le statistiche sottoforma testuale.
+			Potrai inoltre osservare la simulazione da altri punti di vista. Attraverso una apposita finestra potrai seguire la
+			simulazione per via testuale, sottoforma di log, mentre attraverso un'altra finestra avrai accesso a tutti i grafici
+			calcolati dal simulatore.
                         <div class="image">
                         <img src="pagina_files/img/panoramica.jpg"></img></div></span></p>
 
@@ -121,8 +124,11 @@
                         Avrai a disposizione a sinistra un pannello a schede, dove ogni scheda identifica
                         il processo in questione. Dentro ogni scheda ci saranno tante caselle rettangolari quante saranno le unità di 
                         tempo di esecuzione del processo, nelle quali dovrai trascinare con il mouse le pagine o segmenti che creerai 
-                        con il menu a destra. Per rimuovere una pagina o segmento associato ad un certo istante, è necessario cliccarci sopra.
-                        Il menu a destra appunto ti permette di creare e eliminare le pagine o segmenti affinchè tu
+                        con il menu a destra. Per rimuovere una pagina o segmento già associato ad un certo istante, è sufficente cliccare con
+			il tasto destro del mouse e selezionare dal menu a comparsa la voce di rimozione.
+			Potrai anche impostare la modifica di una certa pagina in un determinato istante, allo stesso modo selezionando la voce di
+			modifica.
+                        Il menu a destra ti permette di creare e eliminare le pagine o segmenti affinchè tu
                         le possa associare ai processi.
                         Dopo aver completato prosegui premendo OK.
                         Oppure torna al passo precedente premendo Indietro.
@@ -149,7 +155,16 @@
                         Dopo aver creato o caricato una simulazione, potrai eseguirla semplicemente premendo il pulsante 5 o selezionando
                         la voce corrispondente dal menu Simulazione. Potrai utilizzare inoltre tutti gli altri tasti da 6 a 14 per avanzare
                         o retrocedere nel tempo intelligentemente secondo le tue esigenze. Nel caso volessi velocizzare o rallentare la simulazione
-                        in avanzamento automatico dovrai utilizzare il pulsante 15.
+                        in avanzamento automatico dovrai utilizzare il pulsante 15. Puoi inoltre visualizzare la simulazione per via testuale selezionando
+			l'apposita scheda di Modalità Testuale. Inoltre potrai osservare statistiche e grafici relativi alla simulazione corrente.
+                        <div class="image"><img src="pagina_files/img/visual.jpg"></img></div>
+                        </span></p>
+			
+			<h3><span><a name="Modifica">Modifica di una simulazione</a></span></h3>
+			<p class="p1"><span>
+                        Dopo aver creato o caricato una simulazione, potrai modificarla premendo l'apposito tasto di modifica a forma di matita.
+			Avrai accesso tramite un wizard guidato alla modifica di tutti i parametri inclusa l'associazione in memoria.
+			Dopo aver effettuato una modifica potrai nuovamente salvarla in un altro file di salvataggio ad esempio.
                         <div class="image"><img src="pagina_files/img/visual.jpg"></img></div>
                         </span></p>
 
@@ -179,15 +194,26 @@
                         sia realizzata in modo da minimizzare la possibilità di errori da parte dell'utente,
                         possono comunque sorgere problemi, qui elencati con la relativa spiegazione.
                         <ol>
-                         <li>Al caricamento di una configurazione esistente viene segnalato “File non compatibile”.</li>
-                         <li>Al Passo 3 del wizard di configurazione viene segnalato “Valore inserito non valido”.</li>
-                         <li>Al Passo 3 del wizard di configurazione viene segnalato “Nome di processo duplicato”.</li>
+                         <li>Al caricamento di una configurazione esistente viene segnalato "File non compatibile".</li>
+                         <li>Al Passo 3 del wizard di configurazione viene segnalato "Valore inserito non valido".</li>
+                         <li>Al Passo 3 del wizard di configurazione viene segnalato "Nome di processo duplicato".</li>
+			<li>Dopo aver configurato una simulazione viene segnalato "Durante la simulazione è stata esaurita 
+				la memoria (RAM e Swap). Questa situazione viene gestita da SiGeM come un errore. In questi
+				 casi la simulazione viene terminata prematuramente rispetto agli effettivi istanti di cui si 
+				dovrebbe comporre.".</li>
+			<li>Impostando la configurazione attuale come configurazione di default viene segnalato "Impossibile 
+				impostare la configurazione di default. Errore nella scrittura del file".</li>
+			<li>Al Passo 4 del wizard di configurazione, cercando di modificare la dimensione di un segmento, 
+				la massima dimensione possibile è inferiore alla dimensione della RAM.</li>
                         </ol>
                         Soluzioni:
                         <ol>
                          <li>Il file selezionato non contiene una configurazione valida per il programma SiGem da noi realizzato</li>
                          <li>Si è cercato di immettere un valore non valido in un campo relativo al tempo di arrivo o al tempo di esecuzione di un processo. Si ricorda che sono possibili solo valori interi positivi</li>
                          <li>Si è cercato di impostare lo stesso nome per due processi distinti. E' necessario che ogni processo abbia un nome univoco</li>
+			<li>Durante la creazione della simulazione si è riscontrato un tentativo di spostare una pagina/segmento dalla RAM alla Swap, ma entrambe erano già piene. Questa situazione viene considerata come un'eccezione e provoca la prematura terminazione della simulazione.</li>
+			<li>Si sta eseguendo il programma da una posizione in cui non si ha l'accesso alla scrittura.</li>
+			<li>Nel caso di modifica della dimensione di un segmento, il programma valuta lo spazio disponibile in tutti gli istanti in cui il segmento è già presente ed imposta la dimensione massima applicabile come la somma della dimensione attuale e il minimo spazio libero negli istanti in cui il segmento è presente.</li>
                         </ol>
                         </span></p>
 		</div>
@@ -201,15 +227,16 @@
 					<li><a href="#Avvio" accesskey="b">Avvio</a></li>
 					<li><a href="#Panoramica" accesskey="c">Panoramica</a></li>
 					<li><a href="#Creazione" accesskey="d">Creazione</a></li>
-                                        <li><a href="#Passo1" accesskey="e">Passo 1</a></li>
-					<li><a href="#Passo2" accesskey="f">Passo 2</a></li>
-					<li><a href="#Passo3" accesskey="g">Passo 3</a></li>
-					<li><a href="#Passo4" accesskey="h">Passo 4</a></li>
+                                        <li><a href="#Passo1" accesskey="e">Creazione - Passo 1</a></li>
+					<li><a href="#Passo2" accesskey="f">Creazione - Passo 2</a></li>
+					<li><a href="#Passo3" accesskey="g">Creazione - Passo 3</a></li>
+					<li><a href="#Passo4" accesskey="h">Creazione - Passo 4</a></li>
 					<li><a href="#Salvataggio" accesskey="h">Salvataggio</a></li>
 					<li><a href="#Caricamento" accesskey="i">Caricamento</a></li>
 					<li><a href="#Visualizzazione" accesskey="l">Visualizzazione</a></li>
-					<li><a href="#Requisiti" accesskey="m">Requisiti</a></li>
-                                        <li><a href="#Errori" accesskey="n">Errori</a></li>
+					<li><a href="#Modifica" accesskey="m">Modifica</a></li>
+					<li><a href="#Requisiti" accesskey="n">Requisiti</a></li>
+                                        <li><a href="#Errori" accesskey="o">Errori</a></li>
 				</ul>
 			</div>
 
