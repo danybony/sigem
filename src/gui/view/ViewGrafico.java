@@ -16,6 +16,7 @@ package gui.view;
 
 import java.awt.Panel;
 import java.util.Iterator;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import logic.simulazione.Player;
 import logic.simulazione.Istante;
@@ -69,7 +70,7 @@ public class ViewGrafico extends JScrollPane {
         chart1.setTextAntiAlias(true);
         chart2.setTextAntiAlias(true);
         
-        Panel P=new Panel();
+        JPanel P=new JPanel();
         ChartPanel CP1=new ChartPanel(chart1);
         CP1.setPreferredSize(new java.awt.Dimension(450, 300));
         ChartPanel CP2=new ChartPanel(chart2);
@@ -78,7 +79,7 @@ public class ViewGrafico extends JScrollPane {
         P.add(CP1);
         P.add(CP2);
         //P.add(new ChartPanel(chart0));
-        P.setVisible(true);
+        //P.setVisible(true);
         this.setViewportView(P);
         setVisible(true);
     }
