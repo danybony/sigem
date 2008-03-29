@@ -13,6 +13,8 @@
 
 package gui.view;
 
+
+import java.awt.Panel;
 import java.util.Iterator;
 import javax.swing.JScrollPane;
 import logic.simulazione.Player;
@@ -38,33 +40,46 @@ public class ViewGrafico extends JScrollPane {
     
     public void aggiornaGrafico(Player player){
         
-        XYSeries series = new XYSeries("Somma Fault",false,false);
-        XYSeries series2 = new XYSeries("Fault",false,false);
+        XYSeries series1 = new XYSeries("SommaFault",true,false);
+        XYSeries series2 = new XYSeries("SingoliFault",true,false);
         Iterator<Istante> I=player.ultimoIstante().iterator();
         int i=0,somma_fault=0;
-        series.add(i, somma_fault);
+        series1.add(i, somma_fault);
         series2.add(i, 0);
         while(I.hasNext()){
             int f=I.next().getFault();
-            i++; somma_fault+=f; 
+            i++; 
+            somma_fault+=f;
+            series1.add(i, somma_fault);
             series2.add(i, f);
-            series.add(i, somma_fault);
+            
             
         }
         
-        DefaultTableXYDataset TabellaDati=new DefaultTableXYDataset();
-        TabellaDati.addSeries(series2);
-        TabellaDati.addSeries(series);
+        //DefaultTableXYDataset TabellaDati=new DefaultTableXYDataset();
+        //TabellaDati.addSeries(series2);
+        //TabellaDati.addSeries(series1);
         
         
-        //XYDataset xyDataset = new XYSeriesCollection(series);
-        JFreeChart chart = ChartFactory.createStackedXYAreaChart("Fault in RAM", "Istanti", "Fault", TabellaDati, PlotOrientation.VERTICAL, false,false,false);
-        //JFreeChart chart = ChartFactory.createXYAreaChart("Fault in RAM","Istanti","Fault",xyDataset,PlotOrientation.VERTICAL,false,false,false);
-        //JScrollPane P=new JScrollPane();
-        //P.add();
-        //P.add
+        XYDataset xyDataset1 = new XYSeriesCollection(series1);
+        XYDataset xyDataset2 = new XYSeriesCollection(series2);
+        //JFreeChart chart0 = ChartFactory.createStackedXYAreaChart("Fault in RAM", "Istanti", "Fault", TabellaDati, PlotOrientation.VERTICAL, false,false,false);
+        JFreeChart chart1 = ChartFactory.createXYAreaChart("Andamento Fault Totali","Istanti","Fault",xyDataset1,PlotOrientation.VERTICAL,false,false,false);
+        JFreeChart chart2 = ChartFactory.createXYAreaChart("Andamento Fault per Istante","Istanti","Fault",xyDataset2,PlotOrientation.VERTICAL,false,false,false);
+        chart1.setTextAntiAlias(true);
+        chart2.setTextAntiAlias(true);
         
-        this.setViewportView(new ChartPanel(chart));
+        Panel P=new Panel();
+        ChartPanel CP1=new ChartPanel(chart1);
+        CP1.setPreferredSize(new java.awt.Dimension(450, 300));
+        ChartPanel CP2=new ChartPanel(chart2);
+        CP2.setPreferredSize(new java.awt.Dimension(450, 300));
+
+        P.add(CP1);
+        P.add(CP2);
+        //P.add(new ChartPanel(chart0));
+        P.setVisible(true);
+        this.setViewportView(P);
         setVisible(true);
     }
 }
