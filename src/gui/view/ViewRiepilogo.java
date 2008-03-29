@@ -196,7 +196,7 @@ public class ViewRiepilogo extends javax.swing.JPanel {
         jLabel10.setText("Dimensione pagina: .............."+C.getDimensionePagina()+"KB" );
     }
     private void setSegmentazione( ConfigurazioneIniziale C ) {
-        jLabel7.setText("Tecnica gestione memoria: ......Segmentazione");
+        jLabel7.setText("Tecnica gestione memoria: .......Segmentazione");
         String S="Politica allocazione segmenti: ..";
         switch ( C.getPoliticaGestioneMemoria() ) {
             case 1: jLabel9.setText(S+"First-Fit"); break;
