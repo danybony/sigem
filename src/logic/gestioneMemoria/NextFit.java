@@ -40,7 +40,7 @@ public class NextFit implements IAllocazione {
      */
     public FrameMemoria alloca ( FrameMemoria F, Vector<FrameMemoria> Liberi, int Posizioni[] ) {
         int i=0,dim=Liberi.size();
-        while( P<=Posizioni[i] && i<dim ) i++;
+        while( i<dim && P<=Posizioni[i] ) i++;
         boolean trovato=false;
         int j=i%dim; 
         while( j<dim && !trovato ) {
