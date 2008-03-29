@@ -181,8 +181,8 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
          * già inserito in questo istante e anche lo spazio che mi servirebbe totale */
         boolean caricati=true;
         while( I.hasNext() ) {
-            FrameMemoria fr=I.next();
-            if( !fr.getInRAM() ) { 
+            Segmento fr=((Segmento)I.next());
+            if( !MemoriaRam.cerca(fr) ) { 
                 dimensione_parziale_inserimento+=fr.getDimensione();
                 caricati=false;
             }
@@ -200,7 +200,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         I=ListaSegmenti.iterator();
         while ( I.hasNext() && MemoriaRam.getSpazioMaggiore().getDimensione() < dimensione_parziale_inserimento && !Errore ) {
             Segmento S=((Segmento)I.next());
-            if ( !S.getInRAM() ) {
+            if ( !MemoriaRam.cerca(S) ) {
                 MemoriaRam.rimuovi(S);
                 Azioni.add( new Azione(3, S, MemoriaRam.indiceDi(S) ));
                 if ( S.getModifica()==true ) {                                                        
