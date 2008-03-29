@@ -189,7 +189,14 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             dimensione_totale_inserimento+=fr.getDimensione();
         }
         
-        if(caricati) return null; //ritorno azioni vuote se ho già caricato tutto quello che serve
+        if(caricati) { 
+            I=ListaSegmenti.iterator();
+            while( I.hasNext() ) {
+                Segmento F=((Segmento)I.next());
+                Azioni.add( new Azione(5, F, MemoriaRam.indiceDi(F) ) );
+            }
+            return Azioni; //ritorno azioni vuote se ho già caricato tutto quello che serve
+        }
         
         /* rimuovo i segmenti fino a liberare abbastanza spazio per completare 
          * gli inserimenti che mancano*/
