@@ -132,7 +132,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             if (PoliticaAllocazione instanceof NextFit) {                
                 Pos=new int[Liberi.size()];
                 for (int i=0; i<Liberi.size(); i++)
-                Pos[i]=((RAMSegmentata)M).indiceDi( Liberi.elementAt(i) );
+                    Pos[i]=((RAMSegmentata)M).indiceDi( Liberi.elementAt(i) );
             }
             FrameLibero=PoliticaAllocazione.alloca( F, Liberi, Pos );
         }
@@ -183,6 +183,20 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         /* rimuovo i segmenti fino a liberare abbastanza spazio */
         boolean Errore=false;
         if ( dimensione_totale_inserimento > 0 ) {  
+            
+            //tento di eliminare i segmenti che non mi serviranno in questo istante
+            
+            I=ListaSegmenti.iterator();
+            while ( I.hasNext() && MemoriaRam.getSpazioMaggiore().getDimensione() < dimensione_totale_inserimento ) {
+                Segmento S=((Segmento)I.next());
+                if ( !S.getInRAM() ) {
+                    MemoriaRam.rimuovi(S);
+                    Azioni.add( new Azione(3, S, MemoriaRam.indiceDi(S) ));
+                }
+            }
+            
+            // altrimenti tolgo anche gli altri
+            
             while ( MemoriaRam.getSpazioMaggiore().getDimensione() < dimensione_totale_inserimento && !Errore) {
                 
                 Azioni.add( new Azione(0,null) );
@@ -207,6 +221,7 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
         /*Errore perchè non ho sufficiente spazio in swap*/
         if (Errore==true) return Azioni;
         
+        // inserirco i segmenti
         I=ListaSegmenti.iterator();
                 
         while( I.hasNext()  ) {
