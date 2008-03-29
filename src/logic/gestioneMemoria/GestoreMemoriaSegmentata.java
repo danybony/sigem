@@ -204,24 +204,35 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
             
         //tento di eliminare i segmenti che non mi serviranno in questo istante
 
-        I=ListaSegmenti.iterator();
-        while ( I.hasNext() && MemoriaRam.getSpazioMaggiore().getDimensione() < dimensione_parziale_inserimento && !Errore ) {
-            Segmento S=((Segmento)I.next());
-            if ( !MemoriaRam.cerca(S) ) {
-                MemoriaRam.rimuovi(S);
-                Azioni.add( new Azione(3, S, MemoriaRam.indiceDi(S) ));
-                if ( S.getModifica()==true ) {                                                        
+        // Devo cercare in tutta la ram ogni segmento
+
+        Vector<FrameMemoria> FM=MemoriaRam.getFrameOccupati();
+        for (int i=0; i<FM.size() && !Errore && MemoriaRam.getSpazioMaggiore().getDimensione() < dimensione_parziale_inserimento; i++ ) {
+            
+            FrameMemoria FrmR=FM.elementAt(i);
+            
+            boolean ce=false;
+            
+            Iterator<FrameMemoria> J=ListaSegmenti.iterator();
+            
+            while(J.hasNext() && !ce) 
+                if ( FrmR.equals(J.next()) ) ce=true;
+            
+            if ( !ce ) {
+                MemoriaRam.rimuovi(FrmR);
+                Azioni.add( new Azione(3, FrmR, MemoriaRam.indiceDi(FrmR) ) );
+                if ( FrmR.getModifica()==true ) {                                                        
                     try { 
-                          Inserisci( MemoriaSwap, S );
-                          Azioni.add( new Azione(2, S ) );
+                        Inserisci( MemoriaSwap, FrmR );
+                        Azioni.add( new Azione(2, FrmR ) );
                     }
                     catch ( MemoriaEsaurita SwapEsaurita ) {
                         Azioni.add( new Azione(-1,null) );
                         Errore=true;
                     }
-
                 }
             }
+            
         }
 
         // altrimenti tolgo anche gli altri
