@@ -40,6 +40,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import javax.swing.ListSelectionModel;
 import logic.gestioneMemoria.FrameMemoria;
 import logic.gestioneMemoria.Pagina;
@@ -120,12 +121,18 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
      */
     private Vector<DefaultListModel> modelliListaFrame = new Vector<DefaultListModel>();
     
-    /**
-     * Indica se si sta modificando una configurazione preesistente o se ne 
-     * sta creando una nuova
-     */
-    boolean modifica = false;
     
+    
+    /**
+     * Mouse adapter per le liste che visualizza il menu
+     */
+    private MouseAdapter listMouseAdapter;
+    
+    /**
+     *  Lista della durata per ogni processo
+     */
+    private Vector<Integer> istantiPerProcesso=new Vector<Integer>();
+            
     /** Crostruttore principale della classe.
      * Incaricato di creare tutte le liste per i vari processi e le liste dei FrameMemoria
      * a disposizione di ogni processo.
@@ -154,10 +161,41 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         int numProcessi = configurazioneAmbiente.getNumProcessi();
         
         /* Crea i modelli per la lista dei frame */
-        for(int i=0; i<numProcessi; i++){           
+        for(int i=0; i<numProcessi; i++){ 
+            istantiPerProcesso.add((Integer)processi.getCombinazioneProcessi()[i][2]);
             modelliListaFrame.add(new DefaultListModel());
         } 
         
+        /* creo il mouse adapter per le liste */
+        listMouseAdapter = new MouseAdapter() {
+                @Override
+                 public void mouseClicked(MouseEvent e) { 
+                     /* Rende visibile il menu alle coordinate attuali del mouse */
+                     JList lista =((JList)e.getComponent());
+                     if (e.getButton() == MouseEvent.BUTTON3) {
+                         if(!lista.isSelectionEmpty()
+                         && lista.locationToIndex(e.getPoint())
+                         == lista.getSelectedIndex()){
+                            int index = lista.getSelectedIndex();
+                            if (((DefaultListModel)lista.getModel()).get(index) instanceof FrameMemoria){
+                                menuItemModifica.setText("Modificato in questo istante");
+                            }
+                            else{
+                                menuItemModifica.setText("Non modificato in questo istante");
+                            }
+                            menu.show(lista, e.getX(), e.getY());
+                         }                         
+                      }
+                 }
+                @Override
+                 public void mouseExited(MouseEvent e){
+                     if(!menu.isVisible()){
+                         JList lista =((JList)e.getComponent());
+                         lista.clearSelection();
+                     }                     
+                 }
+             };  
+             
         initComponents();
         creaMenu();
         
@@ -211,14 +249,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
         this(parent, modal, configurazione, pol, proc, view);
         this.confIniziale = confIniziale;
-        modifica = true;
-        
-        /* Se e' stata cambiata la modalita' di gestione della memoria non carico
-         gli accessi perche' pagine e segmenti non hanno nulla in comune */
-        if(confIniziale.getModalitaGestioneMemoria() == politica.getGestioneMemoria()){
-             caricaAccessi();
-        }
-       
+        caricaAccessi();  
     }
     
     /**
@@ -235,12 +266,18 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
 		return frame.toString() + " (M)";
 	} 
     }
+
     
     
     /**
      * Metodo che carica gli accessi dalla ConfigurazioneIniziale che si sta modificando
      */
-    private void caricaAccessi() {
+    void caricaAccessi() {
+         /* Se e' stata cambiata la modalita' di gestione della memoria non carico
+         gli accessi perche' pagine e segmenti non hanno nulla in comune */
+        if(confIniziale.getModalitaGestioneMemoria() != politica.getGestioneMemoria()){
+             return;
+        }
         for(int indiceProcesso = 0; indiceProcesso < confIniziale.getListaProcessi().size()
                 && indiceProcesso < configurazioneAmbiente.getNumProcessi(); 
                 indiceProcesso++){
@@ -255,7 +292,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             int primaLista = 0 ;
 
             for(int processo = 0; processo < indiceProcesso; processo++){
-                primaLista += ((Integer)processi.getCombinazioneProcessi()[processo][2]).intValue();
+                primaLista += istantiPerProcesso.get(processo).intValue();
             }
             
             ArrayList<Accesso> accessi = confIniziale.getListaProcessi().get(indiceProcesso).getAccessi();
@@ -307,7 +344,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         /* Imposto lo spazio disponibile in quell'istante */
         int spazioRimanente = configurazioneAmbiente.getDimensioneRAM() - frame.getDimensione();
         if(spazioRimanente < 0){
-            valido = false;
+            return false;
         }
         for(int elemento = 0; elemento < modello.size() && valido; elemento++){
             if(modello.get(elemento) instanceof FrameMemoria){
@@ -341,24 +378,23 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
                 
                JList lista = ((JList)((JPopupMenu)((JMenuItem)e.getSource()).
                                     getParent()).getInvoker());
+               DefaultListModel modello = (DefaultListModel)lista.getModel();
                
                if (e.getSource() == menuItemElimina) {                   
                      // Elimina il frameMemoria selezionato                   
                      int index = lista.getSelectedIndex();
-                     int idLista = Integer.parseInt(lista.getName());
-                     listModels.get(idLista).remove(index);                 
+                     modello.remove(index);                 
                 }
                else {
                      // Modifica
                      int index = lista.getSelectedIndex();
-                     int idLista = Integer.parseInt(lista.getName());
-                     if (listModels.get(idLista).get(index) instanceof FrameMemoria){
-                         FrameMemoria frameSelezionato = (FrameMemoria) listModels.get(idLista).get(index);
-                         listModels.get(idLista).setElementAt(new FrameModifica(frameSelezionato), index);
+                     if (modello.get(index) instanceof FrameMemoria){
+                         FrameMemoria frameSelezionato = (FrameMemoria) modello.get(index);
+                         modello.setElementAt(new FrameModifica(frameSelezionato), index);
                      }
                      else{
-                         FrameMemoria frameSelezionato = ((FrameModifica) listModels.get(idLista).get(index)).frame;
-                         listModels.get(idLista).setElementAt(frameSelezionato, index);
+                         FrameMemoria frameSelezionato = ((FrameModifica) modello.get(index)).frame;
+                         modello.setElementAt(frameSelezionato, index);
                      
                      }
                 }
@@ -790,7 +826,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
 }//GEN-LAST:event_jButtonModificaActionPerformed
 
     private void jButtonHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHelpActionPerformed
-        HelpHtml.openUrl("pagina.htm#Passo4");
+       HelpHtml.openUrl("pagina.htm#Passo4");
     }//GEN-LAST:event_jButtonHelpActionPerformed
     
     private void inizializzaConfigurazioneIniziale() throws Exception {
@@ -811,7 +847,151 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         
     }
     
-    private void creaListe(){
+    void aggiornaListe(ConfigurazioneAmbienteJDialog configurazioneAmbiente, PoliticheJDialog politiche, ProcessiJDialog processi){
+        this.configurazioneAmbiente = configurazioneAmbiente;
+        this.politica=politiche;
+        this.processi = processi;
+        int numProcessi = configurazioneAmbiente.getNumProcessi();
+        
+        for(int i = 0; i<listModels.size();i++){
+            listModels.get(i).clear();
+        }
+        for(int i = 0; i<modelliListaFrame.size();i++){
+            modelliListaFrame.get(i).clear();
+        }
+        
+        
+        if(numProcessi<istantiPerProcesso.size()){
+            /* Elimino i processi in eccesso */
+            int processiDaEliminare = istantiPerProcesso.size()-numProcessi;
+            for(int i = 0; i<processiDaEliminare; i++){
+                int numIstanti = istantiPerProcesso.get(istantiPerProcesso.size()-1);
+                for(int istante=0; istante<numIstanti; istante++){
+                    
+                     rimuoviLista(istantiPerProcesso.size()-1);
+                    
+                }
+                modelliListaFrame.remove(modelliListaFrame.size()-1);
+                jTabbedPaneProcessi.remove(istantiPerProcesso.size()-1);
+                istantiPerProcesso.remove(istantiPerProcesso.size()-1);
+            }
+            
+        }
+        
+        if(numProcessi>istantiPerProcesso.size()){
+            /* Aggiungo i processi mancanti */
+            int processiDaAggiungere = numProcessi-istantiPerProcesso.size();
+            System.out.println();
+            for(int i = 0; i<processiDaAggiungere; i++){
+                int indiceProcesso=istantiPerProcesso.size();
+                int numIstanti = ((Integer)processi.getCombinazioneProcessi()[indiceProcesso][2]).intValue();
+                String nomeProcesso = (String) processi.getCombinazioneProcessi()[indiceProcesso][0];
+                jTabbedPaneProcessi.addTab(nomeProcesso, creaPannelloProcesso(indiceProcesso));
+                modelliListaFrame.add(new DefaultListModel());
+                istantiPerProcesso.add(numIstanti);
+            }
+        }
+        
+        /* per ogni processo controllo che il numero di istanti sia lo stesso */
+        for(int idProcesso=0; idProcesso< istantiPerProcesso.size(); idProcesso++){
+            
+            int numIstanti = ((Integer)processi.getCombinazioneProcessi()[idProcesso][2]).intValue();
+            
+            if(numIstanti < istantiPerProcesso.get(idProcesso)){
+                /* Rimuovo le liste in più */
+                int listeDaRimuovere = istantiPerProcesso.get(idProcesso).intValue()-numIstanti;
+                for(int istante=0; istante<listeDaRimuovere; istante++){
+                    
+                     rimuoviLista(idProcesso);
+                    
+                }
+                istantiPerProcesso.set(idProcesso, numIstanti);
+                
+            }
+            
+            if(numIstanti > istantiPerProcesso.get(idProcesso)){
+                /* Aggiungo le liste mancanti */
+                
+                for(int istante=istantiPerProcesso.get(idProcesso).intValue(); istante<numIstanti; istante++){
+                    
+                     /* JScrollPane del processo: 3 + indice del processo*/
+                    JScrollPane pannello = (JScrollPane) jTabbedPaneProcessi.getComponents()[3+idProcesso];
+                    JPanel pannelloInterno = (JPanel)pannello.getViewport().getComponents()[0];
+                    pannelloInterno.add(creaPannelloLista(idProcesso,istante));
+                    
+                }
+                istantiPerProcesso.set(idProcesso, numIstanti);
+            }
+            
+        }
+       
+        jTabbedPaneProcessi.repaint();
+        System.gc();
+    }
+    
+    /**
+     * Rimuove l'ultima lista del processo
+     * 
+     * @param processo
+     */
+    private void rimuoviLista(int processo){
+        int numIstanti = istantiPerProcesso.get(processo).intValue();
+        istantiPerProcesso.set(processo, numIstanti-1);
+        int indiceLista=istantiPerProcesso.get(processo).intValue();
+        for(int i=0; i<processo;i++){
+            indiceLista+=istantiPerProcesso.get(i).intValue();
+        }
+        listaList.remove(indiceLista);
+        listModels.remove(indiceLista);
+        /* JScrollPane del processo: 3 + indice del processo*/
+        JScrollPane pannello = (JScrollPane) jTabbedPaneProcessi.getComponents()[3+processo];
+        JPanel pannelloInterno = (JPanel)pannello.getViewport().getComponents()[0];
+        pannelloInterno.remove(istantiPerProcesso.get(processo).intValue());
+    }
+    
+    private JPanel creaPannelloLista(int idProcesso,int istante){
+        
+        String commento;
+        
+        if(politica.getGestioneMemoria() == 1){
+            commento = "<html>Trascinare qui le pagine che il processo utilizzera'" +
+                    " in questo istante. <br> Fare click col tasto destro del mouse per " +
+                    "visualizzare le possibili scelte per la pagina selezionata.</html>";
+        }
+        else{
+            commento = "<html>Trascinare qui i segmenti che il processo utilizzera'" +
+                    " in questo istante. <br> Fare click col tasto destro del mouse per" +
+                    " visualizzare le possibili scelte per il segmento selezionata.</html>";
+        }
+        /*calcolo in che punto inserire la lista fra le altre*/
+        int indiceLista=istante;
+        for(int proc=0; proc<idProcesso; proc++){
+            indiceLista+=istantiPerProcesso.get(proc).intValue();
+        }
+        
+        /*creo un modello di default per la lista*/
+        listModels.add(indiceLista, new DefaultListModel());
+
+        /* e lo associo alla lista da costruire */
+        JList list1=new JList(listModels.get(indiceLista));
+        list1.setBackground(new Color(200,200,200));
+        list1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list1.setTransferHandler(arrayListHandler);
+        list1.setDragEnabled(true);
+        list1.setName(Integer.toString(listaList.size()));
+        list1.setToolTipText(commento);
+        listaList.add(indiceLista,list1); 
+
+        /* Per ogni lista associo il mouseListner */
+        list1.addMouseListener(listMouseAdapter);
+        JScrollPane list1View = new JScrollPane(list1);
+        list1View.setPreferredSize(new Dimension(100, 200));
+        JPanel pannelloPiccolo = new JPanel();
+        pannelloPiccolo.setLayout(new BorderLayout());
+        pannelloPiccolo.add(new JLabel("Istante "+istante),BorderLayout.NORTH);
+        pannelloPiccolo.add(list1View,BorderLayout.SOUTH);
+        
+        return pannelloPiccolo;
         
     }
     
@@ -826,77 +1006,15 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
      * @return Ritorna un JScrollPane contenente tutte le liste degli istanti del
      *         processo passato.
      */
-    private JScrollPane creaPannelloProcesso(int IdProcesso){
+    private JScrollPane creaPannelloProcesso(int idProcesso){
         JPanel nuovoPannelloGlobale = new JPanel();
         
-        String commento;
-        
-        if(politica.getGestioneMemoria() == 1){
-            commento = "<html>Trascinare qui le pagine che il processo utilizzera'" +
-                    " in questo istante. <br> Fare click col tasto destro del mouse per " +
-                    "visualizzare le possibili scelte per la pagina selezionata.</html>";
-        }
-        else{
-            commento = "<html>Trascinare qui i segmenti che il processo utilizzera'" +
-                    " in questo istante. <br> Fare click col tasto destro del mouse per" +
-                    " visualizzare le possibili scelte per il segmento selezionata.</html>";
-        }
-        
-                
-        int numIstanti = ((Integer)processi.getCombinazioneProcessi()[IdProcesso][2]).intValue();
+        int numIstanti = ((Integer)processi.getCombinazioneProcessi()[idProcesso][2]).intValue();
         
         for(int i=0; i< numIstanti; i++){
-            /*creo un modello di default per la lista*/
-            listModels.add(new DefaultListModel());
             
-            /* e lo associo alla lista da costruire */
-            JList list1=new JList(listModels.get(listModels.size()-1));
-            list1.setBackground(new Color(200,200,200));
-            list1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            list1.setTransferHandler(arrayListHandler);
-            list1.setDragEnabled(true);
-            list1.setName(Integer.toString(listaList.size()));
-            list1.setToolTipText(commento);
-            listaList.add(list1); 
+            nuovoPannelloGlobale.add(creaPannelloLista(idProcesso,i));
             
-            /* Per ogni lista creo un mouseListner */
-            list1.addMouseListener(new MouseAdapter() {
-                @Override
-                 public void mouseClicked(MouseEvent e) { 
-                     /* Rende visibile il menu alle coordinate attuali del mouse */
-                     JList lista =((JList)e.getComponent());
-                     if (e.getButton() == MouseEvent.BUTTON3) {
-                         if(!lista.isSelectionEmpty()
-                         && lista.locationToIndex(e.getPoint())
-                         == lista.getSelectedIndex()){
-                            int index = lista.getSelectedIndex();
-                            int idLista = Integer.parseInt(lista.getName());
-                            if (listModels.get(idLista).get(index) instanceof FrameMemoria){
-                                menuItemModifica.setText("Modificato in questo istante");
-                            }
-                            else{
-                                menuItemModifica.setText("Non modificato in questo istante");
-                            }
-                            menu.show(lista, e.getX(), e.getY());
-                         }                         
-                      }
-                 }
-                @Override
-                 public void mouseExited(MouseEvent e){
-                     if(!menu.isVisible()){
-                         JList lista =((JList)e.getComponent());
-                         lista.clearSelection();
-                     }                     
-                 }
-             });   
-            
-            JScrollPane list1View = new JScrollPane(list1);
-            list1View.setPreferredSize(new Dimension(100, 200));
-            JPanel pannelloPiccolo = new JPanel();
-            pannelloPiccolo.setLayout(new BorderLayout());
-            pannelloPiccolo.add(new JLabel("Istante "+i),BorderLayout.NORTH);
-            pannelloPiccolo.add(list1View,BorderLayout.SOUTH);
-            nuovoPannelloGlobale.add(pannelloPiccolo);
         }
         
         JScrollPane nuovoScrollPane = new JScrollPane(nuovoPannelloGlobale);

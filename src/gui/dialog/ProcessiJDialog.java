@@ -26,7 +26,6 @@ import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 import logic.parametri.ConfigurazioneIniziale;
 /**
  *
@@ -51,6 +50,7 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         this.view = view;
         initComponents();
         initTable(); 
+        associazioneProcessi = view.getAssociazioneProcessi();
     }
     
     /** Crea il form ProcessiJDialog per la modifica */
@@ -64,6 +64,7 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         modifica = true;
         initComponents();
         initTable(); 
+        associazioneProcessi = view.getAssociazioneProcessi();
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -272,10 +273,19 @@ public class ProcessiJDialog extends javax.swing.JDialog {
                 combinazioneProcessi[row][col]= jTableProcessi.getValueAt(row, col);
                                     
         this.setVisible(false);
-        if (modifica)
-            associazioneProcessi = new AssociazioneProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, politiche, this, view, confIniziale);
-        else
-            associazioneProcessi = new AssociazioneProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, politiche, this, view);
+        if(associazioneProcessi==null){
+            if (modifica)
+                associazioneProcessi = new AssociazioneProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, politiche, this, view, confIniziale);
+            else
+                associazioneProcessi = new AssociazioneProcessiJDialog(view.getFrame(), true, configurazioneAmbiente, politiche, this, view);
+        }
+        else{
+            associazioneProcessi.aggiornaListe(configurazioneAmbiente, politiche, this);
+            if (modifica){
+                associazioneProcessi.caricaAccessi();
+            }                
+        }
+        view.setAssociazioneProcessi(associazioneProcessi);
         associazioneProcessi.setVisible(true);
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
