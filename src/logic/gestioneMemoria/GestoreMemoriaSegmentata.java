@@ -223,8 +223,8 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
                 Azioni.add( new Azione(3, FrmR, MemoriaRam.indiceDi(FrmR) ) );
                 if ( FrmR.getModifica()==true ) {                                                        
                     try { 
-                        Inserisci( MemoriaSwap, FrmR );
-                        Azioni.add( new Azione(2, FrmR ) );
+                        int pos=Inserisci( MemoriaSwap, FrmR );
+                        Azioni.add( new Azione(2, FrmR, pos ) );
                     }
                     catch ( MemoriaEsaurita SwapEsaurita ) {
                         Azioni.add( new Azione(-1,null) );
@@ -246,8 +246,8 @@ public class GestoreMemoriaSegmentata extends GestoreMemoria {
 
                 if ( FrameRimosso.getModifica()==true ) {                                                        
                     try { 
-                          Inserisci( MemoriaSwap, FrameRimosso );
-                          Azioni.add( new Azione(2, FrameRimosso ) );
+                          int pos=Inserisci( MemoriaSwap, FrameRimosso );
+                          Azioni.add( new Azione(2, FrameRimosso, pos) );
                     }
                     catch ( MemoriaEsaurita SwapEsaurita ) {
                         Azioni.add( new Azione(-1,null) );
