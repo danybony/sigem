@@ -40,7 +40,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JViewport;
 import javax.swing.ListSelectionModel;
 import logic.gestioneMemoria.FrameMemoria;
 import logic.gestioneMemoria.Pagina;
@@ -323,6 +322,10 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             }
             
         }
+    }
+
+    void setConfigurazioneIniziale(ConfigurazioneIniziale confIniziale) {
+        this.confIniziale = confIniziale;
     }
     
     /**
@@ -926,6 +929,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         }
        
         jTabbedPaneProcessi.repaint();
+        System.runFinalization();
         System.gc();
     }
     

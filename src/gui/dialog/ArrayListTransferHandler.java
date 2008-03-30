@@ -38,7 +38,13 @@ public class ArrayListTransferHandler extends TransferHandler {
     int addIndex = -1; //Location where items were added
     int addCount = 0;  //Number of items added
     int dimensioneRAM;
-
+    
+    /**
+     * Unico costruttore della classe.
+     * 
+     * @param dimensioneRAM
+     *          La dimensione della memoria RAM espressa in KB
+     */
     public ArrayListTransferHandler(int dimensioneRAM) {
         try {
             localArrayListFlavor = new DataFlavor(localArrayListType);
@@ -51,6 +57,20 @@ public class ArrayListTransferHandler extends TransferHandler {
         this.dimensioneRAM = dimensioneRAM;
     }
 
+    /**
+     * Metodo chiamato quando si rilasciano degli oggetti su un componente.
+     * Chiama gli altri metodi per controllare se il componente puo' accettare gli 
+     * oggetti passati ed e' incaricato di controllare che, nello specifico, la 
+     * dimensione dei FrameMemoria spostati sommata a quella dei FrameMemoria gia'
+     * presenti, non superi la dimensione della RAM.
+     * 
+     * @param c
+     *      Il componente ricevente
+     * @param t
+     *      La lista di oggetti passati
+     * @return
+     *      Un booleano che indica il successo dell'operazione
+     */
     public boolean importData(JComponent c, Transferable t) {
         JList target = null;
         ArrayList alist = null;
@@ -138,6 +158,12 @@ public class ArrayListTransferHandler extends TransferHandler {
         return true;
     }
 
+    /**
+     * Metodo invocato dopo che l'operazione di spostamento e' stata eseguita
+     * @param c
+     * @param data
+     * @param action
+     */
     protected void exportDone(JComponent c, Transferable data, int action) {
         if ((action == MOVE) && (indices != null)) {
             DefaultListModel model = (DefaultListModel)source.getModel();
@@ -185,7 +211,18 @@ public class ArrayListTransferHandler extends TransferHandler {
         }
         return false;
     }
-
+    
+    /**
+     * Indica se un componente puo' accettare degli oggetti lasciati (dropped )dal 
+     * Drag and Drop
+     * 
+     * @param c
+     *      Il componente ricevente
+     * @param flavors
+     *      Il tipo degli oggetti passati
+     * @return
+     *      Ritorna true se puo' ricevere gli oggetti, false altrimenti
+     */
     public boolean canImport(JComponent c, DataFlavor[] flavors) {
         if(c.getName()!=null && c.getName().equals("jListFrame")){
             return false;
@@ -213,6 +250,14 @@ public class ArrayListTransferHandler extends TransferHandler {
         return null;
     }
 
+    /**
+     * Ritorna un intero rappresentante l'azione che il componente passato puo'
+     * eseguire
+     * @param c
+     *      Il componente da testare
+     * @return
+     *      L'intero rappresentante l'azione
+     */
     public int getSourceActions(JComponent c) {
         if(c.getName()!=null && c.getName().equals("jListFrame")){
             return COPY;

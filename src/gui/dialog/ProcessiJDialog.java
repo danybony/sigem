@@ -282,6 +282,7 @@ public class ProcessiJDialog extends javax.swing.JDialog {
         else{
             associazioneProcessi.aggiornaListe(configurazioneAmbiente, politiche, this);
             if (modifica){
+                associazioneProcessi.setConfigurazioneIniziale(confIniziale);
                 associazioneProcessi.caricaAccessi();
             }                
         }
