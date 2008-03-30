@@ -209,7 +209,8 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             jButtonModifica.setVisible(true);
         }
         
-        arrayListHandler = new ArrayListTransferHandler(configurazioneAmbiente.getDimensioneRAM());
+        arrayListHandler = new ArrayListTransferHandler();
+        arrayListHandler.setDimensioneRAM(configurazioneAmbiente.getDimensioneRAM());
         
         for(int i=0; i<numProcessi; i++){
             String nomeProcesso = (String) processi.getCombinazioneProcessi()[i][0];
@@ -855,6 +856,7 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
         this.politica=politiche;
         this.processi = processi;
         int numProcessi = configurazioneAmbiente.getNumProcessi();
+        arrayListHandler.setDimensioneRAM(configurazioneAmbiente.getDimensioneRAM());
         
         for(int i = 0; i<listModels.size();i++){
             listModels.get(i).clear();

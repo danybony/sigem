@@ -42,10 +42,8 @@ public class ArrayListTransferHandler extends TransferHandler {
     /**
      * Unico costruttore della classe.
      * 
-     * @param dimensioneRAM
-     *          La dimensione della memoria RAM espressa in KB
      */
-    public ArrayListTransferHandler(int dimensioneRAM) {
+    public ArrayListTransferHandler() {
         try {
             localArrayListFlavor = new DataFlavor(localArrayListType);
         } catch (ClassNotFoundException e) {
@@ -54,7 +52,6 @@ public class ArrayListTransferHandler extends TransferHandler {
         }
         serialArrayListFlavor = new DataFlavor(ArrayList.class,
                                               "ArrayList");
-        this.dimensioneRAM = dimensioneRAM;
     }
 
     /**
@@ -184,6 +181,10 @@ public class ArrayListTransferHandler extends TransferHandler {
         indices = null;
         addIndex = -1;
         addCount = 0;
+    }
+
+    void setDimensioneRAM(int dimensioneRAM) {
+        this.dimensioneRAM=dimensioneRAM;
     }
 
     private boolean hasLocalArrayListFlavor(DataFlavor[] flavors) {
