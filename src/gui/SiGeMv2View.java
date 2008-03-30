@@ -111,6 +111,11 @@ public class SiGeMv2View {
      */
     private JFrame frame = new JFrame("SiGeM - StyloSoft");
 
+    /**
+     * Mantiene un riferimento al wizard 4 per migliorare la gestione della memoria
+     */
+    private AssociazioneProcessiJDialog wizard4;
+    
     /** 
      * Rappresenta lo stato dela Gui, vale true se la simulazione e' in 
      * avanzamento automatico, false, se e' interrotta.
@@ -2214,7 +2219,15 @@ public class SiGeMv2View {
         processoScorso = listaIstanti.get(i).getProcessoInEsecuzione();
     }
    }
-
+   
+   public void setAssociazioneProcessi(AssociazioneProcessiJDialog par1){
+    wizard4 = par1;
+   }
+   
+   public AssociazioneProcessiJDialog getAssociazioneProcessi(){
+    return wizard4;
+   }
+   
     public static void main(String[] args) throws Exception {
             // Set InfoNode Look and Feel
         
