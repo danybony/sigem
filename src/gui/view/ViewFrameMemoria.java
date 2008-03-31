@@ -11,7 +11,7 @@
  *                        viene passata direttamente la situazione della memoria.
  *  - v.1.3 (19/03/2008): Rivisto ampiamente il codice. Ora la classe estende un
  *                        JScrollPane per attivare lo scroll, completamente
- *                        cambiate le modalità di disegno della memoria, nuova
+ *                        cambiate le modalita' di disegno della memoria, nuova
  *                        classe interna di tipo JPanel su cui viene disegnata
  *                        la memoria.
  *  - v.1.2 (14/03/2008): Completato il metodo principale aggiungi() e corretti
@@ -25,21 +25,17 @@ package gui.view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
-
 import gui.utility.SquareDraw;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.RenderingHints;
-import java.util.LinkedList;
 import java.util.Vector;
 import javax.swing.JScrollPane;
-import logic.gestioneMemoria.Azione;
 import logic.gestioneMemoria.FrameMemoria;
 
 /**
- * Classe che è incaricata di visualizzare sulla GUI principale l'evolvere della
+ * Classe che e' incaricata di visualizzare sulla GUI principale l'evolvere della
  * memoria, sia essa paginata o segmentata. La classe eredita un JScrollPane
  * per attivare gli scroll in caso di bisogno, inoltre al suo interno ha una
  * classe privata di tipo JPanel in cui viene effettivamente effettuato il diesegno
@@ -97,8 +93,8 @@ public class ViewFrameMemoria extends JScrollPane {
     
     /**
      * Riferimento alla classe interna incaricata di disegnare le pagine.
-     * Il JScrollPane si occuperà dello scrolling di questo oggetto, che non
-     * è altro che un JPanel.
+     * Il JScrollPane si occupera' dello scrolling di questo oggetto, che non
+     * e' altro che un JPanel.
      */
     PannelloFrame pannello=null;
     
@@ -164,7 +160,7 @@ public class ViewFrameMemoria extends JScrollPane {
             ga.setColor(Color.BLACK);
             ga.draw(pag.getSquare());
             //Imposto il colore del frame a seconda dal processo di appartenenza,
-            //dopodichè riempio il quadrato vuoto con quel colore
+            //dopodiche' riempio il quadrato vuoto con quel colore
             ga.setPaint(pag.getColor());
             ga.fill(pag.getSquare());
             //Scrivo l'indirizzo del frame col colore nero e carattere Arial
@@ -199,7 +195,7 @@ public class ViewFrameMemoria extends JScrollPane {
      *      Lancia un'eccezione nel caso in cui la memoria non sia ancora stata configurata
      */
     public void aggiorna(Vector<FrameMemoria> memoria, int istante, Vector<Vector<Integer>> processiUltimati) throws Exception{
-        //Se l'ambiente non è ancora stato configurato, lancio un'eccezione
+        //Se l'ambiente non e' ancora stato configurato, lancio un'eccezione
         if(dimMemoria==0) throw new Exception();
         
         
@@ -313,7 +309,7 @@ public class ViewFrameMemoria extends JScrollPane {
     
     /**
      * Metodo che inizializza il grafico. E' necessario passare per questo metodo
-     * prima di usare effettivamente la classe, cioè chiamare il metodo aggiorna()<br>
+     * prima di usare effettivamente la classe, cioe' chiamare il metodo aggiorna()<br>
      * 
      * @param sceltaGestioneMemoria
      *      FALSE se si vogliono visualizzare pagine, TRUE per i segmenti
