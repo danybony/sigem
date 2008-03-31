@@ -48,9 +48,11 @@ public class SwapSegmentata extends MemoriaSegmentata{
     @Override
     public int aggiungi(FrameMemoria seg, FrameMemoria spazio) throws MemoriaEsaurita{
         if(spazioResiduo>=seg.getDimensione()){
+            memoria.remove(memoria.lastElement());
             memoria.add(seg);
             spazioResiduo-=seg.getDimensione();
-            if(spazioResiduo>0)memoria.set(memoria.lastIndexOf(memoria.lastElement()), new Segmento("spazio", spazioResiduo,-1));
+            if(spazioResiduo>0)memoria.add(new Segmento("spazio", spazioResiduo,-1));
+            
         }
         else{
             throw new MemoriaEsaurita(0);
