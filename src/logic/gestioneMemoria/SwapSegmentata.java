@@ -7,7 +7,7 @@
  * Versione: 1.3
  * Licenza: open-source
  * Registro delle modifiche:
- *  - v.1.3 (04/03/2008): Il metodo aggiungi ora può lanciare l'eccezione MemoriaEsaurita()
+ *  - v.1.3 (04/03/2008): Il metodo aggiungi ora puo' lanciare l'eccezione MemoriaEsaurita()
  *  - v.1.2 (03/03/2008): Modificato il metodo rimuovi: adesso ritorna un bool
  *  - v.1.1 (02/03/2008): Aggiunti i commenti sui parametri e sul tipo di ritorno
  *                        dei metodi
@@ -87,7 +87,7 @@ public class SwapSegmentata extends MemoriaSegmentata{
      * finito la sua esecuzione.
      * 
      * @param idProcesso
-     *      Intero che identifica il processo la cui esecuzione è terminata
+     *      Intero che identifica il processo la cui esecuzione e' terminata
      */
     @Override
     public void liberaMemoria(int idProcesso){
@@ -103,7 +103,7 @@ public class SwapSegmentata extends MemoriaSegmentata{
     
     
     /**
-     * Metodo che ritorna TRUE se il segmento è in memoria, FALSE altrimenti
+     * Metodo che ritorna TRUE se il segmento e' in memoria, FALSE altrimenti
      */
     @Override
     public boolean cerca(FrameMemoria seg){

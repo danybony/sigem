@@ -7,7 +7,7 @@
  * Versione: 1.3
  * Licenza: open-source
  * Registro delle modifiche:
- *  - v.1.3 (04/03/2008): Modificato il costruttore: ora ha 2 parametri e può
+ *  - v.1.3 (04/03/2008): Modificato il costruttore: ora ha 2 parametri e puo'
  *                        lanciare l'eccezione PaginaNulla
  *  - v.1.2 (03/03/2008): Modificato il metodo rimuovi: ora ritorna un bool
  *  - v.1.1 (02/03/2008): Nuovo costruttore come da issue 28
@@ -52,8 +52,8 @@ public class RAMPaginata extends MemoriaPaginata{
     public int aggiungi(FrameMemoria pag) throws MemoriaEsaurita{
 
         if(pagineResidue>0) {
-            /*C'è ancora memoria libera sufficiente: Cerco nelle pagine della 
-             * RAM se ce n'è una già marcata come rimovibile. Decremento subito
+            /*C'e' ancora memoria libera sufficiente: Cerco nelle pagine della 
+             * RAM se ce n'e' una gia' marcata come rimovibile. Decremento subito
              * il numero delle pagine libere di 1 e setto la pagina come in RAM
              */
             pagineResidue--;
@@ -77,8 +77,8 @@ public class RAMPaginata extends MemoriaPaginata{
         }
         
         else{
-            /*Non c'è più posto: lancio quindi l'eccezione MemoriaEsaurita che
-             * farà entrare in gioco la politica di rimpiazzo delle pagine.
+            /*Non c'e' piu' posto: lancio quindi l'eccezione MemoriaEsaurita che
+             * fara' entrare in gioco la politica di rimpiazzo delle pagine.
              */
             throw new MemoriaEsaurita(0);
         }
@@ -86,10 +86,10 @@ public class RAMPaginata extends MemoriaPaginata{
     
     
     /**
-     * Metodo che marca la pagina come non più in RAM, liberando spazio
+     * Metodo che marca la pagina come non piu' in RAM, liberando spazio
      * 
      * @param pag
-     *      Pagina da marcare come non più in RAM
+     *      Pagina da marcare come non piu' in RAM
      * 
      */
     @Override
@@ -104,12 +104,12 @@ public class RAMPaginata extends MemoriaPaginata{
     
     
     /**
-     * Metodo che cerca se una pagina è già presente in RAM
+     * Metodo che cerca se una pagina e' gia' presente in RAM
      * 
      * @param pag
      *      Il riferimento alla pagina da cercare
      * @return
-     *      TRUE se la pagina è in RAM, FALSE altrimenti
+     *      TRUE se la pagina e' in RAM, FALSE altrimenti
      */
     @Override
     public boolean cerca(FrameMemoria pag){
@@ -123,7 +123,7 @@ public class RAMPaginata extends MemoriaPaginata{
      * @param pag
      *      Il riferimento alla pagina di cui si vuole trovare l'indice
      * @return
-     *      L'indice della pagina riferita da pag (se è presente in RAM),
+     *      L'indice della pagina riferita da pag (se e' presente in RAM),
      *      altrimenti ritorna -1
      * 
      */

@@ -144,7 +144,7 @@ public class RAMSegmentata extends MemoriaSegmentata{
         FrameMemoria segAux2;
         
         if(memoria.size()==1 && memoria.get(0).getIdProcesso()==idProcesso){
-            //Caso in cui tutta la memoria è occupata da un segmento
+            //Caso in cui tutta la memoria e' occupata da un segmento
             //riferito dal processo. Caso MOLTO raro ma non impossibile.
             segAux1=memoria.get(0);
             memoria.add(new Segmento("spazio", segAux1.getDimensione(),-1));
@@ -271,7 +271,7 @@ public class RAMSegmentata extends MemoriaSegmentata{
      * @param seg
      *      Il riferimento al segmento di cui si vuole trovare l'indice
      * @return
-     *      L'indice del segmento riferito da seg (se è presente in RAM),
+     *      L'indice del segmento riferito da seg (se e' presente in RAM),
      *      altrimenti ritorna -1
      * 
      */

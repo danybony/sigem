@@ -17,14 +17,14 @@
 package logic.gestioneMemoria;
 
 /**
- * Classe astratta che rappresenta le memorie che utilizzano paginazione. Verrà
+ * Classe astratta che rappresenta le memorie che utilizzano paginazione. Verra'
  * concretizzata poi dalle classi RAMPaginata, SwapPaginata.
  */
 abstract class MemoriaPaginata extends Memoria{
 
     
     /**
-     * Campo dati che indica il numero di pagine che la memoria può ancora
+     * Campo dati che indica il numero di pagine che la memoria puo' ancora
      * contenere.
      */
     protected int pagineResidue=0;
@@ -34,7 +34,7 @@ abstract class MemoriaPaginata extends Memoria{
      * di pagine residue 
      * 
      * @param numeroPagine
-     *      Capacità della memoria espressa in numero di pagine che può contenere
+     *      Capacita' della memoria espressa in numero di pagine che puo' contenere
      */
     public MemoriaPaginata(int dimMemoria, int dimPagina) throws PaginaNulla{
         if(dimPagina!=0){
@@ -46,7 +46,7 @@ abstract class MemoriaPaginata extends Memoria{
     }
 
     /**
-     * Metodo la cui implementazione nelle sottoclassi dovrà permettere l'inserimento
+     * Metodo la cui implementazione nelle sottoclassi dovra' permettere l'inserimento
      * di una pagina in memoria
      * 
      * @param frame

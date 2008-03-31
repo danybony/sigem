@@ -15,7 +15,7 @@
 package logic.gestioneMemoria;
 
 /**
- * Classe astratta che rappresenta le memorie che utilizzano segmentazione. Verrà
+ * Classe astratta che rappresenta le memorie che utilizzano segmentazione. Verra'
  * concretizzata poi dalle classi RAMSegmentata, SwapSegmentata.
  */
 abstract class MemoriaSegmentata extends Memoria{
@@ -39,7 +39,7 @@ abstract class MemoriaSegmentata extends Memoria{
     }
     
     /**
-     * Metodo la cui implementazione nelle sottoclassi dovrà permettere l'aggiunta
+     * Metodo la cui implementazione nelle sottoclassi dovra' permettere l'aggiunta
      * di un segmento in memoria
      * 
      * @param frame

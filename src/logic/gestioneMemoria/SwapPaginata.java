@@ -8,7 +8,7 @@
  * Licenza: open-source
  * Registro delle modifiche:
  *  - v.1.3 (04/03/2008): Modificato il costruttore: ora prende 2 parametri e
- *                        può lanciare l'eccezione PaginaNulla
+ *                        puo' lanciare l'eccezione PaginaNulla
  *  - v.1.2 (03/03/2008): Modificato il metodo rimuovi: ora ritorna un bool
  *  - v.1.1 (02/03/2008): Aggiunti i commenti sui parametri e sul tipo di ritorno
  *                        dei metodi
@@ -25,7 +25,7 @@ import logic.parametri.ConfigurazioneIniziale;
 public class SwapPaginata extends MemoriaPaginata{
     
 /**
- * Costruttore che inizializza il numero delle pagine che può contenere la
+ * Costruttore che inizializza il numero delle pagine che puo' contenere la
  * memoria
  * 
  * @param conf
@@ -91,7 +91,7 @@ public SwapPaginata(ConfigurazioneIniziale conf)throws PaginaNulla{
     
     
     /**
-     * Metodo che ritorna TRUE se la pagina è in memoria, FALSE altrimenti
+     * Metodo che ritorna TRUE se la pagina e' in memoria, FALSE altrimenti
      */
     @Override
     public boolean cerca(FrameMemoria pag){
