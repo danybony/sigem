@@ -1,0 +1,10 @@
+gui
+gui.dialog
+gui.utility
+gui.view
+logic
+logic.caricamento
+logic.gestioneMemoria
+logic.parametri
+logic.schedulazione
+logic.simulazione
