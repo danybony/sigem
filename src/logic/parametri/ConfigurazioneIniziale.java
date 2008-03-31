@@ -156,7 +156,7 @@ public class ConfigurazioneIniziale implements Serializable{
      * @param politicaGestioneMemoria
      *            la politica di gestione della memoria sottoforma di un intero
      *            secondo la tabella del metodo getPoliticaGestioneMemoria().
-     * @param modalitaGestioneMemori
+     * @param modalitaGestioneMemoria
      *            la modalita' di gestione della memoria sottoforma di un intero
      *            secondo la tabella del metodo getModalitaGestioneMemoria().
      * @param politicaSchedulazione

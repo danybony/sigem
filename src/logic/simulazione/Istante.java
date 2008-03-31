@@ -106,7 +106,7 @@ public class Istante {
      *      dichiara il riempimento dell'area di Swap all'istante t
      * @param statoRAM
      *      lo stato della RAM
-     * @param
+     * @param statoSwap
      *      lo stato dello Swap
      */
     public Istante(

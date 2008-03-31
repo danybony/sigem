@@ -29,8 +29,6 @@ public class IconStylosoft {
      * Ritorna una icona tra quelle presenti nella sezione custom dell'archivio
      * personalizzato
      * 
-     * @param category
-     *            Una delle seguenti: general, help, navigation, panel wizard
      * @param name
      *            Il nome dell'immagine
      */

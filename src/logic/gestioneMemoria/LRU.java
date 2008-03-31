@@ -53,7 +53,7 @@ public class LRU implements IRimpiazzo {
      * Imposta F riferiferimento alla pagina nella Posizione indicata, e 
      * imposta UltimoAccesso con il valore corrente del Contatore, 
      * incrementandolo successivamente.
-     * @param 
+     * @param F
      *  Pagina da inserire
      * @param Posizione
      *  Posizione di inserimento

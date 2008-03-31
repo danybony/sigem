@@ -15,7 +15,6 @@ package gui.view;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.geom.Ellipse2D;
 import javax.swing.JScrollPane;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -35,7 +34,7 @@ public class ViewGraficoTempiTotali extends JScrollPane {
     /**
      * Crea e aggiorna il grafico.
      * 
-     * @param serie1
+     * @param serie
      *      la serie di coordinate X e Y per disegnare il primo grafico
      */
     public void aggiorna(XYSeries serie){

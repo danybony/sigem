@@ -183,7 +183,7 @@ public class Player{
      * l'evento significativo.
      * Vengono automaticamente aggiornate le statistiche.
      * 
-     * @param tipoEventoSignificativo
+     * @param e
      *              specifica il tipo di evento da ricercare
      * 
      * @return  lista di istanti che portano all'evento significativo
@@ -292,7 +292,7 @@ public class Player{
      * l'evento significativo.
      * Vengono automaticamente aggiornate le statistiche.
      * 
-     * @param tipoEventoSignificativo
+     * @param e
      *              specifica il tipo di evento da ricercare
      * 
      * @return  lista di istanti che portano all'evento significativo
