@@ -214,7 +214,7 @@ public class ViewRiepilogo extends javax.swing.JPanel {
         jLabel3.setText("Dimensione area Swap : .........."+C.getDimensioneSwap()+"KB");
         jLabel4.setText("Tempo Context Switch : .........."+C.getTempoContextSwitch()+"ms");
         jLabel5.setText("Tempo accesso al disco : ........"+C.getTempoAccessoDisco()+"ms");
-        jLabel6.setText("Banda del bus dati: ............."+C.getBandaBusDati());
+        jLabel6.setText("Banda del bus dati: ............."+C.getBandaBusDati()+"KB/s");
         String scheduler="Politica schedulazione processi: ";
         switch ( C.getPoliticaSchedulazioneProcessi() ) {
             case 1: jLabel8.setText(scheduler+"FCFS"); break;
