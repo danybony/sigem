@@ -72,8 +72,9 @@ public class SwapSegmentata extends MemoriaSegmentata{
     @Override
     public boolean rimuovi(FrameMemoria seg){
         if(memoria.remove(seg)) {
+            if (spazioResiduo>0) memoria.remove(memoria.lastElement());
             spazioResiduo+=seg.getDimensione();
-            memoria.set(memoria.lastIndexOf(memoria.lastElement()), new Segmento("spazio", spazioResiduo,-1));
+            memoria.add(new Segmento("spazio", spazioResiduo,-1));
             return true;
         }
         
@@ -90,14 +91,14 @@ public class SwapSegmentata extends MemoriaSegmentata{
      */
     @Override
     public void liberaMemoria(int idProcesso){
+        
         for(int i=0;i<memoria.size();i++){
             if (memoria.get(i).getIdProcesso()==idProcesso){
-                spazioResiduo+=memoria.get(i).getDimensione();
                 rimuovi(memoria.get(i));
                 i-=1;
             }
         }
-        memoria.set(memoria.lastIndexOf(memoria.lastElement()), new Segmento("spazio", spazioResiduo,-1));
+        
     }
     
     
