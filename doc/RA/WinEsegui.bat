@@ -18,4 +18,4 @@ rem v.1.00 (31\03\2008): creazione del file
 
 @echo Caricamento SiGeM in corso...
 @echo off
-java -mx256M -jar Sigem_src.jar
+java -mx256M -jar Sigem.jar
