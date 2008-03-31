@@ -2133,9 +2133,6 @@ public class SiGeMv2View {
      */
     private boolean caricaSimulazioneDefault(){
         String nomeFile=System.getProperty("user.dir")+File.separatorChar+"default.sigem";
-        nomeFile=nomeFile.replace("\\", "/");
-        nomeFile=nomeFile.replace(" ","%20");
-
         try {
             gestione = new GestioneFile(nomeFile, null);
             ConfigurazioneIniziale conf = gestione.caricaFileConfigurazione();
