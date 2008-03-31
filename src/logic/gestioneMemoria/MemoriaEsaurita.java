@@ -4,8 +4,8 @@
  * Created on 5 febbraio 2008, 16.13
  *
  * Questa classe rappresenta un'eccezione che viene sollevata quando una classe
- * che implementa Memoria non può più aggiungere FrameMemoria in quanto ha esaurito
- * lo spazio a disposizione. Restituisce anche la quantità di spazio residua
+ * che implementa Memoria non puo' piu' aggiungere FrameMemoria in quanto ha esaurito
+ * lo spazio a disposizione. Restituisce anche la quantita' di spazio residua
  * in termini di byte.
  */
 
