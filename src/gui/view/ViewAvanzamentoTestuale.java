@@ -35,7 +35,7 @@ import logic.simulazione.Istante;
 public class ViewAvanzamentoTestuale extends JScrollPane{
     
     /**
-     * JTextArea dove si scriverà il log visualizzato a schermo
+     * JTextArea dove si scrivera' il log visualizzato a schermo
      */
     private JTextArea testo;
     
