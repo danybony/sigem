@@ -169,7 +169,7 @@ public class Player{
      *  <tr align="center"><td>FAULT</td><td colspan="2">Fault in RAM</td></tr>
      *  <tr align="center"><td>SWITCH</td><td>Context-switch</td></tr>
      *  <tr align="center"><td>FULL_RAM</td><td>Memoria centrale esaurita</td></tr>
-     *  <tr align="center"><td>FULL_SWAP (non ancora implementato)</td><td>Area di swap piena</td></tr>
+     *  <tr align="center"><td>FULL_SWAP</td><td>Area di swap piena</td></tr>
      *  <tr align="center"><td>END_PROC</td><td>Processo terminato</td></tr>
      *  <tr align="center"><td>NEW_PROC</td><td>Arrivo di uno o più processi nuovi</td></tr>
      * </table>
