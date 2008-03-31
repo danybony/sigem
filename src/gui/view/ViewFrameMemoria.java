@@ -182,14 +182,18 @@ public class ViewFrameMemoria extends JScrollPane {
      * Funzione che aggiorna il grafico della RAM con i cambiamenti avvenuti nel nuovo
      * istante.
      * 
-     * @param cambiamentiInMemoria
-     *      LinkedList di Azioni che rappresentano tutto ci� che � stato modificato
-     *      in RAM
+     * @param memoria
+     *      Vector che rappresenta uno "screenshot" della memoria in un dato
+     *      istante
      * 
      * @param istante
      *      intero che identifica l'istante di cui si sta disegnando i frame della
      *      memoria. Utile nel caso in cui l'utente decida di tornare indietro nella
      *      simulazione
+     * 
+     * @param processiUltimati
+     *      Vector di Vector di interi che tengono traccia dei processi ultimati
+     *      nei vari istanti
      * 
      * @throws Exception
      *      Lancia un'eccezione nel caso in cui la memoria non sia ancora stata configurata
@@ -200,22 +204,7 @@ public class ViewFrameMemoria extends JScrollPane {
         
         
         
-        //Aggiorno, se necessario, lo storico dei processi ultimati
-        /*
-        if(istante>=processiUltimati.size()){
-            processiUltimati.add(new Vector(processiUltimati.get(istante-1)));
-            if(cambiamentiInMemoria==null) return;
-            int processoUltimato=-2;
-            for(int i=0;i<cambiamentiInMemoria.size();i++){
-                if (cambiamentiInMemoria.get(i).getAzione()==6){
-                    processoUltimato=cambiamentiInMemoria.get(i).getPosizione();
-                }
-            }
-            if(processoUltimato!=-2){
-                processiUltimati.get(istante).add(new Integer(processoUltimato));
-            }
-        }
-        */
+        
         int coordX=10;
         int larghezza=LATO*6;
         int coordY=10;
