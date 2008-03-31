@@ -18,7 +18,7 @@ package logic.gestioneMemoria;
 import java.util.Vector;
 
 /**
- * Classe astratta che rappresenta una generica memoria: verrà poi implementata
+ * Classe astratta che rappresenta una generica memoria: verra' poi implementata
  * da tutte le memorie, sia paginate che segmentate.
  */
 abstract class Memoria{
@@ -30,7 +30,7 @@ abstract class Memoria{
     protected Vector<FrameMemoria> memoria=new Vector<FrameMemoria>();
     
     /**
-     * Metodo la cui implementazione dovrà rimuovere un FrameMemoria dalla memoria
+     * Metodo la cui implementazione dovra' rimuovere un FrameMemoria dalla memoria
      * @param frame
      *      Il riferimento al FrameMemoria da togliere
      * @return
@@ -39,16 +39,16 @@ abstract class Memoria{
     public abstract boolean rimuovi(FrameMemoria frame);
     
     /**
-     * Metodo la cui implementazione dovrà cercare un FrameMemoria nella memoria
+     * Metodo la cui implementazione dovra' cercare un FrameMemoria nella memoria
      * @param frame
      *      Il riferimento al FrameMemoria da cercare
      * @return
-     *      TRUE se il frame è in memoria, FALSE altrimenti
+     *      TRUE se il frame e' in memoria, FALSE altrimenti
      */
     public abstract boolean cerca(FrameMemoria frame);
     
     /**
-     * Metodo la cui implementazione dovrà rimuovere tutti i FrameMemoria 
+     * Metodo la cui implementazione dovra' rimuovere tutti i FrameMemoria 
      * riferiti da un processo che ha finito la sua esecuzione
      * @param idProcesso
      *      Identificativo univoco del processo che ha finito di eseguire
