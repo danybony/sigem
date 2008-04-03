@@ -865,6 +865,17 @@ public class AssociazioneProcessiJDialog extends javax.swing.JDialog {
             modelliListaFrame.get(i).clear();
         }
         
+         if (politica.getGestioneMemoria() == 1){
+            jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI - PAGINE");
+            jButtonNuovoFrame.setText("Nuova Pagina");
+            jButtonModifica.setVisible(false);
+        }
+        else {
+            jLabelAssociazioneProcessi.setText("ASSOCIAZIONE PROCESSI - SEGMENTI");
+            jButtonNuovoFrame.setText("Nuovo segmento");
+            jButtonModifica.setVisible(true);
+        }
+        
         
         if(numProcessi<istantiPerProcesso.size()){
             /* Elimino i processi in eccesso */
