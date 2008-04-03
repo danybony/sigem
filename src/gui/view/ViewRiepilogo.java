@@ -193,7 +193,7 @@ public class ViewRiepilogo extends javax.swing.JPanel {
             case 6: jLabel9.setText(S+"NFU"); break;
             case 7: jLabel9.setText(S+"A"); break;        
         }
-        jLabel10.setText("Dimensione pagina: .............."+C.getDimensionePagina()+"KB" );
+        jLabel10.setText("Dimensione pagina: .............."+C.getDimensionePagina()+" KB" );
     }
     private void setSegmentazione( ConfigurazioneIniziale C ) {
         jLabel7.setText("Tecnica gestione memoria: .......Segmentazione");
@@ -210,11 +210,11 @@ public class ViewRiepilogo extends javax.swing.JPanel {
     public void aggiorna( ConfigurazioneIniziale C ) {
         // imposta i campi su
         jLabel1.setText("Processi: ......................."+C.getListaProcessi().size());
-        jLabel2.setText("Dimensione RAM : ................"+C.getDimensioneRAM()+"KB");
-        jLabel3.setText("Dimensione area Swap : .........."+C.getDimensioneSwap()+"KB");
-        jLabel4.setText("Tempo Context Switch : .........."+C.getTempoContextSwitch()+"ms");
-        jLabel5.setText("Tempo accesso al disco : ........"+C.getTempoAccessoDisco()+"ms");
-        jLabel6.setText("Banda del bus dati: ............."+C.getBandaBusDati()+"KB/s");
+        jLabel2.setText("Dimensione RAM : ................"+C.getDimensioneRAM()+" KB");
+        jLabel3.setText("Dimensione area Swap : .........."+C.getDimensioneSwap()+" KB");
+        jLabel4.setText("Tempo Context Switch : .........."+C.getTempoContextSwitch()+" ms");
+        jLabel5.setText("Tempo accesso al disco : ........"+C.getTempoAccessoDisco()+" ms");
+        jLabel6.setText("Banda del bus dati: ............."+C.getBandaBusDati()+" KB/s");
         String scheduler="Politica schedulazione processi: ";
         switch ( C.getPoliticaSchedulazioneProcessi() ) {
             case 1: jLabel8.setText(scheduler+"FCFS"); break;

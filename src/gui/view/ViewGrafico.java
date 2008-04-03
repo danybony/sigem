@@ -69,8 +69,8 @@ public class ViewGrafico extends JScrollPane {
         XYDataset xyDataset1 = new XYSeriesCollection(series1);
         XYDataset xyDataset2 = new XYSeriesCollection(series2);
         //JFreeChart chart0 = ChartFactory.createStackedXYAreaChart("Fault in RAM", "Istanti", "Fault", TabellaDati, PlotOrientation.VERTICAL, false,false,false);
-        JFreeChart chart1 = ChartFactory.createXYAreaChart("Andamento Fault Totali","Istanti","Fault",xyDataset1,PlotOrientation.VERTICAL,false,false,false);
-        JFreeChart chart2 = ChartFactory.createXYAreaChart("Andamento Fault per Istante","Istanti","Fault",xyDataset2,PlotOrientation.VERTICAL,false,false,false);
+        JFreeChart chart1 = ChartFactory.createXYAreaChart("Fault Totali","Istanti","Fault",xyDataset1,PlotOrientation.VERTICAL,false,false,false);
+        JFreeChart chart2 = ChartFactory.createXYAreaChart("Fault per Istante","Istanti","Fault",xyDataset2,PlotOrientation.VERTICAL,false,false,false);
         chart1.setTextAntiAlias(true);
         chart2.setTextAntiAlias(true);
         
