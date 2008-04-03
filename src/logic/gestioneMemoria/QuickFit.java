@@ -31,7 +31,7 @@ public class QuickFit implements IAllocazione {
         int Dim=F.getDimensione(),Pos=0,Min=Dim-Liberi.elementAt(Pos).getDimensione();
         if ( Min<0 ) Min=-Min;
         for( int i=1; i<Liberi.size(); i++ ) {
-            int valore=Dim-Liberi.elementAt(0).getDimensione();
+            int valore=Dim-Liberi.elementAt(i).getDimensione();
             if ( valore<0 ) valore=-valore;
             if ( valore < Dim ) { Dim=valore; Pos=i; } 
         }
