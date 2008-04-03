@@ -126,7 +126,7 @@ public class ConfigurazioneAmbienteJDialog extends javax.swing.JDialog {
         jLabelDimensioneRAM.setText("Dimensione RAM (KB)");
 
         jLabelDimensionaAreaSWAP.setFont(new java.awt.Font("Tahoma", 1, 12));
-        jLabelDimensionaAreaSWAP.setText("Dimensione Area SWAP (KB)");
+        jLabelDimensionaAreaSWAP.setText("Dimensione Area Swap (KB)");
 
         jLabelDimensionePagina.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabelDimensionePagina.setText("Dimensione Pagina (KB)");
