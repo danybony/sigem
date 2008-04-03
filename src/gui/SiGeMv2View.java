@@ -1068,7 +1068,7 @@ public class SiGeMv2View {
             
             toolBar.addSeparator(new java.awt.Dimension(20, 12));
             
-            toolBar.add(new JLabel("Velocita': "));
+            toolBar.add(new JLabel("Rallentamento (in secondi): "));
             toolBar.add(scegliVelocita);
             
             toolBar.addSeparator(new java.awt.Dimension(30, 12));
