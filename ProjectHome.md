@@ -1,0 +1,1 @@
+Simulatore della gestione della memoria di un elaboratore.
